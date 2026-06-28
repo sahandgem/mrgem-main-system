@@ -6,14 +6,14 @@
 
 | اولویت | شاخه | کار | توضیح |
 |---|---|---|---|
-| بالا | CONTROL | Source Integration Map | فقط نقشه‌برداری منابع و زیرپروژه‌ها؛ بدون ادغام کد |
+| بالا | WF | extraction کنترل‌شده adapterهای کم‌ریسک باقی‌مانده | فقط فازهای کوچک، بدون تغییر route/storage/model/behavior |
 | بالا | CONTROL | نگه‌داری sync اسناد کنترل پروژه | بعد از هر P، current state و phase log اصلاح شود |
 
 ## بعداً
 
 | شاخه | کار | توضیح |
 |---|---|---|
-| WF | استخراج `DataCenterPage` | فاز جدا، بدون تغییر route/storage/model/behavior |
+| WF | ادامه کوچک‌سازی adapterهای باقی‌مانده | پس از WF-P31، DataCenterPage هم جدا شده است |
 | FIN-AUDIT | بررسی استخراج مدل نقدینگی از پروژه پول | فقط schema/model/idea؛ merge مستقیم ممنوع |
 | DATA-MAHAK | بررسی استخراج مدل کالا و بارکد از پروژه کالا | فقط schema/model/idea؛ merge مستقیم ممنوع |
 | CORE/DATA/INV | طراحی Core Product Model | مدل مشترک آینده برای کالا، انبار و تولید |

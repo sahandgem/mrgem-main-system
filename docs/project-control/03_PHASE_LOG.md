@@ -37,6 +37,7 @@
 | WF-P28 | انجام شده | page entry split برای صفحات سیستم و component extraction سبک |
 | WF-P29 | انجام و verify شد | `MaintenancePage` و `HistoryRetentionPage` قبلاً از `WorkforcePages.tsx` جدا شده بودند؛ فایل‌های مستقل موجودند؛ test/build موفق؛ route/storage/UI تغییر نکرد. |
 | WF-P30 | انجام و verify شد | `OperationalHistoryPage` واقعاً از `WorkforcePages.tsx` خارج شد؛ `WorkforcePages.tsx` از `4733` خط به `4614` خط رسید؛ test/build موفق؛ route/storage/UI تغییر نکرد. |
+| WF-P31 | انجام و verify شد | `DataCenterPage` از adapter به صفحه واقعی تبدیل شد؛ `WorkforcePages.tsx` از `4331` خط به `4119` خط رسید؛ test/build موفق؛ route/storage/docs تغییر نکرد. |
 
 ## جدول فازهای CONTROL
 
@@ -48,9 +49,37 @@
 
 ## P فعلی قطعی
 
-آخرین P اجرایی و کدی verify شده: **WF-P30**
+آخرین P اجرایی و کدی verify شده: **WF-P31**
 
 آخرین P کنترل پروژه: **CONTROL-P3**
+
+## جزئیات ثبت WF-P31
+
+فایل صفحه:
+
+- `src/pages/workforce/system/DataCenterPage.tsx`
+
+فایل‌های تغییرکرده در WF-P31:
+
+- `src/WorkforcePages.tsx`
+- `src/pages/workforce/system/DataCenterPage.tsx`
+- `src/pages/workforce/workforcePageUtils.ts`
+- `tests/analysis.test.ts`
+
+نتیجه:
+
+- `DataCenterPage` از adapter به صفحه واقعی تبدیل شد.
+- `WorkforcePages.tsx`: `4331` خط به `4119` خط.
+- کاهش تقریبی: `212` خط.
+- `npm test`: موفق.
+- `npm run build`: موفق.
+- build warning جدی: ندارد.
+- route جدید: ندارد.
+- localStorage key جدید: ندارد.
+- تغییر docs در زمان اجرای WF-P31: ندارد.
+- تغییر رفتار UI: ندارد.
+- commit اجرایی: `85d0df5 refactor: extract DataCenterPage`
+- هشدار باقی‌مانده: `WorkforcePages.tsx` هنوز بزرگ است، ولی `MaintenancePage`، `HistoryRetentionPage`، `OperationalHistoryPage` و `DataCenterPage` جدا شده‌اند.
 
 ## جزئیات ثبت CONTROL-P3
 
@@ -108,7 +137,7 @@
 
 ## P پیشنهادی بعدی
 
-ادامه سبک‌سازی WF با `DataCenterPage` یا طراحی یکی از مدل‌های مرکزی آینده، فقط پس از تأیید مرکز کنترل.
+ادامه extraction کنترل‌شده adapterهای کم‌ریسک باقی‌مانده، یا طراحی یکی از مدل‌های مرکزی آینده بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

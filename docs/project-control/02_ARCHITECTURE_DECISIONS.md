@@ -1,6 +1,6 @@
 ﻿# Architecture Decisions
 
-آخرین به‌روزرسانی: 2026-06-28
+آخرین به‌روزرسانی: 2026-06-29
 
 ## تصمیم‌های معماری گرفته‌شده
 
@@ -26,6 +26,7 @@
 | ADR-018 | Future Modules Roadmap مرجع ترتیب آینده ماژول‌ها است؛ Finance/Product/Mobile/Production/Inventory قبل از مدل‌های مرکزی و کاهش بدهی WF شروع نمی‌شوند. | فعال |
 | ADR-019 | Core Product Model قبل از هر UI، migration، adapter اجرایی یا اتصال محک باید به صورت مستند طراحی و تأیید شود. | فعال |
 | ADR-020 | Core Financial Event Model قبل از هر UI مالی، migration، auth/database change، adapter اجرایی یا اتصال پروژه پول باید به صورت مستند طراحی و تأیید شود. | فعال |
+| ADR-021 | Product Adapter Boundary باید قبل از هر import، UI کالا یا migration اجرا شود؛ داده خام پروژه کالا نباید مستقیم وارد database اصلی شود. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -47,6 +48,8 @@
 - تغییر auth یا RLS به بهانه اتصال مالی
 - ساخت UI کالا قبل از تأیید Core Product Model و schema
 - ساخت migration کالا قبل از اجازه مرکز فرمان
+- import مستقیم داده کالا بدون normalize، validation و duplicate report
+- dependency مستقیم برنامه اصلی به فایل‌های قدیمی `mahak-web-version`
 - تغییر نام شاخه‌های مادر یا کدهای branch registry
 
 ## قانون ثبت تصمیم جدید

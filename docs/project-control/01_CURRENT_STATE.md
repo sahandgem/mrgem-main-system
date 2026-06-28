@@ -1,6 +1,6 @@
 ﻿# Current State
 
-آخرین به‌روزرسانی: 2026-06-28
+آخرین به‌روزرسانی: 2026-06-29
 
 ## وضعیت فعلی پروژه
 
@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P5**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P6**
+
+## وضعیت CONTROL-P6
+
+CONTROL-P6 انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، database یا localStorage تغییر داده نشد.
+
+- فایل طراحی schema و adapter کالا ساخته شد: `docs/project-control/13_PRODUCT_SCHEMA_AND_ADAPTER_BOUNDARY.md`
+- `Product Schema Draft` با فیلدهای پیشنهادی کالا برای database آینده ثبت شد.
+- `Product Adapter Boundary` برای اتصال آینده `mahak-web-version` بدون merge مستقیم طراحی شد.
+- ورودی‌های adapter ثبت شد: خروجی Excel محک، بانک سنگ، کد گروه‌ها، بارکدها، فایل‌های کالا و خروجی AI-ready.
+- خروجی‌های adapter ثبت شد: `ProductNormalizedRecord`، `ProductImportReport`، `DuplicateProductWarning`، `MahakExportPreview` و `AIProductSnapshot`.
+- ریسک‌های اصلی ثبت شد: تکراری شدن کالا، اختلاف کد محک و کد داخلی، خطای بارکد، خطای وزن/اجرت، خراب شدن خروجی محک و وابستگی مستقیم به فایل‌های قدیمی پروژه کالا.
 
 ## وضعیت CONTROL-P5
 
@@ -153,4 +164,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-طراحی `Financial Schema Draft` و `Financial Adapter Boundary`، یا ادامه طراحی `Product Schema Draft` و `Product Adapter Boundary` بدون کدنویسی.
+طراحی `Product Import Validator` و `Product Duplicate Detector`، یا طراحی `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی.

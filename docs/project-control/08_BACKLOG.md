@@ -1,6 +1,6 @@
 ﻿# Backlog
 
-آخرین به‌روزرسانی: 2026-06-28
+آخرین به‌روزرسانی: 2026-06-29
 
 ## الان
 
@@ -23,6 +23,11 @@
 | DATA-MAHAK | بررسی بانک سنگ | استخراج مفهومی نوع سنگ و ویژگی‌های لازم |
 | DATA-MAHAK | بررسی barcode strategy | بررسی تولید، یکتایی، alias و کنترل تکراری بارکد |
 | DATA-MAHAK | بررسی AI-ready product export | طراحی خروجی تمیز و قابل تحلیل برای AI |
+| DATA-MAHAK | طراحی Product Import Validator | اعتبارسنجی داده کالا قبل از هر import یا UI |
+| DATA-MAHAK | طراحی Product Duplicate Detector | تشخیص تکراری بر اساس کد داخلی، کد محک، بارکد، نام، وزن و سنگ |
+| DATA-MAHAK | طراحی Mahak Export Adapter | تولید preview و mapping خروجی محک بدون نوشتن در سیستم اصلی |
+| DATA-MAHAK | طراحی AI Product Snapshot | snapshot نسخه‌دار و تمیز برای تحلیل هوشمند |
+| UI | بررسی Product UI بعد از کاهش بدهی Workforce | UI کالا فقط بعد از مدل/schema/validator و کاهش بدهی WF |
 | CORE/FIN | طراحی Core Financial Event Model | مدل مشترک آینده برای نقدینگی، رسید و رویداد مالی |
 | CORE/FIN | طراحی Financial Schema Draft | تبدیل مدل مفهومی رویداد مالی به schema پیشنهادی، بدون migration |
 | FIN-AUDIT | طراحی Financial Adapter Boundary | مرز استخراج/تبدیل داده مالی از پروژه پول، بدون merge |

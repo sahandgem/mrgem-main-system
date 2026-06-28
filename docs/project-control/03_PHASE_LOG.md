@@ -1,6 +1,6 @@
 ﻿# Phase Log
 
-آخرین به‌روزرسانی: 2026-06-28
+آخرین به‌روزرسانی: 2026-06-29
 
 ## جدول فازهای WF
 
@@ -48,12 +48,29 @@
 | CONTROL-P3 | انجام شده | ساخت `10_FUTURE_MODULES_ROADMAP.md` و ثبت نقشه آینده ماژول‌های مستر جم بدون کدنویسی یا ادغام کد |
 | CONTROL-P4 | انجام شده | ساخت `11_CORE_PRODUCT_MODEL.md` و طراحی مستند مدل مرکزی کالا بدون کدنویسی، migration یا merge پروژه کالا |
 | CONTROL-P5 | انجام شده | ساخت `12_CORE_FINANCIAL_EVENT_MODEL.md` و طراحی مستند مدل مرکزی رویداد مالی بدون کدنویسی، auth/database change یا merge پروژه پول |
+| CONTROL-P6 | انجام شده | ساخت `13_PRODUCT_SCHEMA_AND_ADAPTER_BOUNDARY.md` و طراحی schema پیشنهادی کالا و adapter boundary بدون کدنویسی یا merge پروژه کالا |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P5**
+آخرین P کنترل پروژه: **CONTROL-P6**
+
+## جزئیات ثبت CONTROL-P6
+
+فایل جدید:
+
+- `docs/project-control/13_PRODUCT_SCHEMA_AND_ADAPTER_BOUNDARY.md`
+
+نتیجه:
+
+- `Product Schema Draft` برای ورود احتمالی کالا به database آینده طراحی شد.
+- `Product Adapter Boundary` برای اتصال آینده `mahak-web-version` بدون merge مستقیم ثبت شد.
+- ورودی‌های adapter ثبت شد: خروجی Excel محک، بانک سنگ، کد گروه‌ها، بارکدها، فایل‌های کالا و خروجی AI-ready.
+- خروجی‌های adapter ثبت شد: `ProductNormalizedRecord`، `ProductImportReport`، `DuplicateProductWarning`، `MahakExportPreview` و `AIProductSnapshot`.
+- قوانین امنیتی ثبت شد: هیچ داده‌ای مستقیم وارد database اصلی نشود؛ adapter اول normalize و سپس گزارش خطا/تکراری بسازد؛ UI یا migration فقط با تأیید مرکز فرمان.
+- ریسک‌ها ثبت شد: تکراری شدن کالا، اختلاف کد محک با کد داخلی، خطای بارکد، خطای وزن/اجرت، خرابی خروجی محک و وابستگی مستقیم به فایل‌های قدیمی پروژه کالا.
+- کد اجرایی، route، UI، database، migration و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P5
 
@@ -167,7 +184,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Financial Schema Draft` و `Financial Adapter Boundary`، یا ادامه طراحی `Product Schema Draft` و `Product Adapter Boundary` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Product Import Validator` و `Product Duplicate Detector`، یا طراحی `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

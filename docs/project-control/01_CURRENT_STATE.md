@@ -10,13 +10,31 @@
 
 ## آخرین P قطعی
 
-آخرین P اجرایی و کدی verify شده: **WF-P29**
+آخرین P اجرایی و کدی verify شده: **WF-P30**
 
 کار کنترل پروژه تکمیل‌شده: **CONTROL-P1**
 
+## وضعیت WF-P30
+
+WF-P30 انجام شد و verify شد. در این فاز فقط extraction معماری انجام شد و رفتار برنامه تغییر نکرد.
+
+- `OperationalHistoryPage` واقعاً از `src/WorkforcePages.tsx` خارج شد.
+- فایل صفحه: `src/pages/workforce/system/OperationalHistoryPage.tsx`
+- فایل‌های تغییرکرده در WF-P30:
+  - `src/WorkforcePages.tsx`
+  - `src/pages/workforce/system/OperationalHistoryPage.tsx`
+  - `tests/analysis.test.ts`
+- `WorkforcePages.tsx` از `4733` خط به `4614` خط رسید.
+- route تغییر نکرد.
+- localStorage key جدید ساخته نشد.
+- `npm test` موفق بود.
+- `npm run build` موفق بود.
+- build warning نداشت.
+- رفتار UI تغییر نکرد.
+
 ## وضعیت WF-P29
 
-WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/WorkforcePages.tsx` جدا شده بودند و در این مرحله ثبت نهایی شدند:
+WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/WorkforcePages.tsx` جدا شده بودند و ثبت نهایی شدند:
 
 - `MaintenancePage`
 - `HistoryRetentionPage`
@@ -35,14 +53,13 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 - route جدید ساخته نشده است.
 - localStorage key جدید ساخته نشده است.
 - رفتار UI تغییر نکرده است.
-- هشدار باقی‌مانده: `WorkforcePages.tsx` هنوز بزرگ است.
 
 ## شاخه‌های فعال
 
 | شاخه | وضعیت | توضیح |
 |---|---|---|
 | CORE | فعال کنترلی | route registry، shell، قوانین معماری و اتصال آینده به کابین مرکزی |
-| WF | فعال اجرایی | ماژول نیروی انسانی تا WF-P29 تأیید و verify شده است |
+| WF | فعال اجرایی | ماژول نیروی انسانی تا WF-P30 تأیید و verify شده است |
 | UI | فعال پشتیبان | RTL، dark mode و cockpit مدیریتی در UI فعلی حفظ شده است |
 | DATA | نیمه‌فعال | localStorage registry، backup، import/restore و baseline compatibility وجود دارد |
 | CONTROL | فعال | docs/project-control منبع حقیقت کنترل پروژه است |
@@ -64,13 +81,14 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 - routeها lazy load می‌شوند.
 - داده‌ها در localStorage و serviceهای داخلی هستند.
 - analyzerها، recommendation، simulator، decision queue، report، backup، readiness، launch، drift، history، retention، operations calendar و maintenance وجود دارند.
-- `MaintenancePage` و `HistoryRetentionPage` از `WorkforcePages.tsx` جدا شده‌اند.
+- `MaintenancePage`، `HistoryRetentionPage` و `OperationalHistoryPage` از `WorkforcePages.tsx` جدا شده‌اند.
 - `WorkforcePages.tsx` هنوز بزرگ است و نیازمند extraction مرحله‌ای بیشتر است.
+- `DataCenterPage` هنوز adapter/compat دارد.
 
 ## ریسک‌های فعلی
 
 1. `WorkforcePages.tsx` هنوز بدهی معماری اصلی است.
-2. صفحه‌های بزرگ دیگری مثل `OperationalHistoryPage` و `DataCenterPage` هنوز گزینه extraction جداگانه هستند.
+2. `DataCenterPage` هنوز adapter/compat دارد.
 3. زیرپروژه‌های `audit-app` و `mahak-web-version` نباید مستقیم merge شوند.
 4. تست DOM/E2E رسمی برای routeهای مستقیم وجود ندارد.
 5. پروژه هنوز local-only است؛ پاک شدن storage مرورگر باعث از دست رفتن داده محلی می‌شود.
@@ -78,4 +96,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-استخراج `OperationalHistoryPage` یا `DataCenterPage` در یک فاز جدا، بدون تغییر route، storage، مدل داده یا رفتار UI.
+**Source Integration Map**، بدون ادغام کد.

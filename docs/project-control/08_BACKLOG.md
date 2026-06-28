@@ -6,13 +6,14 @@
 
 | اولویت | شاخه | کار | توضیح |
 |---|---|---|---|
-| بالا | WF | استخراج `OperationalHistoryPage` یا `DataCenterPage` | فاز جدا، بدون تغییر route/storage/model/behavior |
+| بالا | CONTROL | Source Integration Map | فقط نقشه‌برداری منابع و زیرپروژه‌ها؛ بدون ادغام کد |
 | بالا | CONTROL | نگه‌داری sync اسناد کنترل پروژه | بعد از هر P، current state و phase log اصلاح شود |
 
 ## بعداً
 
 | شاخه | کار | توضیح |
 |---|---|---|
+| WF | استخراج `DataCenterPage` | فاز جدا، بدون تغییر route/storage/model/behavior |
 | FIN-AUDIT | بررسی استخراج schema نقدینگی، roles و RLS | فقط تحلیل و استخراج ایده/مدل؛ merge مستقیم ممنوع |
 | DATA-MAHAK | بررسی استخراج مدل کالا، بارکد، بانک سنگ و خروجی AI-ready | فقط تحلیل و استخراج ایده/مدل؛ merge مستقیم ممنوع |
 | WF | کوچک‌سازی ادامه‌دار `WorkforcePages.tsx` | ادامه استخراج صفحه‌ها در فازهای کوچک و قابل rollback |

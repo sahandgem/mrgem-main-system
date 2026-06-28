@@ -36,6 +36,7 @@
 | WF-P27 | انجام شده | operator guidance برای legacy baseline |
 | WF-P28 | انجام شده | page entry split برای صفحات سیستم و component extraction سبک |
 | WF-P29 | انجام و verify شد | `MaintenancePage` و `HistoryRetentionPage` قبلاً از `WorkforcePages.tsx` جدا شده بودند؛ فایل‌های مستقل موجودند؛ test/build موفق؛ route/storage/UI تغییر نکرد. |
+| WF-P30 | انجام و verify شد | `OperationalHistoryPage` واقعاً از `WorkforcePages.tsx` خارج شد؛ `WorkforcePages.tsx` از `4733` خط به `4614` خط رسید؛ test/build موفق؛ route/storage/UI تغییر نکرد. |
 
 ## جدول فازهای CONTROL
 
@@ -45,9 +46,32 @@
 
 ## P فعلی قطعی
 
-آخرین P اجرایی و کدی verify شده: **WF-P29**
+آخرین P اجرایی و کدی verify شده: **WF-P30**
 
 آخرین P کنترل پروژه: **CONTROL-P1**
+
+## جزئیات ثبت WF-P30
+
+فایل صفحه:
+
+- `src/pages/workforce/system/OperationalHistoryPage.tsx`
+
+فایل‌های تغییرکرده در WF-P30:
+
+- `src/WorkforcePages.tsx`
+- `src/pages/workforce/system/OperationalHistoryPage.tsx`
+- `tests/analysis.test.ts`
+
+نتیجه:
+
+- `WorkforcePages.tsx`: `4733` خط به `4614` خط.
+- `npm test`: موفق.
+- `npm run build`: موفق.
+- build warning: ندارد.
+- route جدید: ندارد.
+- localStorage key جدید: ندارد.
+- تغییر رفتار UI: ندارد.
+- هشدار باقی‌مانده: `WorkforcePages.tsx` هنوز بزرگ است و `DataCenterPage` هنوز adapter/compat دارد.
 
 ## جزئیات ثبت WF-P29
 
@@ -65,11 +89,10 @@
 - route جدید: ندارد.
 - localStorage key جدید: ندارد.
 - تغییر رفتار UI: ندارد.
-- هشدار باقی‌مانده: `WorkforcePages.tsx` هنوز بزرگ است.
 
 ## P پیشنهادی بعدی
 
-استخراج `OperationalHistoryPage` یا `DataCenterPage` در فاز جدا.
+**Source Integration Map**، بدون ادغام کد.
 
 ## قالب ثبت فاز بعدی
 

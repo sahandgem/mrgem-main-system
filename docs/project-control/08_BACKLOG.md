@@ -43,6 +43,18 @@
 | CORE/FIN | طراحی Bank Transaction Mapping | mapping شماره پیگیری، تاریخ، مبلغ، مبدا و مقصد به رویداد مالی |
 | MOBILE | طراحی Mobile Receipt Capture Dependency | وابستگی اپ موبایل به مدل مالی و receipt flow |
 | CORE/FIN | طراحی Audit Trail Model | رد تغییرات مالی، تأیید مدیر، اتصال رسید و mapping بانکی |
+| CORE/FIN | طراحی Financial Validation Rules | کنترل مبلغ، تاریخ، طرف حساب، وضعیت پرداخت، سند، بانک و duplicate قبل از ورود داده مالی |
+| CORE/FIN | طراحی Financial Import Decision Flow | تصمیم‌های import allowed، blocked، review، attach، create، confirm installment و correction |
+| FIN/MOBILE | طراحی Receipt Review Flow | جریان بررسی رسید عکس‌دار و اتصال کنترل‌شده به رویداد مالی |
+| CORE/FIN | طراحی Bank Match Confidence | سطح‌بندی exact، strong، weak، conflict و no match برای تطبیق بانک و رویداد |
+| CORE/FIN | طراحی Liquidity Alert Rules | قواعد هشدار نقدینگی برای cash-in، cash-out، سررسید، mismatch و پرداخت بدون سند |
+| CORE/FIN | طراحی Manager Approval Boundary | مرز تصمیم‌هایی که باید مدیر تایید کند، مخصوصاً پرداخت حساس، قسط و اصلاحیه |
+| FIN-AUDIT | طراحی Daily Bank Excel Import | طراحی خواندن اکسل گردش حساب روزانه در staging بدون ورود مستقیم به database |
+| FIN-AUDIT | طراحی Bank Transaction Normalizer | یکسان‌سازی تاریخ، مبلغ، برداشت/واریز، شماره پیگیری، مبدا، مقصد و توضیحات |
+| FIN-AUDIT | طراحی Transaction Description Matcher | تشخیص rule-based قسط، دریافت، پرداخت، بدهی، خرید یا هزینه از متن شرح بانکی |
+| CORE/FIN | طراحی Installment Auto Confirmation | تایید قسط فقط با اطمینان خیلی بالا، قانون مدیر و بدون conflict/duplicate |
+| FIN/MOBILE | طراحی Receipt Attachment Link | اتصال قابل ردیابی receipt، bank transaction و financial event با دلیل match |
+| FIN-AUDIT | طراحی Bank Excel Format Change Handling | توقف امن import هنگام تغییر قالب اکسل بانک و نیاز به approval قالب جدید |
 | FIN-AUDIT | بررسی liquidity model از audit-app | تحلیل مدل فشار نقدینگی و cash-in/cash-out |
 | FIN-AUDIT | بررسی approval workflow | طراحی جریان ثبت، بررسی، تایید و رد مدیر |
 | FIN/MOBILE | بررسی receipt attachment flow | اتصال سند یا عکس رسید به رویداد مالی |

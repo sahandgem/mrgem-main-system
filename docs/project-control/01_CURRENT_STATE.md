@@ -12,7 +12,19 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P9-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P10-BATCH**
+
+## وضعیت CONTROL-P10-BATCH
+
+CONTROL-P10-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database یا localStorage تغییر داده نشد.
+
+- فایل validation و import decision flow مالی ساخته شد: `docs/project-control/23_FINANCIAL_VALIDATION_AND_IMPORT_DECISION_FLOW.md`
+- فایل receipt review و bank match confidence ساخته شد: `docs/project-control/24_RECEIPT_REVIEW_AND_BANK_MATCH_CONFIDENCE.md`
+- فایل liquidity alert و manager approval boundary ساخته شد: `docs/project-control/25_FINANCIAL_LIQUIDITY_ALERT_AND_APPROVAL_RULES.md`
+- فایل bank Excel automation و rule matcher ساخته شد: `docs/project-control/26_BANK_EXCEL_AUTOMATION_AND_RULE_MATCHER.md`
+- طراحی شد که اکسل گردش بانکی روزانه در آینده فقط پس از staging، normalizing، validation، rule matching، duplicate check و review/approval وارد جریان مالی شود.
+- تأکید شد که auto confirm قسط فقط برای اطمینان خیلی بالا، قانون مصوب مدیر و بدون conflict/duplicate مجاز است.
+- `audit-app` merge نشد و auth/database/migration در این فاز تغییر نکرد.
 
 ## وضعیت CONTROL-P9-BATCH
 

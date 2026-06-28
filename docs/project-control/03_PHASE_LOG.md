@@ -44,12 +44,27 @@
 |---|---|---|
 | CONTROL-P1 | انجام شده | ساخت/تکمیل docs/project-control به عنوان منبع حقیقت مستر جم و sync تصمیم مرکز کنترل |
 | CONTROL-P2 | انجام شده | ساخت `09_SOURCE_INTEGRATION_MAP.md` و ثبت نقشه ادغام منابع بدون merge کد |
+| CONTROL-P3 | انجام شده | ساخت `10_FUTURE_MODULES_ROADMAP.md` و ثبت نقشه آینده ماژول‌های مستر جم بدون کدنویسی یا ادغام کد |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P30**
 
-آخرین P کنترل پروژه: **CONTROL-P2**
+آخرین P کنترل پروژه: **CONTROL-P3**
+
+## جزئیات ثبت CONTROL-P3
+
+فایل جدید:
+
+- `docs/project-control/10_FUTURE_MODULES_ROADMAP.md`
+
+نتیجه:
+
+- نقشه آینده Workforce، Finance، Product، Production، Inventory، Receipts، Mahak Integration، Mobile App، AI Analysis و Central Cockpit ثبت شد.
+- تصمیم ثبت شد که قبل از کاهش بدهی معماری WF، ماژول جدید شروع نشود.
+- `audit-app` و `mahak-web-version` همچنان Subproject هستند و merge مستقیم ندارند.
+- مدل‌های پایه آینده ثبت شدند: `Core Product Model`، `Core Financial Event Model`، `Core Inventory Model`، `Production Flow Model`، `Receipt Capture Flow` و `Central Cockpit Dashboard Map`.
+- کد اجرایی، route، UI، migration و localStorage تغییر نکرد.
 
 ## جزئیات ثبت WF-P30
 
@@ -93,7 +108,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی Source Integration Plan یا ادامه سبک‌سازی WF با `DataCenterPage`، فقط پس از تأیید مرکز کنترل.
+ادامه سبک‌سازی WF با `DataCenterPage` یا طراحی یکی از مدل‌های مرکزی آینده، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

@@ -18,6 +18,12 @@
 | DATA-MAHAK | بررسی استخراج مدل کالا و بارکد از پروژه کالا | فقط schema/model/idea؛ merge مستقیم ممنوع |
 | CORE/DATA/INV | طراحی Core Product Model | مدل مشترک آینده برای کالا، انبار و تولید |
 | CORE/FIN | طراحی Core Financial Event Model | مدل مشترک آینده برای نقدینگی، رسید و رویداد مالی |
+| CORE/INV | طراحی Core Inventory Model | مدل مشترک ورود/خروج، موجودی، مکان و مغایرت |
+| PROD | طراحی Production Flow Model | مدل جریان تولید پس از تثبیت کالا و انبار |
+| FIN/MOBILE | طراحی Receipt Capture Flow | جریان ثبت رسید، عکس، بررسی و اتصال به رویداد مالی |
+| MOBILE | طراحی Mobile Capture App | اپ ثبت سبک پس از مدل رسید و رویداد مالی |
+| DATA-MAHAK | طراحی Mahak Integration Boundary | مرز اتصال محک، خروجی‌ها و کنترل تکراری |
+| CORE/UI | طراحی Central Cockpit Dashboard Map | نقشه KPIها، alertها و decisionها برای کابین مرکزی |
 | CONTROL | طراحی Source Integration Plan | تبدیل نقشه منابع به برنامه استخراج مرحله‌ای |
 | FIN-AUDIT | بررسی استخراج schema نقدینگی، roles و RLS | فقط تحلیل و استخراج ایده/مدل؛ merge مستقیم ممنوع |
 | DATA-MAHAK | بررسی استخراج مدل کالا، بارکد، بانک سنگ و خروجی AI-ready | فقط تحلیل و استخراج ایده/مدل؛ merge مستقیم ممنوع |

@@ -12,7 +12,17 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P30**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P2**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P3**
+
+## وضعیت CONTROL-P3
+
+CONTROL-P3 انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration یا localStorage تغییر داده نشد.
+
+- فایل نقشه آینده ماژول‌ها ساخته شد: `docs/project-control/10_FUTURE_MODULES_ROADMAP.md`
+- آینده شاخه‌های Workforce، Finance، Product، Production، Inventory، Receipts، Mahak Integration، Mobile App، AI Analysis و Central Cockpit ثبت شد.
+- تصمیم قطعی ثبت شد که قبل از کاهش بدهی معماری WF، ماژول جدید شروع نشود.
+- وابستگی‌های کلیدی آینده ثبت شد: `Core Product Model`، `Core Financial Event Model`، `Core Inventory Model`، `Receipt Capture Flow` و `Mahak Integration Boundary`.
+- پروژه پول و پروژه کالا همچنان Subproject می‌مانند و merge مستقیم ندارند.
 
 ## وضعیت WF-P30
 
@@ -106,4 +116,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-طراحی یا اجرای مرحله بعدی Source Integration Plan، بدون ادغام کد؛ یا ادامه سبک‌سازی `DataCenterPage` در WF پس از تأیید مرکز کنترل.
+ادامه سبک‌سازی `DataCenterPage` در WF یا طراحی `Core Product Model` / `Core Financial Event Model`، فقط پس از تأیید مرکز کنترل.

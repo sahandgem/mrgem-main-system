@@ -36,6 +36,8 @@
 | ADR-028 | Financial Review Queue، Bank Excel Format Test Plan، Bank Rule Versioning و Installment Audit باید قبل از هر automation مالی اجرایی و تایید خودکار قسط طراحی و تأیید شوند. | فعال |
 | ADR-029 | کل پروژه باید با اصل Automation-First و AI-Assisted طراحی شود: سیستم تا جای امن normalize، validate، analyze، suggest و auto-act می‌کند و انسان موارد حساس، مشکوک یا کم‌اطمینان را کنترل می‌کند. | فعال |
 | ADR-030 | هر AI suggestion یا auto action باید confidence level، rule version، دلیل تصمیم و audit trail داشته باشد؛ تصمیم‌های conflict و manual only هرگز auto-confirm نمی‌شوند. | فعال |
+| ADR-031 | هر اتوماسیون بین‌ماژولی باید از طریق snapshot یا signal کنترل‌شده انجام شود؛ ماژول‌ها نباید داده خام یکدیگر را مستقیم mutate کنند. | فعال |
+| ADR-032 | تصمیم auto action فقط برای high confidence مجاز است؛ medium به review، low به review یا blocked، conflict به blocked و manual only به تصمیم انسانی می‌رود. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -66,6 +68,9 @@
 - اقدام خودکار برای سطح medium، low، conflict یا manual only
 - نمایش AI suggestion به عنوان حقیقت قطعی بدون source، confidence و rule context
 - تصمیم حساس بدون human-in-the-loop یا manager approval
+- mutate مستقیم داده یک ماژول توسط ماژول دیگر به بهانه اتوماسیون
+- cross-module automation بدون snapshot/signal نسخه‌دار و قابل audit
+- auto action بدون عبور از Auto Action Safety Matrix
 - اتصال خودکار رسید به رویداد حساس بدون bank match یا review
 - تصمیم مالی صرفاً بر اساس شباهت متن توضیحات بانکی
 - تغییر auth، database، migration، route یا localStorage به بهانه bank Excel automation

@@ -73,6 +73,11 @@
 | CONTROL/DATA | طراحی AI Audit Trail | ثبت source، normalized input، validation، confidence، rule version، suggestion و decision |
 | CONTROL/CORE | طراحی Auto Action Safety Rules | مرز اقدام خودکار امن و موارد نیازمند manager review |
 | CONTROL/CORE | طراحی Manager Review Boundary | تعریف مواردی که باید همیشه به مدیر یا reviewer برسند |
+| CONTROL/DATA | طراحی Cross-module AI Snapshot Strategy | تعریف snapshotهای مشترک برای Finance، Product، Production، Inventory، Workforce، Mobile و Cockpit |
+| CONTROL/DATA | طراحی Module Data Producer/Consumer Map | مشخص کردن تولیدکننده و مصرف‌کننده داده در هر ماژول |
+| CONTROL/CORE | طراحی Auto Action Safety Matrix | ماتریس auto action، review required و manual only برای کل سیستم |
+| CONTROL/CORE | طراحی Automation Risk Boundary | مرز ریسک اتوماسیون بین هشدار، پیشنهاد، اقدام خودکار و تصمیم مدیر |
+| CONTROL/CORE | طراحی Auto Action Audit Requirements | الزامات audit برای هر اقدام خودکار شامل source، confidence، rule version و reason |
 | FIN-AUDIT | بررسی liquidity model از audit-app | تحلیل مدل فشار نقدینگی و cash-in/cash-out |
 | FIN-AUDIT | بررسی approval workflow | طراحی جریان ثبت، بررسی، تایید و رد مدیر |
 | FIN/MOBILE | بررسی receipt attachment flow | اتصال سند یا عکس رسید به رویداد مالی |

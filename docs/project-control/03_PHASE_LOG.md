@@ -56,12 +56,30 @@
 | CONTROL-P10-BATCH | انجام شده | طراحی financial validation، import decision flow، receipt review، bank match confidence، liquidity approvals و bank Excel rule matcher بدون کدنویسی یا merge پروژه پول |
 | CONTROL-P11-BATCH | انجام شده | طراحی financial review queue، bank Excel format test plan، bank rule management و installment audit بدون کدنویسی یا merge پروژه پول |
 | CONTROL-P12-BATCH | انجام شده | ثبت اصل Automation-First و AI-Assisted، Human-in-the-loop، confidence rules و AI audit trail برای کل پروژه بدون کدنویسی |
+| CONTROL-P13-BATCH | انجام شده | طراحی Cross-module Automation Map، Confidence Scoring Model و Auto Action Safety Matrix بدون کدنویسی |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P12-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P13-BATCH**
+
+## جزئیات ثبت CONTROL-P13-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/33_CROSS_MODULE_AUTOMATION_MAP.md`
+- `docs/project-control/34_CONFIDENCE_SCORING_MODEL.md`
+- `docs/project-control/35_AUTO_ACTION_SAFETY_MATRIX.md`
+
+نتیجه:
+
+- نقشه جریان داده و اتوماسیون بین Finance، Product، Production، Inventory، Workforce، Mobile و Central Cockpit ثبت شد.
+- مثال‌های cross-module شامل mobile receipt to financial event، bank Excel to installment confirmation، product import to inventory readiness، production formula to material requirement، inventory shortage to finance alert و finance pressure to cockpit crisis signal طراحی شد.
+- مدل confidence با معیارهای completeness، validation، rule strength، duplicate/conflict risk، source reliability، historical consistency، manager-approved rule، match quality و AI certainty ثبت شد.
+- سطح‌های high، medium، low، conflict و manual only به تصمیم‌های auto action، review، blocked و never auto action وصل شدند.
+- ماتریس ایمنی auto action، review required و manual only ثبت شد.
+- کد اجرایی، route، UI، auth، database، migration، repo و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P12-BATCH
 
@@ -307,7 +325,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Cross-module Automation Map` و `Confidence Scoring Model`، یا ادامه `Financial Rule Simulation Test Cases` و `Bank Import Staging Model` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Cross-module AI Snapshot Strategy` و `Module Data Producer/Consumer Contract`، یا ادامه `Financial Rule Simulation Test Cases` و `Bank Import Staging Model` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

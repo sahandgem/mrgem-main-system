@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P12-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P13-BATCH**
+
+## وضعیت CONTROL-P13-BATCH
+
+CONTROL-P13-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database، repo یا localStorage تغییر داده نشد.
+
+- فایل Cross-module Automation Map ساخته شد: `docs/project-control/33_CROSS_MODULE_AUTOMATION_MAP.md`
+- فایل Confidence Scoring Model ساخته شد: `docs/project-control/34_CONFIDENCE_SCORING_MODEL.md`
+- فایل Auto Action Safety Matrix ساخته شد: `docs/project-control/35_AUTO_ACTION_SAFETY_MATRIX.md`
+- جریان داده و اتوماسیون بین Finance، Product، Production، Inventory، Workforce، Mobile و Central Cockpit طراحی شد.
+- معیارهای confidence شامل data completeness، validation result، rule match strength، duplicate risk، conflict risk، source reliability، historical consistency، manager-approved rule، match quality و AI suggestion certainty ثبت شد.
+- مرز auto action، review required و manual only برای اقدام‌های بین‌ماژولی مشخص شد.
 
 ## وضعیت CONTROL-P12-BATCH
 

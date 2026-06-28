@@ -54,12 +54,29 @@
 | CONTROL-P8-BATCH | انجام شده | طراحی parallel workstream، multi-Codex handoff و merge approval checklist بدون کدنویسی یا ساخت repo جدید |
 | CONTROL-P9-BATCH | انجام شده | طراحی financial schema، adapter boundary، approval/liquidity flow و receipt/bank mapping بدون کدنویسی یا merge پروژه پول |
 | CONTROL-P10-BATCH | انجام شده | طراحی financial validation، import decision flow، receipt review، bank match confidence، liquidity approvals و bank Excel rule matcher بدون کدنویسی یا merge پروژه پول |
+| CONTROL-P11-BATCH | انجام شده | طراحی financial review queue، bank Excel format test plan، bank rule management و installment audit بدون کدنویسی یا merge پروژه پول |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P10-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P11-BATCH**
+
+## جزئیات ثبت CONTROL-P11-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/27_FINANCIAL_REVIEW_QUEUE_AND_DECISION_WORKFLOW.md`
+- `docs/project-control/28_BANK_EXCEL_FORMAT_TEST_PLAN.md`
+- `docs/project-control/29_BANK_RULE_MANAGEMENT_AND_INSTALLMENT_AUDIT.md`
+
+نتیجه:
+
+- Financial Review Queue برای mismatch رسید/بانک، duplicate candidate، weak bank match، تراکنش بدون رسید، قسط با اطمینان متوسط، پرداخت حساس، اصلاحیه مالی و اختلاف مبلغ/تاریخ طراحی شد.
+- تصمیم‌های مدیر شامل approve، reject، request correction، attach to existing event، create new event، confirm installment، mark as duplicate و ignore as irrelevant ثبت شد.
+- Bank Excel Format Test Plan برای ستون‌های اصلی، تغییر قالب، نبود ستون، جابه‌جایی ستون‌ها، مبلغ/تاریخ نامعتبر، توضیحات خالی، برداشت/واریز همزمان، duplicate transaction و فایل تکراری طراحی شد.
+- Bank Rule Management و Installment Auto Confirmation Audit با versioning، change log و محدودیت‌های auto confirm ثبت شد.
+- کد اجرایی، route، UI، auth، database، migration و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P10-BATCH
 
@@ -272,7 +289,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Financial Review Queue` و `Bank Excel Format Test Plan`، یا ادامه `Product Import Decision Flow` و `Product Duplicate Resolution Flow` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Financial Rule Simulation Test Cases` و `Bank Import Staging Model`، یا ادامه `Product Import Decision Flow` و `Product Duplicate Resolution Flow` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

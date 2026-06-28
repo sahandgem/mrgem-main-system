@@ -55,6 +55,15 @@
 | CORE/FIN | طراحی Installment Auto Confirmation | تایید قسط فقط با اطمینان خیلی بالا، قانون مدیر و بدون conflict/duplicate |
 | FIN/MOBILE | طراحی Receipt Attachment Link | اتصال قابل ردیابی receipt، bank transaction و financial event با دلیل match |
 | FIN-AUDIT | طراحی Bank Excel Format Change Handling | توقف امن import هنگام تغییر قالب اکسل بانک و نیاز به approval قالب جدید |
+| CORE/FIN | طراحی Financial Review Queue | صف کنترل انسانی برای mismatch، duplicate، weak match، پرداخت حساس و اصلاحیه مالی |
+| CORE/FIN | طراحی Financial Review Decision Workflow | تصمیم‌های approve، reject، correction، attach، create، confirm installment و duplicate |
+| CORE/FIN | طراحی Financial Correction Log | ثبت مقدار قبلی/جدید، دلیل اصلاح، شخص تصمیم‌گیر و زمان تصمیم |
+| FIN-AUDIT | طراحی Bank Excel Format Test Plan | تست ستون‌ها، تغییر قالب، نبود ستون، مبلغ/تاریخ نامعتبر و فایل تکراری |
+| FIN-AUDIT | طراحی Bank Excel Parse Report | گزارش warning/error/import decision برای فایل گردش حساب |
+| FIN-AUDIT | طراحی Bank Rule Management | مدیریت قانون‌های متن، مبلغ، برداشت/واریز، حساب، طرف حساب، قرارداد و قسط |
+| CORE/FIN | طراحی Installment Auto Confirmation Audit | ثبت دلیل، rule version، match evidence و نتیجه duplicate/conflict برای تایید قسط |
+| CORE/FIN | طراحی Rule Versioning | نسخه‌بندی ruleها و اتصال هر تصمیم auto confirm به نسخه rule |
+| CORE/FIN | طراحی Bank Rule Change Log | لاگ ایجاد، تغییر، غیرفعال‌سازی یا حذف rule با دلیل و تاییدکننده |
 | FIN-AUDIT | بررسی liquidity model از audit-app | تحلیل مدل فشار نقدینگی و cash-in/cash-out |
 | FIN-AUDIT | بررسی approval workflow | طراحی جریان ثبت، بررسی، تایید و رد مدیر |
 | FIN/MOBILE | بررسی receipt attachment flow | اتصال سند یا عکس رسید به رویداد مالی |

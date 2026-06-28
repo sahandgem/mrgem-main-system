@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P10-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P11-BATCH**
+
+## وضعیت CONTROL-P11-BATCH
+
+CONTROL-P11-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database یا localStorage تغییر داده نشد.
+
+- فایل Financial Review Queue و decision workflow ساخته شد: `docs/project-control/27_FINANCIAL_REVIEW_QUEUE_AND_DECISION_WORKFLOW.md`
+- فایل Bank Excel Format Test Plan ساخته شد: `docs/project-control/28_BANK_EXCEL_FORMAT_TEST_PLAN.md`
+- فایل Bank Rule Management و Installment Audit ساخته شد: `docs/project-control/29_BANK_RULE_MANAGEMENT_AND_INSTALLMENT_AUDIT.md`
+- طراحی شد که mismatch رسید/بانک، duplicate candidate، weak bank match، تراکنش بدون رسید، قسط با اطمینان متوسط، پرداخت حساس و اصلاحیه مالی وارد صف review شوند.
+- تست‌های ایمنی قالب اکسل بانک برای ستون‌های مهم، تغییر قالب، نبود ستون، جابه‌جایی ستون، مبلغ/تاریخ نامعتبر، توضیحات خالی، برداشت/واریز همزمان، duplicate transaction و فایل تکراری ثبت شد.
+- تأکید شد که هر rule و هر auto confirm قسط باید version، reason، manager approval و audit trail داشته باشد.
 
 ## وضعیت CONTROL-P10-BATCH
 

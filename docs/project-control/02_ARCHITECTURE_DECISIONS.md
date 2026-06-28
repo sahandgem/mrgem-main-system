@@ -33,6 +33,7 @@
 | ADR-025 | هیچ دو Codex نباید همزمان یک فایل مشترک را تغییر دهند و هر handoff باید git status، محدوده، commit و push status داشته باشد. | فعال |
 | ADR-026 | Financial Schema و Adapter Boundary باید قبل از هر UI مالی، receipt flow، bank import، liquidity dashboard، auth/database change یا migration طراحی و تأیید شوند. | فعال |
 | ADR-027 | Financial Validation، Bank Excel Automation، Receipt Match و Installment Confirmation باید قبل از هر import واقعی یا auto confirm اجرایی به صورت مستند و قابل audit طراحی و تأیید شوند. | فعال |
+| ADR-028 | Financial Review Queue، Bank Excel Format Test Plan، Bank Rule Versioning و Installment Audit باید قبل از هر automation مالی اجرایی و تایید خودکار قسط طراحی و تأیید شوند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -55,6 +56,10 @@
 - import بانکی واقعی بدون Financial Adapter Boundary و approval
 - import اکسل بانک بدون staging، normalizer، validation، duplicate check و format change handling
 - auto confirm قسط بدون match خیلی قوی، قانون مصوب مدیر و نبود conflict/duplicate
+- auto confirm قسط بدون audit trail، rule version و دلیل match
+- تغییر rule بانکی بدون Bank Rule Change Log
+- عبور دادن weak match، mismatch رسید/بانک، duplicate candidate یا پرداخت حساس از صف review
+- import فایل Excel بانک بدون تست قالب و parse report
 - اتصال خودکار رسید به رویداد حساس بدون bank match یا review
 - تصمیم مالی صرفاً بر اساس شباهت متن توضیحات بانکی
 - تغییر auth، database، migration، route یا localStorage به بهانه bank Excel automation

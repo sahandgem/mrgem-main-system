@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P7-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P8-BATCH**
+
+## وضعیت CONTROL-P8-BATCH
+
+CONTROL-P8-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، database، localStorage یا repo جدید ایجاد نشد.
+
+- استراتژی workstream و repoهای آینده ثبت شد: `docs/project-control/17_PARALLEL_WORKSTREAM_AND_REPO_STRATEGY.md`
+- پروتکل handoff چند Codex ثبت شد: `docs/project-control/18_MULTI_CODEX_HANDOFF_PROTOCOL.md`
+- checklist تأیید merge ثبت شد: `docs/project-control/19_MERGE_APPROVAL_CHECKLIST.md`
+- نقش repo اصلی `mrgem-main-system` و labهای آینده product، finance، design، mobile و production/inventory مشخص شد.
+- قانون اصلی ثبت شد: هیچ دو Codex نباید همزمان یک فایل مشترک را تغییر دهند.
+- Design Lab به عنوان فضای جدا برای UI/UX و pattern exploration ثبت شد و merge مستقیم آن ممنوع است.
 
 ## وضعیت CONTROL-P7-BATCH
 
@@ -184,4 +195,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Import Decision Flow` و `Product Duplicate Resolution Flow`، یا طراحی `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی.
+طراحی `Product Import Decision Flow` و `Product Duplicate Resolution Flow`، یا شروع `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی.

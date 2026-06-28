@@ -48,6 +48,13 @@
 | MOBILE | طراحی Mobile Capture App | اپ ثبت سبک پس از مدل رسید و رویداد مالی |
 | DATA-MAHAK | طراحی Mahak Integration Boundary | مرز اتصال محک، خروجی‌ها و کنترل تکراری |
 | CORE/UI | طراحی Central Cockpit Dashboard Map | نقشه KPIها، alertها و decisionها برای کابین مرکزی |
+| UI | طراحی Design Lab repo | repo جدا برای UI/UX، design tokens و component patterns |
+| UI | طراحی UI/UX cockpit prototype | prototype مستقل از main برای cockpit مدیریتی |
+| UI | طراحی component pattern extraction | روش ورود pattern/component تأییدشده از Design Lab به main |
+| CONTROL | طراحی multi-Codex handoff protocol | پروتکل تحویل کار بین Codexها و مرکز فرمان |
+| CONTROL | طراحی branch ownership rules | مالکیت branch/file/workstream برای جلوگیری از conflict |
+| CONTROL | طراحی merge approval checklist | checklist قبل از هر merge به main |
+| CONTROL | طراحی rollback checklist | تعریف مسیر برگشت برای mergeهای کدی و lab output |
 | CONTROL | طراحی Source Integration Plan | تبدیل نقشه منابع به برنامه استخراج مرحله‌ای |
 | FIN-AUDIT | بررسی استخراج schema نقدینگی، roles و RLS | فقط تحلیل و استخراج ایده/مدل؛ merge مستقیم ممنوع |
 | DATA-MAHAK | بررسی استخراج مدل کالا، بارکد، بانک سنگ و خروجی AI-ready | فقط تحلیل و استخراج ایده/مدل؛ merge مستقیم ممنوع |

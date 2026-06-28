@@ -29,6 +29,8 @@
 | ADR-021 | Product Adapter Boundary باید قبل از هر import، UI کالا یا migration اجرا شود؛ داده خام پروژه کالا نباید مستقیم وارد database اصلی شود. | فعال |
 | ADR-022 | Product Import Validator و Duplicate Detector باید قبل از هر import واقعی، merge/update کالا، UI کالا یا Mahak Export Adapter طراحی و تأیید شوند. | فعال |
 | ADR-023 | Product Auto-fix، Review Queue، Mahak Export و AI Product Snapshot باید قبل از ورود واقعی کالا به صورت مستند و قابل audit طراحی شوند. | فعال |
+| ADR-024 | کار آینده باید بین workstreamها و labهای جدا تقسیم شود؛ repo اصلی فقط خروجی‌های کوچک، تأییدشده و قابل rollback را می‌پذیرد. | فعال |
+| ADR-025 | هیچ دو Codex نباید همزمان یک فایل مشترک را تغییر دهند و هر handoff باید git status، محدوده، commit و push status داشته باشد. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -56,6 +58,9 @@
 - اعمال auto-fix بدون ProductCorrectionLog و تأیید لازم
 - خروجی محک یا AI snapshot از رکورد دارای duplicate/error حل‌نشده
 - dependency مستقیم برنامه اصلی به فایل‌های قدیمی `mahak-web-version`
+- merge مستقیم خروجی labها به main بدون approval و checklist
+- کار همزمان دو Codex روی یک فایل مشترک
+- ساخت repo جدید بدون تصمیم صریح مرکز فرمان
 - تغییر نام شاخه‌های مادر یا کدهای branch registry
 
 ## قانون ثبت تصمیم جدید

@@ -51,12 +51,31 @@
 | CONTROL-P6 | انجام شده | ساخت `13_PRODUCT_SCHEMA_AND_ADAPTER_BOUNDARY.md` و طراحی schema پیشنهادی کالا و adapter boundary بدون کدنویسی یا merge پروژه کالا |
 | CONTROL-P7 | انجام شده | ساخت `14_PRODUCT_IMPORT_VALIDATOR_AND_DUPLICATE_DETECTOR.md` و طراحی قوانین اعتبارسنجی ورود کالا و تشخیص تکراری بدون کدنویسی یا merge پروژه کالا |
 | CONTROL-P7-BATCH | انجام شده | تکمیل بسته ایمنی ورود کالا با auto-fix، review queue، Mahak export و AI product snapshot بدون کدنویسی یا merge پروژه کالا |
+| CONTROL-P8-BATCH | انجام شده | طراحی parallel workstream، multi-Codex handoff و merge approval checklist بدون کدنویسی یا ساخت repo جدید |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P7-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P8-BATCH**
+
+## جزئیات ثبت CONTROL-P8-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/17_PARALLEL_WORKSTREAM_AND_REPO_STRATEGY.md`
+- `docs/project-control/18_MULTI_CODEX_HANDOFF_PROTOCOL.md`
+- `docs/project-control/19_MERGE_APPROVAL_CHECKLIST.md`
+
+نتیجه:
+
+- نقش repo اصلی `mrgem-main-system` و repoهای lab آینده ثبت شد.
+- نقش Codexهای کد اصلی، کالا، پول، دیزاین و موبایل آینده ثبت شد.
+- قانون کار همزمان ثبت شد: هیچ دو Codex نباید همزمان یک فایل مشترک را تغییر دهند.
+- Design Lab به عنوان repo جدا برای UI/UX، tokens و component patterns ثبت شد؛ merge مستقیم ممنوع است.
+- handoff protocol با git status، محدوده مجاز، گزارش استاندارد، commit hash و push status ثبت شد.
+- merge approval checklist با docs، boundary، test/build، route/storage، migration، rollback و approval ثبت شد.
+- کد اجرایی، route، UI، database، migration، localStorage و repo جدید تغییر/ساخته نشد.
 
 ## جزئیات ثبت CONTROL-P7-BATCH
 
@@ -218,7 +237,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Import Decision Flow` و `Product Duplicate Resolution Flow`، یا طراحی `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Product Import Decision Flow` و `Product Duplicate Resolution Flow`، یا شروع `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

@@ -37,6 +37,12 @@
 | CORE/FIN | طراحی Core Financial Event Model | مدل مشترک آینده برای نقدینگی، رسید و رویداد مالی |
 | CORE/FIN | طراحی Financial Schema Draft | تبدیل مدل مفهومی رویداد مالی به schema پیشنهادی، بدون migration |
 | FIN-AUDIT | طراحی Financial Adapter Boundary | مرز استخراج/تبدیل داده مالی از پروژه پول، بدون merge |
+| CORE/FIN | طراحی Financial Approval Flow | جریان ثبت، بررسی، تأیید مدیر، رد و درخواست اصلاح |
+| CORE/FIN | طراحی Liquidity Warning Model | مدل هشدار فشار نقدینگی، سررسیدها و cash-in/cash-out |
+| FIN/MOBILE | طراحی Receipt Attachment Flow | اتصال رسید عکس‌دار به رویداد مالی و queue بررسی |
+| CORE/FIN | طراحی Bank Transaction Mapping | mapping شماره پیگیری، تاریخ، مبلغ، مبدا و مقصد به رویداد مالی |
+| MOBILE | طراحی Mobile Receipt Capture Dependency | وابستگی اپ موبایل به مدل مالی و receipt flow |
+| CORE/FIN | طراحی Audit Trail Model | رد تغییرات مالی، تأیید مدیر، اتصال رسید و mapping بانکی |
 | FIN-AUDIT | بررسی liquidity model از audit-app | تحلیل مدل فشار نقدینگی و cash-in/cash-out |
 | FIN-AUDIT | بررسی approval workflow | طراحی جریان ثبت، بررسی، تایید و رد مدیر |
 | FIN/MOBILE | بررسی receipt attachment flow | اتصال سند یا عکس رسید به رویداد مالی |

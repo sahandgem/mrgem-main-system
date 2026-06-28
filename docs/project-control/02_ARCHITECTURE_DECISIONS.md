@@ -31,6 +31,7 @@
 | ADR-023 | Product Auto-fix، Review Queue، Mahak Export و AI Product Snapshot باید قبل از ورود واقعی کالا به صورت مستند و قابل audit طراحی شوند. | فعال |
 | ADR-024 | کار آینده باید بین workstreamها و labهای جدا تقسیم شود؛ repo اصلی فقط خروجی‌های کوچک، تأییدشده و قابل rollback را می‌پذیرد. | فعال |
 | ADR-025 | هیچ دو Codex نباید همزمان یک فایل مشترک را تغییر دهند و هر handoff باید git status، محدوده، commit و push status داشته باشد. | فعال |
+| ADR-026 | Financial Schema و Adapter Boundary باید قبل از هر UI مالی، receipt flow، bank import، liquidity dashboard، auth/database change یا migration طراحی و تأیید شوند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -50,6 +51,9 @@
 - ساخت UI مالی قبل از تأیید Core Financial Event Model و schema
 - ساخت migration مالی قبل از اجازه مرکز فرمان
 - تغییر auth یا RLS به بهانه اتصال مالی
+- import بانکی واقعی بدون Financial Adapter Boundary و approval
+- اتصال receipt یا mobile capture به main قبل از مدل مالی و receipt flow
+- dashboard نقدینگی قبل از financial schema و liquidity model
 - ساخت UI کالا قبل از تأیید Core Product Model و schema
 - ساخت migration کالا قبل از اجازه مرکز فرمان
 - import مستقیم داده کالا بدون normalize، validation و duplicate report

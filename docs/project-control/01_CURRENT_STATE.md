@@ -12,7 +12,17 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P8-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P9-BATCH**
+
+## وضعیت CONTROL-P9-BATCH
+
+CONTROL-P9-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database یا localStorage تغییر داده نشد.
+
+- فایل schema و adapter boundary مالی ساخته شد: `docs/project-control/20_FINANCIAL_SCHEMA_AND_ADAPTER_BOUNDARY.md`
+- فایل approval و liquidity flow ساخته شد: `docs/project-control/21_FINANCIAL_APPROVAL_AND_LIQUIDITY_FLOW.md`
+- فایل receipt و bank transaction mapping ساخته شد: `docs/project-control/22_RECEIPT_AND_BANK_TRANSACTION_MAPPING.md`
+- طراحی شد که رویداد مالی آینده چگونه به receipt، bank transaction، employee، product، production، وضعیت پرداخت، وضعیت تایید مدیر، dataSource و audit trail وصل شود.
+- تأکید شد که `audit-app` merge نمی‌شود و auth/database/migration در این فاز تغییر نمی‌کند.
 
 ## وضعیت CONTROL-P8-BATCH
 
@@ -195,4 +205,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Import Decision Flow` و `Product Duplicate Resolution Flow`، یا شروع `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی.
+طراحی `Financial Validation Rules` و `Financial Import Decision Flow`، یا طراحی `Product Import Decision Flow` و `Product Duplicate Resolution Flow` بدون کدنویسی.

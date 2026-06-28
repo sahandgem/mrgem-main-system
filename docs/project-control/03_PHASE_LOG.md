@@ -52,12 +52,29 @@
 | CONTROL-P7 | انجام شده | ساخت `14_PRODUCT_IMPORT_VALIDATOR_AND_DUPLICATE_DETECTOR.md` و طراحی قوانین اعتبارسنجی ورود کالا و تشخیص تکراری بدون کدنویسی یا merge پروژه کالا |
 | CONTROL-P7-BATCH | انجام شده | تکمیل بسته ایمنی ورود کالا با auto-fix، review queue، Mahak export و AI product snapshot بدون کدنویسی یا merge پروژه کالا |
 | CONTROL-P8-BATCH | انجام شده | طراحی parallel workstream، multi-Codex handoff و merge approval checklist بدون کدنویسی یا ساخت repo جدید |
+| CONTROL-P9-BATCH | انجام شده | طراحی financial schema، adapter boundary، approval/liquidity flow و receipt/bank mapping بدون کدنویسی یا merge پروژه پول |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P8-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P9-BATCH**
+
+## جزئیات ثبت CONTROL-P9-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/20_FINANCIAL_SCHEMA_AND_ADAPTER_BOUNDARY.md`
+- `docs/project-control/21_FINANCIAL_APPROVAL_AND_LIQUIDITY_FLOW.md`
+- `docs/project-control/22_RECEIPT_AND_BANK_TRANSACTION_MAPPING.md`
+
+نتیجه:
+
+- Financial Schema Draft با ارتباط receipt، bank transaction، employee، product، production، paymentStatus، approvalStatus، dataSource و audit trail طراحی شد.
+- Financial Adapter Boundary برای جلوگیری از merge مستقیم `audit-app` و ورود کنترل‌شده داده مالی ثبت شد.
+- approval flow و liquidity model با نقش‌های recorder، reviewer، manager و admin طراحی شد.
+- receipt attachment و bank transaction mapping با شماره پیگیری، تاریخ، مبلغ، مبدا، مقصد و توضیحات طراحی شد.
+- کد اجرایی، route، UI، auth، database، migration و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P8-BATCH
 
@@ -237,7 +254,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Import Decision Flow` و `Product Duplicate Resolution Flow`، یا شروع `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Financial Validation Rules` و `Financial Import Decision Flow`، یا طراحی `Product Import Decision Flow` و `Product Duplicate Resolution Flow` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

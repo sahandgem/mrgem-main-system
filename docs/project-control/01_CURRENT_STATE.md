@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P13-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P14-BATCH**
+
+## وضعیت CONTROL-P14-BATCH
+
+CONTROL-P14-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database، repo یا localStorage تغییر داده نشد.
+
+- فایل Cross-module AI Snapshot Strategy ساخته شد: `docs/project-control/36_CROSS_MODULE_AI_SNAPSHOT_STRATEGY.md`
+- فایل Module Data Producer/Consumer Contracts ساخته شد: `docs/project-control/37_MODULE_DATA_PRODUCER_CONSUMER_CONTRACTS.md`
+- فایل Staging Review and Safe Import Boundary ساخته شد: `docs/project-control/38_STAGING_REVIEW_AND_SAFE_IMPORT_BOUNDARY.md`
+- استاندارد snapshot شامل source، normalizedData، validationStatus، confidenceLevel، riskFlags، relatedEntities، summaryForAI، auditReference، generatedAt و version ثبت شد.
+- قرارداد تولید/مصرف داده برای Finance، Product، Production، Inventory، Workforce، Mobile و Central Cockpit ثبت شد.
+- مسیر امن ورود داده خارجی از raw input تا staging، normalize، validate، duplicate/conflict check، confidence score، review، approved import و audit trail طراحی شد.
 
 ## وضعیت CONTROL-P13-BATCH
 

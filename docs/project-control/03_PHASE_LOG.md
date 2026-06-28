@@ -57,12 +57,30 @@
 | CONTROL-P11-BATCH | انجام شده | طراحی financial review queue، bank Excel format test plan، bank rule management و installment audit بدون کدنویسی یا merge پروژه پول |
 | CONTROL-P12-BATCH | انجام شده | ثبت اصل Automation-First و AI-Assisted، Human-in-the-loop، confidence rules و AI audit trail برای کل پروژه بدون کدنویسی |
 | CONTROL-P13-BATCH | انجام شده | طراحی Cross-module Automation Map، Confidence Scoring Model و Auto Action Safety Matrix بدون کدنویسی |
+| CONTROL-P14-BATCH | انجام شده | طراحی AI Snapshot Strategy، Module Data Producer/Consumer Contracts و Staging/Safe Import Boundary بدون کدنویسی |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P13-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P14-BATCH**
+
+## جزئیات ثبت CONTROL-P14-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/36_CROSS_MODULE_AI_SNAPSHOT_STRATEGY.md`
+- `docs/project-control/37_MODULE_DATA_PRODUCER_CONSUMER_CONTRACTS.md`
+- `docs/project-control/38_STAGING_REVIEW_AND_SAFE_IMPORT_BOUNDARY.md`
+
+نتیجه:
+
+- AI Snapshot Strategy برای تحلیل AI روی داده normalize و validate شده ثبت شد.
+- ساختار snapshot شامل source، normalizedData، validationStatus، confidenceLevel، riskFlags، relatedEntities، summaryForAI، auditReference، generatedAt و version طراحی شد.
+- قرارداد producer/consumer برای Finance، Product، Production، Inventory، Workforce، Mobile و Central Cockpit ثبت شد.
+- Staging Boundary برای Bank Excel، Mobile receipt، Product Excel/Mahak export، Stone bank، Group codes، Production formula input و Inventory import طراحی شد.
+- تصمیم‌های staging شامل accept، reject، needs review، duplicate candidate، conflict، auto-fix suggested و approved for import ثبت شد.
+- کد اجرایی، route، UI، auth، database، migration، repo و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P13-BATCH
 
@@ -325,7 +343,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Cross-module AI Snapshot Strategy` و `Module Data Producer/Consumer Contract`، یا ادامه `Financial Rule Simulation Test Cases` و `Bank Import Staging Model` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `External Data Staging Policy` و `Approved Import Flow`، یا ادامه `Financial Rule Simulation Test Cases` و `Bank Import Staging Model` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

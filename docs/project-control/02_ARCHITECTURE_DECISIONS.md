@@ -38,6 +38,8 @@
 | ADR-030 | هر AI suggestion یا auto action باید confidence level، rule version، دلیل تصمیم و audit trail داشته باشد؛ تصمیم‌های conflict و manual only هرگز auto-confirm نمی‌شوند. | فعال |
 | ADR-031 | هر اتوماسیون بین‌ماژولی باید از طریق snapshot یا signal کنترل‌شده انجام شود؛ ماژول‌ها نباید داده خام یکدیگر را مستقیم mutate کنند. | فعال |
 | ADR-032 | تصمیم auto action فقط برای high confidence مجاز است؛ medium به review، low به review یا blocked، conflict به blocked و manual only به تصمیم انسانی می‌رود. | فعال |
+| ADR-033 | AI فقط باید از snapshotهای normalize و validate شده برای تحلیل نهایی استفاده کند؛ داده خام خارجی نباید مستقیم به AI یا main database وارد شود. | فعال |
+| ADR-034 | هر داده خارجی باید قبل از ورود به سیستم اصلی از staging، validation، duplicate/conflict check، confidence score، review در صورت نیاز و audit trail عبور کند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -71,6 +73,9 @@
 - mutate مستقیم داده یک ماژول توسط ماژول دیگر به بهانه اتوماسیون
 - cross-module automation بدون snapshot/signal نسخه‌دار و قابل audit
 - auto action بدون عبور از Auto Action Safety Matrix
+- تحلیل نهایی AI روی داده خام، staging نشده یا validate نشده
+- import مستقیم Bank Excel، Mobile receipt، Product Excel/Mahak export، Stone bank، Group codes، Production formula input یا Inventory import به main
+- approved import بدون auditReference، confidenceLevel و validationStatus
 - اتصال خودکار رسید به رویداد حساس بدون bank match یا review
 - تصمیم مالی صرفاً بر اساس شباهت متن توضیحات بانکی
 - تغییر auth، database، migration، route یا localStorage به بهانه bank Excel automation

@@ -78,6 +78,13 @@
 | CONTROL/CORE | طراحی Auto Action Safety Matrix | ماتریس auto action، review required و manual only برای کل سیستم |
 | CONTROL/CORE | طراحی Automation Risk Boundary | مرز ریسک اتوماسیون بین هشدار، پیشنهاد، اقدام خودکار و تصمیم مدیر |
 | CONTROL/CORE | طراحی Auto Action Audit Requirements | الزامات audit برای هر اقدام خودکار شامل source، confidence، rule version و reason |
+| CONTROL/DATA | طراحی Module Data Producer/Consumer Contract | قرارداد versioned برای producer/consumer هر ماژول و مصرف snapshot/signal |
+| CONTROL/DATA | طراحی Staging Review Boundary | مرز review برای داده خارجی، duplicate، conflict و low confidence |
+| CONTROL/DATA | طراحی Safe Import Boundary | ورود کنترل‌شده فقط پس از validation، confidence، review و audit |
+| CONTROL/DATA | طراحی Snapshot Versioning | نسخه‌بندی snapshotها و قرارداد تغییر schema مفهومی |
+| CONTROL/DATA | طراحی AI Snapshot Audit Reference | اتصال هر snapshot به source، validation، rule و decision قابل ردیابی |
+| CONTROL/DATA | طراحی Approved Import Flow | مسیر approved import از staging به سیستم اصلی بدون ورود مستقیم داده خام |
+| CONTROL/DATA | طراحی External Data Staging Policy | policy داده‌های Bank Excel، Mobile receipt، Product Excel، Stone bank، Group codes و Inventory import |
 | FIN-AUDIT | بررسی liquidity model از audit-app | تحلیل مدل فشار نقدینگی و cash-in/cash-out |
 | FIN-AUDIT | بررسی approval workflow | طراحی جریان ثبت، بررسی، تایید و رد مدیر |
 | FIN/MOBILE | بررسی receipt attachment flow | اتصال سند یا عکس رسید به رویداد مالی |

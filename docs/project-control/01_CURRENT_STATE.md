@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P14-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P15-BATCH**
+
+## وضعیت CONTROL-P15-BATCH
+
+CONTROL-P15-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database، repo یا localStorage تغییر داده نشد.
+
+- فایل External Data Staging Policy ساخته شد: `docs/project-control/39_EXTERNAL_DATA_STAGING_POLICY.md`
+- فایل Approved Import Flow and Import Gate ساخته شد: `docs/project-control/40_APPROVED_IMPORT_FLOW_AND_IMPORT_GATE.md`
+- فایل Import Error Handling and Rollback Policy ساخته شد: `docs/project-control/41_IMPORT_ERROR_HANDLING_AND_ROLLBACK_POLICY.md`
+- وضعیت‌های staging شامل raw_received، parsed، normalized، validation_failed، duplicate_candidate، conflict، needs_review، auto_fix_suggested، approved_for_import، imported، rejected و quarantined ثبت شد.
+- Import Gate با شرط‌های validation passed، no unresolved conflict، no blocking duplicate، confidence acceptable، required fields complete، manager approval if sensitive، audit reference و rollback plan طراحی شد.
+- سیاست خطا و rollback برای parse error، validation error، duplicate conflict، wrong mapping، format changed، missing required field، low confidence، unauthorized import attempt و partial import failure ثبت شد.
 
 ## وضعیت CONTROL-P14-BATCH
 

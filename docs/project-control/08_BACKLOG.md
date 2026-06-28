@@ -85,6 +85,13 @@
 | CONTROL/DATA | طراحی AI Snapshot Audit Reference | اتصال هر snapshot به source، validation، rule و decision قابل ردیابی |
 | CONTROL/DATA | طراحی Approved Import Flow | مسیر approved import از staging به سیستم اصلی بدون ورود مستقیم داده خام |
 | CONTROL/DATA | طراحی External Data Staging Policy | policy داده‌های Bank Excel، Mobile receipt، Product Excel، Stone bank، Group codes و Inventory import |
+| CONTROL/DATA | طراحی Import Gate | نقطه کنترل نهایی برای validation، conflict، duplicate، confidence، approval، audit و rollback |
+| CONTROL/DATA | طراحی Import Dry-run Report | گزارش اثر import قبل از اجرای واقعی، شامل created/updated/skipped و rollback data |
+| CONTROL/DATA | طراحی Import Error Handling | رفتار block، quarantine، review، correction، retry و rollback candidate برای خطاها |
+| CONTROL/DATA | طراحی Rollback Policy | سیاست rollback امن با before/after snapshot، affected records، actor، reason و approval |
+| CONTROL/DATA | طراحی Import Batch Audit | audit برای batch id، source، status، actor، approval، import result و rollback |
+| CONTROL/DATA | طراحی Quarantine Flow | مسیر نگه‌داری و review داده پرریسک، قالب ناشناخته یا import غیرمجاز |
+| CONTROL/DATA | طراحی Staging Status Lifecycle | چرخه وضعیت raw_received تا imported/rejected/quarantined |
 | FIN-AUDIT | بررسی liquidity model از audit-app | تحلیل مدل فشار نقدینگی و cash-in/cash-out |
 | FIN-AUDIT | بررسی approval workflow | طراحی جریان ثبت، بررسی، تایید و رد مدیر |
 | FIN/MOBILE | بررسی receipt attachment flow | اتصال سند یا عکس رسید به رویداد مالی |

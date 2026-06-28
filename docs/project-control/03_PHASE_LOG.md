@@ -58,12 +58,29 @@
 | CONTROL-P12-BATCH | انجام شده | ثبت اصل Automation-First و AI-Assisted، Human-in-the-loop، confidence rules و AI audit trail برای کل پروژه بدون کدنویسی |
 | CONTROL-P13-BATCH | انجام شده | طراحی Cross-module Automation Map، Confidence Scoring Model و Auto Action Safety Matrix بدون کدنویسی |
 | CONTROL-P14-BATCH | انجام شده | طراحی AI Snapshot Strategy، Module Data Producer/Consumer Contracts و Staging/Safe Import Boundary بدون کدنویسی |
+| CONTROL-P15-BATCH | انجام شده | طراحی External Data Staging Policy، Approved Import Flow، Import Gate و Rollback Policy بدون کدنویسی |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P14-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P15-BATCH**
+
+## جزئیات ثبت CONTROL-P15-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/39_EXTERNAL_DATA_STAGING_POLICY.md`
+- `docs/project-control/40_APPROVED_IMPORT_FLOW_AND_IMPORT_GATE.md`
+- `docs/project-control/41_IMPORT_ERROR_HANDLING_AND_ROLLBACK_POLICY.md`
+
+نتیجه:
+
+- External Data Staging Policy برای Bank Excel، Mobile receipt، Product Excel، Mahak export/import، Stone bank، Group codes، Production formula input، Inventory import و Workforce external input طراحی شد.
+- وضعیت‌های staging شامل raw_received، parsed، normalized، validation_failed، duplicate_candidate، conflict، needs_review، auto_fix_suggested، approved_for_import، imported، rejected و quarantined ثبت شد.
+- Approved Import Flow و Import Gate با dry-run report، audit reference و rollback plan طراحی شد.
+- Error Handling و Rollback Policy برای parse error، validation error، duplicate conflict، wrong mapping، format changed، missing required field، low confidence، unauthorized import attempt و partial import failure ثبت شد.
+- کد اجرایی، route، UI، auth، database، migration، repo و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P14-BATCH
 
@@ -343,7 +360,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `External Data Staging Policy` و `Approved Import Flow`، یا ادامه `Financial Rule Simulation Test Cases` و `Bank Import Staging Model` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Import Dry-run Report Standard` و `Quarantine Review Flow`، یا ادامه `Financial Rule Simulation Test Cases` و `Bank Import Staging Model` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

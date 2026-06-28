@@ -40,6 +40,8 @@
 | ADR-032 | تصمیم auto action فقط برای high confidence مجاز است؛ medium به review، low به review یا blocked، conflict به blocked و manual only به تصمیم انسانی می‌رود. | فعال |
 | ADR-033 | AI فقط باید از snapshotهای normalize و validate شده برای تحلیل نهایی استفاده کند؛ داده خام خارجی نباید مستقیم به AI یا main database وارد شود. | فعال |
 | ADR-034 | هر داده خارجی باید قبل از ورود به سیستم اصلی از staging، validation، duplicate/conflict check، confidence score، review در صورت نیاز و audit trail عبور کند. | فعال |
+| ADR-035 | main فقط داده دارای وضعیت `approved_for_import` را می‌پذیرد؛ importهای حساس باید Import Gate، dry-run report، audit reference و rollback plan داشته باشند. | فعال |
+| ADR-036 | rollback اقدام حساس است و برای financial event، inventory stock، production formula، product merge، workforce critical data و approved payment/installment بدون approval ممنوع است. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -76,6 +78,10 @@
 - تحلیل نهایی AI روی داده خام، staging نشده یا validate نشده
 - import مستقیم Bank Excel، Mobile receipt، Product Excel/Mahak export، Stone bank، Group codes، Production formula input یا Inventory import به main
 - approved import بدون auditReference، confidenceLevel و validationStatus
+- import به main بدون وضعیت `approved_for_import`
+- import حساس بدون Import Gate، dry-run report یا rollback plan
+- rollback داده حساس بدون manager approval و before/after snapshot
+- نادیده گرفتن unauthorized import attempt، partial import failure یا format changed
 - اتصال خودکار رسید به رویداد حساس بدون bank match یا review
 - تصمیم مالی صرفاً بر اساس شباهت متن توضیحات بانکی
 - تغییر auth، database، migration، route یا localStorage به بهانه bank Excel automation

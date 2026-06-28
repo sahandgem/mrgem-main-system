@@ -12,7 +12,16 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P3**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P4**
+
+## وضعیت CONTROL-P4
+
+CONTROL-P4 انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، database یا localStorage تغییر داده نشد.
+
+- فایل طراحی مدل مرکزی کالا ساخته شد: `docs/project-control/11_CORE_PRODUCT_MODEL.md`
+- `Core Product Model` برای کالا، بارکد، گروه کالا، سنگ، وزن، اجرت، قیمت، موجودی، تولید، خروجی محک و AI-ready export طراحی مفهومی شد.
+- تصمیم ثبت شد که `mahak-web-version` فعلاً merge نشود و فقط ایده، مدل، schema، بانک سنگ، barcode strategy و خروجی محک بعداً بررسی شوند.
+- ترتیب امن آینده ثبت شد: مدل مفهومی، schema پیشنهادی، adapter boundary، تست روی داده نمونه، UI، و در آخر migration فقط با اجازه مرکز فرمان.
 
 ## وضعیت CONTROL-P3
 
@@ -135,4 +144,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-ادامه extraction کنترل‌شده adapterهای کم‌ریسک باقی‌مانده، یا شروع طراحی مستند `Core Product Model` / `Core Financial Event Model` بدون کدنویسی.
+طراحی `Product Schema Draft` و `Product Adapter Boundary`، یا طراحی مستند `Core Financial Event Model` بدون کدنویسی.

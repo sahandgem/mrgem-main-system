@@ -17,6 +17,12 @@
 | FIN-AUDIT | بررسی استخراج مدل نقدینگی از پروژه پول | فقط schema/model/idea؛ merge مستقیم ممنوع |
 | DATA-MAHAK | بررسی استخراج مدل کالا و بارکد از پروژه کالا | فقط schema/model/idea؛ merge مستقیم ممنوع |
 | CORE/DATA/INV | طراحی Core Product Model | مدل مشترک آینده برای کالا، انبار و تولید |
+| CORE/DATA/INV | طراحی Product Schema Draft | تبدیل مدل مفهومی کالا به schema پیشنهادی، بدون migration |
+| DATA-MAHAK | طراحی Product Adapter Boundary | مرز استخراج/تبدیل داده کالا از پروژه کالا یا محک، بدون merge |
+| DATA-MAHAK | بررسی خروجی محک | تحلیل ستون‌ها، mapping و محدودیت‌های Excel/محک |
+| DATA-MAHAK | بررسی بانک سنگ | استخراج مفهومی نوع سنگ و ویژگی‌های لازم |
+| DATA-MAHAK | بررسی barcode strategy | بررسی تولید، یکتایی، alias و کنترل تکراری بارکد |
+| DATA-MAHAK | بررسی AI-ready product export | طراحی خروجی تمیز و قابل تحلیل برای AI |
 | CORE/FIN | طراحی Core Financial Event Model | مدل مشترک آینده برای نقدینگی، رسید و رویداد مالی |
 | CORE/INV | طراحی Core Inventory Model | مدل مشترک ورود/خروج، موجودی، مکان و مغایرت |
 | PROD | طراحی Production Flow Model | مدل جریان تولید پس از تثبیت کالا و انبار |

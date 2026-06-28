@@ -24,6 +24,7 @@
 | ADR-016 | Source Integration Map مرجع تصمیم‌های ادغام آینده است و CONTROL-P2 هیچ ادغام کدی انجام نمی‌دهد. | فعال |
 | ADR-017 | پروژه اصلی فعلاً روی سبک‌سازی WF و کاهش بدهی `WorkforcePages.tsx` متمرکز می‌ماند؛ ماژول جدید بدون تأیید مرکز کنترل شروع نمی‌شود. | فعال |
 | ADR-018 | Future Modules Roadmap مرجع ترتیب آینده ماژول‌ها است؛ Finance/Product/Mobile/Production/Inventory قبل از مدل‌های مرکزی و کاهش بدهی WF شروع نمی‌شوند. | فعال |
+| ADR-019 | Core Product Model قبل از هر UI، migration، adapter اجرایی یا اتصال محک باید به صورت مستند طراحی و تأیید شود. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -40,6 +41,8 @@
 - تغییر database اصلی
 - merge مستقیم `audit-app`
 - merge مستقیم `mahak-web-version`
+- ساخت UI کالا قبل از تأیید Core Product Model و schema
+- ساخت migration کالا قبل از اجازه مرکز فرمان
 - تغییر نام شاخه‌های مادر یا کدهای branch registry
 
 ## قانون ثبت تصمیم جدید

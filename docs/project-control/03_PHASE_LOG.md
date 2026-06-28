@@ -46,12 +46,27 @@
 | CONTROL-P1 | انجام شده | ساخت/تکمیل docs/project-control به عنوان منبع حقیقت مستر جم و sync تصمیم مرکز کنترل |
 | CONTROL-P2 | انجام شده | ساخت `09_SOURCE_INTEGRATION_MAP.md` و ثبت نقشه ادغام منابع بدون merge کد |
 | CONTROL-P3 | انجام شده | ساخت `10_FUTURE_MODULES_ROADMAP.md` و ثبت نقشه آینده ماژول‌های مستر جم بدون کدنویسی یا ادغام کد |
+| CONTROL-P4 | انجام شده | ساخت `11_CORE_PRODUCT_MODEL.md` و طراحی مستند مدل مرکزی کالا بدون کدنویسی، migration یا merge پروژه کالا |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P3**
+آخرین P کنترل پروژه: **CONTROL-P4**
+
+## جزئیات ثبت CONTROL-P4
+
+فایل جدید:
+
+- `docs/project-control/11_CORE_PRODUCT_MODEL.md`
+
+نتیجه:
+
+- `Core Product Model` برای کالا، بارکد، گروه کالا، سنگ، وزن، اجرت، قیمت، موجودی، تولید، خروجی محک و AI-ready export طراحی شد.
+- موارد قابل استخراج آینده از `mahak-web-version` ثبت شد: مدل کالا، بارکد، بانک سنگ، کد گروه، خروجی Excel محک، کنترل تکراری و خروجی قابل تحلیل برای AI.
+- موارد ممنوع ثبت شد: merge مستقیم `mahak-web-version`، تغییر database اصلی، ساخت UI کالا، migration، تغییر route و تغییر localStorage.
+- ترتیب امن آینده ثبت شد: مدل مفهومی، schema پیشنهادی، adapter، تست روی داده نمونه، UI، و migration فقط با اجازه مرکز فرمان.
+- کد اجرایی، route، UI، database، migration و localStorage تغییر نکرد.
 
 ## جزئیات ثبت WF-P31
 
@@ -137,7 +152,7 @@
 
 ## P پیشنهادی بعدی
 
-ادامه extraction کنترل‌شده adapterهای کم‌ریسک باقی‌مانده، یا طراحی یکی از مدل‌های مرکزی آینده بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Product Schema Draft` و `Product Adapter Boundary`، یا طراحی یکی از مدل‌های مرکزی آینده بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

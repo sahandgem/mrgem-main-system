@@ -151,7 +151,6 @@ const timestamp = "2026-01-01T00:00:00.000Z";
 
 {
   const p28PageEntries = [
-    ["src/pages/workforce/system/DataCenterPage.tsx", "/organization/workforce-dashboard/data-center"],
     ["src/pages/workforce/system/BaselineDriftPage.tsx", "/organization/workforce-dashboard/baseline-drift"],
     ["src/pages/workforce/system/LaunchSignoffPage.tsx", "/organization/workforce-dashboard/launch-signoff"],
     ["src/pages/workforce/system/ReadinessPage.tsx", "/organization/workforce-dashboard/readiness"],
@@ -173,6 +172,7 @@ const timestamp = "2026-01-01T00:00:00.000Z";
     "src/pages/workforce/system/MaintenancePage.tsx",
     "src/pages/workforce/operations/HistoryRetentionPage.tsx",
     "src/pages/workforce/system/OperationalHistoryPage.tsx",
+    "src/pages/workforce/system/DataCenterPage.tsx",
   ];
 
   p29ExtractedPages.forEach((filePath) => {

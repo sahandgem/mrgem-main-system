@@ -63,6 +63,17 @@ export function maintenanceSeverityTone(value: MaintenanceIssueSeverity): Status
 
 
 
+
+export function driftLevelLabel(value: BaselineDriftLevel) {
+  const labels: Record<BaselineDriftLevel, string> = {
+    none: "ط¨ط¯ظˆظ† طھط؛غŒغŒط±",
+    low: "کم",
+    medium: "متوسط",
+    high: "زیاد",
+    critical: "ط¨ط­ط±ط§ظ†غŒ",
+  };
+  return labels[value];
+}
 export function driftTone(value: BaselineDriftLevel | BaselineDriftSeverity): StatusTone {
   if (value === "critical" || value === "high") return "critical";
   if (value === "medium") return "warn";

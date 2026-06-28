@@ -24,6 +24,13 @@
 | DATA-MAHAK | بررسی barcode strategy | بررسی تولید، یکتایی، alias و کنترل تکراری بارکد |
 | DATA-MAHAK | بررسی AI-ready product export | طراحی خروجی تمیز و قابل تحلیل برای AI |
 | CORE/FIN | طراحی Core Financial Event Model | مدل مشترک آینده برای نقدینگی، رسید و رویداد مالی |
+| CORE/FIN | طراحی Financial Schema Draft | تبدیل مدل مفهومی رویداد مالی به schema پیشنهادی، بدون migration |
+| FIN-AUDIT | طراحی Financial Adapter Boundary | مرز استخراج/تبدیل داده مالی از پروژه پول، بدون merge |
+| FIN-AUDIT | بررسی liquidity model از audit-app | تحلیل مدل فشار نقدینگی و cash-in/cash-out |
+| FIN-AUDIT | بررسی approval workflow | طراحی جریان ثبت، بررسی، تایید و رد مدیر |
+| FIN/MOBILE | بررسی receipt attachment flow | اتصال سند یا عکس رسید به رویداد مالی |
+| CORE/FIN | بررسی bank transaction mapping | mapping تراکنش بانکی به رویداد مالی، بدون اتصال واقعی |
+| MOBILE | بررسی mobile receipt capture flow | ثبت رسید از اپ موبایل پس از تثبیت مدل مالی و رسید |
 | CORE/INV | طراحی Core Inventory Model | مدل مشترک ورود/خروج، موجودی، مکان و مغایرت |
 | PROD | طراحی Production Flow Model | مدل جریان تولید پس از تثبیت کالا و انبار |
 | FIN/MOBILE | طراحی Receipt Capture Flow | جریان ثبت رسید، عکس، بررسی و اتصال به رویداد مالی |

@@ -12,7 +12,16 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P4**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P5**
+
+## وضعیت CONTROL-P5
+
+CONTROL-P5 انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database یا localStorage تغییر داده نشد.
+
+- فایل طراحی مدل مرکزی رویداد مالی ساخته شد: `docs/project-control/12_CORE_FINANCIAL_EVENT_MODEL.md`
+- `Core Financial Event Model` برای دریافت، پرداخت، خرید، فروش، هزینه، حقوق، بدهی، طلب، انتقال بانکی، چک، نقدینگی، هزینه تولید، اصلاحیه مالی و تایید مدیر طراحی مفهومی شد.
+- تصمیم ثبت شد که `audit-app` فعلاً merge نشود و فقط مدل نقدینگی، schema مالی، نقش‌ها، RLS، تایید مدیر، داشبورد بحران نقدینگی و flow ثبت/بررسی/تأیید بعداً بررسی شوند.
+- ترتیب امن آینده ثبت شد: مدل مفهومی، schema پیشنهادی، adapter boundary، تست با داده نمونه، UI، اتصال رسیدها، و در آخر migration فقط با اجازه مرکز فرمان.
 
 ## وضعیت CONTROL-P4
 
@@ -144,4 +153,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Schema Draft` و `Product Adapter Boundary`، یا طراحی مستند `Core Financial Event Model` بدون کدنویسی.
+طراحی `Financial Schema Draft` و `Financial Adapter Boundary`، یا ادامه طراحی `Product Schema Draft` و `Product Adapter Boundary` بدون کدنویسی.

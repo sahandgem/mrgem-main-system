@@ -47,12 +47,27 @@
 | CONTROL-P2 | انجام شده | ساخت `09_SOURCE_INTEGRATION_MAP.md` و ثبت نقشه ادغام منابع بدون merge کد |
 | CONTROL-P3 | انجام شده | ساخت `10_FUTURE_MODULES_ROADMAP.md` و ثبت نقشه آینده ماژول‌های مستر جم بدون کدنویسی یا ادغام کد |
 | CONTROL-P4 | انجام شده | ساخت `11_CORE_PRODUCT_MODEL.md` و طراحی مستند مدل مرکزی کالا بدون کدنویسی، migration یا merge پروژه کالا |
+| CONTROL-P5 | انجام شده | ساخت `12_CORE_FINANCIAL_EVENT_MODEL.md` و طراحی مستند مدل مرکزی رویداد مالی بدون کدنویسی، auth/database change یا merge پروژه پول |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P4**
+آخرین P کنترل پروژه: **CONTROL-P5**
+
+## جزئیات ثبت CONTROL-P5
+
+فایل جدید:
+
+- `docs/project-control/12_CORE_FINANCIAL_EVENT_MODEL.md`
+
+نتیجه:
+
+- `Core Financial Event Model` برای دریافت، پرداخت، خرید، فروش، هزینه، حقوق، بدهی، طلب، انتقال بانکی، چک، نقدینگی، هزینه تولید، اصلاحیه مالی و تایید مدیر طراحی شد.
+- موارد قابل استخراج آینده از `audit-app` ثبت شد: مدل نقدینگی، schema مالی، نقش‌ها، RLS، تایید مدیر، داشبورد بحران نقدینگی و جریان ثبت/بررسی/تایید.
+- موارد ممنوع ثبت شد: merge مستقیم `audit-app`، تغییر auth اصلی، تغییر database اصلی، ساخت migration، ساخت UI مالی، تغییر route و تغییر localStorage.
+- ترتیب امن آینده ثبت شد: مدل مفهومی، schema پیشنهادی، adapter boundary، تست با داده نمونه، UI، اتصال رسیدها، و migration فقط با اجازه مرکز فرمان.
+- کد اجرایی، route، UI، auth، database، migration و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P4
 
@@ -152,7 +167,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Schema Draft` و `Product Adapter Boundary`، یا طراحی یکی از مدل‌های مرکزی آینده بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Financial Schema Draft` و `Financial Adapter Boundary`، یا ادامه طراحی `Product Schema Draft` و `Product Adapter Boundary` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P11-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P12-BATCH**
+
+## وضعیت CONTROL-P12-BATCH
+
+CONTROL-P12-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database، repo یا localStorage تغییر داده نشد.
+
+- فایل اصل معماری Automation-First و AI-Assisted ساخته شد: `docs/project-control/30_AUTOMATION_FIRST_AI_ASSISTED_ARCHITECTURE.md`
+- فایل Human-in-the-loop و confidence rules ساخته شد: `docs/project-control/31_HUMAN_IN_THE_LOOP_AND_CONFIDENCE_RULES.md`
+- فایل AI Analysis Pipeline و audit trail ساخته شد: `docs/project-control/32_AI_ANALYSIS_PIPELINE_AND_AUDIT_TRAIL.md`
+- اصل مشترک ثبت شد: data enters، system normalizes، system validates، system analyzes، system suggests، system auto-acts only when safe، human reviews risky or uncertain cases و everything is logged.
+- این اصل برای Finance، Product، Production، Inventory، Workforce، Mobile و Central Cockpit تعریف شد.
+- تأکید شد که AI کمک‌تحلیل‌گر است و تصمیم‌های حساس باید confidence، rule version، audit trail و در صورت نیاز تایید انسانی داشته باشند.
 
 ## وضعیت CONTROL-P11-BATCH
 

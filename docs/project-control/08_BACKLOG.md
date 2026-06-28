@@ -64,6 +64,15 @@
 | CORE/FIN | طراحی Installment Auto Confirmation Audit | ثبت دلیل، rule version، match evidence و نتیجه duplicate/conflict برای تایید قسط |
 | CORE/FIN | طراحی Rule Versioning | نسخه‌بندی ruleها و اتصال هر تصمیم auto confirm به نسخه rule |
 | CORE/FIN | طراحی Bank Rule Change Log | لاگ ایجاد، تغییر، غیرفعال‌سازی یا حذف rule با دلیل و تاییدکننده |
+| CONTROL/CORE | طراحی Automation-First Architecture | اصل طراحی کل سیستم بر پایه normalize، validate، analyze، suggest، safe auto action و audit |
+| CONTROL/CORE | طراحی AI-Assisted Decision Support | نقش AI به عنوان کمک‌تحلیل‌گر و کمک‌تصمیم‌گیر با مرز انسانی |
+| CONTROL/CORE | طراحی Human-in-the-loop Rules | قوانین ورود انسان برای موارد حساس، مشکوک، conflict یا manual only |
+| CONTROL/CORE | طراحی Confidence Scoring Model | مدل high، medium، low، conflict و manual only برای همه ماژول‌ها |
+| CONTROL/DATA | طراحی AI Analysis Pipeline | مسیر raw data، normalize، validate، confidence، rule check، AI suggestion و approval |
+| CONTROL/CORE | طراحی Cross-module Automation Map | نقشه اتوماسیون بین Finance، Product، Production، Inventory، Workforce، Mobile و Cockpit |
+| CONTROL/DATA | طراحی AI Audit Trail | ثبت source، normalized input، validation، confidence، rule version، suggestion و decision |
+| CONTROL/CORE | طراحی Auto Action Safety Rules | مرز اقدام خودکار امن و موارد نیازمند manager review |
+| CONTROL/CORE | طراحی Manager Review Boundary | تعریف مواردی که باید همیشه به مدیر یا reviewer برسند |
 | FIN-AUDIT | بررسی liquidity model از audit-app | تحلیل مدل فشار نقدینگی و cash-in/cash-out |
 | FIN-AUDIT | بررسی approval workflow | طراحی جریان ثبت، بررسی، تایید و رد مدیر |
 | FIN/MOBILE | بررسی receipt attachment flow | اتصال سند یا عکس رسید به رویداد مالی |

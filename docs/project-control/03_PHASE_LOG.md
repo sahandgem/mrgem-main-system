@@ -55,12 +55,30 @@
 | CONTROL-P9-BATCH | انجام شده | طراحی financial schema، adapter boundary، approval/liquidity flow و receipt/bank mapping بدون کدنویسی یا merge پروژه پول |
 | CONTROL-P10-BATCH | انجام شده | طراحی financial validation، import decision flow، receipt review، bank match confidence، liquidity approvals و bank Excel rule matcher بدون کدنویسی یا merge پروژه پول |
 | CONTROL-P11-BATCH | انجام شده | طراحی financial review queue، bank Excel format test plan، bank rule management و installment audit بدون کدنویسی یا merge پروژه پول |
+| CONTROL-P12-BATCH | انجام شده | ثبت اصل Automation-First و AI-Assisted، Human-in-the-loop، confidence rules و AI audit trail برای کل پروژه بدون کدنویسی |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P11-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P12-BATCH**
+
+## جزئیات ثبت CONTROL-P12-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/30_AUTOMATION_FIRST_AI_ASSISTED_ARCHITECTURE.md`
+- `docs/project-control/31_HUMAN_IN_THE_LOOP_AND_CONFIDENCE_RULES.md`
+- `docs/project-control/32_AI_ANALYSIS_PIPELINE_AND_AUDIT_TRAIL.md`
+
+نتیجه:
+
+- اصل Automation-First ثبت شد: سیستم داده را دریافت، normalize، validate، analyze و suggest می‌کند و فقط وقتی امن است auto action انجام می‌دهد.
+- اصل AI-Assisted ثبت شد: AI کمک‌تحلیل‌گر و کمک‌تصمیم‌گیر است، نه جایگزین کنترل مدیریتی.
+- کاربرد اصل در Finance، Product، Production، Inventory، Workforce، Mobile و Central Cockpit ثبت شد.
+- Human-in-the-loop و سطح‌های confidence شامل high، medium، low، conflict و manual only تعریف شد.
+- AI Analysis Pipeline شامل raw data intake، normalize، validate، confidence score، rule check، AI suggestion، human approval و audit trail ثبت شد.
+- کد اجرایی، route، UI، auth، database، migration، repo و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P11-BATCH
 
@@ -289,7 +307,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Financial Rule Simulation Test Cases` و `Bank Import Staging Model`، یا ادامه `Product Import Decision Flow` و `Product Duplicate Resolution Flow` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Cross-module Automation Map` و `Confidence Scoring Model`، یا ادامه `Financial Rule Simulation Test Cases` و `Bank Import Staging Model` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

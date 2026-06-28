@@ -12,7 +12,7 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P30**
 
-کار کنترل پروژه تکمیل‌شده: **CONTROL-P1**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P2**
 
 ## وضعیت WF-P30
 
@@ -31,6 +31,16 @@ WF-P30 انجام شد و verify شد. در این فاز فقط extraction مع
 - `npm run build` موفق بود.
 - build warning نداشت.
 - رفتار UI تغییر نکرد.
+
+## وضعیت CONTROL-P2
+
+CONTROL-P2 انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی ادغام یا تغییر داده نشد.
+
+- فایل نقشه منابع ساخته شد: `docs/project-control/09_SOURCE_INTEGRATION_MAP.md`
+- پروژه پول / `audit-app` به عنوان `FIN-AUDIT` ثبت شد و فعلاً Subproject باقی می‌ماند.
+- پروژه کالا / `mahak-web-version` به عنوان `DATA-MAHAK` ثبت شد و فعلاً Subproject باقی می‌ماند.
+- merge مستقیم هر دو زیرپروژه ممنوع است.
+- پیشنهاد استخراج آینده فقط در سطح ایده، مدل، schema و الگو ثبت شد.
 
 ## وضعیت WF-P29
 
@@ -96,4 +106,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-**Source Integration Map**، بدون ادغام کد.
+طراحی یا اجرای مرحله بعدی Source Integration Plan، بدون ادغام کد؛ یا ادامه سبک‌سازی `DataCenterPage` در WF پس از تأیید مرکز کنترل.

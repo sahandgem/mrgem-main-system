@@ -14,6 +14,11 @@
 | شاخه | کار | توضیح |
 |---|---|---|
 | WF | استخراج `DataCenterPage` | فاز جدا، بدون تغییر route/storage/model/behavior |
+| FIN-AUDIT | بررسی استخراج مدل نقدینگی از پروژه پول | فقط schema/model/idea؛ merge مستقیم ممنوع |
+| DATA-MAHAK | بررسی استخراج مدل کالا و بارکد از پروژه کالا | فقط schema/model/idea؛ merge مستقیم ممنوع |
+| CORE/DATA/INV | طراحی Core Product Model | مدل مشترک آینده برای کالا، انبار و تولید |
+| CORE/FIN | طراحی Core Financial Event Model | مدل مشترک آینده برای نقدینگی، رسید و رویداد مالی |
+| CONTROL | طراحی Source Integration Plan | تبدیل نقشه منابع به برنامه استخراج مرحله‌ای |
 | FIN-AUDIT | بررسی استخراج schema نقدینگی، roles و RLS | فقط تحلیل و استخراج ایده/مدل؛ merge مستقیم ممنوع |
 | DATA-MAHAK | بررسی استخراج مدل کالا، بارکد، بانک سنگ و خروجی AI-ready | فقط تحلیل و استخراج ایده/مدل؛ merge مستقیم ممنوع |
 | WF | کوچک‌سازی ادامه‌دار `WorkforcePages.tsx` | ادامه استخراج صفحه‌ها در فازهای کوچک و قابل rollback |

@@ -27,6 +27,7 @@
 | ADR-019 | Core Product Model قبل از هر UI، migration، adapter اجرایی یا اتصال محک باید به صورت مستند طراحی و تأیید شود. | فعال |
 | ADR-020 | Core Financial Event Model قبل از هر UI مالی، migration، auth/database change، adapter اجرایی یا اتصال پروژه پول باید به صورت مستند طراحی و تأیید شود. | فعال |
 | ADR-021 | Product Adapter Boundary باید قبل از هر import، UI کالا یا migration اجرا شود؛ داده خام پروژه کالا نباید مستقیم وارد database اصلی شود. | فعال |
+| ADR-022 | Product Import Validator و Duplicate Detector باید قبل از هر import واقعی، merge/update کالا، UI کالا یا Mahak Export Adapter طراحی و تأیید شوند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -49,6 +50,8 @@
 - ساخت UI کالا قبل از تأیید Core Product Model و schema
 - ساخت migration کالا قبل از اجازه مرکز فرمان
 - import مستقیم داده کالا بدون normalize، validation و duplicate report
+- merge یا update خودکار کالا بدون review و تصمیم مرکز فرمان
+- ساخت Mahak Export Adapter قبل از validator و duplicate detector
 - dependency مستقیم برنامه اصلی به فایل‌های قدیمی `mahak-web-version`
 - تغییر نام شاخه‌های مادر یا کدهای branch registry
 

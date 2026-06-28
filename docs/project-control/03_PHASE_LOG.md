@@ -49,12 +49,29 @@
 | CONTROL-P4 | انجام شده | ساخت `11_CORE_PRODUCT_MODEL.md` و طراحی مستند مدل مرکزی کالا بدون کدنویسی، migration یا merge پروژه کالا |
 | CONTROL-P5 | انجام شده | ساخت `12_CORE_FINANCIAL_EVENT_MODEL.md` و طراحی مستند مدل مرکزی رویداد مالی بدون کدنویسی، auth/database change یا merge پروژه پول |
 | CONTROL-P6 | انجام شده | ساخت `13_PRODUCT_SCHEMA_AND_ADAPTER_BOUNDARY.md` و طراحی schema پیشنهادی کالا و adapter boundary بدون کدنویسی یا merge پروژه کالا |
+| CONTROL-P7 | انجام شده | ساخت `14_PRODUCT_IMPORT_VALIDATOR_AND_DUPLICATE_DETECTOR.md` و طراحی قوانین اعتبارسنجی ورود کالا و تشخیص تکراری بدون کدنویسی یا merge پروژه کالا |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P6**
+آخرین P کنترل پروژه: **CONTROL-P7**
+
+## جزئیات ثبت CONTROL-P7
+
+فایل جدید:
+
+- `docs/project-control/14_PRODUCT_IMPORT_VALIDATOR_AND_DUPLICATE_DETECTOR.md`
+
+نتیجه:
+
+- `Product Import Validator` برای بررسی داده کالا قبل از ورود به مستر جم طراحی شد.
+- قوانین اعتبارسنجی field-level برای کد کالا، بارکد، نام، گروه، کد محک، وزن، اجرت، قیمت، سنگ، statusها و dataSource ثبت شد.
+- `Product Duplicate Detector` برای تشخیص تکراری بر اساس barcode، productCode، mahakCode، ترکیب نام/وزن/سنگ/گروه، شباهت نام و اختلاف نگارشی طراحی شد.
+- سطح هشدارها ثبت شد: Error، Warning، Info و Auto-fix candidate.
+- خروجی‌ها ثبت شد: `ProductImportReport`، `DuplicateProductWarning`، `ProductValidationError`، `ProductAutoFixSuggestion` و `ProductImportDecision`.
+- تصمیم‌های ورود ثبت شد: Import allowed، Import blocked، Needs review، Merge candidate، Update existing product و Create new product.
+- کد اجرایی، route، UI، database، migration و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P6
 
@@ -184,7 +201,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Import Validator` و `Product Duplicate Detector`، یا طراحی `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Product Auto-fix Rules` و `Product Review Queue`، یا طراحی `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

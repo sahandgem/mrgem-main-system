@@ -12,7 +12,17 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P6**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P7**
+
+## وضعیت CONTROL-P7
+
+CONTROL-P7 انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، database یا localStorage تغییر داده نشد.
+
+- فایل طراحی validator و duplicate detector کالا ساخته شد: `docs/project-control/14_PRODUCT_IMPORT_VALIDATOR_AND_DUPLICATE_DETECTOR.md`
+- قوانین اعتبارسنجی ورود کالا برای `productCode`، `barcode`، `name`، `groupCode`، `mahakCode`، `weight`، `wage`، `basePrice`، `salePrice`، `stoneName`، `stoneType`، `inventoryStatus`، `productionStatus` و `dataSource` ثبت شد.
+- معیارهای تشخیص تکراری ثبت شد: barcode، productCode، mahakCode، ترکیب نام/وزن/سنگ/گروه، شباهت نام، اختلاف نگارشی سنگ/گروه و کالاهای ظاهراً متفاوت اما محتمل یکسان.
+- خروجی‌های مورد انتظار ثبت شد: `ProductImportReport`، `DuplicateProductWarning`، `ProductValidationError`، `ProductAutoFixSuggestion` و `ProductImportDecision`.
+- تصمیم‌های ورود کالا ثبت شد: import allowed، import blocked، needs review، merge candidate، update existing product و create new product.
 
 ## وضعیت CONTROL-P6
 
@@ -164,4 +174,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Import Validator` و `Product Duplicate Detector`، یا طراحی `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی.
+طراحی `Product Auto-fix Rules` و `Product Review Queue`، یا طراحی `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی.

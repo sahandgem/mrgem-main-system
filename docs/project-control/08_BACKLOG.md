@@ -27,6 +27,11 @@
 | DATA-MAHAK | طراحی Product Duplicate Detector | تشخیص تکراری بر اساس کد داخلی، کد محک، بارکد، نام، وزن و سنگ |
 | DATA-MAHAK | طراحی Mahak Export Adapter | تولید preview و mapping خروجی محک بدون نوشتن در سیستم اصلی |
 | DATA-MAHAK | طراحی AI Product Snapshot | snapshot نسخه‌دار و تمیز برای تحلیل هوشمند |
+| DATA-MAHAK | طراحی Product Auto-fix Rules | قواعد پیشنهادی برای اصلاح امن نام سنگ، گروه، barcode format و statusها |
+| DATA-MAHAK | طراحی Product Review Queue | صف بررسی کالاهای دارای warning، duplicate یا merge/update candidate |
+| DATA-MAHAK | طراحی Product Import Decision Flow | جریان تصمیم برای allowed، blocked، review، merge، update و create |
+| DATA-MAHAK | طراحی Product Duplicate Resolution Flow | روش حل duplicate بدون merge خودکار و با تأیید مرکز فرمان |
+| DATA-MAHAK | بررسی Mahak Export Adapter بعد از validator | خروجی محک فقط پس از validator و duplicate detector بررسی شود |
 | UI | بررسی Product UI بعد از کاهش بدهی Workforce | UI کالا فقط بعد از مدل/schema/validator و کاهش بدهی WF |
 | CORE/FIN | طراحی Core Financial Event Model | مدل مشترک آینده برای نقدینگی، رسید و رویداد مالی |
 | CORE/FIN | طراحی Financial Schema Draft | تبدیل مدل مفهومی رویداد مالی به schema پیشنهادی، بدون migration |

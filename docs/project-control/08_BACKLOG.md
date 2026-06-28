@@ -32,6 +32,7 @@
 | DATA-MAHAK | طراحی Product Import Decision Flow | جریان تصمیم برای allowed، blocked، review، merge، update و create |
 | DATA-MAHAK | طراحی Product Duplicate Resolution Flow | روش حل duplicate بدون merge خودکار و با تأیید مرکز فرمان |
 | DATA-MAHAK | بررسی Mahak Export Adapter بعد از validator | خروجی محک فقط پس از validator و duplicate detector بررسی شود |
+| DATA-MAHAK | طراحی Product Correction Log | ثبت اصلاح‌ها، تصمیم‌ها، مقدار قبلی/پیشنهادی و تأییدکننده |
 | UI | بررسی Product UI بعد از کاهش بدهی Workforce | UI کالا فقط بعد از مدل/schema/validator و کاهش بدهی WF |
 | CORE/FIN | طراحی Core Financial Event Model | مدل مشترک آینده برای نقدینگی، رسید و رویداد مالی |
 | CORE/FIN | طراحی Financial Schema Draft | تبدیل مدل مفهومی رویداد مالی به schema پیشنهادی، بدون migration |

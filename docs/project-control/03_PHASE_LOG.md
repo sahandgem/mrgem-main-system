@@ -50,12 +50,29 @@
 | CONTROL-P5 | انجام شده | ساخت `12_CORE_FINANCIAL_EVENT_MODEL.md` و طراحی مستند مدل مرکزی رویداد مالی بدون کدنویسی، auth/database change یا merge پروژه پول |
 | CONTROL-P6 | انجام شده | ساخت `13_PRODUCT_SCHEMA_AND_ADAPTER_BOUNDARY.md` و طراحی schema پیشنهادی کالا و adapter boundary بدون کدنویسی یا merge پروژه کالا |
 | CONTROL-P7 | انجام شده | ساخت `14_PRODUCT_IMPORT_VALIDATOR_AND_DUPLICATE_DETECTOR.md` و طراحی قوانین اعتبارسنجی ورود کالا و تشخیص تکراری بدون کدنویسی یا merge پروژه کالا |
+| CONTROL-P7-BATCH | انجام شده | تکمیل بسته ایمنی ورود کالا با auto-fix، review queue، Mahak export و AI product snapshot بدون کدنویسی یا merge پروژه کالا |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P7**
+آخرین P کنترل پروژه: **CONTROL-P7-BATCH**
+
+## جزئیات ثبت CONTROL-P7-BATCH
+
+فایل‌های بسته:
+
+- `docs/project-control/14_PRODUCT_IMPORT_VALIDATOR_AND_DUPLICATE_DETECTOR.md`
+- `docs/project-control/15_PRODUCT_AUTOFIX_AND_REVIEW_QUEUE.md`
+- `docs/project-control/16_MAHAK_EXPORT_AND_AI_PRODUCT_SNAPSHOT.md`
+
+نتیجه:
+
+- بخش A بسته با فایل ۱۴ پوشش داده شد: validator، duplicate detector، سطح هشدارها و تصمیم‌های ورود کالا.
+- بخش B ساخته شد: auto-fix rules، خطاهای قابل اصلاح، خطاهای نیازمند تأیید مدیر، review queue و correction log.
+- بخش C ساخته شد: Mahak Export Adapter، کنترل‌های قبل از خروجی محک، ریسک‌های خروجی محک و AI Product Snapshot.
+- backlog برای Product Correction Log، decision flow، duplicate resolution و Mahak Export Adapter تکمیل شد.
+- کد اجرایی، route، UI، database، migration و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P7
 
@@ -201,7 +218,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Auto-fix Rules` و `Product Review Queue`، یا طراحی `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Product Import Decision Flow` و `Product Duplicate Resolution Flow`، یا طراحی `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

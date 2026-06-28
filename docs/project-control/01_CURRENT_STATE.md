@@ -12,7 +12,17 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P7**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P7-BATCH**
+
+## وضعیت CONTROL-P7-BATCH
+
+CONTROL-P7-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، database یا localStorage تغییر داده نشد.
+
+- بسته ایمنی ورود کالا تکمیل شد.
+- فایل validator و duplicate detector موجود بود و به عنوان بخش A بسته ثبت شد: `docs/project-control/14_PRODUCT_IMPORT_VALIDATOR_AND_DUPLICATE_DETECTOR.md`
+- فایل auto-fix و review queue ساخته شد: `docs/project-control/15_PRODUCT_AUTOFIX_AND_REVIEW_QUEUE.md`
+- فایل Mahak export و AI product snapshot ساخته شد: `docs/project-control/16_MAHAK_EXPORT_AND_AI_PRODUCT_SNAPSHOT.md`
+- هدف بسته ثبت شد: جلوگیری از ورود کالای خراب یا تکراری، جدا نگه داشتن barcode و mahakCode، کنترل وزن/اجرت/سنگ/گروه، حفاظت خروجی محک و آماده‌سازی داده تمیز برای AI.
 
 ## وضعیت CONTROL-P7
 
@@ -174,4 +184,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Auto-fix Rules` و `Product Review Queue`، یا طراحی `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی.
+طراحی `Product Import Decision Flow` و `Product Duplicate Resolution Flow`، یا طراحی `Financial Schema Draft` و `Financial Adapter Boundary` بدون کدنویسی.

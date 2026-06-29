@@ -61,6 +61,13 @@
 | UI/PRODUCT | بررسی Product Import Design Lab Candidate | prototype تصویری بدون اتصال main و بدون import واقعی |
 | UI/CONTROL | طراحی Product Data Quality Cockpit Metrics | نمایش read-only threshold breach، source quality و روند review |
 | CONTROL/DATA-MAHAK | ثبت Product Import Implementation Blockers | approval، schema/type، config، test data، security، audit و rollback |
+| CONTROL/DATA-MAHAK | طراحی Product Import Prototype Charter | منشور هدف، scope، خروجی، معیار موفقیت/توقف و ممنوعیت‌های prototype |
+| CONTROL/DATA-MAHAK | طراحی Product Import Synthetic Data Protocol | fixtureهای مصنوعی، deterministic و دارای expected result بدون داده واقعی |
+| CONTROL/DATA-MAHAK | طراحی Product Import Prototype Isolation Boundary | جدایی کامل از main، production storage، Mahak، auth، route و approval واقعی |
+| DATA-MAHAK | طراحی Product Import Demo Flow | فقط پس از approval ساخت prototype و با mock service/data |
+| DATA-MAHAK | طراحی Product Import Mock Dataset | sampleهای synthetic برای valid، duplicate، mismatch، conflict و low confidence |
+| CONTROL/DATA-MAHAK | طراحی Product Import Prototype Exit Criteria | معیار docs، synthetic test، dry-run، gate، review، rollback و security |
+| CONTROL/DATA-MAHAK | طراحی Product Import Implementation Approval Gate | approval نهایی مستقل پیش از هر implementation یا اتصال واقعی |
 | UI | بررسی Product UI بعد از کاهش بدهی Workforce | UI کالا فقط بعد از مدل/schema/validator و کاهش بدهی WF |
 | CORE/FIN | طراحی Core Financial Event Model | مدل مشترک آینده برای نقدینگی، رسید و رویداد مالی |
 | CORE/FIN | طراحی Financial Schema Draft | تبدیل مدل مفهومی رویداد مالی به schema پیشنهادی، بدون migration |

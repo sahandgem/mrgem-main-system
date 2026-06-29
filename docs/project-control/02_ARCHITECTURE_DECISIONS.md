@@ -70,6 +70,10 @@
 | ADR-062 | Product Data Quality Thresholdها باید config و version مصوب داشته باشند؛ blocker قطعی با میانگین کیفیت جبران نمی‌شود و هیچ عدد اجرایی در اسناد معماری hardcode نمی‌شود. | فعال |
 | ADR-063 | Product Import architecture پس از CONTROL-P26 برای Design Lab/prototype ایزوله آینده آماده است، اما هر prototype یا implementation واقعی به approval و فاز مستقل نیاز دارد. | فعال |
 | ADR-064 | محک فقط reference-only و historical-data-only باقی می‌ماند؛ داده تاریخی کالا فقط از staging، validation، review، Quality Gate و audit عبور می‌کند. | فعال |
+| ADR-065 | Product Import فقط می‌تواند وارد مرحله طراحی prototype ایزوله شود؛ ساخت prototype واقعی یا implementation همچنان بدون approval مستقل ممنوع است. | فعال |
+| ADR-066 | نخستین prototype آینده باید فقط با synthetic/mock data نسخه‌دار، تکرارپذیر و دارای expected result ارزیابی شود؛ داده واقعی مجاز نیست. | فعال |
+| ADR-067 | prototype Product Import حق write به main، استفاده از production storage، shared key، migration، auth، route اصلی یا action برگشت‌ناپذیر ندارد. | فعال |
+| ADR-068 | محک همچنان reference-only و historical-data-only است؛ prototype نباید به فایل، schema، query، table یا داده واقعی محک وابسته شود. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -151,6 +155,12 @@
 - جبران blocker قطعی با میانگین یا سطح کیفیت کلی batch
 - برداشت readiness معماری CONTROL-P26 به عنوان مجوز prototype یا implementation واقعی
 - اتصال مستقیم داده تاریخی یا ساختار فنی محک به Product Import
+- ساخت Product Import prototype واقعی بدون approval مستقل مرکز کنترل
+- استفاده از داده واقعی مشتری، مالی، کالا، barcode یا محک در نخستین prototype
+- write prototype به main data یا production storage
+- استفاده prototype از localStorage key، auth، route یا service مشترک با main
+- ساخت migration، schema dependency یا direct Mahak dependency برای prototype
+- action برگشت‌ناپذیر یا تغییر manager approval واقعی در جریان demo
 - ساخت Mahak Export Adapter قبل از validator و duplicate detector
 - اعمال auto-fix بدون ProductCorrectionLog و تأیید لازم
 - خروجی محک یا AI snapshot از رکورد دارای duplicate/error حل‌نشده

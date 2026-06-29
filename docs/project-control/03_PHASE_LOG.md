@@ -71,12 +71,31 @@
 | CONTROL-P24-BATCH | انجام شده | طراحی Product Feature Review UI Contract، Product Import Quality Gate و Product Feature Decision Audit Model بدون ساخت UI یا کپی schema محک |
 | CONTROL-P25-BATCH | انجام شده | طراحی Product Import Batch Decision Contract، Product Review Metrics Read Model و Product Import Manager Decision Report بدون کدنویسی یا کپی schema محک |
 | CONTROL-P26-BATCH | انجام شده | طراحی Product Import Batch Split Flow، Product Data Quality Threshold Policy و Product Import Architecture Readiness Report بدون کدنویسی یا کپی schema محک |
+| CONTROL-P27-BATCH | انجام شده | طراحی Product Import Prototype Charter، Synthetic Data Protocol و Prototype Isolation Boundary بدون ساخت prototype یا استفاده از داده واقعی |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P26-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P27-BATCH**
+
+## جزئیات ثبت CONTROL-P27-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/76_PRODUCT_IMPORT_PROTOTYPE_CHARTER.md`
+- `docs/project-control/77_PRODUCT_IMPORT_SYNTHETIC_DATA_PROTOCOL.md`
+- `docs/project-control/78_PRODUCT_IMPORT_PROTOTYPE_ISOLATION_BOUNDARY.md`
+
+نتیجه:
+
+- منشور prototype برای اثبات parsing، staging، mapping، validation، review، gate، batch decision، manager report و audit concept طراحی شد.
+- import واقعی، اتصال database/main/Mahak، migration، auth، route و تغییر UI/data واقعی از scope خارج ماند.
+- سناریوهای synthetic data شامل valid، missing feature، duplicate barcode، stone/group mismatch، invalid weight/unit، pricing/production conflict، low confidence و manual-only ثبت شدند.
+- قرارداد sample شامل sampleId، productCode/name، groupCode، featureSet، sourceType و expected validation/gate/review/risk طراحی شد.
+- Isolation Boundary هرگونه production write، shared storage، migration، schema/Mahak dependency، approval mutation و irreversible action را ممنوع کرد.
+- شرایط خروج از prototype به implementation شامل approval docs، synthetic tests، dry-run، gate/review approval، rollback و implementation approval ثبت شد.
+- کد اجرایی، prototype واقعی، repo، route، UI، component، auth، database، migration، localStorage، داده واقعی و schema محک تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P26-BATCH
 
@@ -566,7 +585,7 @@
 
 ## P پیشنهادی بعدی
 
-در صورت تایید مرکز کنترل، طراحی `Product Import Prototype Charter` با داده مصنوعی و scope ایزوله؛ در غیر این صورت ادامه کاهش بدهی معماری WF.
+بازبینی و approval منشور prototype توسط مرکز کنترل؛ ساخت prototype واقعی فقط با دستور مستقل و scope مصوب.
 
 ## قالب ثبت فاز بعدی
 

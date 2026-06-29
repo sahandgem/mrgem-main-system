@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P26-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P27-BATCH**
+
+## وضعیت CONTROL-P27-BATCH
+
+CONTROL-P27-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، prototype واقعی، repo، route، UI، component، migration، auth، database، localStorage، داده واقعی یا schema محک اضافه نشد.
+
+- فایل Product Import Prototype Charter ساخته شد: `docs/project-control/76_PRODUCT_IMPORT_PROTOTYPE_CHARTER.md`
+- فایل Product Import Synthetic Data Protocol ساخته شد: `docs/project-control/77_PRODUCT_IMPORT_SYNTHETIC_DATA_PROTOCOL.md`
+- فایل Product Import Prototype Isolation Boundary ساخته شد: `docs/project-control/78_PRODUCT_IMPORT_PROTOTYPE_ISOLATION_BOUNDARY.md`
+- هدف، پرسش‌ها، خروجی‌ها، معیار موفقیت و توقف prototype آینده ثبت شد.
+- سناریوها و قرارداد sampleهای synthetic data بدون اطلاعات واقعی طراحی شدند.
+- مرز جدایی prototype از main data، production storage، محک، auth، route و approval واقعی ثبت شد.
 
 ## وضعیت CONTROL-P26-BATCH
 
@@ -403,4 +414,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-در صورت تایید مرکز کنترل، طراحی مستند `Product Import Prototype Charter` با داده مصنوعی و scope ایزوله؛ در غیر این صورت ادامه کاهش بدهی معماری WF.
+بازبینی و approval منشور prototype توسط مرکز کنترل؛ ساخت prototype واقعی همچنان ممنوع است مگر با دستور مستقل.

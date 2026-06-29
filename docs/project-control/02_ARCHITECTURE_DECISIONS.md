@@ -66,6 +66,10 @@
 | ADR-058 | تصمیم import کالا باید در سطح batch و item تفکیک شود؛ import_valid_only یا split_batch فقط با ثبت itemهای excluded، parent/child references، Quality Gate و audit معتبر مجاز است. | فعال |
 | ADR-059 | Product Review Metrics یک Read Model صرفاً خواندنی است؛ تعریف metric، denominator، scope و version باید شفاف باشد و هیچ metric حق mutate یا جایگزینی Decision Audit را ندارد. | فعال |
 | ADR-060 | گزارش تصمیم مدیر فقط شواهد و پیشنهاد ارائه می‌کند؛ override باید دامنه، دلیل، actor، risk acceptance و audit مستقل داشته باشد و AI تصمیم‌گیر نهایی نیست. | فعال |
+| ADR-061 | Product Import Batch Split باید parent-child continuity، item membership consistency و audit کامل را حفظ کند؛ conflict، duplicate حساس و manual-only حل‌نشده وارد approved_sub_batch نمی‌شوند. | فعال |
+| ADR-062 | Product Data Quality Thresholdها باید config و version مصوب داشته باشند؛ blocker قطعی با میانگین کیفیت جبران نمی‌شود و هیچ عدد اجرایی در اسناد معماری hardcode نمی‌شود. | فعال |
+| ADR-063 | Product Import architecture پس از CONTROL-P26 برای Design Lab/prototype ایزوله آینده آماده است، اما هر prototype یا implementation واقعی به approval و فاز مستقل نیاز دارد. | فعال |
+| ADR-064 | محک فقط reference-only و historical-data-only باقی می‌ماند؛ داده تاریخی کالا فقط از staging، validation، review، Quality Gate و audit عبور می‌کند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -141,6 +145,12 @@
 - استفاده از Product Review Metrics برای mutate داده یا جایگزینی Quality Gate/Decision Audit
 - manager override مبهم روی کل batch بدون دامنه item، دلیل و risk acceptance
 - اجرای تصمیم پیشنهادی AI به عنوان تصمیم نهایی import کالا
+- split کردن batch بدون parent-child references، membership audit یا تطبیق شمارش‌ها
+- ورود conflict، duplicate حساس یا manual-only حل‌نشده به `approved_sub_batch`
+- تغییر threshold کیفیت بدون version، owner، approval و audit
+- جبران blocker قطعی با میانگین یا سطح کیفیت کلی batch
+- برداشت readiness معماری CONTROL-P26 به عنوان مجوز prototype یا implementation واقعی
+- اتصال مستقیم داده تاریخی یا ساختار فنی محک به Product Import
 - ساخت Mahak Export Adapter قبل از validator و duplicate detector
 - اعمال auto-fix بدون ProductCorrectionLog و تأیید لازم
 - خروجی محک یا AI snapshot از رکورد دارای duplicate/error حل‌نشده

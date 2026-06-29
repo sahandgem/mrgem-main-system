@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P25-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P26-BATCH**
+
+## وضعیت CONTROL-P26-BATCH
+
+CONTROL-P26-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI واقعی، component، migration، auth، database، localStorage یا schema محک اضافه نشد.
+
+- فایل Product Import Batch Split Flow ساخته شد: `docs/project-control/73_PRODUCT_IMPORT_BATCH_SPLIT_FLOW.md`
+- فایل Product Data Quality Threshold Policy ساخته شد: `docs/project-control/74_PRODUCT_DATA_QUALITY_THRESHOLD_POLICY.md`
+- فایل Product Import Architecture Readiness Report ساخته شد: `docs/project-control/75_PRODUCT_IMPORT_ARCHITECTURE_READINESS_REPORT.md`
+- جریان split برای approved، review، quarantine، rejected و correction-required sub-batch با parent/audit continuity طراحی شد.
+- thresholdهای کیفیت، سطح‌های excellent تا blocked و blockerهای قطعی ثبت شدند؛ هیچ مقدار اجرایی hardcode نشد.
+- معماری Product Import برای Design Lab/prototype ایزوله آینده آماده ارزیابی شد، اما پیاده‌سازی واقعی همچنان نیازمند approval جداگانه است.
 
 ## وضعیت CONTROL-P25-BATCH
 
@@ -392,4 +403,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-طراحی مستند `Product Import Batch Split Flow` و `Product Data Quality Threshold Policy`، یا ادامه `Read Model Contract` بدون کدنویسی.
+در صورت تایید مرکز کنترل، طراحی مستند `Product Import Prototype Charter` با داده مصنوعی و scope ایزوله؛ در غیر این صورت ادامه کاهش بدهی معماری WF.

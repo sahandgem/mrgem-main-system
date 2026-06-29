@@ -51,10 +51,16 @@
 | CORE/DATA-MAHAK | طراحی Product Import Batch Decision Contract | قرارداد تصمیم batch با source، counts، gate، confidence، risk، approval و audit |
 | CORE/DATA | طراحی Product Review Metrics Read Model | projection خواندنی شاخص‌های review، blocker، duplicate، auto-fix و confidence |
 | CORE/CONTROL | طراحی Product Import Manager Decision Report | گزارش مدیریتی quality gate، review، risk، AI suggestion و اقدام لازم |
-| CORE/DATA-MAHAK | طراحی Product Import Batch Split Flow | تقسیم امن valid/review/blocked با parent-child reference و audit |
+| CORE/DATA-MAHAK | طراحی Product Import Batch Split Flow | تقسیم امن valid/review/quarantine/rejected/correction با parent-child reference و membership audit |
 | CORE/CONTROL | طراحی Product Import Override Audit | ثبت دامنه، دلیل، actor، risk acceptance و نتیجه override مدیر |
 | CORE/DATA | طراحی Product Data Quality Monitoring | پایش روند issueها، source quality، confidence و impactها بدون mutation |
 | UI/CONTROL | طراحی Product Import Cockpit Metrics | شاخص‌های read-only کیفیت import برای کابین خلبانی و drill-down |
+| CORE/DATA | طراحی Product Data Quality Threshold Policy | thresholdهای نسخه‌دار کیفیت، blockerها و سطح‌های excellent تا blocked |
+| CONTROL/DATA-MAHAK | طراحی Product Import Architecture Readiness Report | جمع‌بندی آمادگی مدل، validation، review، gate، audit، batch و metrics |
+| DATA-MAHAK | بررسی Product Import Prototype Candidate | فقط پس از approval مستقل، با داده مصنوعی و محیط ایزوله |
+| UI/PRODUCT | بررسی Product Import Design Lab Candidate | prototype تصویری بدون اتصال main و بدون import واقعی |
+| UI/CONTROL | طراحی Product Data Quality Cockpit Metrics | نمایش read-only threshold breach، source quality و روند review |
+| CONTROL/DATA-MAHAK | ثبت Product Import Implementation Blockers | approval، schema/type، config، test data، security، audit و rollback |
 | UI | بررسی Product UI بعد از کاهش بدهی Workforce | UI کالا فقط بعد از مدل/schema/validator و کاهش بدهی WF |
 | CORE/FIN | طراحی Core Financial Event Model | مدل مشترک آینده برای نقدینگی، رسید و رویداد مالی |
 | CORE/FIN | طراحی Financial Schema Draft | تبدیل مدل مفهومی رویداد مالی به schema پیشنهادی، بدون migration |

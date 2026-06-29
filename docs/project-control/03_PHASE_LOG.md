@@ -70,12 +70,31 @@
 | CONTROL-P23-BATCH | انجام شده | طراحی Product Feature Review Queue، Product Attribute Validation Report و Product Feature Auto-fix Decision Flow بدون کدنویسی یا کپی schema محک |
 | CONTROL-P24-BATCH | انجام شده | طراحی Product Feature Review UI Contract، Product Import Quality Gate و Product Feature Decision Audit Model بدون ساخت UI یا کپی schema محک |
 | CONTROL-P25-BATCH | انجام شده | طراحی Product Import Batch Decision Contract، Product Review Metrics Read Model و Product Import Manager Decision Report بدون کدنویسی یا کپی schema محک |
+| CONTROL-P26-BATCH | انجام شده | طراحی Product Import Batch Split Flow، Product Data Quality Threshold Policy و Product Import Architecture Readiness Report بدون کدنویسی یا کپی schema محک |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P25-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P26-BATCH**
+
+## جزئیات ثبت CONTROL-P26-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/73_PRODUCT_IMPORT_BATCH_SPLIT_FLOW.md`
+- `docs/project-control/74_PRODUCT_DATA_QUALITY_THRESHOLD_POLICY.md`
+- `docs/project-control/75_PRODUCT_IMPORT_ARCHITECTURE_READINESS_REPORT.md`
+
+نتیجه:
+
+- Batch Split Flow برای mixed valid/blocked، duplicate، partial format، group/stone issue، pricing/production conflict و manual-only records طراحی شد.
+- sub-batchهای approved، review، quarantine، rejected و correction-required با parentBatchId، splitReason، gate، risk، confidence، requiredActions و audit ثبت شدند.
+- thresholdهای completion، validity، duplicate/conflict، barcode، group، stone، weight/unit، pricing/production review، low confidence و manual-only طراحی شدند.
+- سطح‌های کیفیت excellent، acceptable، warning، risky و blocked ثبت شدند؛ blocker قطعی با میانگین کیفیت قابل جبران نیست.
+- Readiness Report اجزای Core Product تا Threshold Policy را ارزیابی و معماری را برای prototype ایزوله آینده آماده دانست.
+- اجرای واقعی، prototype، UI، database، migration و اتصال مستقیم محک همچنان بدون approval جداگانه ممنوع ماند.
+- کد اجرایی، route، UI واقعی، component، auth، database، migration، localStorage و schema محک تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P25-BATCH
 
@@ -547,7 +566,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Import Batch Split Flow` و `Product Data Quality Threshold Policy`، یا ادامه `Read Model Contract` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+در صورت تایید مرکز کنترل، طراحی `Product Import Prototype Charter` با داده مصنوعی و scope ایزوله؛ در غیر این صورت ادامه کاهش بدهی معماری WF.
 
 ## قالب ثبت فاز بعدی
 

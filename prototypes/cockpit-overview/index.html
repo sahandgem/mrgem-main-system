@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>نمونه ایزوله کابین مرکزی</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="prototype-banner" role="status">
+      <span class="banner-mark" aria-hidden="true">DEMO</span>
+      <strong>نمونه نمایشی ایزوله — داده‌ها ساختگی هستند</strong>
+      <span>بدون اتصال به برنامه اصلی</span>
+    </div>
+
+    <main class="cockpit-shell">
+      <header class="top-status-band">
+        <div>
+          <p class="eyebrow">CENTRAL COCKPIT / MOCK ONLY</p>
+          <h1>دید کلی کسب‌وکار</h1>
+          <p class="status-copy">تصویر نمایشی وضعیت، ریسک و تصمیم‌های منتظر بررسی</p>
+        </div>
+        <div class="overall-status" aria-label="وضعیت کلی نمایشی">
+          <span class="status-pulse" aria-hidden="true"></span>
+          <div>
+            <small>وضعیت کلی ساختگی</small>
+            <strong>نیازمند توجه</strong>
+          </div>
+        </div>
+      </header>
+
+      <section class="summary-strip" aria-label="خلاصه وضعیت">
+        <div><span>سیگنال‌ها</span><strong id="signal-count">۰</strong></div>
+        <div><span>ریسک بالا</span><strong id="high-risk-count">۰</strong></div>
+        <div><span>تصمیم مدیر</span><strong id="review-count">۰</strong></div>
+        <div><span>مسدود</span><strong id="blocked-count">۰</strong></div>
+      </section>
+
+      <section class="cockpit-section" aria-labelledby="critical-heading">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">اولویت فوری</span>
+            <h2 id="critical-heading">کارت‌های بحرانی</h2>
+          </div>
+          <span class="section-note">فقط نمایش مفهومی</span>
+        </div>
+        <div id="critical-cards" class="card-grid critical-grid"></div>
+      </section>
+
+      <section class="cockpit-section" aria-labelledby="operational-heading">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">تصویر عملیات</span>
+            <h2 id="operational-heading">ریسک‌های عملیاتی</h2>
+          </div>
+          <span class="section-note">Mock signals</span>
+        </div>
+        <div id="operational-cards" class="card-grid"></div>
+      </section>
+
+      <section class="decision-layout">
+        <article class="focus-panel ai-panel" aria-labelledby="ai-heading">
+          <div class="panel-heading">
+            <span class="panel-icon" aria-hidden="true">AI</span>
+            <div><small>پیشنهاد، نه تصمیم</small><h2 id="ai-heading">پیشنهاد هوشمند</h2></div>
+          </div>
+          <div id="ai-suggestion"></div>
+        </article>
+
+        <article class="focus-panel review-panel" aria-labelledby="review-heading">
+          <div class="panel-heading">
+            <span class="panel-icon review-icon" aria-hidden="true">!</span>
+            <div><small>Human in the loop</small><h2 id="review-heading">مرکز بررسی مدیر</h2></div>
+          </div>
+          <div id="manager-review"></div>
+        </article>
+      </section>
+
+      <section class="audit-summary" aria-labelledby="audit-heading">
+        <div>
+          <span class="section-kicker">مرز کنترل</span>
+          <h2 id="audit-heading">خلاصه ریسک و Audit</h2>
+        </div>
+        <div id="audit-summary-items" class="audit-summary-items"></div>
+      </section>
+    </main>
+
+    <div id="concept-panel" class="concept-panel" aria-hidden="true">
+      <button id="concept-backdrop" class="concept-backdrop" type="button" aria-label="بستن پنل"></button>
+      <aside class="concept-drawer" role="dialog" aria-modal="true" aria-labelledby="concept-title">
+        <div class="drawer-header">
+          <div><span class="section-kicker">DRILL-DOWN CONCEPT</span><h2 id="concept-title">جزئیات مفهومی</h2></div>
+          <button id="close-concept" class="icon-button" type="button" aria-label="بستن">×</button>
+        </div>
+        <div id="concept-content" class="concept-content"></div>
+        <p class="concept-disclaimer">این فقط drill-down مفهومی است و هیچ عملیات واقعی انجام نمی‌شود</p>
+      </aside>
+    </div>
+
+    <noscript>برای نمایش این نمونه، JavaScript مرورگر باید فعال باشد.</noscript>
+    <script src="mock-signals.js"></script>
+    <script src="prototype.js"></script>
+  </body>
+</html>

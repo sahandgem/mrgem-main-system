@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P35-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P36-BATCH**
+
+## وضعیت CONTROL-P36-BATCH
+
+CONTROL-P36-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، UI واقعی، prototype واقعی، route، component، repo، migration، auth، database، production storage، localStorage یا داده واقعی اضافه نشد.
+
+- Environment Decision در `107_COCKPIT_PROTOTYPE_ENVIRONMENT_DECISION.md` ثبت شد؛ planning آماده ولی environment ساخته نشده است.
+- Work Order Draft در `108_COCKPIT_ISOLATED_PROTOTYPE_WORK_ORDER_DRAFT.md` ثبت شد؛ این سند مجوز شروع کار نیست.
+- Build Approval Review در `109_COCKPIT_PROTOTYPE_BUILD_APPROVAL_REVIEW.md` با وضعیت `PENDING_CONTROL_ROOM_DECISION` ثبت شد.
+- Pre-build Checklist در `110_COCKPIT_PROTOTYPE_PRE_BUILD_CHECKLIST.md` ثبت شد.
+- بدون خروجی صریح `approved_for_build` هیچ کدنویسی cockpit مجاز نیست.
+- `Cockpit Prototype = ON_HOLD` و `Cockpit Implementation = NOT_APPROVED` باقی ماند.
 
 ## وضعیت CONTROL-P35-BATCH
 

@@ -103,6 +103,10 @@
 | ADR-095 | Cockpit Prototype Build و Cockpit Implementation همچنان NOT_APPROVED و prototype همچنان ON_HOLD است. | فعال |
 | ADR-096 | Mock Signal Dataset آینده cockpit باید کاملاً synthetic، ایزوله، resetپذیر و مستقل از main و production storage باشد. | فعال |
 | ADR-097 | هیچ cockpit route، UI، component، database، localStorage، auth یا production storage change در CONTROL-P35 تایید نشده است. | فعال |
+| ADR-098 | برنامه‌ریزی محیط prototype ایزوله cockpit READY است، اما Environment Creation و Prototype Build در CONTROL-P36 تایید نشده‌اند. | فعال |
+| ADR-099 | Cockpit Implementation همچنان NOT_APPROVED است و هر build آینده فقط با تصمیم صریح `approved_for_build` مرکز کنترل مجاز می‌شود. | فعال |
+| ADR-100 | محیط آینده cockpit باید mock-only، resetپذیر و بدون main route، production component/storage، database، auth یا real data باشد. | فعال |
+| ADR-101 | Work Order و Pre-build Checklist فقط draftهای کنترلی هستند؛ route، UI، component، database، localStorage، auth یا production storage change را مجاز نمی‌کنند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

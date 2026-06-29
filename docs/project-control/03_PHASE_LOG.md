@@ -80,12 +80,31 @@
 | CONTROL-P33-BATCH | انجام شده | طراحی Cockpit Implementation Approval Gate، انتخاب Central Cockpit Overview Screen به عنوان first candidate، ثبت Prototype Hold Policy و Mock Data Protocol بدون ساخت prototype |
 | CONTROL-P34-BATCH | انجام شده | طراحی Cockpit Prototype Isolation Boundary، Test Plan و Rollback/Exit Plan بدون ساخت prototype یا تغییر main |
 | CONTROL-P35-BATCH | انجام شده | آماده‌سازی Overview Screen Spec Review، Mock Signal Dataset Spec، Layout/Card Behavior و Prototype Readiness Report بدون ساخت UI یا prototype |
+| CONTROL-P36-BATCH | انجام شده | ثبت Environment Decision، Work Order Draft، Build Approval Review و Pre-build Checklist بدون ساخت محیط یا prototype |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P35-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P36-BATCH**
+
+## جزئیات ثبت CONTROL-P36-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/107_COCKPIT_PROTOTYPE_ENVIRONMENT_DECISION.md`
+- `docs/project-control/108_COCKPIT_ISOLATED_PROTOTYPE_WORK_ORDER_DRAFT.md`
+- `docs/project-control/109_COCKPIT_PROTOTYPE_BUILD_APPROVAL_REVIEW.md`
+- `docs/project-control/110_COCKPIT_PROTOTYPE_PRE_BUILD_CHECKLIST.md`
+
+نتیجه:
+
+- برنامه‌ریزی محیط mock-only و ایزوله `READY` شد، اما Environment Creation همچنان `NOT_APPROVED` است.
+- Work Order آینده فقط در حد draft با scope محدود و ممنوعیت‌های production ثبت شد.
+- Documentation Readiness برابر `READY` و Prototype Build Approval برابر `PENDING_CONTROL_ROOM_DECISION` است.
+- Pre-build Checklist خروجی‌های `approved_for_build`، `needs_revision`، `blocked` و `frozen` را تعریف کرد.
+- Prototype همچنان `ON_HOLD` و Implementation همچنان `NOT_APPROVED` است.
+- هیچ کد اجرایی، UI، prototype، route، component، localStorage، database، auth یا داده واقعی تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P35-BATCH
 

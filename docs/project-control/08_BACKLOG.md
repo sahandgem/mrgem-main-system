@@ -121,6 +121,13 @@
 | UI/CONTROL | Cockpit Future Isolated Prototype Approval | تصمیم مستقل مرکز کنترل برای ادامه hold یا prototype ایزوله |
 | UI/CONTROL | Cockpit Test Execution Plan | تعیین owner، evidence، pass/fail و عدم استفاده از داده واقعی |
 | UI/CONTROL | Cockpit Prototype Environment Decision | انتخاب محیط مستقل بدون route/storage/database/auth production |
+| UI/CONTROL | Cockpit Isolated Prototype Work Order Draft | scope ساخت احتمالی آینده با mock-only و ممنوعیت production dependency |
+| UI/CONTROL | Cockpit Prototype Build Approval Review | تصمیم مستقل مرکز کنترل پیش از هر build |
+| UI/CONTROL | Cockpit Prototype Pre-build Checklist | کنترل checkpoint، data boundary، file scope، test و rollback |
+| UI/CONTROL | Cockpit Future Build Approval | صدور یا رد تصمیم صریح `approved_for_build` در فاز مستقل |
+| UI/CONTROL | Cockpit Prototype File Scope | فهرست محدود فایل‌های مجاز و مالک هر فایل پیش از build |
+| UI/CONTROL | Cockpit Prototype Mock Fixture | fixture مصنوعی نسخه‌دار با expected result و reset کامل |
+| UI/CONTROL | Cockpit Prototype Rollback Owner | تعیین مسئول توقف، پاک‌سازی و verification پس از rollback |
 | WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
 | FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |
 | PROD/DATA | طراحی Production Formula Architecture | مدل مفهومی فرمول تولید، مواد و هزینه بدون engine اجرایی |

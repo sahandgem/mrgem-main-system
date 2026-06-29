@@ -58,6 +58,8 @@
 | ADR-050 | Product Variant، pricing feature و production feature فعلاً فقط boundary مفهومی هستند؛ pricing engine، production formula، variant merge/update یا UI کالا بدون فاز مستقل و تایید مرکز کنترل ممنوع است. | فعال |
 | ADR-051 | featureهای کالا قبل از ورود به main، AI snapshot، pricing، production یا reporting باید validation، confidence، duplicate/conflict check و audit مناسب داشته باشند. | فعال |
 | ADR-052 | Product Feature AI Snapshot فقط از داده normalize و validate شده ساخته می‌شود و هیچ پیشنهاد AI نباید بدون review یا approval لازم تغییر حساس ایجاد کند. | فعال |
+| ADR-053 | feature حساس، conflict یا low confidence بدون Product Feature Review Decision و audit معتبر وارد main نمی‌شود؛ review queue فقط تصمیم تولید می‌کند و داده اصلی را مستقیم mutate نمی‌کند. | فعال |
+| ADR-054 | Product Feature Auto-fix فقط برای اصلاح کم‌ریسک، high confidence و rule مصوب مجاز است؛ تغییر قیمت، وزن حساس، سنگ/گروه متعارض، merge کالا، فرمول تولید، حذف feature و بارکد تکراری نیازمند review یا block هستند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -118,6 +120,10 @@
 - ساخت AI snapshot از feature خام، validate نشده یا بدون sourceReferences
 - import مستقیم unknown feature، wrong unit، suspicious weight، duplicate barcode یا mismatched stone بدون review
 - اعمال Product Feature Auto-fix بدون audit، validation و approval لازم
+- ورود feature حساس، conflict یا low confidence بدون Product Feature Review Decision
+- mutate داده اصلی توسط Product Feature Review Queue یا Product Attribute Validation Report
+- auto-fix قیمت، وزن حساس، سنگ/گروه متعارض، merge کالا، فرمول تولید، حذف feature یا بارکد تکراری
+- correction بدون مقدار قبل/بعد، دلیل، rule version و auditReference
 - ساخت Mahak Export Adapter قبل از validator و duplicate detector
 - اعمال auto-fix بدون ProductCorrectionLog و تأیید لازم
 - خروجی محک یا AI snapshot از رکورد دارای duplicate/error حل‌نشده

@@ -67,12 +67,29 @@
 | CONTROL-P20-BATCH | انجام شده | طراحی Document Status/Approval، Document Audit Trail/Change Log و Reporting View Layer بدون کدنویسی یا کپی schema محک |
 | CONTROL-P21-BATCH | انجام شده | طراحی Product Feature Engine، Core Product Attribute Model و Product Variant/Pricing/Production Boundary بدون کدنویسی یا کپی schema محک |
 | CONTROL-P22-BATCH | انجام شده | طراحی Product Feature Validation Rules، Product Feature AI Snapshot و Product Feature Import Mapping/Review Boundary بدون کدنویسی یا کپی schema محک |
+| CONTROL-P23-BATCH | انجام شده | طراحی Product Feature Review Queue، Product Attribute Validation Report و Product Feature Auto-fix Decision Flow بدون کدنویسی یا کپی schema محک |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P22-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P23-BATCH**
+
+## جزئیات ثبت CONTROL-P23-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/64_PRODUCT_FEATURE_REVIEW_QUEUE.md`
+- `docs/project-control/65_PRODUCT_ATTRIBUTE_VALIDATION_REPORT.md`
+- `docs/project-control/66_PRODUCT_FEATURE_AUTOFIX_DECISION_FLOW.md`
+
+نتیجه:
+
+- Product Feature Review Queue برای unknown/missing feature، invalid type، unit mismatch، suspicious weight، duplicate barcode، stone/group mismatch، pricing/production conflict، low confidence و manual-only mapping طراحی شد.
+- تصمیم‌های reviewer شامل approve، reject، request correction، accept auto-fix، edit normalized value، manual mapping، mark duplicate، block import و escalate to manager ثبت شد.
+- Product Attribute Validation Report به عنوان گزارش read-only از valid/warning/review/blocked، auto-fix، missing، duplicate، impact، confidence، risk و source طراحی شد.
+- Product Feature Auto-fix فقط برای normalizeهای کم‌ریسک تعریف شد و تغییر قیمت، وزن حساس، conflict سنگ/گروه، merge کالا، فرمول تولید، حذف feature و بارکد تکراری ممنوع ماند.
+- کد اجرایی، route، UI، auth، database، migration، localStorage و schema محک تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P22-BATCH
 
@@ -494,7 +511,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Feature Review Queue` و `Product Attribute Validation Report`، یا ادامه `Read Model Contract` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Product Feature Review UI Contract` و `Product Import Quality Gate`، یا ادامه `Read Model Contract` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

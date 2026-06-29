@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P22-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P23-BATCH**
+
+## وضعیت CONTROL-P23-BATCH
+
+CONTROL-P23-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database، localStorage یا schema محک اضافه نشد.
+
+- فایل Product Feature Review Queue ساخته شد: `docs/project-control/64_PRODUCT_FEATURE_REVIEW_QUEUE.md`
+- فایل Product Attribute Validation Report ساخته شد: `docs/project-control/65_PRODUCT_ATTRIBUTE_VALIDATION_REPORT.md`
+- فایل Product Feature Auto-fix Decision Flow ساخته شد: `docs/project-control/66_PRODUCT_FEATURE_AUTOFIX_DECISION_FLOW.md`
+- صف review برای feature ناشناخته/ناقص، type/unit نامعتبر، وزن مشکوک، duplicate barcode، mismatch سنگ/گروه، conflict و low confidence طراحی شد.
+- گزارش read-only اعتبارسنجی برای import dry-run، cockpit، manager review، AI snapshot و خروجی آینده محک ثبت شد.
+- مرز auto-fix کم‌ریسک، review اجباری تغییرهای حساس و correction/audit trail طراحی شد.
 
 ## وضعیت CONTROL-P22-BATCH
 
@@ -359,4 +370,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-طراحی `Financial Validation Rules` و `Financial Import Decision Flow`، یا طراحی `Product Import Decision Flow` و `Product Duplicate Resolution Flow` بدون کدنویسی.
+طراحی مستند `Product Feature Review UI Contract` و `Product Import Quality Gate`، یا ادامه `Read Model Contract` بدون کدنویسی.

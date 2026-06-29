@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P23-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P24-BATCH**
+
+## وضعیت CONTROL-P24-BATCH
+
+CONTROL-P24-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI واقعی، component، migration، auth، database، localStorage یا schema محک اضافه نشد.
+
+- فایل Product Feature Review UI Contract ساخته شد: `docs/project-control/67_PRODUCT_FEATURE_REVIEW_UI_CONTRACT.md`
+- فایل Product Import Quality Gate ساخته شد: `docs/project-control/68_PRODUCT_IMPORT_QUALITY_GATE.md`
+- فایل Product Feature Decision Audit Model ساخته شد: `docs/project-control/69_PRODUCT_FEATURE_DECISION_AUDIT_MODEL.md`
+- قرارداد UI آینده برای نمایش raw/normalized value، validation، confidence، risk، source، AI suggestion و duplicate/conflict signals طراحی شد.
+- شرط‌های عبور، تصمیم‌ها و blockerهای Quality Gate ورود کالا ثبت شد.
+- audit تصمیم reviewer/manager، manager override و approval boundary برای featureهای حساس طراحی شد.
 
 ## وضعیت CONTROL-P23-BATCH
 
@@ -370,4 +381,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-طراحی مستند `Product Feature Review UI Contract` و `Product Import Quality Gate`، یا ادامه `Read Model Contract` بدون کدنویسی.
+طراحی مستند `Product Import Batch Decision Contract` و `Product Review Metrics Read Model`، یا ادامه `Read Model Contract` بدون کدنویسی.

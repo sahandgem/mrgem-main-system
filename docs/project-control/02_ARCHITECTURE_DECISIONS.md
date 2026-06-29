@@ -60,6 +60,9 @@
 | ADR-052 | Product Feature AI Snapshot فقط از داده normalize و validate شده ساخته می‌شود و هیچ پیشنهاد AI نباید بدون review یا approval لازم تغییر حساس ایجاد کند. | فعال |
 | ADR-053 | feature حساس، conflict یا low confidence بدون Product Feature Review Decision و audit معتبر وارد main نمی‌شود؛ review queue فقط تصمیم تولید می‌کند و داده اصلی را مستقیم mutate نمی‌کند. | فعال |
 | ADR-054 | Product Feature Auto-fix فقط برای اصلاح کم‌ریسک، high confidence و rule مصوب مجاز است؛ تغییر قیمت، وزن حساس، سنگ/گروه متعارض، merge کالا، فرمول تولید، حذف feature و بارکد تکراری نیازمند review یا block هستند. | فعال |
+| ADR-055 | Product Feature Review UI آینده فقط decision command تولید می‌کند و حق mutate مستقیم main data ندارد؛ raw value، normalized value، validation، confidence، risk، source و audit context باید قابل مشاهده باشند. | فعال |
+| ADR-056 | ورود کالا فقط پس از Product Import Quality Gate و وجود validation، duplicate/conflict resolution، review لازم، confidence قابل قبول، dry-run و audit reference مجاز است. | فعال |
+| ADR-057 | تصمیم reviewer/manager درباره feature حساس باید append-only audit، reason، role، before/after، ruleVersion و approval level داشته باشد؛ AI فقط suggestionReference است. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -124,6 +127,12 @@
 - mutate داده اصلی توسط Product Feature Review Queue یا Product Attribute Validation Report
 - auto-fix قیمت، وزن حساس، سنگ/گروه متعارض، merge کالا، فرمول تولید، حذف feature یا بارکد تکراری
 - correction بدون مقدار قبل/بعد، دلیل، rule version و auditReference
+- ساخت یا اجرای Product Feature Review UI واقعی بدون فاز مستقل
+- mutate مستقیم main data توسط Review UI یا Quality Gate
+- عبور کالا از Quality Gate بدون dry-run، audit reference یا رفع blockerها
+- `pass` دادن به duplicate، conflict یا manual-only حل‌نشده
+- manager override بدون دلیل، approval level و audit append-only
+- ثبت AI به عنوان actor یا تصمیم‌گیر feature کالا
 - ساخت Mahak Export Adapter قبل از validator و duplicate detector
 - اعمال auto-fix بدون ProductCorrectionLog و تأیید لازم
 - خروجی محک یا AI snapshot از رکورد دارای duplicate/error حل‌نشده

@@ -40,6 +40,14 @@
 | CORE/DATA-MAHAK | طراحی Product Feature Review Audit Trail | رد کامل ورود صف، شواهد، reviewer، تصمیم و نتیجه |
 | CORE/DATA-MAHAK | طراحی Product Import Quality Report | خلاصه کیفیت batch کالا برای import gate و cockpit |
 | CORE/DATA-MAHAK | طراحی Product Feature Risk Summary | جمع‌بندی duplicate، pricing، production، inventory و AI risk |
+| UI/PRODUCT | طراحی Product Feature Review UI Contract | قرارداد نمایش شواهد، actionها و stateهای review بدون ساخت UI واقعی |
+| CORE/DATA-MAHAK | طراحی Product Import Quality Gate | دروازه validation، duplicate/conflict، confidence، review، dry-run و audit پیش از import |
+| CORE/CONTROL | طراحی Product Feature Decision Audit Model | audit تصمیم reviewer/manager با actor، role، before/after، reason و ruleVersion |
+| CORE/DATA-MAHAK | طراحی Product Import Gate Decision | قرارداد pass، pass_with_warnings، needs_review، blocked، quarantine و reject_batch |
+| CORE/DATA-MAHAK | طراحی Product Import Risk Summary | خلاصه blockerها و ریسک‌های batch/item برای quality gate |
+| CORE/CONTROL | طراحی Product Import Approval Requirement | تعیین approval لازم برای featureهای حساس و warningهای قابل عبور |
+| CORE/CONTROL | طراحی Product Feature Manager Override | override فقط با reason، approval level و audit append-only |
+| UI/PRODUCT | طراحی Product Feature Review UI State Model | stateهای pending تا resolved و transitionهای مجاز review |
 | UI | بررسی Product UI بعد از کاهش بدهی Workforce | UI کالا فقط بعد از مدل/schema/validator و کاهش بدهی WF |
 | CORE/FIN | طراحی Core Financial Event Model | مدل مشترک آینده برای نقدینگی، رسید و رویداد مالی |
 | CORE/FIN | طراحی Financial Schema Draft | تبدیل مدل مفهومی رویداد مالی به schema پیشنهادی، بدون migration |

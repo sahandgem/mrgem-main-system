@@ -68,12 +68,30 @@
 | CONTROL-P21-BATCH | انجام شده | طراحی Product Feature Engine، Core Product Attribute Model و Product Variant/Pricing/Production Boundary بدون کدنویسی یا کپی schema محک |
 | CONTROL-P22-BATCH | انجام شده | طراحی Product Feature Validation Rules، Product Feature AI Snapshot و Product Feature Import Mapping/Review Boundary بدون کدنویسی یا کپی schema محک |
 | CONTROL-P23-BATCH | انجام شده | طراحی Product Feature Review Queue، Product Attribute Validation Report و Product Feature Auto-fix Decision Flow بدون کدنویسی یا کپی schema محک |
+| CONTROL-P24-BATCH | انجام شده | طراحی Product Feature Review UI Contract، Product Import Quality Gate و Product Feature Decision Audit Model بدون ساخت UI یا کپی schema محک |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P23-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P24-BATCH**
+
+## جزئیات ثبت CONTROL-P24-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/67_PRODUCT_FEATURE_REVIEW_UI_CONTRACT.md`
+- `docs/project-control/68_PRODUCT_IMPORT_QUALITY_GATE.md`
+- `docs/project-control/69_PRODUCT_FEATURE_DECISION_AUDIT_MODEL.md`
+
+نتیجه:
+
+- قرارداد UI آینده برای نمایش اطلاعات review item، raw/normalized value، validation، confidence، risk، source، AI suggestion و duplicate/conflict signals طراحی شد.
+- actionهای approve، reject، correction، accept auto-fix، edit، manual map، mark duplicate، block و escalate همراه با stateهای UI ثبت شدند.
+- Quality Gate ورود کالا با شرط‌های required features، validation، duplicate/conflict resolution، barcode/group/stone/weight، impact review، confidence، audit و dry-run طراحی شد.
+- تصمیم‌های gate شامل pass، pass_with_warnings، needs_review، blocked، quarantine و reject_batch ثبت شد.
+- Decision Audit Model برای actor، role، before/after، reason، confidence، risk، ruleVersion، AI suggestion reference و manager override طراحی شد.
+- کد اجرایی، route، UI واقعی، component، auth، database، migration، localStorage و schema محک تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P23-BATCH
 
@@ -511,7 +529,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Feature Review UI Contract` و `Product Import Quality Gate`، یا ادامه `Read Model Contract` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Product Import Batch Decision Contract` و `Product Review Metrics Read Model`، یا ادامه `Read Model Contract` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

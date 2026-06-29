@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P18-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P19-BATCH**
+
+## وضعیت CONTROL-P19-BATCH
+
+CONTROL-P19-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database، localStorage یا schema محک اضافه نشد.
+
+- فایل Core Document Architecture ساخته شد: `docs/project-control/52_CORE_DOCUMENT_ARCHITECTURE.md`
+- فایل Master Data Registry ساخته شد: `docs/project-control/53_MASTER_DATA_REGISTRY.md`
+- فایل Core Business Event Bus ساخته شد: `docs/project-control/54_CORE_BUSINESS_EVENT_BUS.md`
+- BaseDocument و BaseDocumentItem به صورت مفهومی و مستقل از محک طراحی شدند.
+- master dataهای اصلی شامل Product، ProductGroup، Stone، Person، Customer، Supplier، Employee، BankAccount، CashBox، Currency، Unit، Warehouse، ProductionFormula، CostCenter و Branch ثبت شدند.
+- Central Business Event Bus به عنوان event bus مفهومی برای Automation-First، AI-Assisted و Central Cockpit طراحی شد.
 
 ## وضعیت CONTROL-P18-BATCH
 

@@ -136,11 +136,17 @@
 | FIN-AUDIT | بررسی استخراج schema نقدینگی، roles و RLS | فقط تحلیل و استخراج ایده/مدل؛ merge مستقیم ممنوع |
 | DATA-MAHAK | بررسی استخراج مدل کالا، بارکد، بانک سنگ و خروجی AI-ready | فقط تحلیل و استخراج ایده/مدل؛ merge مستقیم ممنوع |
 | CORE/DATA | طراحی Core Document Architecture | استفاده از ایده Header/Detail و BaseDocument بدون وابستگی به schema محک |
+| CORE/DATA | طراحی BaseDocument Pattern | قرارداد مفهومی header سندهای مالی، خرید، فروش، تولید، انبار و اصلاحیه |
+| CORE/DATA | طراحی BaseDocumentItem Pattern | قرارداد مفهومی itemهای سند شامل product، quantity، unit، amount، weight و cost |
 | DATA/PRODUCT | طراحی Product Feature Engine | طراحی ویژگی‌محور کالا بر اساس الگوهای قابل استفاده، نه ساختار فنی محک |
 | CORE/DATA | طراحی Reporting View Layer | طراحی لایه گزارش خواندنی مستقل، بدون وابستگی به viewهای محک |
 | CORE/CONTROL | طراحی Audit Framework | چارچوب audit برای import، rollback، تصمیم‌ها و تغییرات حساس |
 | CORE | طراحی Event Driven Business Engine | موتور رویداد کسب‌وکار مستقل از محک و آماده برای ماژول‌های آینده |
 | CORE/DATA | طراحی Master Data Registry | registry داده‌های پایه مثل کالا، گروه، سنگ، طرف حساب و مکان، مستقل از جدول‌های محک |
+| CORE | طراحی Central Business Event Bus | event bus مفهومی برای رخدادهای مالی، کالا، تولید، انبار، موبایل، review و crisis |
+| CORE | طراحی Business Event Contract | قرارداد event شامل eventId، eventType، sourceModule، confidence، riskFlags و auditReference |
+| CORE/DATA | طراحی Document Approval Status Model | وضعیت تایید سند شامل draft، pending، approved، rejected، reversed و archived |
+| CORE/CONTROL | طراحی Document Audit Trail Boundary | مرز audit برای سندها، itemها، import، approval، correction و rollback |
 | WF | کوچک‌سازی ادامه‌دار `WorkforcePages.tsx` | ادامه استخراج صفحه‌ها در فازهای کوچک و قابل rollback |
 | CORE | dashboard مرکزی چندشاخه | اتصال KPIهای WF به کابین مرکزی مستر جم |
 | UI | تست responsive و accessibility | keyboard، contrast، overflow و mobile viewport |

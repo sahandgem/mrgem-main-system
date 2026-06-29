@@ -50,6 +50,8 @@
 | ADR-042 | وابستگی مستقیم به SQL schema، tableها، columnها، queryها و viewهای محک ممنوع است؛ فقط الگوهای معماری و ایده‌های دامنه‌ای قابل استفاده هستند. | فعال |
 | ADR-043 | Cockpit cardها باید برای هر هشدار source، risk، confidence، drill-down و review boundary داشته باشند؛ هیچ crisis یا AI suggestion نباید بدون evidence نمایش قطعی شود. | فعال |
 | ADR-044 | Manager Review UI تنها مرجع تصمیم حساس در سطح UI است و هر تصمیم approve، reject، correction، attach، create، confirm، duplicate، ignore یا escalate باید audit trail داشته باشد. | فعال |
+| ADR-045 | Core Document Architecture باید مستقل از محک و بر اساس BaseDocument/BaseDocumentItem مفهومی طراحی شود؛ هیچ schema، جدول، ستون، query یا view محک وارد قرارداد سندهای مستر جم نمی‌شود. | فعال |
+| ADR-046 | Master Data Registry و Central Business Event Bus فعلاً مفهومی هستند و قبل از هر database، migration، route یا implementation باید در فاز مستقل تایید شوند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -110,6 +112,9 @@
 - وابستگی مستقیم به SQL schema، table، column، query یا view محک
 - طراحی هسته مستر جم بر اساس محدودیت‌های فنی محک
 - انتقال naming convention یا relationهای فنی محک به عنوان قرارداد اصلی
+- تبدیل BaseDocument یا Master Data Registry به schema اجرایی بدون فاز مستقل
+- ساخت event bus، queue، database table یا migration برای business events بدون تایید مرکز کنترل
+- کپی هر نام جدول/ستون/query/view محک در قرارداد سند یا master data
 - merge مستقیم خروجی labها به main بدون approval و checklist
 - کار همزمان دو Codex روی یک فایل مشترک
 - ساخت repo جدید بدون تصمیم صریح مرکز فرمان

@@ -63,12 +63,29 @@
 | CONTROL-P17-BATCH | انجام شده | طراحی Design Lab Launch Blueprint، Central Cockpit UI/UX Strategy و Design Tokens/Component Pattern Strategy بدون کدنویسی یا ساخت repo |
 | CONTROL-MAHAK-ARCH-01 | انجام شده | ثبت دانش معماری استخراج‌شده از محک به عنوان reference-only، بدون merge، بدون schema dependency و بدون کدنویسی |
 | CONTROL-P18-BATCH | انجام شده | طراحی Cockpit Dashboard Card Map، Manager Review UI Concept و AI Suggestion/Risk Visual Language بدون کدنویسی یا تغییر UI اصلی |
+| CONTROL-P19-BATCH | انجام شده | طراحی Core Document Architecture، Master Data Registry و Core Business Event Bus بدون کدنویسی یا کپی schema محک |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P18-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P19-BATCH**
+
+## جزئیات ثبت CONTROL-P19-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/52_CORE_DOCUMENT_ARCHITECTURE.md`
+- `docs/project-control/53_MASTER_DATA_REGISTRY.md`
+- `docs/project-control/54_CORE_BUSINESS_EVENT_BUS.md`
+
+نتیجه:
+
+- Core Document Architecture با الگوی Header/Detail مستقل از محک طراحی شد.
+- BaseDocument و BaseDocumentItem مفهومی برای سندهای Financial، Purchase، Sales، Production، InventoryMovement، Payroll و Adjustment ثبت شد.
+- Master Data Registry برای Product، ProductGroup، Stone، Person، Customer، Supplier، Employee، BankAccount، CashBox، Currency، Unit، Warehouse، ProductionFormula، CostCenter و Branch طراحی شد.
+- Central Business Event Bus و eventهای آینده مثل FinancialEventCreated، PaymentApproved، ProductImported، InventoryShortageDetected، ReceiptUploaded، ManagerDecisionSubmitted و CrisisSignalRaised ثبت شد.
+- کد اجرایی، route، UI، auth، database، migration، localStorage و schema محک تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P18-BATCH
 
@@ -426,7 +443,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Cockpit Drill-down Strategy` و `Review Queue Card Pattern`، یا ادامه `Core Document Architecture` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Document Approval Status Model` و `Document Audit Trail Boundary`، یا ادامه `Product Feature Engine` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

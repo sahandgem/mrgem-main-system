@@ -88,6 +88,9 @@
 | ADR-080 | Design Lab Foundation Package قانون‌نامه الزامی قبل از هر UI prototype یا main UI implementation است. | فعال |
 | ADR-081 | خروجی‌های Design Lab مفهومی هستند و مستقیم وارد main نمی‌شوند؛ prototype یا implementation نیازمند approval صریح و مستقل مرکز کنترل است. | فعال |
 | ADR-082 | همه design conceptهای حساس باید risk، confidence، audit و human approval boundary قابل مشاهده داشته باشند. | فعال |
+| ADR-083 | Central Cockpit drill-down strategy فقط concept است و هیچ cockpit UI، route، component یا prototype در این فاز تایید نشده است. | فعال |
+| ADR-084 | Cockpit screen specها خروجی Design Lab هستند و بدون approval مستقل وارد main نمی‌شوند. | فعال |
+| ADR-085 | تصمیم‌های مدیریتی cockpit باید risk، confidence، AI suggestion و audit boundary را آشکار نشان دهند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -185,6 +188,9 @@
 - شروع workstream بعدی بدون تصمیم مستقل مرکز کنترل
 - عبور خروجی Design Lab از approval gate بدون screen spec approved، mock data، risk/confidence، audit boundary، test plan و rollback plan
 - طراحی screen حساس بدون نمایش approval path، audit visibility و AI suggestion boundary
+- ساخت cockpit UI، route، component یا prototype به بهانه screen spec یا drill-down strategy
+- نمایش کارت cockpit بدون drill-down، source report، risk/confidence و audit visibility برای تصمیم حساس
+- اجرای decision cockpit بدون decisionReason، actor و auditReference
 - ورود مستقیم خروجی Design Lab به main بدون review و approval مستقل
 - ساخت UI/component واقعی به بهانه wireframe یا mock screen
 - آزادکردن Implementation Hold بدون Design Lab approval، synthetic/test/rollback/storage/integration plan و دستور مستقل

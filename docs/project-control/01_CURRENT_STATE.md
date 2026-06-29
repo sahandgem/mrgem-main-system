@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P31-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P32-BATCH**
+
+## وضعیت CONTROL-P32-BATCH
+
+CONTROL-P32-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، UI واقعی، prototype واقعی، route، component، repo، migration، auth، database یا localStorage اضافه نشد.
+
+- فایل Central Cockpit Drill-down Strategy ساخته شد: `docs/project-control/92_CENTRAL_COCKPIT_DRILL_DOWN_STRATEGY.md`
+- فایل Central Cockpit Screen Spec Package ساخته شد: `docs/project-control/93_CENTRAL_COCKPIT_SCREEN_SPEC_PACKAGE.md`
+- فایل Cockpit Manager Decision Flow Spec ساخته شد: `docs/project-control/94_COCKPIT_MANAGER_DECISION_FLOW_SPEC.md`
+- فایل Cockpit Risk Confidence Audit Visual Rules ساخته شد: `docs/project-control/95_COCKPIT_RISK_CONFIDENCE_AUDIT_VISUAL_RULES.md`
+- مسیر drill-down کارت‌های اصلی cockpit به screen concept، source report، action مدیریتی، audit و AI suggestion ثبت شد.
+- ثبت شد که screen specهای cockpit خروجی Design Lab هستند و هنوز هیچ cockpit UI، route، component یا prototype تایید نشده است.
 
 ## وضعیت CONTROL-P31-BATCH
 
@@ -460,4 +471,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-Central Cockpit Drill-down Strategy یا یک Design Lab screen-spec package محدود، فقط در سطح مستندات و بدون UI/prototype واقعی.
+Cockpit implementation approval gate یا یک بسته screen-spec محدود برای اولین کارت cockpit، فقط در سطح مستندات و بدون UI/prototype واقعی.

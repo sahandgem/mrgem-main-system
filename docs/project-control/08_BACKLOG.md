@@ -94,6 +94,13 @@
 | UI/CONTROL | طراحی Risk and Confidence Visual Rulebook | زبان دیداری risk/confidence برای cockpit و review screens |
 | UI/CONTROL | طراحی Manager Decision UX Standard | استاندارد نمایش تصمیم انسانی، approval، reason و audit |
 | UI/CONTROL | طراحی Central Cockpit Drill-down Strategy | مسیر drill-down از کارت‌ها به evidence، review و audit |
+| UI/CONTROL | طراحی Central Cockpit Screen Spec Package | screen specهای Overview، Financial، Product Import، Manager Review، Crisis و AI Suggestion |
+| UI/CONTROL | طراحی Cockpit Manager Decision Flow | قرارداد approve/reject/hold/correction/escalate/override و actionهای مدیریتی |
+| UI/CONTROL | طراحی Cockpit Risk Confidence Audit Visual Rules | قواعد دیداری risk، confidence و audit برای کارت‌ها و decision pointها |
+| UI/CONTROL | طراحی Cockpit Card to Drill-down Map | اتصال هر کارت cockpit به screen concept، report، action و audit |
+| UI/CONTROL | طراحی Cockpit AI Suggestion Review Screen | بررسی پیشنهادهای AI با evidence، confidence، risk و approval |
+| UI/CONTROL | طراحی Cockpit Crisis Signal Drill-down | صفحه مفهومی بررسی crisis signal چندماژولی |
+| UI/CONTROL | طراحی Cockpit Implementation Approval Gate | gate مستقل قبل از هر UI، route، component یا prototype واقعی cockpit |
 | WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
 | FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |
 | PROD/DATA | طراحی Production Formula Architecture | مدل مفهومی فرمول تولید، مواد و هزینه بدون engine اجرایی |

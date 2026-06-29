@@ -76,12 +76,31 @@
 | CONTROL-P29-BATCH | انجام شده | طراحی Product Import Design Lab Concept Package، Flow Map/Screen Concepts و Mock Scenario Storyboard بدون ساخت UI، component، route یا prototype واقعی |
 | CONTROL-P30-BATCH | انجام شده | جمع‌بندی Product Import Design Lab، ثبت freeze برای implementation و پیشنهاد Design Lab Foundation Package به عنوان مسیر بعدی بدون کدنویسی |
 | CONTROL-P31-BATCH | انجام شده | طراحی Design Lab Foundation Rulebook، Output Contract، Screen Spec Template، Review Checklist و Approval Gate بدون کدنویسی یا UI واقعی |
+| CONTROL-P32-BATCH | انجام شده | طراحی Central Cockpit Drill-down Strategy، Cockpit Screen Spec Package، Manager Decision Flow و Risk/Confidence/Audit Visual Rules بدون UI واقعی |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P31-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P32-BATCH**
+
+## جزئیات ثبت CONTROL-P32-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/92_CENTRAL_COCKPIT_DRILL_DOWN_STRATEGY.md`
+- `docs/project-control/93_CENTRAL_COCKPIT_SCREEN_SPEC_PACKAGE.md`
+- `docs/project-control/94_COCKPIT_MANAGER_DECISION_FLOW_SPEC.md`
+- `docs/project-control/95_COCKPIT_RISK_CONFIDENCE_AUDIT_VISUAL_RULES.md`
+
+نتیجه:
+
+- برای کارت‌های Financial Pressure، Cash-in/Cash-out، Bank Import، Installment، Manager Review Queue، Product Import Warning، Inventory Shortage، Production Risk، Workforce Risk، Mobile Receipt Queue، AI Suggestion و Crisis Signal مسیر drill-down مفهومی ثبت شد.
+- screen specهای Central Cockpit Overview، Financial Pressure Drill-down، Product Import Metrics Drill-down، Manager Review Queue Drill-down، Crisis Signal Drill-down و AI Suggestion Review طراحی شدند.
+- Cockpit Manager Decision Flow برای approve، reject، hold، correction، escalate، override، confirm installment، approve valid only، block import، production review و inventory check ثبت شد.
+- قرارداد تصمیم مدیر شامل decisionId، decisionType، sourceCard، sourceModule، relatedDocument، relatedEvent، riskFlags، confidenceLevel، aiSuggestionReference، decisionReason، actor، timestamp و auditReference است.
+- قواعد دیداری risk، confidence و audit برای low، medium، high، conflict، manual_only و audit states ثبت شد.
+- کد اجرایی، UI واقعی، route، component، prototype، auth، database، migration، repo و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P31-BATCH
 
@@ -661,7 +680,7 @@
 
 ## P پیشنهادی بعدی
 
-Central Cockpit Drill-down Strategy یا یک Design Lab screen-spec package محدود، فقط در سطح مستندات و بدون UI/prototype واقعی.
+Cockpit implementation approval gate یا یک بسته screen-spec محدود برای اولین کارت cockpit، فقط در سطح مستندات و بدون UI/prototype واقعی.
 
 ## قالب ثبت فاز بعدی
 

@@ -61,12 +61,27 @@
 | CONTROL-P15-BATCH | انجام شده | طراحی External Data Staging Policy، Approved Import Flow، Import Gate و Rollback Policy بدون کدنویسی |
 | CONTROL-P16-BATCH | انجام شده | طراحی Import Dry-run Report، Quarantine Review Flow و Import Simulation Test Cases بدون کدنویسی |
 | CONTROL-P17-BATCH | انجام شده | طراحی Design Lab Launch Blueprint، Central Cockpit UI/UX Strategy و Design Tokens/Component Pattern Strategy بدون کدنویسی یا ساخت repo |
+| CONTROL-MAHAK-ARCH-01 | انجام شده | ثبت دانش معماری استخراج‌شده از محک به عنوان reference-only، بدون merge، بدون schema dependency و بدون کدنویسی |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P17-BATCH**
+آخرین P کنترل پروژه: **CONTROL-MAHAK-ARCH-01**
+
+## جزئیات ثبت CONTROL-MAHAK-ARCH-01
+
+فایل جدید:
+
+- `docs/project-control/51_MAHAK_ARCHITECTURE_KNOWLEDGE_EXTRACTION.md`
+
+نتیجه:
+
+- محک به عنوان architecture knowledge reference و historical data source ثبت شد، نه بخشی از معماری مستر جم.
+- الگوهای قابل استفاده شامل Header/Detail، BaseDocument، BaseDocumentItem، Master Data، Feature Based Product Model، Audit Trail، Status Based Soft Delete، View Based Reporting و Multi Currency Ready Design ثبت شد.
+- انتقال مستقیم table structure، table names، column names، SQL schema، queryها و viewهای محک ممنوع ثبت شد.
+- استفاده مجاز از داده‌های استخراج‌شده برای طراحی مدل داده، اعتبارسنجی هسته، تست import، مهاجرت داده‌های تاریخی و تحلیل رفتار کسب‌وکار ثبت شد.
+- کد اجرایی، route، UI، auth، database، migration، repo، localStorage و پروژه `mahak-web-version` تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P17-BATCH
 
@@ -394,7 +409,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Cockpit Dashboard Card Map` و `Manager Review UI Concept`، یا ادامه `Bank Import Staging Model` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Core Document Architecture` و `Master Data Registry`، یا ادامه `Cockpit Dashboard Card Map` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

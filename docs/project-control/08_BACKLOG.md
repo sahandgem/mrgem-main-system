@@ -130,6 +130,12 @@
 | CONTROL | طراحی Source Integration Plan | تبدیل نقشه منابع به برنامه استخراج مرحله‌ای |
 | FIN-AUDIT | بررسی استخراج schema نقدینگی، roles و RLS | فقط تحلیل و استخراج ایده/مدل؛ merge مستقیم ممنوع |
 | DATA-MAHAK | بررسی استخراج مدل کالا، بارکد، بانک سنگ و خروجی AI-ready | فقط تحلیل و استخراج ایده/مدل؛ merge مستقیم ممنوع |
+| CORE/DATA | طراحی Core Document Architecture | استفاده از ایده Header/Detail و BaseDocument بدون وابستگی به schema محک |
+| DATA/PRODUCT | طراحی Product Feature Engine | طراحی ویژگی‌محور کالا بر اساس الگوهای قابل استفاده، نه ساختار فنی محک |
+| CORE/DATA | طراحی Reporting View Layer | طراحی لایه گزارش خواندنی مستقل، بدون وابستگی به viewهای محک |
+| CORE/CONTROL | طراحی Audit Framework | چارچوب audit برای import، rollback، تصمیم‌ها و تغییرات حساس |
+| CORE | طراحی Event Driven Business Engine | موتور رویداد کسب‌وکار مستقل از محک و آماده برای ماژول‌های آینده |
+| CORE/DATA | طراحی Master Data Registry | registry داده‌های پایه مثل کالا، گروه، سنگ، طرف حساب و مکان، مستقل از جدول‌های محک |
 | WF | کوچک‌سازی ادامه‌دار `WorkforcePages.tsx` | ادامه استخراج صفحه‌ها در فازهای کوچک و قابل rollback |
 | CORE | dashboard مرکزی چندشاخه | اتصال KPIهای WF به کابین مرکزی مستر جم |
 | UI | تست responsive و accessibility | keyboard، contrast، overflow و mobile viewport |

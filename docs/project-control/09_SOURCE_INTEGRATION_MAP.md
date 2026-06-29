@@ -70,3 +70,11 @@
 | Core Financial Event Model | CORE/FIN | Extract model | مطالعه نقدینگی و رسیدها |
 | Source Integration Plan | CONTROL | Extract idea | تکمیل این map و تعیین اولویت‌ها |
 
+## CONTROL-MAHAK-ARCH-01 - Mahak Reference-only Decision
+
+- `mahak-web-version` و تحلیل معماری محک فقط reference-only هستند.
+- merge مستقیم پروژه محک یا کدهای مرتبط با آن ممنوع است.
+- وابستگی به SQL schema، tableها، columnها، queryها و viewهای محک ممنوع است.
+- داده‌های تاریخی محک فقط از مسیر staging، import، validation، dry-run، review و approved import قابل استفاده هستند.
+- فقط الگوهای معماری قابل استفاده‌اند: Header/Detail، BaseDocument، BaseDocumentItem، Master Data، Feature Based Product Model، Audit Trail، Status Based Soft Delete، View Based Reporting و Multi Currency Ready Design.
+- هسته مستر جم باید مستقل از محک و بر اساس Event Driven Architecture، AI Ready Architecture، Domain Driven Design، Modular Architecture، Unified Business Model و Central Business Event Bus طراحی شود.

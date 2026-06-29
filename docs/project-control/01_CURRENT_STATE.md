@@ -12,7 +12,17 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P17-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-MAHAK-ARCH-01**
+
+## وضعیت CONTROL-MAHAK-ARCH-01
+
+CONTROL-MAHAK-ARCH-01 انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database، repo، localStorage یا merge پروژه محک انجام نشد.
+
+- فایل Mahak Architecture Knowledge Extraction ساخته شد: `docs/project-control/51_MAHAK_ARCHITECTURE_KNOWLEDGE_EXTRACTION.md`
+- ثبت شد که محک بخشی از معماری مستر جم نیست و فقط مرجع دانش معماری، تجربه طراحی و داده تاریخی است.
+- الگوهای قابل استفاده ثبت شد: Header/Detail، BaseDocument، BaseDocumentItem، Master Data، Feature Based Product Model، Audit Trail، Status Based Soft Delete، View Based Reporting و Multi Currency Ready Design.
+- انتقال مستقیم جدول‌ها، ستون‌ها، schema، queryها و viewهای محک ممنوع ثبت شد.
+- استفاده مجاز از داده‌های استخراج‌شده فقط برای طراحی مدل داده، اعتبارسنجی هسته، تست import، مهاجرت داده تاریخی و تحلیل رفتار کسب‌وکار ثبت شد.
 
 ## وضعیت CONTROL-P17-BATCH
 

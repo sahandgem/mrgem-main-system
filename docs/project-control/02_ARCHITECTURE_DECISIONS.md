@@ -46,6 +46,8 @@
 | ADR-038 | داده quarantined نباید بدون review decision، correction log یا manager/admin approval از quarantine خارج و وارد main شود. | فعال |
 | ADR-039 | Design Lab باید از main جدا بماند؛ خروجی آن مستقیم merge نمی‌شود و فقط pattern/spec تصویب‌شده با فاز implementation مستقل وارد main می‌شود. | فعال |
 | ADR-040 | Central Cockpit UI باید تصمیم‌محور، قابل scan در ۱۰ ثانیه، دارای drill-down، confidence context و review boundary برای موارد حساس باشد. | فعال |
+| ADR-041 | Mahak بخشی از معماری مستر جم نیست؛ فقط historical data source و architecture reference برای استخراج تجربه طراحی است. | فعال |
+| ADR-042 | وابستگی مستقیم به SQL schema، tableها، columnها، queryها و viewهای محک ممنوع است؛ فقط الگوهای معماری و ایده‌های دامنه‌ای قابل استفاده هستند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -103,6 +105,9 @@
 - اعمال auto-fix بدون ProductCorrectionLog و تأیید لازم
 - خروجی محک یا AI snapshot از رکورد دارای duplicate/error حل‌نشده
 - dependency مستقیم برنامه اصلی به فایل‌های قدیمی `mahak-web-version`
+- وابستگی مستقیم به SQL schema، table، column، query یا view محک
+- طراحی هسته مستر جم بر اساس محدودیت‌های فنی محک
+- انتقال naming convention یا relationهای فنی محک به عنوان قرارداد اصلی
 - merge مستقیم خروجی labها به main بدون approval و checklist
 - کار همزمان دو Codex روی یک فایل مشترک
 - ساخت repo جدید بدون تصمیم صریح مرکز فرمان

@@ -78,6 +78,10 @@
 | ADR-070 | Design Lab فقط flow، wireframe، mock screen، card و concept با synthetic data تولید می‌کند؛ هیچ خروجی آن بدون approval جداگانه وارد main نمی‌شود. | فعال |
 | ADR-071 | داده واقعی، production storage، route، UI، database، migration، auth و direct Mahak connection در Product Import همچنان ممنوع‌اند. | فعال |
 | ADR-072 | هر prototype آینده به approval صریح و مستقل مرکز کنترل نیاز دارد؛ readiness، backlog یا design approval مجوز ساخت محسوب نمی‌شوند. | فعال |
+| ADR-073 | Product Import Design Lab concept package تایید مستنداتی دارد و فقط Flow Map، Screen Concept، Mock Scenario و Design Spec تولید می‌کند. | فعال |
+| ADR-074 | Product Import implementation همچنان NOT_APPROVED است؛ package مفهومی، screen concept یا storyboard مجوز ساخت UI اجرایی، component، route یا prototype واقعی نیست. | فعال |
+| ADR-075 | خروجی‌های Design Lab مفهومی هستند و بدون approval مستقل، merge checklist، implementation plan و rollback boundary وارد main نمی‌شوند. | فعال |
+| ADR-076 | همه سناریوهای Product Import در Design Lab باید synthetic/mock و بدون داده واقعی مشتری، کالا، barcode، قیمت یا محک باشند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -166,6 +170,10 @@
 - ساخت migration، schema dependency یا direct Mahak dependency برای prototype
 - action برگشت‌ناپذیر یا تغییر manager approval واقعی در جریان demo
 - برداشت `DESIGN_REVIEW_APPROVED` به عنوان مجوز Prototype Build یا Implementation
+- برداشت Product Import Design Lab Concept Package به عنوان مجوز UI اجرایی، component، route، prototype واقعی یا implementation
+- استفاده از داده واقعی در mock scenarioها، screen conceptها یا Design Lab package
+- merge مستقیم screen concept یا Design Lab output به main بدون approval مستقل
+- ساخت Product Import Flow Map به شکل route یا component واقعی در main
 - ورود مستقیم خروجی Design Lab به main بدون review و approval مستقل
 - ساخت UI/component واقعی به بهانه wireframe یا mock screen
 - آزادکردن Implementation Hold بدون Design Lab approval، synthetic/test/rollback/storage/integration plan و دستور مستقل

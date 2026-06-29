@@ -72,6 +72,13 @@
 | UI/PRODUCT | طراحی Product Import Design Lab Transition Plan | ورودی‌ها، خروجی‌ها و handoff مفهومی Design Lab بدون کدنویسی |
 | CONTROL/DATA-MAHAK | ثبت Product Import Implementation Hold Policy | شرایط hold، blockerها و الزامات approval مستقل |
 | UI/PRODUCT | طراحی Product Import Flow Map | مسیر synthetic input تا review، gate، batch و manager decision |
+| UI/PRODUCT | طراحی Product Import Design Lab Concept Package | بسته مفهومی Design Lab برای flow، screen spec، کارت‌ها، report و AI suggestion |
+| UI/PRODUCT | طراحی Product Import Screen Concepts | screen conceptهای dry-run، staging، mapping، validation، review، gate، decision و audit |
+| UI/PRODUCT | طراحی Product Import Mock Scenario Storyboard | سناریوهای synthetic برای valid، missing، duplicate، mismatch، conflict، low confidence و override |
+| UI/PRODUCT | طراحی Product Import Design Lab Screen Spec | مشخصات صفحه‌های مفهومی بدون ساخت component یا route |
+| UI/PRODUCT | طراحی Product Import AI Suggestion Panel Concept | نمایش suggestion، reason، confidence، risk، related data و approval requirement |
+| UI/PRODUCT | طراحی Product Import Audit Summary Screen | نمایش مفهومی رد تصمیم‌ها، issueها و audit reference بدون audit اجرایی |
+| UI/PRODUCT | طراحی Product Import Manager Decision UX | تجربه مفهومی تصمیم مدیر برای approve، reject، correction، split، hold و override |
 | UI/PRODUCT | طراحی Product Review Queue Screen Concept | mock مفهومی issue، raw/normalized، confidence، risk و actionها |
 | UI/PRODUCT | طراحی Product Quality Gate Screen Concept | نمایش شرط‌ها، blockerها و gate decision بدون رفتار اجرایی |
 | UI/PRODUCT | طراحی Product Import Manager Report Screen | گزارش مفهومی batch، risk، AI suggestion و required action |

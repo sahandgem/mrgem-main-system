@@ -73,12 +73,31 @@
 | CONTROL-P26-BATCH | انجام شده | طراحی Product Import Batch Split Flow، Product Data Quality Threshold Policy و Product Import Architecture Readiness Report بدون کدنویسی یا کپی schema محک |
 | CONTROL-P27-BATCH | انجام شده | طراحی Product Import Prototype Charter، Synthetic Data Protocol و Prototype Isolation Boundary بدون ساخت prototype یا استفاده از داده واقعی |
 | CONTROL-P28-BATCH | انجام شده | ثبت Design Review approval، برنامه انتقال به Design Lab و Implementation Hold Policy؛ ساخت prototype و implementation تایید نشد |
+| CONTROL-P29-BATCH | انجام شده | طراحی Product Import Design Lab Concept Package، Flow Map/Screen Concepts و Mock Scenario Storyboard بدون ساخت UI، component، route یا prototype واقعی |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P28-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P29-BATCH**
+
+## جزئیات ثبت CONTROL-P29-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/82_PRODUCT_IMPORT_DESIGN_LAB_CONCEPT_PACKAGE.md`
+- `docs/project-control/83_PRODUCT_IMPORT_FLOW_MAP_AND_SCREEN_CONCEPTS.md`
+- `docs/project-control/84_PRODUCT_IMPORT_MOCK_SCENARIO_STORYBOARD.md`
+
+نتیجه:
+
+- بسته مفهومی Design Lab برای Product Import طراحی و ثبت شد.
+- خروجی‌های مجاز شامل Flow Map، Import Dry-run Screen Concept، Review Queue Screen Concept، Quality Gate Result، Batch Decision، Manager Decision Report، Product Data Quality Metrics Card و AI Suggestion Panel Concept تعریف شدند.
+- Flow Map از انتخاب منبع mock تا parse preview، staging preview، feature mapping، validation report، review queue، quality gate، batch decision، manager report و audit summary ثبت شد.
+- screen conceptهای Import Source Selection، Parse Preview، Staging Preview، Feature Mapping، Validation Report، Review Queue، Quality Gate Result، Batch Decision، Manager Decision Report و Audit Summary طراحی شدند.
+- storyboard سناریوهای synthetic شامل clean valid import، missing required feature، duplicate barcode، stone/group mismatch، invalid weight/unit، pricing/production conflict، low confidence، manual-only mapping، mixed batch و manager override ثبت شد.
+- اجرای واقعی، UI واقعی، component، route، prototype، import، storage واقعی، اتصال محک، داده واقعی و implementation همچنان `NOT_APPROVED` باقی ماند.
+- کد اجرایی، route، UI، auth، database، migration، repo و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P28-BATCH
 
@@ -603,7 +622,7 @@
 
 ## P پیشنهادی بعدی
 
-برنامه‌ریزی Design Lab در سطح concept؛ هر ساخت prototype یا implementation فقط با approval مستقل مرکز کنترل.
+بازبینی بسته concept توسط مرکز کنترل و در صورت تایید مستقل، طراحی prototype ایزوله فقط با داده synthetic و بدون اتصال main.
 
 ## قالب ثبت فاز بعدی
 

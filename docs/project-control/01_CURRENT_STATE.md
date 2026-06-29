@@ -12,7 +12,19 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P28-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P29-BATCH**
+
+## وضعیت CONTROL-P29-BATCH
+
+CONTROL-P29-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، prototype واقعی، route، UI اجرایی، component، repo، migration، auth، database، localStorage، داده واقعی، اتصال محک یا schema محک اضافه نشد.
+
+- فایل Product Import Design Lab Concept Package ساخته شد: `docs/project-control/82_PRODUCT_IMPORT_DESIGN_LAB_CONCEPT_PACKAGE.md`
+- فایل Product Import Flow Map and Screen Concepts ساخته شد: `docs/project-control/83_PRODUCT_IMPORT_FLOW_MAP_AND_SCREEN_CONCEPTS.md`
+- فایل Product Import Mock Scenario Storyboard ساخته شد: `docs/project-control/84_PRODUCT_IMPORT_MOCK_SCENARIO_STORYBOARD.md`
+- بسته مفهومی Design Lab برای Flow Map، Import Dry-run، Review Queue، Quality Gate، Batch Decision، Manager Decision Report، Metrics Card و AI Suggestion Panel ثبت شد.
+- screen conceptها فقط به عنوان spec مفهومی ثبت شدند و component یا route واقعی ساخته نشد.
+- سناریوهای mock/synthetic برای valid import، missing feature، duplicate barcode، stone/group mismatch، invalid weight/unit، pricing/production conflict، low confidence، manual-only، mixed batch و manager override ثبت شدند.
+- وضعیت ساخت prototype واقعی و implementation همچنان `NOT_APPROVED` باقی ماند.
 
 ## وضعیت CONTROL-P28-BATCH
 
@@ -425,4 +437,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-آغاز برنامه‌ریزی Design Lab فقط در سطح flow/wireframe/mock concept؛ ساخت prototype و implementation تا دستور مستقل در hold باقی می‌ماند.
+بررسی و تایید Design Lab concept package توسط مرکز کنترل، سپس در صورت تایید مستقل فقط طراحی prototype ایزوله با داده synthetic؛ ساخت prototype واقعی و implementation هنوز در hold است.

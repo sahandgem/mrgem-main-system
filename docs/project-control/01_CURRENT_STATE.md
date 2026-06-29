@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-MAHAK-ARCH-01**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P18-BATCH**
+
+## وضعیت CONTROL-P18-BATCH
+
+CONTROL-P18-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI اصلی، migration، auth، database، repo یا localStorage تغییر داده نشد.
+
+- فایل Cockpit Dashboard Card Map ساخته شد: `docs/project-control/48_COCKPIT_DASHBOARD_CARD_MAP.md`
+- فایل Manager Review UI Concept ساخته شد: `docs/project-control/49_MANAGER_REVIEW_UI_CONCEPT.md`
+- فایل AI Suggestion UI and Risk Visual Language ساخته شد: `docs/project-control/50_AI_SUGGESTION_UI_AND_RISK_VISUAL_LANGUAGE.md`
+- کارت‌های اصلی cockpit شامل Financial Pressure، Cash-in/Cash-out، Bank Import Status، Installment Confirmation، Manager Review Queue، Product Import Warning، Inventory Shortage، Production Risk، Workforce Risk، Mobile Receipt Queue، AI Suggestion و Crisis Signal طراحی شد.
+- مفهوم UI تصمیم مدیر برای weak match، conflict، duplicate، auto-fix candidate، mismatch، formula risk، workforce risk و mobile receipt issue ثبت شد.
+- زبان دیداری risk و confidence برای low، medium، high، conflict و manual only طراحی شد.
 
 ## وضعیت CONTROL-MAHAK-ARCH-01
 

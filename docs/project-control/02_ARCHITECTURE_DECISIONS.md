@@ -48,6 +48,8 @@
 | ADR-040 | Central Cockpit UI باید تصمیم‌محور، قابل scan در ۱۰ ثانیه، دارای drill-down، confidence context و review boundary برای موارد حساس باشد. | فعال |
 | ADR-041 | Mahak بخشی از معماری مستر جم نیست؛ فقط historical data source و architecture reference برای استخراج تجربه طراحی است. | فعال |
 | ADR-042 | وابستگی مستقیم به SQL schema، tableها، columnها، queryها و viewهای محک ممنوع است؛ فقط الگوهای معماری و ایده‌های دامنه‌ای قابل استفاده هستند. | فعال |
+| ADR-043 | Cockpit cardها باید برای هر هشدار source، risk، confidence، drill-down و review boundary داشته باشند؛ هیچ crisis یا AI suggestion نباید بدون evidence نمایش قطعی شود. | فعال |
+| ADR-044 | Manager Review UI تنها مرجع تصمیم حساس در سطح UI است و هر تصمیم approve، reject، correction، attach، create، confirm، duplicate، ignore یا escalate باید audit trail داشته باشد. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -115,6 +117,9 @@
 - تغییر UI اصلی، route، auth، database یا migration به بهانه Design Lab
 - وابسته کردن main به assetها، dependencyها یا prototypeهای Design Lab
 - نمایش AI suggestion یا crisis signal در cockpit بدون confidence، source و drill-down
+- طراحی کارت cockpit بدون risk/confidence/review boundary
+- نمایش پیشنهاد AI بدون reason، related data، required approval و audit reference
+- اجرای تصمیم حساس از UI بدون Manager Review و audit trail
 - تغییر نام شاخه‌های مادر یا کدهای branch registry
 
 ## قانون ثبت تصمیم جدید

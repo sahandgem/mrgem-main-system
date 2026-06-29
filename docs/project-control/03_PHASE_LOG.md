@@ -62,12 +62,29 @@
 | CONTROL-P16-BATCH | انجام شده | طراحی Import Dry-run Report، Quarantine Review Flow و Import Simulation Test Cases بدون کدنویسی |
 | CONTROL-P17-BATCH | انجام شده | طراحی Design Lab Launch Blueprint، Central Cockpit UI/UX Strategy و Design Tokens/Component Pattern Strategy بدون کدنویسی یا ساخت repo |
 | CONTROL-MAHAK-ARCH-01 | انجام شده | ثبت دانش معماری استخراج‌شده از محک به عنوان reference-only، بدون merge، بدون schema dependency و بدون کدنویسی |
+| CONTROL-P18-BATCH | انجام شده | طراحی Cockpit Dashboard Card Map، Manager Review UI Concept و AI Suggestion/Risk Visual Language بدون کدنویسی یا تغییر UI اصلی |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-MAHAK-ARCH-01**
+آخرین P کنترل پروژه: **CONTROL-P18-BATCH**
+
+## جزئیات ثبت CONTROL-P18-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/48_COCKPIT_DASHBOARD_CARD_MAP.md`
+- `docs/project-control/49_MANAGER_REVIEW_UI_CONCEPT.md`
+- `docs/project-control/50_AI_SUGGESTION_UI_AND_RISK_VISUAL_LANGUAGE.md`
+
+نتیجه:
+
+- نقشه کارت‌های cockpit برای financial pressure، cash-in/cash-out، bank import، installment، manager review، product warning، inventory، production، workforce، mobile receipt، AI suggestion و crisis signal ثبت شد.
+- برای هر کارت هدف، داده ورودی، خروجی/اقدام، risk، confidence، drill-down و نیاز review طراحی شد.
+- Manager Review UI برای weak match، receipt/bank conflict، installment medium confidence، duplicate، auto-fix، inventory mismatch، production formula risk، workforce risk و mobile receipt issue طراحی شد.
+- AI Suggestion UI با suggestion، reason، confidence، risk flags، related data، required approval و audit reference ثبت شد.
+- کد اجرایی، route، UI اصلی، auth، database، migration، repo و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-MAHAK-ARCH-01
 
@@ -409,7 +426,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Core Document Architecture` و `Master Data Registry`، یا ادامه `Cockpit Dashboard Card Map` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Cockpit Drill-down Strategy` و `Review Queue Card Pattern`، یا ادامه `Core Document Architecture` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

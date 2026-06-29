@@ -122,6 +122,11 @@
 | UI | طراحی Manager Review UI Concept | تجربه تصمیم approve/reject/correction/quarantine/rollback برای مدیر |
 | UI | طراحی AI Suggestion UI Concept | نمایش پیشنهاد AI با source، confidence، evidence و review boundary |
 | UI | طراحی Risk and Confidence Visual Language | زبان بصری ریسک، بحران، review و confidence برای کل cockpit |
+| UI/CORE | طراحی Risk Visual Language | نمایش low، medium، high، conflict و manual only در کارت‌ها و review |
+| UI/CORE | طراحی Confidence Visual Language | نمایش high، medium، low، conflict و manual only با evidence و source |
+| UI/CORE | طراحی Cockpit Drill-down Strategy | مسیر summary به detail، source snapshot، audit reference و review queue |
+| UI | طراحی Review Queue Card Pattern | الگوی کارت تصمیم مدیر برای approve، reject، correction، attach و escalate |
+| UI | طراحی Crisis Signal UI Pattern | الگوی هشدار بحران چندماژولی با risk، affected modules و decision pack |
 | UI/CONTROL | طراحی Design Lab to Main Handoff | روش تبدیل prototype به approved component spec و implementation امن در main |
 | CONTROL | طراحی multi-Codex handoff protocol | پروتکل تحویل کار بین Codexها و مرکز فرمان |
 | CONTROL | طراحی branch ownership rules | مالکیت branch/file/workstream برای جلوگیری از conflict |

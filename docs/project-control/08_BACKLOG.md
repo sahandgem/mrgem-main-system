@@ -84,6 +84,15 @@
 | UI/PRODUCT | آماده‌سازی Product Import Design Lab Handoff | بسته تحویل شامل اسناد concept، flow، storyboard، synthetic data و isolation |
 | CONTROL | طراحی Next Control Workstream Decision | انتخاب مسیر بعدی پس از freeze Product Import |
 | UI/CONTROL | طراحی Design Lab Foundation Package | rulebook و مرزهای Design Lab پیش از UI یا prototype واقعی |
+| UI/CONTROL | طراحی Design Lab Foundation Rulebook | قانون‌نامه نقش Design Lab، خروجی‌های مجاز، ممنوعیت‌ها و اصول cockpit |
+| UI/CONTROL | طراحی Design Lab Output Contract | قرارداد خروجی شامل هدف، داده، action، risk/confidence، AI، manager decision و audit |
+| UI/CONTROL | طراحی Design Lab Handoff Status Model | وضعیت‌های draft، ready_for_review، approved_for_prototype، rejected، needs_revision و frozen |
+| UI/CONTROL | طراحی Design Lab Screen Spec Template | قالب screen title، goal، role، data source، cards، actions، states و restrictions |
+| UI/CONTROL | طراحی Design Lab Review Checklist | کنترل هدف، وضعیت ۱۰ ثانیه‌ای، risk/confidence، AI boundary، audit و concept-only بودن |
+| UI/CONTROL | طراحی Design Lab to Main Approval Gate | gate خروج از Design Lab به prototype/main با approval، test و rollback |
+| UI/CONTROL | طراحی Cockpit UX Rulebook | اصول ۱۰ ثانیه‌ای، drill-down، هشدار دلیل‌دار و تصمیم مدیریتی |
+| UI/CONTROL | طراحی Risk and Confidence Visual Rulebook | زبان دیداری risk/confidence برای cockpit و review screens |
+| UI/CONTROL | طراحی Manager Decision UX Standard | استاندارد نمایش تصمیم انسانی، approval، reason و audit |
 | UI/CONTROL | طراحی Central Cockpit Drill-down Strategy | مسیر drill-down از کارت‌ها به evidence، review و audit |
 | WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
 | FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |

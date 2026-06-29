@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P30-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P31-BATCH**
+
+## وضعیت CONTROL-P31-BATCH
+
+CONTROL-P31-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، prototype واقعی، route، UI اجرایی، component، repo، migration، auth، database، localStorage یا داده واقعی اضافه نشد.
+
+- فایل Design Lab Foundation Rulebook ساخته شد: `docs/project-control/88_DESIGN_LAB_FOUNDATION_RULEBOOK.md`
+- فایل Design Lab Output Contract and Handoff ساخته شد: `docs/project-control/89_DESIGN_LAB_OUTPUT_CONTRACT_AND_HANDOFF.md`
+- فایل Design Lab Screen Spec Template and Review Checklist ساخته شد: `docs/project-control/90_DESIGN_LAB_SCREEN_SPEC_TEMPLATE_AND_REVIEW_CHECKLIST.md`
+- فایل Design Lab to Main Approval Gate ساخته شد: `docs/project-control/91_DESIGN_LAB_TO_MAIN_APPROVAL_GATE.md`
+- قانون‌نامه Design Lab، خروجی‌های مجاز/ممنوع، قالب screen spec، checklist review و gate خروج به main ثبت شد.
+- ثبت شد که خروجی‌های Design Lab مفهومی هستند و هیچ UI prototype یا main implementation بدون approval مستقل مجاز نیست.
 
 ## وضعیت CONTROL-P30-BATCH
 
@@ -449,4 +460,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-Design Lab Foundation Package برای تکمیل rulebook، handoff و مرزهای Design Lab پیش از هر prototype یا UI واقعی.
+Central Cockpit Drill-down Strategy یا یک Design Lab screen-spec package محدود، فقط در سطح مستندات و بدون UI/prototype واقعی.

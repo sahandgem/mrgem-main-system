@@ -85,6 +85,9 @@
 | ADR-077 | Product Import workstream برای implementation در وضعیت `FROZEN_FOR_IMPLEMENTATION` است و فقط handoff به Design Lab مجاز است. | فعال |
 | ADR-078 | Prototype و implementation ورود کالا همچنان NOT_APPROVED هستند و freeze فقط با دستور مستقل مرکز کنترل برداشته می‌شود. | فعال |
 | ADR-079 | workstream پیشنهادی بعدی Design Lab Foundation Package است تا rulebook و handoff قبل از هر UI/prototype واقعی کامل شود. | فعال |
+| ADR-080 | Design Lab Foundation Package قانون‌نامه الزامی قبل از هر UI prototype یا main UI implementation است. | فعال |
+| ADR-081 | خروجی‌های Design Lab مفهومی هستند و مستقیم وارد main نمی‌شوند؛ prototype یا implementation نیازمند approval صریح و مستقل مرکز کنترل است. | فعال |
+| ADR-082 | همه design conceptهای حساس باید risk، confidence، audit و human approval boundary قابل مشاهده داشته باشند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -180,6 +183,8 @@
 - برداشتن Product Import implementation freeze بدون دستور مستقل مرکز کنترل
 - شروع prototype یا build ورود کالا به بهانه handoff به Design Lab
 - شروع workstream بعدی بدون تصمیم مستقل مرکز کنترل
+- عبور خروجی Design Lab از approval gate بدون screen spec approved، mock data، risk/confidence، audit boundary، test plan و rollback plan
+- طراحی screen حساس بدون نمایش approval path، audit visibility و AI suggestion boundary
 - ورود مستقیم خروجی Design Lab به main بدون review و approval مستقل
 - ساخت UI/component واقعی به بهانه wireframe یا mock screen
 - آزادکردن Implementation Hold بدون Design Lab approval، synthetic/test/rollback/storage/integration plan و دستور مستقل

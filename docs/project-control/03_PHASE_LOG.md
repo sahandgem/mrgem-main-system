@@ -75,12 +75,31 @@
 | CONTROL-P28-BATCH | انجام شده | ثبت Design Review approval، برنامه انتقال به Design Lab و Implementation Hold Policy؛ ساخت prototype و implementation تایید نشد |
 | CONTROL-P29-BATCH | انجام شده | طراحی Product Import Design Lab Concept Package، Flow Map/Screen Concepts و Mock Scenario Storyboard بدون ساخت UI، component، route یا prototype واقعی |
 | CONTROL-P30-BATCH | انجام شده | جمع‌بندی Product Import Design Lab، ثبت freeze برای implementation و پیشنهاد Design Lab Foundation Package به عنوان مسیر بعدی بدون کدنویسی |
+| CONTROL-P31-BATCH | انجام شده | طراحی Design Lab Foundation Rulebook، Output Contract، Screen Spec Template، Review Checklist و Approval Gate بدون کدنویسی یا UI واقعی |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P30-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P31-BATCH**
+
+## جزئیات ثبت CONTROL-P31-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/88_DESIGN_LAB_FOUNDATION_RULEBOOK.md`
+- `docs/project-control/89_DESIGN_LAB_OUTPUT_CONTRACT_AND_HANDOFF.md`
+- `docs/project-control/90_DESIGN_LAB_SCREEN_SPEC_TEMPLATE_AND_REVIEW_CHECKLIST.md`
+- `docs/project-control/91_DESIGN_LAB_TO_MAIN_APPROVAL_GATE.md`
+
+نتیجه:
+
+- Design Lab Foundation به عنوان rulebook الزامی پیش از UI prototype یا main UI implementation ثبت شد.
+- خروجی‌های Design Lab شامل flow map، wireframe، mock screen، screen spec، component pattern، design token proposal، UX scenario، interaction rule، risk/confidence visual rule، manager decision UX و AI suggestion UX تعریف شدند.
+- قرارداد خروجی Design Lab با فیلدهای outputId، workstream، screenName، purpose، targetUser، inputData، outputData، actionها، risk/confidence، AI area، manager decision area، audit area و handoffStatus ثبت شد.
+- قالب screen spec و review checklist برای هدف صفحه، وضعیت ۱۰ ثانیه‌ای، action، risk/confidence، AI suggestion، approval، audit، داده واقعی و ممنوعیت code/route/component طراحی شد.
+- Design Lab to Main Approval Gate با شرط‌های approved screen spec، mock data، risk/confidence review، audit boundary، implementation restriction، test plan، rollback plan و control-room approval ثبت شد.
+- کد اجرایی، route، UI، component، auth، database، migration، repo، localStorage و داده واقعی تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P30-BATCH
 
@@ -642,7 +661,7 @@
 
 ## P پیشنهادی بعدی
 
-Design Lab Foundation Package برای تکمیل rulebook، handoff و مرزهای Design Lab پیش از هر prototype یا UI واقعی.
+Central Cockpit Drill-down Strategy یا یک Design Lab screen-spec package محدود، فقط در سطح مستندات و بدون UI/prototype واقعی.
 
 ## قالب ثبت فاز بعدی
 

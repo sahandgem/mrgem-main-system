@@ -82,6 +82,9 @@
 | ADR-074 | Product Import implementation همچنان NOT_APPROVED است؛ package مفهومی، screen concept یا storyboard مجوز ساخت UI اجرایی، component، route یا prototype واقعی نیست. | فعال |
 | ADR-075 | خروجی‌های Design Lab مفهومی هستند و بدون approval مستقل، merge checklist، implementation plan و rollback boundary وارد main نمی‌شوند. | فعال |
 | ADR-076 | همه سناریوهای Product Import در Design Lab باید synthetic/mock و بدون داده واقعی مشتری، کالا، barcode، قیمت یا محک باشند. | فعال |
+| ADR-077 | Product Import workstream برای implementation در وضعیت `FROZEN_FOR_IMPLEMENTATION` است و فقط handoff به Design Lab مجاز است. | فعال |
+| ADR-078 | Prototype و implementation ورود کالا همچنان NOT_APPROVED هستند و freeze فقط با دستور مستقل مرکز کنترل برداشته می‌شود. | فعال |
+| ADR-079 | workstream پیشنهادی بعدی Design Lab Foundation Package است تا rulebook و handoff قبل از هر UI/prototype واقعی کامل شود. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -174,6 +177,9 @@
 - استفاده از داده واقعی در mock scenarioها، screen conceptها یا Design Lab package
 - merge مستقیم screen concept یا Design Lab output به main بدون approval مستقل
 - ساخت Product Import Flow Map به شکل route یا component واقعی در main
+- برداشتن Product Import implementation freeze بدون دستور مستقل مرکز کنترل
+- شروع prototype یا build ورود کالا به بهانه handoff به Design Lab
+- شروع workstream بعدی بدون تصمیم مستقل مرکز کنترل
 - ورود مستقیم خروجی Design Lab به main بدون review و approval مستقل
 - ساخت UI/component واقعی به بهانه wireframe یا mock screen
 - آزادکردن Implementation Hold بدون Design Lab approval، synthetic/test/rollback/storage/integration plan و دستور مستقل

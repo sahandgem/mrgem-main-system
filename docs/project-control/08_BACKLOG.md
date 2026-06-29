@@ -79,6 +79,16 @@
 | UI/PRODUCT | طراحی Product Import AI Suggestion Panel Concept | نمایش suggestion، reason، confidence، risk، related data و approval requirement |
 | UI/PRODUCT | طراحی Product Import Audit Summary Screen | نمایش مفهومی رد تصمیم‌ها، issueها و audit reference بدون audit اجرایی |
 | UI/PRODUCT | طراحی Product Import Manager Decision UX | تجربه مفهومی تصمیم مدیر برای approve، reject، correction، split، hold و override |
+| CONTROL/DATA-MAHAK | ثبت Product Import Design Lab Review Summary | جمع‌بندی READY/NOT_APPROVED و آماده‌سازی handoff بدون اجرای واقعی |
+| CONTROL/DATA-MAHAK | ثبت Product Import Workstream Freeze | freeze برای implementation و مجاز بودن فقط Design Lab handoff |
+| UI/PRODUCT | آماده‌سازی Product Import Design Lab Handoff | بسته تحویل شامل اسناد concept، flow، storyboard، synthetic data و isolation |
+| CONTROL | طراحی Next Control Workstream Decision | انتخاب مسیر بعدی پس از freeze Product Import |
+| UI/CONTROL | طراحی Design Lab Foundation Package | rulebook و مرزهای Design Lab پیش از UI یا prototype واقعی |
+| UI/CONTROL | طراحی Central Cockpit Drill-down Strategy | مسیر drill-down از کارت‌ها به evidence، review و audit |
+| WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
+| FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |
+| PROD/DATA | طراحی Production Formula Architecture | مدل مفهومی فرمول تولید، مواد و هزینه بدون engine اجرایی |
+| INV/DATA | طراحی Inventory Visual Registry Architecture | رجیستری دیداری وضعیت موجودی و مغایرت‌ها در سطح concept |
 | UI/PRODUCT | طراحی Product Review Queue Screen Concept | mock مفهومی issue، raw/normalized، confidence، risk و actionها |
 | UI/PRODUCT | طراحی Product Quality Gate Screen Concept | نمایش شرط‌ها، blockerها و gate decision بدون رفتار اجرایی |
 | UI/PRODUCT | طراحی Product Import Manager Report Screen | گزارش مفهومی batch، risk، AI suggestion و required action |

@@ -12,7 +12,19 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P29-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P30-BATCH**
+
+## وضعیت CONTROL-P30-BATCH
+
+CONTROL-P30-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، prototype واقعی، route، UI اجرایی، component، repo، migration، auth، database، localStorage، داده واقعی، اتصال محک یا schema محک اضافه نشد.
+
+- فایل Product Import Design Lab Review Summary ساخته شد: `docs/project-control/85_PRODUCT_IMPORT_DESIGN_LAB_REVIEW_SUMMARY.md`
+- فایل Product Import Workstream Freeze and Handoff ساخته شد: `docs/project-control/86_PRODUCT_IMPORT_WORKSTREAM_FREEZE_AND_HANDOFF.md`
+- فایل Next Control Workstream Decision ساخته شد: `docs/project-control/87_NEXT_CONTROL_WORKSTREAM_DECISION.md`
+- وضعیت Product Import برای implementation به صورت `FROZEN_FOR_IMPLEMENTATION` ثبت شد.
+- Product Import فقط برای Design Lab handoff آماده است.
+- Prototype Build و Real Implementation همچنان `NOT_APPROVED` هستند.
+- پیشنهاد پیش‌فرض مسیر بعدی مرکز کنترل: Design Lab Foundation Package.
 
 ## وضعیت CONTROL-P29-BATCH
 
@@ -437,4 +449,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-بررسی و تایید Design Lab concept package توسط مرکز کنترل، سپس در صورت تایید مستقل فقط طراحی prototype ایزوله با داده synthetic؛ ساخت prototype واقعی و implementation هنوز در hold است.
+Design Lab Foundation Package برای تکمیل rulebook، handoff و مرزهای Design Lab پیش از هر prototype یا UI واقعی.

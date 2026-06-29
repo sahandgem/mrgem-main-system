@@ -74,12 +74,32 @@
 | CONTROL-P27-BATCH | انجام شده | طراحی Product Import Prototype Charter، Synthetic Data Protocol و Prototype Isolation Boundary بدون ساخت prototype یا استفاده از داده واقعی |
 | CONTROL-P28-BATCH | انجام شده | ثبت Design Review approval، برنامه انتقال به Design Lab و Implementation Hold Policy؛ ساخت prototype و implementation تایید نشد |
 | CONTROL-P29-BATCH | انجام شده | طراحی Product Import Design Lab Concept Package، Flow Map/Screen Concepts و Mock Scenario Storyboard بدون ساخت UI، component، route یا prototype واقعی |
+| CONTROL-P30-BATCH | انجام شده | جمع‌بندی Product Import Design Lab، ثبت freeze برای implementation و پیشنهاد Design Lab Foundation Package به عنوان مسیر بعدی بدون کدنویسی |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P29-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P30-BATCH**
+
+## جزئیات ثبت CONTROL-P30-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/85_PRODUCT_IMPORT_DESIGN_LAB_REVIEW_SUMMARY.md`
+- `docs/project-control/86_PRODUCT_IMPORT_WORKSTREAM_FREEZE_AND_HANDOFF.md`
+- `docs/project-control/87_NEXT_CONTROL_WORKSTREAM_DECISION.md`
+
+نتیجه:
+
+- Product Import Design Lab Review Summary وضعیت READY برای Concept Package، Flow Map، Screen Concepts، Mock Scenario Storyboard، Synthetic Data Protocol و Isolation Boundary ثبت کرد.
+- Prototype Build و Real Implementation همچنان `NOT_APPROVED` باقی ماندند.
+- Product Import برای implementation در وضعیت `FROZEN_FOR_IMPLEMENTATION` ثبت شد.
+- فقط Design Lab handoff مجاز است و prototype/build/main integration ممنوع ماند.
+- Handoff به Design Lab باید بر پایه اسناد 76، 77، 78، 80، 81، 82، 83 و 84 انجام شود.
+- گزینه‌های مسیر بعدی شامل Design Lab Foundation Package، Cockpit Drill-down، Workforce Refactor، Finance Bank Excel، Production Formula و Inventory Visual Registry ثبت شدند.
+- پیشنهاد پیش‌فرض بعدی Design Lab Foundation Package است.
+- کد اجرایی، route، UI، component، auth، database، migration، repo، localStorage، داده واقعی و schema محک تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P29-BATCH
 
@@ -622,7 +642,7 @@
 
 ## P پیشنهادی بعدی
 
-بازبینی بسته concept توسط مرکز کنترل و در صورت تایید مستقل، طراحی prototype ایزوله فقط با داده synthetic و بدون اتصال main.
+Design Lab Foundation Package برای تکمیل rulebook، handoff و مرزهای Design Lab پیش از هر prototype یا UI واقعی.
 
 ## قالب ثبت فاز بعدی
 

@@ -101,6 +101,13 @@
 | UI/CONTROL | طراحی Cockpit AI Suggestion Review Screen | بررسی پیشنهادهای AI با evidence، confidence، risk و approval |
 | UI/CONTROL | طراحی Cockpit Crisis Signal Drill-down | صفحه مفهومی بررسی crisis signal چندماژولی |
 | UI/CONTROL | طراحی Cockpit Implementation Approval Gate | gate مستقل قبل از هر UI، route، component یا prototype واقعی cockpit |
+| UI/CONTROL | طراحی Cockpit First Screen Candidate | انتخاب Central Cockpit Overview Screen به عنوان first candidate آینده |
+| UI/CONTROL | طراحی Cockpit Prototype Hold Policy | ثبت ON_HOLD بودن prototype و NOT_APPROVED بودن implementation |
+| UI/CONTROL | طراحی Cockpit Mock Data Protocol | تعریف signalهای mock برای prototype ایزوله آینده بدون داده واقعی |
+| UI/CONTROL | طراحی Cockpit Overview Mock Screen | فقط پس از approval مستقل و با mock/synthetic data |
+| UI/CONTROL | طراحی Cockpit Card Layout Study | بررسی تراکم کارت و scan ده‌ثانیه‌ای در Design Lab |
+| UI/CONTROL | طراحی Cockpit Risk Confidence Visual Test | تست مفهومی نمایش risk/confidence/audit بدون UI واقعی |
+| UI/CONTROL | طراحی Cockpit Prototype Isolation Boundary | مرز جدایی prototype از main، route، storage، auth و data واقعی |
 | WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
 | FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |
 | PROD/DATA | طراحی Production Formula Architecture | مدل مفهومی فرمول تولید، مواد و هزینه بدون engine اجرایی |

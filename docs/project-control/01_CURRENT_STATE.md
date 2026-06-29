@@ -12,7 +12,19 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P32-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P33-BATCH**
+
+## وضعیت CONTROL-P33-BATCH
+
+CONTROL-P33-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، UI واقعی، prototype واقعی، route، component، repo، migration، auth، database یا localStorage اضافه نشد.
+
+- فایل Cockpit Implementation Approval Gate ساخته شد: `docs/project-control/96_COCKPIT_IMPLEMENTATION_APPROVAL_GATE.md`
+- فایل Cockpit First Screen Candidate ساخته شد: `docs/project-control/97_COCKPIT_FIRST_SCREEN_CANDIDATE.md`
+- فایل Cockpit Prototype Hold Policy ساخته شد: `docs/project-control/98_COCKPIT_PROTOTYPE_HOLD_POLICY.md`
+- فایل Cockpit Mock Data Protocol ساخته شد: `docs/project-control/99_COCKPIT_MOCK_DATA_PROTOCOL.md`
+- وضعیت cockpit prototype برابر `ON_HOLD` و real implementation برابر `NOT_APPROVED` ثبت شد.
+- first screen candidate آینده `Central Cockpit Overview Screen` انتخاب شد.
+- ثبت شد که هر prototype آینده باید فقط با mock/synthetic data و approval مستقل مرکز کنترل شروع شود.
 
 ## وضعیت CONTROL-P32-BATCH
 
@@ -471,4 +483,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-Cockpit implementation approval gate یا یک بسته screen-spec محدود برای اولین کارت cockpit، فقط در سطح مستندات و بدون UI/prototype واقعی.
+Cockpit prototype isolation boundary و test/rollback plan، فقط در سطح مستندات و پیش از هر مجوز ساخت.

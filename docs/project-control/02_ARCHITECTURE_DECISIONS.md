@@ -91,6 +91,10 @@
 | ADR-083 | Central Cockpit drill-down strategy فقط concept است و هیچ cockpit UI، route، component یا prototype در این فاز تایید نشده است. | فعال |
 | ADR-084 | Cockpit screen specها خروجی Design Lab هستند و بدون approval مستقل وارد main نمی‌شوند. | فعال |
 | ADR-085 | تصمیم‌های مدیریتی cockpit باید risk، confidence، AI suggestion و audit boundary را آشکار نشان دهند. | فعال |
+| ADR-086 | Cockpit prototype و implementation همچنان NOT_APPROVED هستند؛ Design Lab concept مجوز ساخت محسوب نمی‌شود. | فعال |
+| ADR-087 | Central Cockpit Overview Screen اولین screen candidate پیشنهادی برای prototype ایزوله آینده است. | فعال |
+| ADR-088 | هر prototype آینده cockpit باید فقط با mock/synthetic data شروع شود و هیچ route، component، UI، database، localStorage یا auth change تایید نشده است. | فعال |
+| ADR-089 | هر implementation آینده cockpit نیازمند approval صریح و مستقل مرکز کنترل، test plan، rollback plan و security/data review است. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -191,6 +195,9 @@
 - ساخت cockpit UI، route، component یا prototype به بهانه screen spec یا drill-down strategy
 - نمایش کارت cockpit بدون drill-down، source report، risk/confidence و audit visibility برای تصمیم حساس
 - اجرای decision cockpit بدون decisionReason، actor و auditReference
+- ساخت Cockpit Overview Screen واقعی بدون approval مستقل
+- استفاده از داده واقعی مالی، کالا، بانک، محک یا کارمند در cockpit prototype
+- استفاده از localStorage production key یا database واقعی برای cockpit mock/prototype
 - ورود مستقیم خروجی Design Lab به main بدون review و approval مستقل
 - ساخت UI/component واقعی به بهانه wireframe یا mock screen
 - آزادکردن Implementation Hold بدون Design Lab approval، synthetic/test/rollback/storage/integration plan و دستور مستقل

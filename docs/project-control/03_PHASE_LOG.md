@@ -77,12 +77,32 @@
 | CONTROL-P30-BATCH | انجام شده | جمع‌بندی Product Import Design Lab، ثبت freeze برای implementation و پیشنهاد Design Lab Foundation Package به عنوان مسیر بعدی بدون کدنویسی |
 | CONTROL-P31-BATCH | انجام شده | طراحی Design Lab Foundation Rulebook، Output Contract، Screen Spec Template، Review Checklist و Approval Gate بدون کدنویسی یا UI واقعی |
 | CONTROL-P32-BATCH | انجام شده | طراحی Central Cockpit Drill-down Strategy، Cockpit Screen Spec Package، Manager Decision Flow و Risk/Confidence/Audit Visual Rules بدون UI واقعی |
+| CONTROL-P33-BATCH | انجام شده | طراحی Cockpit Implementation Approval Gate، انتخاب Central Cockpit Overview Screen به عنوان first candidate، ثبت Prototype Hold Policy و Mock Data Protocol بدون ساخت prototype |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P32-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P33-BATCH**
+
+## جزئیات ثبت CONTROL-P33-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/96_COCKPIT_IMPLEMENTATION_APPROVAL_GATE.md`
+- `docs/project-control/97_COCKPIT_FIRST_SCREEN_CANDIDATE.md`
+- `docs/project-control/98_COCKPIT_PROTOTYPE_HOLD_POLICY.md`
+- `docs/project-control/99_COCKPIT_MOCK_DATA_PROTOCOL.md`
+
+نتیجه:
+
+- Cockpit Implementation Approval Gate وضعیت Design Concept، Drill-down Strategy، Screen Spec Package، Manager Decision Flow و Risk/Confidence/Audit Rules را READY و Prototype/Real UI Implementation را `NOT_APPROVED` ثبت کرد.
+- شرط‌های prototype آینده شامل approved screen spec، mock data، isolated boundary، no main route/database/localStorage production key، risk/confidence، audit، test plan، rollback/exit plan و control-room approval ثبت شد.
+- Central Cockpit Overview Screen به عنوان first screen candidate آینده انتخاب شد.
+- کارت‌های مجاز first screen concept شامل Financial Pressure، Product Import Warning، Manager Review Queue، Inventory Shortage، Production Risk، Workforce Risk، AI Suggestion و Crisis Signal هستند.
+- Cockpit Prototype در وضعیت `ON_HOLD` و Cockpit Implementation در وضعیت `NOT_APPROVED` ثبت شد.
+- Cockpit Mock Data Protocol signalهای financial_pressure، product_import_warning، manager_review_queue، inventory_shortage، production_risk، workforce_risk، ai_suggestion و crisis را تعریف کرد.
+- کد اجرایی، UI واقعی، route، component، prototype، auth، database، migration، repo و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P32-BATCH
 
@@ -680,7 +700,7 @@
 
 ## P پیشنهادی بعدی
 
-Cockpit implementation approval gate یا یک بسته screen-spec محدود برای اولین کارت cockpit، فقط در سطح مستندات و بدون UI/prototype واقعی.
+Cockpit prototype isolation boundary و test/rollback plan، فقط در سطح مستندات و پیش از هر مجوز ساخت.
 
 ## قالب ثبت فاز بعدی
 

@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P27-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P28-BATCH**
+
+## وضعیت CONTROL-P28-BATCH
+
+CONTROL-P28-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، prototype واقعی، repo، route، UI، component، migration، auth، database، localStorage، داده واقعی یا schema محک اضافه نشد.
+
+- فایل Product Import Prototype Approval Review ساخته شد: `docs/project-control/79_PRODUCT_IMPORT_PROTOTYPE_APPROVAL_REVIEW.md`
+- فایل Product Import Design Lab Transition Plan ساخته شد: `docs/project-control/80_PRODUCT_IMPORT_DESIGN_LAB_TRANSITION_PLAN.md`
+- فایل Product Import Implementation Hold Policy ساخته شد: `docs/project-control/81_PRODUCT_IMPORT_IMPLEMENTATION_HOLD_POLICY.md`
+- وضعیت رسمی `DESIGN_REVIEW_APPROVED` و `Design Lab Planning: APPROVED` ثبت شد.
+- وضعیت `Prototype Build: NOT_APPROVED` و `Implementation: NOT_APPROVED` باقی ماند.
+- خروجی‌های مجاز Design Lab و شرایط سخت‌گیرانه رفع Implementation Hold طراحی شدند.
 
 ## وضعیت CONTROL-P27-BATCH
 
@@ -414,4 +425,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-بازبینی و approval منشور prototype توسط مرکز کنترل؛ ساخت prototype واقعی همچنان ممنوع است مگر با دستور مستقل.
+آغاز برنامه‌ریزی Design Lab فقط در سطح flow/wireframe/mock concept؛ ساخت prototype و implementation تا دستور مستقل در hold باقی می‌ماند.

@@ -74,6 +74,10 @@
 | ADR-066 | نخستین prototype آینده باید فقط با synthetic/mock data نسخه‌دار، تکرارپذیر و دارای expected result ارزیابی شود؛ داده واقعی مجاز نیست. | فعال |
 | ADR-067 | prototype Product Import حق write به main، استفاده از production storage، shared key، migration، auth، route اصلی یا action برگشت‌ناپذیر ندارد. | فعال |
 | ADR-068 | محک همچنان reference-only و historical-data-only است؛ prototype نباید به فایل، schema، query، table یا داده واقعی محک وابسته شود. | فعال |
+| ADR-069 | Product Import فقط برای Design Lab planning تایید شده است؛ Design Review approved است اما Prototype Build و Implementation وضعیت NOT_APPROVED دارند. | فعال |
+| ADR-070 | Design Lab فقط flow، wireframe، mock screen، card و concept با synthetic data تولید می‌کند؛ هیچ خروجی آن بدون approval جداگانه وارد main نمی‌شود. | فعال |
+| ADR-071 | داده واقعی، production storage، route، UI، database، migration، auth و direct Mahak connection در Product Import همچنان ممنوع‌اند. | فعال |
+| ADR-072 | هر prototype آینده به approval صریح و مستقل مرکز کنترل نیاز دارد؛ readiness، backlog یا design approval مجوز ساخت محسوب نمی‌شوند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -161,6 +165,11 @@
 - استفاده prototype از localStorage key، auth، route یا service مشترک با main
 - ساخت migration، schema dependency یا direct Mahak dependency برای prototype
 - action برگشت‌ناپذیر یا تغییر manager approval واقعی در جریان demo
+- برداشت `DESIGN_REVIEW_APPROVED` به عنوان مجوز Prototype Build یا Implementation
+- ورود مستقیم خروجی Design Lab به main بدون review و approval مستقل
+- ساخت UI/component واقعی به بهانه wireframe یا mock screen
+- آزادکردن Implementation Hold بدون Design Lab approval، synthetic/test/rollback/storage/integration plan و دستور مستقل
+- استفاده از readiness report یا backlog entry به عنوان مجوز اجرا
 - ساخت Mahak Export Adapter قبل از validator و duplicate detector
 - اعمال auto-fix بدون ProductCorrectionLog و تأیید لازم
 - خروجی محک یا AI snapshot از رکورد دارای duplicate/error حل‌نشده

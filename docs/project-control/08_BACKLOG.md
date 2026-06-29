@@ -68,6 +68,14 @@
 | DATA-MAHAK | طراحی Product Import Mock Dataset | sampleهای synthetic برای valid، duplicate، mismatch، conflict و low confidence |
 | CONTROL/DATA-MAHAK | طراحی Product Import Prototype Exit Criteria | معیار docs، synthetic test، dry-run، gate، review، rollback و security |
 | CONTROL/DATA-MAHAK | طراحی Product Import Implementation Approval Gate | approval نهایی مستقل پیش از هر implementation یا اتصال واقعی |
+| CONTROL/DATA-MAHAK | ثبت Product Import Prototype Approval Review | وضعیت رسمی Design Review، Design Lab، Prototype Build و Implementation |
+| UI/PRODUCT | طراحی Product Import Design Lab Transition Plan | ورودی‌ها، خروجی‌ها و handoff مفهومی Design Lab بدون کدنویسی |
+| CONTROL/DATA-MAHAK | ثبت Product Import Implementation Hold Policy | شرایط hold، blockerها و الزامات approval مستقل |
+| UI/PRODUCT | طراحی Product Import Flow Map | مسیر synthetic input تا review، gate، batch و manager decision |
+| UI/PRODUCT | طراحی Product Review Queue Screen Concept | mock مفهومی issue، raw/normalized، confidence، risk و actionها |
+| UI/PRODUCT | طراحی Product Quality Gate Screen Concept | نمایش شرط‌ها، blockerها و gate decision بدون رفتار اجرایی |
+| UI/PRODUCT | طراحی Product Import Manager Report Screen | گزارش مفهومی batch، risk، AI suggestion و required action |
+| CONTROL/DATA-MAHAK | بررسی Product Import Isolated Prototype Approval | فقط پس از Design Lab review و تکمیل test/rollback/storage/security plan |
 | UI | بررسی Product UI بعد از کاهش بدهی Workforce | UI کالا فقط بعد از مدل/schema/validator و کاهش بدهی WF |
 | CORE/FIN | طراحی Core Financial Event Model | مدل مشترک آینده برای نقدینگی، رسید و رویداد مالی |
 | CORE/FIN | طراحی Financial Schema Draft | تبدیل مدل مفهومی رویداد مالی به schema پیشنهادی، بدون migration |

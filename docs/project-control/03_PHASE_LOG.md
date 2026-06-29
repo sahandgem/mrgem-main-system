@@ -72,12 +72,30 @@
 | CONTROL-P25-BATCH | انجام شده | طراحی Product Import Batch Decision Contract، Product Review Metrics Read Model و Product Import Manager Decision Report بدون کدنویسی یا کپی schema محک |
 | CONTROL-P26-BATCH | انجام شده | طراحی Product Import Batch Split Flow، Product Data Quality Threshold Policy و Product Import Architecture Readiness Report بدون کدنویسی یا کپی schema محک |
 | CONTROL-P27-BATCH | انجام شده | طراحی Product Import Prototype Charter، Synthetic Data Protocol و Prototype Isolation Boundary بدون ساخت prototype یا استفاده از داده واقعی |
+| CONTROL-P28-BATCH | انجام شده | ثبت Design Review approval، برنامه انتقال به Design Lab و Implementation Hold Policy؛ ساخت prototype و implementation تایید نشد |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P27-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P28-BATCH**
+
+## جزئیات ثبت CONTROL-P28-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/79_PRODUCT_IMPORT_PROTOTYPE_APPROVAL_REVIEW.md`
+- `docs/project-control/80_PRODUCT_IMPORT_DESIGN_LAB_TRANSITION_PLAN.md`
+- `docs/project-control/81_PRODUCT_IMPORT_IMPLEMENTATION_HOLD_POLICY.md`
+
+نتیجه:
+
+- تصمیم مرکز کنترل با وضعیت DESIGN_REVIEW_APPROVED، Design Lab Planning APPROVED، Prototype Build NOT_APPROVED و Implementation NOT_APPROVED ثبت شد.
+- طراحی user flow، wireframe، mock screen، dashboard card، review queue، quality gate و manager report concept مجاز شد.
+- خروجی‌های Design Lab شامل Flow Map، Dry-run، Review Queue، Gate Result، Batch Decision، Manager Report، Metrics Card و AI Suggestion concept تعریف شدند.
+- فقط synthetic/mock data مجاز ماند و ورود مستقیم خروجی Design Lab به main ممنوع شد.
+- Implementation Hold تا تصویب Design Lab concept، synthetic flow، isolated prototype، mock dataset، test/rollback/storage/integration plan و manager approval flow ثبت شد.
+- کد اجرایی، prototype واقعی، repo، route، UI، component، auth، database، migration، localStorage، داده واقعی و schema محک تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P27-BATCH
 
@@ -585,7 +603,7 @@
 
 ## P پیشنهادی بعدی
 
-بازبینی و approval منشور prototype توسط مرکز کنترل؛ ساخت prototype واقعی فقط با دستور مستقل و scope مصوب.
+برنامه‌ریزی Design Lab در سطح concept؛ هر ساخت prototype یا implementation فقط با approval مستقل مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

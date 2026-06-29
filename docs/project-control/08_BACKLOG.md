@@ -48,6 +48,13 @@
 | CORE/CONTROL | طراحی Product Import Approval Requirement | تعیین approval لازم برای featureهای حساس و warningهای قابل عبور |
 | CORE/CONTROL | طراحی Product Feature Manager Override | override فقط با reason، approval level و audit append-only |
 | UI/PRODUCT | طراحی Product Feature Review UI State Model | stateهای pending تا resolved و transitionهای مجاز review |
+| CORE/DATA-MAHAK | طراحی Product Import Batch Decision Contract | قرارداد تصمیم batch با source، counts، gate، confidence، risk، approval و audit |
+| CORE/DATA | طراحی Product Review Metrics Read Model | projection خواندنی شاخص‌های review، blocker، duplicate، auto-fix و confidence |
+| CORE/CONTROL | طراحی Product Import Manager Decision Report | گزارش مدیریتی quality gate، review، risk، AI suggestion و اقدام لازم |
+| CORE/DATA-MAHAK | طراحی Product Import Batch Split Flow | تقسیم امن valid/review/blocked با parent-child reference و audit |
+| CORE/CONTROL | طراحی Product Import Override Audit | ثبت دامنه، دلیل، actor، risk acceptance و نتیجه override مدیر |
+| CORE/DATA | طراحی Product Data Quality Monitoring | پایش روند issueها، source quality، confidence و impactها بدون mutation |
+| UI/CONTROL | طراحی Product Import Cockpit Metrics | شاخص‌های read-only کیفیت import برای کابین خلبانی و drill-down |
 | UI | بررسی Product UI بعد از کاهش بدهی Workforce | UI کالا فقط بعد از مدل/schema/validator و کاهش بدهی WF |
 | CORE/FIN | طراحی Core Financial Event Model | مدل مشترک آینده برای نقدینگی، رسید و رویداد مالی |
 | CORE/FIN | طراحی Financial Schema Draft | تبدیل مدل مفهومی رویداد مالی به schema پیشنهادی، بدون migration |

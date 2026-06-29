@@ -63,6 +63,9 @@
 | ADR-055 | Product Feature Review UI آینده فقط decision command تولید می‌کند و حق mutate مستقیم main data ندارد؛ raw value، normalized value، validation، confidence، risk، source و audit context باید قابل مشاهده باشند. | فعال |
 | ADR-056 | ورود کالا فقط پس از Product Import Quality Gate و وجود validation، duplicate/conflict resolution، review لازم، confidence قابل قبول، dry-run و audit reference مجاز است. | فعال |
 | ADR-057 | تصمیم reviewer/manager درباره feature حساس باید append-only audit، reason، role، before/after، ruleVersion و approval level داشته باشد؛ AI فقط suggestionReference است. | فعال |
+| ADR-058 | تصمیم import کالا باید در سطح batch و item تفکیک شود؛ import_valid_only یا split_batch فقط با ثبت itemهای excluded، parent/child references، Quality Gate و audit معتبر مجاز است. | فعال |
+| ADR-059 | Product Review Metrics یک Read Model صرفاً خواندنی است؛ تعریف metric، denominator، scope و version باید شفاف باشد و هیچ metric حق mutate یا جایگزینی Decision Audit را ندارد. | فعال |
+| ADR-060 | گزارش تصمیم مدیر فقط شواهد و پیشنهاد ارائه می‌کند؛ override باید دامنه، دلیل، actor، risk acceptance و audit مستقل داشته باشد و AI تصمیم‌گیر نهایی نیست. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -133,6 +136,11 @@
 - `pass` دادن به duplicate، conflict یا manual-only حل‌نشده
 - manager override بدون دلیل، approval level و audit append-only
 - ثبت AI به عنوان actor یا تصمیم‌گیر feature کالا
+- import batch دارای conflict حل‌نشده، duplicate حساس یا confidence کلی پایین بدون review/approval
+- `import_valid_only` یا `split_batch` بدون ثبت itemهای مستثنا و parent/child audit references
+- استفاده از Product Review Metrics برای mutate داده یا جایگزینی Quality Gate/Decision Audit
+- manager override مبهم روی کل batch بدون دامنه item، دلیل و risk acceptance
+- اجرای تصمیم پیشنهادی AI به عنوان تصمیم نهایی import کالا
 - ساخت Mahak Export Adapter قبل از validator و duplicate detector
 - اعمال auto-fix بدون ProductCorrectionLog و تأیید لازم
 - خروجی محک یا AI snapshot از رکورد دارای duplicate/error حل‌نشده

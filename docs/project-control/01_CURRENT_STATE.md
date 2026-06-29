@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P24-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P25-BATCH**
+
+## وضعیت CONTROL-P25-BATCH
+
+CONTROL-P25-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI واقعی، component، migration، auth، database، localStorage یا schema محک اضافه نشد.
+
+- فایل Product Import Batch Decision Contract ساخته شد: `docs/project-control/70_PRODUCT_IMPORT_BATCH_DECISION_CONTRACT.md`
+- فایل Product Review Metrics Read Model ساخته شد: `docs/project-control/71_PRODUCT_REVIEW_METRICS_READ_MODEL.md`
+- فایل Product Import Manager Decision Report ساخته شد: `docs/project-control/72_PRODUCT_IMPORT_MANAGER_DECISION_REPORT.md`
+- تصمیم‌های batch برای import کامل، فقط معتبرها، پس از review، quarantine، reject، split، correction و dry-run طراحی شد.
+- مدل read-only شاخص‌های review، blocker، duplicate، auto-fix، escalation، confidence و issue/source quality ثبت شد.
+- گزارش مدیریتی برای Quality Gate، blockerها، review، duplicate/conflict، AI suggestion، risk و approval طراحی شد.
 
 ## وضعیت CONTROL-P24-BATCH
 
@@ -381,4 +392,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-طراحی مستند `Product Import Batch Decision Contract` و `Product Review Metrics Read Model`، یا ادامه `Read Model Contract` بدون کدنویسی.
+طراحی مستند `Product Import Batch Split Flow` و `Product Data Quality Threshold Policy`، یا ادامه `Read Model Contract` بدون کدنویسی.

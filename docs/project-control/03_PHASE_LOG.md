@@ -69,12 +69,30 @@
 | CONTROL-P22-BATCH | انجام شده | طراحی Product Feature Validation Rules، Product Feature AI Snapshot و Product Feature Import Mapping/Review Boundary بدون کدنویسی یا کپی schema محک |
 | CONTROL-P23-BATCH | انجام شده | طراحی Product Feature Review Queue، Product Attribute Validation Report و Product Feature Auto-fix Decision Flow بدون کدنویسی یا کپی schema محک |
 | CONTROL-P24-BATCH | انجام شده | طراحی Product Feature Review UI Contract، Product Import Quality Gate و Product Feature Decision Audit Model بدون ساخت UI یا کپی schema محک |
+| CONTROL-P25-BATCH | انجام شده | طراحی Product Import Batch Decision Contract، Product Review Metrics Read Model و Product Import Manager Decision Report بدون کدنویسی یا کپی schema محک |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P24-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P25-BATCH**
+
+## جزئیات ثبت CONTROL-P25-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/70_PRODUCT_IMPORT_BATCH_DECISION_CONTRACT.md`
+- `docs/project-control/71_PRODUCT_REVIEW_METRICS_READ_MODEL.md`
+- `docs/project-control/72_PRODUCT_IMPORT_MANAGER_DECISION_REPORT.md`
+
+نتیجه:
+
+- قرارداد batch شامل source، item counts، duplicate/conflict/auto-fix counts، Quality Gate، confidence/risk، review summary، manager approval و audit طراحی شد.
+- تصمیم‌های import_all، import_valid_only، import_after_review، quarantine_batch، reject_batch، split_batch، request_correction و dry_run_only ثبت شدند.
+- Read Model شاخص‌های total/pending/resolved review، blocked import، duplicate، auto-fix، escalation، confidence، issue/source/group و impact را تعریف کرد.
+- گزارش مدیر برای source، batch summary، gate result، blockerها، review، duplicate/conflict، auto-fix، AI suggestion، risk، confidence و actionهای لازم طراحی شد.
+- تصمیم‌های مدیر شامل approve import، approve valid only، hold، reject، split، correction و override with reason ثبت شد.
+- کد اجرایی، route، UI واقعی، component، auth، database، migration، localStorage و schema محک تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P24-BATCH
 
@@ -529,7 +547,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Import Batch Decision Contract` و `Product Review Metrics Read Model`، یا ادامه `Read Model Contract` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Product Import Batch Split Flow` و `Product Data Quality Threshold Policy`، یا ادامه `Read Model Contract` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

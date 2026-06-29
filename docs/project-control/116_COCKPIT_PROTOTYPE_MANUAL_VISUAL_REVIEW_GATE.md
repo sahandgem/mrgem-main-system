@@ -1,16 +1,28 @@
 # Cockpit Prototype Manual Visual Review Gate
 
-آخرین به‌روزرسانی: 2026-06-29
+آخرین به‌روزرسانی: 2026-06-30
 
 ## وضعیت فعلی
 
 | موضوع | وضعیت |
 |---|---|
 | Static Review | `PASS` |
-| Human Visual Review | `PENDING` |
-| Main Merge | `NOT_APPROVED` |
+| Human Visual Review | `approved_for_iteration` |
+| Desktop | `PASS` |
+| Mobile | `PASS_WITH_MINOR_NOTE` |
+| Main Merge | `ON_HOLD` |
 | Main Integration | `NOT_APPROVED` |
 | Implementation | `NOT_APPROVED` |
+
+## نتیجه ثبت‌شده
+
+- Reviewer: Sahand
+- Review date: 2026-06-30
+- Desktop overall: همه‌چیز خوب است.
+- Desktop issue: ندارد.
+- Mobile overall: خوب است.
+- Mobile issue: اندازه‌ها کمی بزرگ هستند، اما blocker نیست.
+- Decision: `approved_for_iteration`
 
 ## Human Visual Review Gate چیست؟
 
@@ -53,4 +65,4 @@
 
 ## قانون
 
-بدون Human Visual Review و ثبت outcome، merge، main integration یا ادامه build مجاز نیست. وضعیت فعلی `PENDING` است.
+Human Visual Review با outcome برابر `approved_for_iteration` ثبت شد. این outcome فقط iteration بعدی در scope ایزوله را مجاز می‌داند و معادل merge approval نیست. Main Merge همچنان `ON_HOLD` و Implementation همچنان `NOT_APPROVED` است.

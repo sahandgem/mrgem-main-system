@@ -1,6 +1,6 @@
 ﻿# Phase Log
 
-آخرین به‌روزرسانی: 2026-06-29
+آخرین به‌روزرسانی: 2026-06-30
 
 ## جدول فازهای WF
 
@@ -82,12 +82,27 @@
 | CONTROL-P35-BATCH | انجام شده | آماده‌سازی Overview Screen Spec Review، Mock Signal Dataset Spec، Layout/Card Behavior و Prototype Readiness Report بدون ساخت UI یا prototype |
 | CONTROL-P36-BATCH | انجام شده | ثبت Environment Decision، Work Order Draft، Build Approval Review و Pre-build Checklist بدون ساخت محیط یا prototype |
 | CONTROL-P37-BATCH | انجام شده | صدور approval محدود برای build ایزوله آینده، تعیین File Scope، Execution Guardrails و Build Stop Rules بدون کدنویسی یا ساخت prototype |
+| CONTROL-P38-BUILD | انجام شده | ساخت prototype ایزوله Central Cockpit Overview فقط با mock/synthetic data روی branch مستقل، بدون اتصال به main |
+| CONTROL-P39-REVIEW | انجام شده | Static Review برابر PASS، ثبت Human Visual Review Gate و حفظ Main Merge در وضعیت ON_HOLD |
+| CONTROL-P40-RECORD | انجام شده | ثبت نتیجه Sahand با `approved_for_iteration`؛ Desktop PASS، Mobile PASS_WITH_MINOR_NOTE و merge همچنان ON_HOLD |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P37-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P40-RECORD**
+
+## جزئیات ثبت CONTROL-P40-RECORD
+
+- Reviewer: Sahand
+- Review date: 2026-06-30
+- Human Visual Review: `approved_for_iteration`
+- Desktop: `PASS`، بدون issue
+- Mobile: `PASS_WITH_MINOR_NOTE`؛ اندازه‌ها کمی بزرگ هستند و blocker نیستند.
+- Main Merge همچنان `ON_HOLD` است؛ iteration approval مجوز merge نیست.
+- Main Integration و Implementation همچنان `NOT_APPROVED` هستند.
+- فایل `118_COCKPIT_PROTOTYPE_HUMAN_VISUAL_REVIEW_RESULT.md` ساخته شد.
+- هیچ کد prototype، UI، CSS، behavior، route، src یا package تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P37-BATCH
 

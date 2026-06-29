@@ -1,6 +1,6 @@
 ﻿# Current State
 
-آخرین به‌روزرسانی: 2026-06-29
+آخرین به‌روزرسانی: 2026-06-30
 
 ## وضعیت فعلی پروژه
 
@@ -12,7 +12,20 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P37-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P40-RECORD**
+
+## وضعیت CONTROL-P40-RECORD
+
+نتیجه Human Visual Review مربوط به prototype ایزوله Central Cockpit Overview ثبت شد.
+
+- Reviewer: Sahand
+- Human Visual Review: `approved_for_iteration`
+- Desktop: `PASS` و بدون issue
+- Mobile: `PASS_WITH_MINOR_NOTE`؛ اندازه‌ها کمی بزرگ هستند، اما blocker نیست.
+- Static Review از CONTROL-P39 همچنان `PASS` است.
+- Main Merge همچنان `ON_HOLD` است.
+- Main Integration و Implementation همچنان `NOT_APPROVED` هستند.
+- هیچ UI، CSS، behavior، feature یا کد prototype در CONTROL-P40 تغییر نکرد.
 
 ## وضعیت CONTROL-P37-BATCH
 

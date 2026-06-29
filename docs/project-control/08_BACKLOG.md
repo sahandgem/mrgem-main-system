@@ -1,6 +1,6 @@
 ﻿# Backlog
 
-آخرین به‌روزرسانی: 2026-06-29
+آخرین به‌روزرسانی: 2026-06-30
 
 ## الان
 
@@ -136,6 +136,9 @@
 | UI/CONTROL | Cockpit Mock Fixture Implementation | fixture synthetic نسخه‌دار، resetپذیر و بدون production persistence |
 | UI/CONTROL | Cockpit Prototype Test Execution | اجرای isolation، mock behavior، risk/confidence/audit و rollback tests |
 | UI/CONTROL | Cockpit Prototype Review Report | ثبت نتیجه، محدودیت‌ها، evidence و exit outcome پس از build آینده |
+| UI/CONTROL | Cockpit Prototype Minor Mobile Sizing Iteration | بررسی کاهش کنترل‌شده اندازه‌ها در mobile، فقط با دستور مستقل و بدون تغییر main |
+| UI/CONTROL | Cockpit Prototype Iteration Review | تکرار static/visual review پس از هر تغییر UI یا CSS آینده |
+| UI/CONTROL | Cockpit Main Merge Approval Review | تصمیم مستقل مرکز کنترل؛ `approved_for_iteration` مجوز merge نیست |
 | WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
 | FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |
 | PROD/DATA | طراحی Production Formula Architecture | مدل مفهومی فرمول تولید، مواد و هزینه بدون engine اجرایی |

@@ -99,6 +99,10 @@
 | ADR-091 | هر prototype آینده cockpit فقط با mock/synthetic data، mock service ایزوله، demo label و reset کامل demo state مجاز به بررسی است. | فعال |
 | ADR-092 | prototype cockpit حق route، UI/component production، database، localStorage production، auth، production storage، داده واقعی یا تصمیم واقعی مدیر را ندارد. | فعال |
 | ADR-093 | نقض data/storage/main/audit boundary یا نمایش AI به عنوان تصمیم نهایی، محرک توقف و rollback فوری prototype است. | فعال |
+| ADR-094 | Central Cockpit Overview Screen spec برای بازبینی مرکز کنترل READY است، اما این وضعیت مجوز ساخت prototype یا UI نیست. | فعال |
+| ADR-095 | Cockpit Prototype Build و Cockpit Implementation همچنان NOT_APPROVED و prototype همچنان ON_HOLD است. | فعال |
+| ADR-096 | Mock Signal Dataset آینده cockpit باید کاملاً synthetic، ایزوله، resetپذیر و مستقل از main و production storage باشد. | فعال |
+| ADR-097 | هیچ cockpit route، UI، component، database، localStorage، auth یا production storage change در CONTROL-P35 تایید نشده است. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

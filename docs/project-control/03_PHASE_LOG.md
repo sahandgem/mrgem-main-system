@@ -79,12 +79,31 @@
 | CONTROL-P32-BATCH | انجام شده | طراحی Central Cockpit Drill-down Strategy، Cockpit Screen Spec Package، Manager Decision Flow و Risk/Confidence/Audit Visual Rules بدون UI واقعی |
 | CONTROL-P33-BATCH | انجام شده | طراحی Cockpit Implementation Approval Gate، انتخاب Central Cockpit Overview Screen به عنوان first candidate، ثبت Prototype Hold Policy و Mock Data Protocol بدون ساخت prototype |
 | CONTROL-P34-BATCH | انجام شده | طراحی Cockpit Prototype Isolation Boundary، Test Plan و Rollback/Exit Plan بدون ساخت prototype یا تغییر main |
+| CONTROL-P35-BATCH | انجام شده | آماده‌سازی Overview Screen Spec Review، Mock Signal Dataset Spec، Layout/Card Behavior و Prototype Readiness Report بدون ساخت UI یا prototype |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P34-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P35-BATCH**
+
+## جزئیات ثبت CONTROL-P35-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/103_COCKPIT_OVERVIEW_SCREEN_SPEC_APPROVAL_REVIEW.md`
+- `docs/project-control/104_COCKPIT_OVERVIEW_MOCK_SIGNAL_DATASET_SPEC.md`
+- `docs/project-control/105_COCKPIT_OVERVIEW_LAYOUT_AND_CARD_BEHAVIOR_SPEC.md`
+- `docs/project-control/106_COCKPIT_PROTOTYPE_READINESS_REPORT.md`
+
+نتیجه:
+
+- Central Cockpit Overview Screen با وضعیت `Screen Candidate: SELECTED` و `Screen Spec Review: READY` ثبت شد.
+- هشت mock signal اصلی و سناریوهای synthetic برای ارزیابی صفحه تعریف شدند.
+- layout مفهومی، stateهای کارت، نمایش risk/confidence/audit و block شدن conflict/manual_only مشخص شد.
+- readiness مستنداتی کامل است، اما approval ساخت صادر نشده است.
+- Cockpit Prototype همچنان `ON_HOLD` و Prototype Build/Implementation همچنان `NOT_APPROVED` هستند.
+- هیچ کد اجرایی، UI، prototype، route، component، localStorage، database، auth یا داده واقعی تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P34-BATCH
 

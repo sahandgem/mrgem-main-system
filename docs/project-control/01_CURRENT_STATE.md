@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P34-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P35-BATCH**
+
+## وضعیت CONTROL-P35-BATCH
+
+CONTROL-P35-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، UI واقعی، prototype واقعی، route، component، repo، migration، auth، database، production storage، localStorage یا داده واقعی اضافه نشد.
+
+- Cockpit Overview Screen Spec Approval Review در `103_COCKPIT_OVERVIEW_SCREEN_SPEC_APPROVAL_REVIEW.md` ثبت شد.
+- قرارداد signalهای مصنوعی Overview در `104_COCKPIT_OVERVIEW_MOCK_SIGNAL_DATASET_SPEC.md` ثبت شد.
+- layout و رفتار مفهومی کارت‌ها در `105_COCKPIT_OVERVIEW_LAYOUT_AND_CARD_BEHAVIOR_SPEC.md` ثبت شد.
+- readiness مستنداتی در `106_COCKPIT_PROTOTYPE_READINESS_REPORT.md` جمع‌بندی شد.
+- Central Cockpit Overview Screen برای review مرکز کنترل `READY` است.
+- `Cockpit Prototype = ON_HOLD` و build/implementation همچنان `NOT_APPROVED` هستند.
 
 ## وضعیت CONTROL-P34-BATCH
 

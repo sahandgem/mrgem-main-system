@@ -114,6 +114,13 @@
 | UI/CONTROL | طراحی Cockpit Prototype Risk Review | بررسی ریسک data leak، misleading confidence، missing audit و main dependency |
 | UI/CONTROL | طراحی Cockpit Prototype Approval Review | review مستقل مرکز کنترل پیش از هر ساخت prototype |
 | UI/CONTROL | تایید Cockpit Overview Screen Spec | بررسی screen candidate و scope پیش از برداشتن hold |
+| UI/CONTROL | Cockpit Overview Screen Spec Approval Review | بازبینی رسمی screen spec بدون صدور مجوز ساخت |
+| UI/CONTROL | Cockpit Overview Mock Signal Dataset Spec | قرارداد signalهای synthetic، deterministic و resetپذیر |
+| UI/CONTROL | Cockpit Overview Layout and Card Behavior Spec | تعریف layout، card states، risk/confidence و audit behavior |
+| UI/CONTROL | Cockpit Prototype Readiness Report | جمع‌بندی readiness و blockerهای باقیمانده پیش از approval |
+| UI/CONTROL | Cockpit Future Isolated Prototype Approval | تصمیم مستقل مرکز کنترل برای ادامه hold یا prototype ایزوله |
+| UI/CONTROL | Cockpit Test Execution Plan | تعیین owner، evidence، pass/fail و عدم استفاده از داده واقعی |
+| UI/CONTROL | Cockpit Prototype Environment Decision | انتخاب محیط مستقل بدون route/storage/database/auth production |
 | WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
 | FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |
 | PROD/DATA | طراحی Production Formula Architecture | مدل مفهومی فرمول تولید، مواد و هزینه بدون engine اجرایی |

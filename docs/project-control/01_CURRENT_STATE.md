@@ -12,7 +12,19 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P33-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P34-BATCH**
+
+## وضعیت CONTROL-P34-BATCH
+
+CONTROL-P34-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، UI واقعی، prototype واقعی، route، component، repo، migration، auth، database یا localStorage اضافه نشد.
+
+- فایل Cockpit Prototype Isolation Boundary ساخته شد: `docs/project-control/100_COCKPIT_PROTOTYPE_ISOLATION_BOUNDARY.md`
+- فایل Cockpit Prototype Test Plan ساخته شد: `docs/project-control/101_COCKPIT_PROTOTYPE_TEST_PLAN.md`
+- فایل Cockpit Prototype Rollback and Exit Plan ساخته شد: `docs/project-control/102_COCKPIT_PROTOTYPE_ROLLBACK_AND_EXIT_PLAN.md`
+- مرز جدایی prototype آینده از main، production route/component/storage، database، auth و داده واقعی ثبت شد.
+- سناریوهای تست synthetic برای فهم ۱۰ ثانیه‌ای، risk/confidence، audit، AI suggestion و جلوگیری از mutation طراحی شدند.
+- محرک‌های توقف، اجزای rollback و exit outcomeهای رسمی ثبت شدند.
+- وضعیت `Cockpit Prototype = ON_HOLD` و `Cockpit Implementation = NOT_APPROVED` بدون تغییر باقی ماند.
 
 ## وضعیت CONTROL-P33-BATCH
 

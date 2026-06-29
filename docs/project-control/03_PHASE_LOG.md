@@ -78,12 +78,29 @@
 | CONTROL-P31-BATCH | انجام شده | طراحی Design Lab Foundation Rulebook، Output Contract، Screen Spec Template، Review Checklist و Approval Gate بدون کدنویسی یا UI واقعی |
 | CONTROL-P32-BATCH | انجام شده | طراحی Central Cockpit Drill-down Strategy، Cockpit Screen Spec Package، Manager Decision Flow و Risk/Confidence/Audit Visual Rules بدون UI واقعی |
 | CONTROL-P33-BATCH | انجام شده | طراحی Cockpit Implementation Approval Gate، انتخاب Central Cockpit Overview Screen به عنوان first candidate، ثبت Prototype Hold Policy و Mock Data Protocol بدون ساخت prototype |
+| CONTROL-P34-BATCH | انجام شده | طراحی Cockpit Prototype Isolation Boundary، Test Plan و Rollback/Exit Plan بدون ساخت prototype یا تغییر main |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P33-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P34-BATCH**
+
+## جزئیات ثبت CONTROL-P34-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/100_COCKPIT_PROTOTYPE_ISOLATION_BOUNDARY.md`
+- `docs/project-control/101_COCKPIT_PROTOTYPE_TEST_PLAN.md`
+- `docs/project-control/102_COCKPIT_PROTOTYPE_ROLLBACK_AND_EXIT_PLAN.md`
+
+نتیجه:
+
+- جدایی prototype احتمالی از main route/component، production storage، database، auth، داده واقعی و تصمیم واقعی مدیر ثبت شد.
+- Test Plan شامل سناریوهای normal day، فشار مالی، import مسدود، کمبود موجودی، ریسک تولید/نیروی انسانی، overload صف مدیر، بحران، audit مفقود و conflict/manual_only است.
+- محرک‌های توقف، پاک‌سازی demo state، verification پس از rollback و exit outcomeهای رسمی تعریف شدند.
+- Cockpit Prototype همچنان `ON_HOLD` و Cockpit Implementation همچنان `NOT_APPROVED` است.
+- کد اجرایی، UI واقعی، route، component، prototype، auth، database، migration، repo و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P33-BATCH
 

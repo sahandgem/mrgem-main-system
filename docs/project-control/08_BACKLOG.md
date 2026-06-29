@@ -108,6 +108,12 @@
 | UI/CONTROL | طراحی Cockpit Card Layout Study | بررسی تراکم کارت و scan ده‌ثانیه‌ای در Design Lab |
 | UI/CONTROL | طراحی Cockpit Risk Confidence Visual Test | تست مفهومی نمایش risk/confidence/audit بدون UI واقعی |
 | UI/CONTROL | طراحی Cockpit Prototype Isolation Boundary | مرز جدایی prototype از main، route، storage، auth و data واقعی |
+| UI/CONTROL | طراحی Cockpit Prototype Test Plan | سناریوهای synthetic برای فهم ۱۰ ثانیه‌ای، risk/confidence، audit و جلوگیری از mutation |
+| UI/CONTROL | طراحی Cockpit Prototype Rollback and Exit Plan | محرک‌های توقف، پاک‌سازی demo state، verification و exit outcomeهای کنترل‌شده |
+| UI/CONTROL | طراحی Cockpit Prototype Demo State Reset | reset کامل fixture، mock service state و وضعیت نمایشی بدون اثر روی main |
+| UI/CONTROL | طراحی Cockpit Prototype Risk Review | بررسی ریسک data leak، misleading confidence، missing audit و main dependency |
+| UI/CONTROL | طراحی Cockpit Prototype Approval Review | review مستقل مرکز کنترل پیش از هر ساخت prototype |
+| UI/CONTROL | تایید Cockpit Overview Screen Spec | بررسی screen candidate و scope پیش از برداشتن hold |
 | WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
 | FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |
 | PROD/DATA | طراحی Production Formula Architecture | مدل مفهومی فرمول تولید، مواد و هزینه بدون engine اجرایی |

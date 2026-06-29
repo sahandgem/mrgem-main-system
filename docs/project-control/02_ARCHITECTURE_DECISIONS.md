@@ -95,6 +95,10 @@
 | ADR-087 | Central Cockpit Overview Screen اولین screen candidate پیشنهادی برای prototype ایزوله آینده است. | فعال |
 | ADR-088 | هر prototype آینده cockpit باید فقط با mock/synthetic data شروع شود و هیچ route، component، UI، database، localStorage یا auth change تایید نشده است. | فعال |
 | ADR-089 | هر implementation آینده cockpit نیازمند approval صریح و مستقل مرکز کنترل، test plan، rollback plan و security/data review است. | فعال |
+| ADR-090 | Cockpit prototype همچنان ON_HOLD است و قبل از هر ساخت به approval مستقل Isolation Boundary، Test Plan و Rollback/Exit Plan نیاز دارد. | فعال |
+| ADR-091 | هر prototype آینده cockpit فقط با mock/synthetic data، mock service ایزوله، demo label و reset کامل demo state مجاز به بررسی است. | فعال |
+| ADR-092 | prototype cockpit حق route، UI/component production، database، localStorage production، auth، production storage، داده واقعی یا تصمیم واقعی مدیر را ندارد. | فعال |
+| ADR-093 | نقض data/storage/main/audit boundary یا نمایش AI به عنوان تصمیم نهایی، محرک توقف و rollback فوری prototype است. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

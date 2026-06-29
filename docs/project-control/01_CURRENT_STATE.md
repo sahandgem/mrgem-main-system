@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P16-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P17-BATCH**
+
+## وضعیت CONTROL-P17-BATCH
+
+CONTROL-P17-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI اصلی، migration، auth، database، repo یا localStorage تغییر داده نشد.
+
+- فایل Design Lab Launch Blueprint ساخته شد: `docs/project-control/45_DESIGN_LAB_LAUNCH_BLUEPRINT.md`
+- فایل Central Cockpit UI UX Strategy ساخته شد: `docs/project-control/46_CENTRAL_COCKPIT_UI_UX_STRATEGY.md`
+- فایل Design Tokens and Component Pattern Strategy ساخته شد: `docs/project-control/47_DESIGN_TOKENS_AND_COMPONENT_PATTERN_STRATEGY.md`
+- Design Lab به عنوان فضای جدا برای cockpit prototype، dashboard cards، design tokens، component patterns، layout experiments، mobile concepts، finance/product dashboards و production/inventory concepts تعریف شد.
+- کابین مرکزی برای financial pressure، cash-in/cash-out، product/import warnings، inventory shortage، production risk، workforce risk، mobile receipt queue، AI suggestions، manager review queue و crisis signals طراحی مفهومی شد.
+- قانون ثبت شد که هیچ component یا prototype از Design Lab مستقیم وارد main نشود و ابتدا باید pattern/spec تایید شود.
 
 ## وضعیت CONTROL-P16-BATCH
 

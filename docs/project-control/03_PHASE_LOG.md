@@ -60,12 +60,29 @@
 | CONTROL-P14-BATCH | انجام شده | طراحی AI Snapshot Strategy، Module Data Producer/Consumer Contracts و Staging/Safe Import Boundary بدون کدنویسی |
 | CONTROL-P15-BATCH | انجام شده | طراحی External Data Staging Policy، Approved Import Flow، Import Gate و Rollback Policy بدون کدنویسی |
 | CONTROL-P16-BATCH | انجام شده | طراحی Import Dry-run Report، Quarantine Review Flow و Import Simulation Test Cases بدون کدنویسی |
+| CONTROL-P17-BATCH | انجام شده | طراحی Design Lab Launch Blueprint، Central Cockpit UI/UX Strategy و Design Tokens/Component Pattern Strategy بدون کدنویسی یا ساخت repo |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P16-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P17-BATCH**
+
+## جزئیات ثبت CONTROL-P17-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/45_DESIGN_LAB_LAUNCH_BLUEPRINT.md`
+- `docs/project-control/46_CENTRAL_COCKPIT_UI_UX_STRATEGY.md`
+- `docs/project-control/47_DESIGN_TOKENS_AND_COMPONENT_PATTERN_STRATEGY.md`
+
+نتیجه:
+
+- Design Lab به عنوان فضای جدا از main برای prototype، tokens، component patterns، UX flows، screenshots و approved specs طراحی شد.
+- ممنوعیت merge مستقیم، تغییر route اصلی، تغییر auth/database، ساخت migration و وابسته‌کردن main به prototype ثبت شد.
+- استراتژی cockpit مرکزی با financial pressure، cash-in/cash-out، product/import warnings، inventory shortage، production risk، workforce risk، mobile receipt queue، AI suggestions، manager review queue و crisis signals طراحی شد.
+- tokenهای اولیه و patternهای KPI Card، Risk Alert Card، Review Queue Card، AI Suggestion Card، Import Status Card، Financial Pressure Card، Product Warning Card، Timeline/History Card و Manager Decision Panel ثبت شد.
+- کد اجرایی، route، UI اصلی، auth، database، migration، repo و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P16-BATCH
 
@@ -377,7 +394,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Bank Import Staging Model` و `Financial Rule Simulation Test Cases`، یا طراحی `Product Import Simulation Matrix` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Cockpit Dashboard Card Map` و `Manager Review UI Concept`، یا ادامه `Bank Import Staging Model` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

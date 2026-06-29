@@ -44,6 +44,8 @@
 | ADR-036 | rollback اقدام حساس است و برای financial event، inventory stock، production formula، product merge، workforce critical data و approved payment/installment بدون approval ممنوع است. | فعال |
 | ADR-037 | هیچ import واقعی نباید بدون dry-run report و بررسی rollback readiness اجرا شود؛ داده دارای conflict، low confidence یا manual only باید قبل از import واقعی متوقف یا review شود. | فعال |
 | ADR-038 | داده quarantined نباید بدون review decision، correction log یا manager/admin approval از quarantine خارج و وارد main شود. | فعال |
+| ADR-039 | Design Lab باید از main جدا بماند؛ خروجی آن مستقیم merge نمی‌شود و فقط pattern/spec تصویب‌شده با فاز implementation مستقل وارد main می‌شود. | فعال |
+| ADR-040 | Central Cockpit UI باید تصمیم‌محور، قابل scan در ۱۰ ثانیه، دارای drill-down، confidence context و review boundary برای موارد حساس باشد. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -104,6 +106,10 @@
 - merge مستقیم خروجی labها به main بدون approval و checklist
 - کار همزمان دو Codex روی یک فایل مشترک
 - ساخت repo جدید بدون تصمیم صریح مرکز فرمان
+- merge مستقیم prototype یا component از Design Lab به main
+- تغییر UI اصلی، route، auth، database یا migration به بهانه Design Lab
+- وابسته کردن main به assetها، dependencyها یا prototypeهای Design Lab
+- نمایش AI suggestion یا crisis signal در cockpit بدون confidence، source و drill-down
 - تغییر نام شاخه‌های مادر یا کدهای branch registry
 
 ## قانون ثبت تصمیم جدید

@@ -114,6 +114,15 @@
 | UI | طراحی Design Lab repo | repo جدا برای UI/UX، design tokens و component patterns |
 | UI | طراحی UI/UX cockpit prototype | prototype مستقل از main برای cockpit مدیریتی |
 | UI | طراحی component pattern extraction | روش ورود pattern/component تأییدشده از Design Lab به main |
+| UI | طراحی Design Lab Launch | نقشه راه راه‌اندازی Design Lab بدون ساخت repo و بدون تغییر main |
+| UI | طراحی Cockpit UI/UX Prototype | prototype کابین مرکزی برای وضعیت ۱۰ ثانیه‌ای مدیر |
+| UI | طراحی Design Tokens Draft | colors، typography، spacing، radius، shadows، density، status و confidence |
+| UI | طراحی Component Pattern Strategy | patternهای کارت، صف review، پیشنهاد AI، import status و decision panel |
+| UI/CORE | طراحی Cockpit Dashboard Card Map | نقشه کارت‌های financial pressure، product warning، inventory، production، workforce و crisis |
+| UI | طراحی Manager Review UI Concept | تجربه تصمیم approve/reject/correction/quarantine/rollback برای مدیر |
+| UI | طراحی AI Suggestion UI Concept | نمایش پیشنهاد AI با source، confidence، evidence و review boundary |
+| UI | طراحی Risk and Confidence Visual Language | زبان بصری ریسک، بحران، review و confidence برای کل cockpit |
+| UI/CONTROL | طراحی Design Lab to Main Handoff | روش تبدیل prototype به approved component spec و implementation امن در main |
 | CONTROL | طراحی multi-Codex handoff protocol | پروتکل تحویل کار بین Codexها و مرکز فرمان |
 | CONTROL | طراحی branch ownership rules | مالکیت branch/file/workstream برای جلوگیری از conflict |
 | CONTROL | طراحی merge approval checklist | checklist قبل از هر merge به main |

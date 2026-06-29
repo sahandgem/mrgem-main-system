@@ -139,6 +139,13 @@
 | CORE/DATA | طراحی BaseDocument Pattern | قرارداد مفهومی header سندهای مالی، خرید، فروش، تولید، انبار و اصلاحیه |
 | CORE/DATA | طراحی BaseDocumentItem Pattern | قرارداد مفهومی itemهای سند شامل product، quantity، unit، amount، weight و cost |
 | DATA/PRODUCT | طراحی Product Feature Engine | طراحی ویژگی‌محور کالا بر اساس الگوهای قابل استفاده، نه ساختار فنی محک |
+| DATA/PRODUCT | طراحی Core Product Attribute Model | مدل attribute شامل type، value، validation، confidence، risk و audit |
+| DATA/PRODUCT | طراحی Product Variant Boundary | مرز variant در برابر کالای مستقل و نیاز به review برای merge/update |
+| DATA/PRODUCT | طراحی Product Pricing Feature Boundary | مشخص کردن featureهای اثرگذار بر قیمت بدون پیاده‌سازی pricing engine |
+| PROD/DATA | طراحی Product Production Feature Boundary | مشخص کردن featureهای اثرگذار بر تولید بدون پیاده‌سازی formula engine |
+| DATA/PRODUCT | طراحی Product Feature Validation Rules | قوانین اعتبارسنجی featureها بر اساس type، group، source، confidence و risk |
+| DATA/PRODUCT | طراحی Product Feature AI Snapshot | خلاصه featureهای تاییدشده برای تحلیل AI و cockpit |
+| CORE/CONTROL | طراحی Product Attribute Audit Trail | audit تغییر attribute، source، validation، confidence و decision |
 | CORE/DATA | طراحی Reporting View Layer | طراحی لایه گزارش خواندنی مستقل، بدون وابستگی به viewهای محک |
 | CORE/CONTROL | طراحی Audit Framework | چارچوب audit برای import، rollback، تصمیم‌ها و تغییرات حساس |
 | CORE | طراحی Event Driven Business Engine | موتور رویداد کسب‌وکار مستقل از محک و آماده برای ماژول‌های آینده |

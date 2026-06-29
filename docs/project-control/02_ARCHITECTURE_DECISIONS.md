@@ -54,6 +54,8 @@
 | ADR-046 | Master Data Registry و Central Business Event Bus فعلاً مفهومی هستند و قبل از هر database، migration، route یا implementation باید در فاز مستقل تایید شوند. | فعال |
 | ADR-047 | سند حساس بدون approval و audit trail نهایی نمی‌شود؛ conflict و low confidence نباید auto approve شوند و AI فقط پیشنهاد می‌دهد. | فعال |
 | ADR-048 | Reporting View Layer و Read Model فقط خواندنی هستند و نباید داده اصلی را mutate کنند یا query/view/schema محک را کپی کنند. | فعال |
+| ADR-049 | Product Feature Engine و Core Product Attribute Model مستقل از محک هستند؛ فقط الگوی feature-based استفاده می‌شود و هیچ schema، table، column، query یا view محک وارد قرارداد کالا نمی‌شود. | فعال |
+| ADR-050 | Product Variant، pricing feature و production feature فعلاً فقط boundary مفهومی هستند؛ pricing engine، production formula، variant merge/update یا UI کالا بدون فاز مستقل و تایید مرکز کنترل ممنوع است. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -107,6 +109,10 @@
 - ساخت migration کالا قبل از اجازه مرکز فرمان
 - import مستقیم داده کالا بدون normalize، validation و duplicate report
 - merge یا update خودکار کالا بدون review و تصمیم مرکز فرمان
+- پیاده‌سازی Product Feature Engine، pricing engine یا production formula بدون فاز مستقل
+- ورود attribute مشکوک، conflict یا low confidence به main بدون review
+- تغییر feature قیمت‌گذار یا تولیدی بدون auditReference، validationStatus و confidenceLevel
+- تبدیل Product Variant Boundary به merge/update خودکار کالا
 - ساخت Mahak Export Adapter قبل از validator و duplicate detector
 - اعمال auto-fix بدون ProductCorrectionLog و تأیید لازم
 - خروجی محک یا AI snapshot از رکورد دارای duplicate/error حل‌نشده

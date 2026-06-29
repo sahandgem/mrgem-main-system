@@ -65,12 +65,29 @@
 | CONTROL-P18-BATCH | انجام شده | طراحی Cockpit Dashboard Card Map، Manager Review UI Concept و AI Suggestion/Risk Visual Language بدون کدنویسی یا تغییر UI اصلی |
 | CONTROL-P19-BATCH | انجام شده | طراحی Core Document Architecture، Master Data Registry و Core Business Event Bus بدون کدنویسی یا کپی schema محک |
 | CONTROL-P20-BATCH | انجام شده | طراحی Document Status/Approval، Document Audit Trail/Change Log و Reporting View Layer بدون کدنویسی یا کپی schema محک |
+| CONTROL-P21-BATCH | انجام شده | طراحی Product Feature Engine، Core Product Attribute Model و Product Variant/Pricing/Production Boundary بدون کدنویسی یا کپی schema محک |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P20-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P21-BATCH**
+
+## جزئیات ثبت CONTROL-P21-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/58_PRODUCT_FEATURE_ENGINE.md`
+- `docs/project-control/59_CORE_PRODUCT_ATTRIBUTE_MODEL.md`
+- `docs/project-control/60_PRODUCT_VARIANT_PRICING_AND_PRODUCTION_FEATURE_BOUNDARY.md`
+
+نتیجه:
+
+- Product Feature Engine برای featureهای قابل توسعه، feature مخصوص گروه کالا، validation rule، required/optional، searchable/reportable و AI-ready summary طراحی شد.
+- Core Product Attribute Model با attributeId، productId، attributeKey، attributeLabel، attributeType، attributeValue، valueUnit، sourceModule، validationStatus، confidenceLevel، riskFlags، isRequired، isSearchable، isReportable، createdAt، updatedAt و auditReference ثبت شد.
+- attributeTypeهای text، number، money، weight، percentage، boolean، enum، date، reference و formula طراحی شدند.
+- مرز Product Variant، Pricing Feature و Production Feature مشخص شد، اما pricing engine و production formula پیاده‌سازی نشد.
+- کد اجرایی، route، UI، auth، database، migration، localStorage و schema محک تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P20-BATCH
 
@@ -460,7 +477,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Feature Engine` و `Core Product Attribute Model`، یا ادامه `Read Model Contract` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Product Feature Validation Rules` و `Product Feature AI Snapshot`، یا ادامه `Read Model Contract` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

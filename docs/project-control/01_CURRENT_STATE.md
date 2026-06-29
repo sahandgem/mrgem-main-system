@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P20-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P21-BATCH**
+
+## وضعیت CONTROL-P21-BATCH
+
+CONTROL-P21-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database، localStorage یا schema محک اضافه نشد.
+
+- فایل Product Feature Engine ساخته شد: `docs/project-control/58_PRODUCT_FEATURE_ENGINE.md`
+- فایل Core Product Attribute Model ساخته شد: `docs/project-control/59_CORE_PRODUCT_ATTRIBUTE_MODEL.md`
+- فایل Product Variant, Pricing and Production Feature Boundary ساخته شد: `docs/project-control/60_PRODUCT_VARIANT_PRICING_AND_PRODUCTION_FEATURE_BOUNDARY.md`
+- Product Feature Engine به عنوان لایه مفهومی ویژگی‌های قابل توسعه کالا، validation rule، searchable/reportable feature و AI-ready summary طراحی شد.
+- Core Product Attribute Model شامل attributeId، productId، attributeKey، attributeType، attributeValue، validationStatus، confidenceLevel، riskFlags و auditReference ثبت شد.
+- مرز variant، pricing و production feature بدون پیاده‌سازی pricing engine یا production formula مشخص شد.
 
 ## وضعیت CONTROL-P20-BATCH
 

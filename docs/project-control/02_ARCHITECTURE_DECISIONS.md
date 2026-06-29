@@ -42,6 +42,8 @@
 | ADR-034 | هر داده خارجی باید قبل از ورود به سیستم اصلی از staging، validation، duplicate/conflict check، confidence score، review در صورت نیاز و audit trail عبور کند. | فعال |
 | ADR-035 | main فقط داده دارای وضعیت `approved_for_import` را می‌پذیرد؛ importهای حساس باید Import Gate، dry-run report، audit reference و rollback plan داشته باشند. | فعال |
 | ADR-036 | rollback اقدام حساس است و برای financial event، inventory stock، production formula، product merge، workforce critical data و approved payment/installment بدون approval ممنوع است. | فعال |
+| ADR-037 | هیچ import واقعی نباید بدون dry-run report و بررسی rollback readiness اجرا شود؛ داده دارای conflict، low confidence یا manual only باید قبل از import واقعی متوقف یا review شود. | فعال |
+| ADR-038 | داده quarantined نباید بدون review decision، correction log یا manager/admin approval از quarantine خارج و وارد main شود. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -82,6 +84,10 @@
 - import حساس بدون Import Gate، dry-run report یا rollback plan
 - rollback داده حساس بدون manager approval و before/after snapshot
 - نادیده گرفتن unauthorized import attempt، partial import failure یا format changed
+- import واقعی بدون Import Dry-run Report
+- خروج داده از quarantine بدون QuarantineReviewDecision یا audit trail
+- اجرای import برای dry-run دارای rollback not ready
+- عبور دادن unknown format، unsafe auto action یا suspicious duplicate بدون quarantine/review
 - اتصال خودکار رسید به رویداد حساس بدون bank match یا review
 - تصمیم مالی صرفاً بر اساس شباهت متن توضیحات بانکی
 - تغییر auth، database، migration، route یا localStorage به بهانه bank Excel automation

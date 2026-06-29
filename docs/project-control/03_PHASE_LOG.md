@@ -59,12 +59,29 @@
 | CONTROL-P13-BATCH | انجام شده | طراحی Cross-module Automation Map، Confidence Scoring Model و Auto Action Safety Matrix بدون کدنویسی |
 | CONTROL-P14-BATCH | انجام شده | طراحی AI Snapshot Strategy، Module Data Producer/Consumer Contracts و Staging/Safe Import Boundary بدون کدنویسی |
 | CONTROL-P15-BATCH | انجام شده | طراحی External Data Staging Policy، Approved Import Flow، Import Gate و Rollback Policy بدون کدنویسی |
+| CONTROL-P16-BATCH | انجام شده | طراحی Import Dry-run Report، Quarantine Review Flow و Import Simulation Test Cases بدون کدنویسی |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P15-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P16-BATCH**
+
+## جزئیات ثبت CONTROL-P16-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/42_IMPORT_DRY_RUN_REPORT_STANDARD.md`
+- `docs/project-control/43_QUARANTINE_REVIEW_FLOW.md`
+- `docs/project-control/44_IMPORT_SIMULATION_TEST_CASES.md`
+
+نتیجه:
+
+- Import Dry-run Report برای نمایش batch id، source، parsed/valid/invalid items، duplicate، conflict، auto-fix، review، approval، blocked، confidence، risk، affected records و rollback readiness طراحی شد.
+- Quarantine Review Flow برای parse error، unknown format، missing required fields، conflict، low confidence، suspicious duplicate، unauthorized import attempt، unsafe auto action و failed validation طراحی شد.
+- تصمیم‌های manager در quarantine شامل approve after correction، reject permanently، request correction، mark duplicate، map manually، split batch، retry parse و archive as unsafe ثبت شد.
+- Import Simulation Test Cases برای valid/invalid bank Excel، duplicate bank transaction، mobile receipt، product Excel، stone bank، group code، production formula، inventory import، low confidence، conflict و manual only طراحی شد.
+- کد اجرایی، route، UI، auth، database، migration، repo و localStorage تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P15-BATCH
 
@@ -360,7 +377,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Import Dry-run Report Standard` و `Quarantine Review Flow`، یا ادامه `Financial Rule Simulation Test Cases` و `Bank Import Staging Model` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Bank Import Staging Model` و `Financial Rule Simulation Test Cases`، یا طراحی `Product Import Simulation Matrix` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

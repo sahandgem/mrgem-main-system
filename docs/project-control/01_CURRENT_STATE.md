@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P15-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P16-BATCH**
+
+## وضعیت CONTROL-P16-BATCH
+
+CONTROL-P16-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database، repo یا localStorage تغییر داده نشد.
+
+- فایل Import Dry-run Report Standard ساخته شد: `docs/project-control/42_IMPORT_DRY_RUN_REPORT_STANDARD.md`
+- فایل Quarantine Review Flow ساخته شد: `docs/project-control/43_QUARANTINE_REVIEW_FLOW.md`
+- فایل Import Simulation Test Cases ساخته شد: `docs/project-control/44_IMPORT_SIMULATION_TEST_CASES.md`
+- استاندارد dry-run شامل import batch id، source، parsed/valid/invalid items، duplicate candidates، conflicts، auto-fix suggestions، needs review، blocked items، confidence summary، risk flags، affected records و rollback readiness ثبت شد.
+- جریان quarantine برای parse error، unknown format، missing required fields، conflict، low confidence، suspicious duplicate، unauthorized import attempt، unsafe auto action، failed validation و mapping ناسازگار طراحی شد.
+- سناریوهای شبیه‌سازی import برای Bank Excel، Mobile receipt، Product Excel، Stone bank، Group codes، Production formula و Inventory import ثبت شد.
 
 ## وضعیت CONTROL-P15-BATCH
 

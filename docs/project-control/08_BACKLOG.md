@@ -92,6 +92,14 @@
 | CONTROL/DATA | طراحی Import Batch Audit | audit برای batch id، source، status، actor، approval، import result و rollback |
 | CONTROL/DATA | طراحی Quarantine Flow | مسیر نگه‌داری و review داده پرریسک، قالب ناشناخته یا import غیرمجاز |
 | CONTROL/DATA | طراحی Staging Status Lifecycle | چرخه وضعیت raw_received تا imported/rejected/quarantined |
+| CONTROL/DATA | طراحی Import Dry-run Report Standard | استاندارد گزارش قبل از import واقعی و نمایش اثر، ریسک و rollback readiness |
+| CONTROL/DATA | طراحی Import Dry-run Summary | خلاصه batch شامل parsed، valid، invalid، duplicate، conflict، review و blocked |
+| CONTROL/DATA | طراحی Quarantine Review Flow | جریان بررسی، اصلاح، رد، archive یا approval داده quarantined |
+| CONTROL/DATA | طراحی Quarantine Correction Log | ثبت اصلاح داده quarantined، مقدار قبلی/جدید، actor و دلیل |
+| CONTROL/DATA | طراحی Import Simulation Test Cases | سناریوهای تست مفهومی برای Bank Excel، Mobile receipt، Product Excel، Inventory و conflictها |
+| CONTROL/DATA | طراحی Import Risk Summary | خلاصه ریسک‌های duplicate، conflict، low confidence، unsafe action و manual only |
+| CONTROL/DATA | طراحی Import Approval Requirement | تعیین نیاز به reviewer/manager/admin approval قبل از import |
+| CONTROL/DATA | طراحی Rollback Readiness Check | بررسی اینکه batch قبل از import برنامه rollback/correction دارد یا نه |
 | FIN-AUDIT | بررسی liquidity model از audit-app | تحلیل مدل فشار نقدینگی و cash-in/cash-out |
 | FIN-AUDIT | بررسی approval workflow | طراحی جریان ثبت، بررسی، تایید و رد مدیر |
 | FIN/MOBILE | بررسی receipt attachment flow | اتصال سند یا عکس رسید به رویداد مالی |

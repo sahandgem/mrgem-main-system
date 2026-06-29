@@ -56,6 +56,8 @@
 | ADR-048 | Reporting View Layer و Read Model فقط خواندنی هستند و نباید داده اصلی را mutate کنند یا query/view/schema محک را کپی کنند. | فعال |
 | ADR-049 | Product Feature Engine و Core Product Attribute Model مستقل از محک هستند؛ فقط الگوی feature-based استفاده می‌شود و هیچ schema، table، column، query یا view محک وارد قرارداد کالا نمی‌شود. | فعال |
 | ADR-050 | Product Variant، pricing feature و production feature فعلاً فقط boundary مفهومی هستند؛ pricing engine، production formula، variant merge/update یا UI کالا بدون فاز مستقل و تایید مرکز کنترل ممنوع است. | فعال |
+| ADR-051 | featureهای کالا قبل از ورود به main، AI snapshot، pricing، production یا reporting باید validation، confidence، duplicate/conflict check و audit مناسب داشته باشند. | فعال |
+| ADR-052 | Product Feature AI Snapshot فقط از داده normalize و validate شده ساخته می‌شود و هیچ پیشنهاد AI نباید بدون review یا approval لازم تغییر حساس ایجاد کند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -113,6 +115,9 @@
 - ورود attribute مشکوک، conflict یا low confidence به main بدون review
 - تغییر feature قیمت‌گذار یا تولیدی بدون auditReference، validationStatus و confidenceLevel
 - تبدیل Product Variant Boundary به merge/update خودکار کالا
+- ساخت AI snapshot از feature خام، validate نشده یا بدون sourceReferences
+- import مستقیم unknown feature، wrong unit، suspicious weight، duplicate barcode یا mismatched stone بدون review
+- اعمال Product Feature Auto-fix بدون audit، validation و approval لازم
 - ساخت Mahak Export Adapter قبل از validator و duplicate detector
 - اعمال auto-fix بدون ProductCorrectionLog و تأیید لازم
 - خروجی محک یا AI snapshot از رکورد دارای duplicate/error حل‌نشده

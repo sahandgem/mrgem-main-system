@@ -146,6 +146,12 @@
 | DATA/PRODUCT | طراحی Product Feature Validation Rules | قوانین اعتبارسنجی featureها بر اساس type، group، source، confidence و risk |
 | DATA/PRODUCT | طراحی Product Feature AI Snapshot | خلاصه featureهای تاییدشده برای تحلیل AI و cockpit |
 | CORE/CONTROL | طراحی Product Attribute Audit Trail | audit تغییر attribute، source، validation، confidence و decision |
+| DATA/PRODUCT | طراحی Product Feature Import Mapping | mapping داده خام یا staging شده به attributeKeyهای مفهومی |
+| DATA/PRODUCT | طراحی Product Feature Review Boundary | مرز review برای unknown feature، wrong unit، duplicate barcode، conflict و low confidence |
+| DATA/PRODUCT | طراحی Product Attribute Validation Report | گزارش validation برای attributeها، warningها، blockedها و auto-fixها |
+| DATA/PRODUCT | طراحی Product Feature Risk Warning | هشدارهای featureهای اثرگذار روی duplicate، pricing، production و inventory |
+| DATA/PRODUCT | طراحی Product Feature Auto-fix Suggestion | پیشنهاد اصلاح feature بدون اعمال خودکار و با audit/approval |
+| CORE/CONTROL | طراحی Product Feature Audit Trail | audit mapping، validation، review، auto-fix suggestion و approved import |
 | CORE/DATA | طراحی Reporting View Layer | طراحی لایه گزارش خواندنی مستقل، بدون وابستگی به viewهای محک |
 | CORE/CONTROL | طراحی Audit Framework | چارچوب audit برای import، rollback، تصمیم‌ها و تغییرات حساس |
 | CORE | طراحی Event Driven Business Engine | موتور رویداد کسب‌وکار مستقل از محک و آماده برای ماژول‌های آینده |

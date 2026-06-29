@@ -66,12 +66,29 @@
 | CONTROL-P19-BATCH | انجام شده | طراحی Core Document Architecture، Master Data Registry و Core Business Event Bus بدون کدنویسی یا کپی schema محک |
 | CONTROL-P20-BATCH | انجام شده | طراحی Document Status/Approval، Document Audit Trail/Change Log و Reporting View Layer بدون کدنویسی یا کپی schema محک |
 | CONTROL-P21-BATCH | انجام شده | طراحی Product Feature Engine، Core Product Attribute Model و Product Variant/Pricing/Production Boundary بدون کدنویسی یا کپی schema محک |
+| CONTROL-P22-BATCH | انجام شده | طراحی Product Feature Validation Rules، Product Feature AI Snapshot و Product Feature Import Mapping/Review Boundary بدون کدنویسی یا کپی schema محک |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P21-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P22-BATCH**
+
+## جزئیات ثبت CONTROL-P22-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/61_PRODUCT_FEATURE_VALIDATION_RULES.md`
+- `docs/project-control/62_PRODUCT_FEATURE_AI_SNAPSHOT.md`
+- `docs/project-control/63_PRODUCT_FEATURE_IMPORT_MAPPING_AND_REVIEW_BOUNDARY.md`
+
+نتیجه:
+
+- Product Feature Validation Rules برای required، type، unit، range، enum، reference، duplicate-sensitive، pricing-impact، production-impact، inventory-impact و AI-risk طراحی شد.
+- خروجی‌های validation شامل valid، warning، needs_review، blocked و auto_fix_suggested ثبت شد.
+- Product Feature AI Snapshot شامل productId، productCode، productName، featureSummary، requiredFeatureStatus، missingFeatures، validationWarnings، duplicateSignals، pricingImpactFeatures، productionImpactFeatures، inventoryImpactFeatures، confidenceSummary، riskFlags، sourceReferences، auditReference، generatedAt و version طراحی شد.
+- Product Feature Import Mapping مسیر raw feature input، staging، normalize، map to attributeKey، validate، confidence score، duplicate/conflict check، review، approved import و audit trail را ثبت کرد.
+- کد اجرایی، route، UI، auth، database، migration، localStorage و schema محک تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P21-BATCH
 
@@ -477,7 +494,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Product Feature Validation Rules` و `Product Feature AI Snapshot`، یا ادامه `Read Model Contract` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Product Feature Review Queue` و `Product Attribute Validation Report`، یا ادامه `Read Model Contract` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P21-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P22-BATCH**
+
+## وضعیت CONTROL-P22-BATCH
+
+CONTROL-P22-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database، localStorage یا schema محک اضافه نشد.
+
+- فایل Product Feature Validation Rules ساخته شد: `docs/project-control/61_PRODUCT_FEATURE_VALIDATION_RULES.md`
+- فایل Product Feature AI Snapshot ساخته شد: `docs/project-control/62_PRODUCT_FEATURE_AI_SNAPSHOT.md`
+- فایل Product Feature Import Mapping and Review Boundary ساخته شد: `docs/project-control/63_PRODUCT_FEATURE_IMPORT_MAPPING_AND_REVIEW_BOUNDARY.md`
+- قوانین validation برای required، type، unit، range، enum، reference، duplicate-sensitive، pricing-impact، production-impact، inventory-impact و AI-risk طراحی شد.
+- snapshot مخصوص AI برای featureSummary، requiredFeatureStatus، missingFeatures، validationWarnings، duplicateSignals، pricing/production/inventory impact و confidence/risk summary ثبت شد.
+- مرز import mapping و review برای featureهای ناشناخته، واحد اشتباه، وزن مشکوک، بارکد تکراری، mismatch سنگ/گروه، conflict و low confidence طراحی شد.
 
 ## وضعیت CONTROL-P21-BATCH
 

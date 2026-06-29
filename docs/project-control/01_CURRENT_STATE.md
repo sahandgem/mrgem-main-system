@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P19-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P20-BATCH**
+
+## وضعیت CONTROL-P20-BATCH
+
+CONTROL-P20-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، route، UI، migration، auth، database، localStorage یا schema محک اضافه نشد.
+
+- فایل Document Status and Approval Model ساخته شد: `docs/project-control/55_DOCUMENT_STATUS_AND_APPROVAL_MODEL.md`
+- فایل Document Audit Trail and Change Log Boundary ساخته شد: `docs/project-control/56_DOCUMENT_AUDIT_TRAIL_AND_CHANGE_LOG_BOUNDARY.md`
+- فایل Reporting View Layer and Read Model Strategy ساخته شد: `docs/project-control/57_REPORTING_VIEW_LAYER_AND_READ_MODEL_STRATEGY.md`
+- وضعیت‌های سند و تایید مدیر برای draft، submitted، under_review، correction_requested، approved، rejected، finalized، cancelled و archived طراحی شد.
+- audit trail سند برای actionTypeهای create، submit، approve، reject، request_correction، update، finalize، cancel، rollback، attach_receipt و import_from_staging ثبت شد.
+- reporting layer به عنوان لایه read-only از event، snapshot، document و audit data طراحی شد.
 
 ## وضعیت CONTROL-P19-BATCH
 

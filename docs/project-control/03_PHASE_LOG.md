@@ -64,12 +64,29 @@
 | CONTROL-MAHAK-ARCH-01 | انجام شده | ثبت دانش معماری استخراج‌شده از محک به عنوان reference-only، بدون merge، بدون schema dependency و بدون کدنویسی |
 | CONTROL-P18-BATCH | انجام شده | طراحی Cockpit Dashboard Card Map، Manager Review UI Concept و AI Suggestion/Risk Visual Language بدون کدنویسی یا تغییر UI اصلی |
 | CONTROL-P19-BATCH | انجام شده | طراحی Core Document Architecture، Master Data Registry و Core Business Event Bus بدون کدنویسی یا کپی schema محک |
+| CONTROL-P20-BATCH | انجام شده | طراحی Document Status/Approval، Document Audit Trail/Change Log و Reporting View Layer بدون کدنویسی یا کپی schema محک |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P19-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P20-BATCH**
+
+## جزئیات ثبت CONTROL-P20-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/55_DOCUMENT_STATUS_AND_APPROVAL_MODEL.md`
+- `docs/project-control/56_DOCUMENT_AUDIT_TRAIL_AND_CHANGE_LOG_BOUNDARY.md`
+- `docs/project-control/57_REPORTING_VIEW_LAYER_AND_READ_MODEL_STRATEGY.md`
+
+نتیجه:
+
+- Document Status Model با وضعیت‌های draft، submitted، under_review، correction_requested، approved، rejected، finalized، cancelled و archived ثبت شد.
+- Approval Status Model با not_required، required، pending_manager، approved_by_manager، rejected_by_manager و escalated طراحی شد.
+- Document Audit Trail با auditId، documentId، actionType، actor، timestamp، before/after snapshot، reason، sourceModule، confidenceLevel، riskFlags، ruleVersion و relatedEventId ثبت شد.
+- Reporting View Layer و Read Model Strategy به عنوان لایه read-only برای گزارش‌های مالی، کالا، انبار، تولید، نیروی انسانی، review، import، audit و crisis طراحی شد.
+- کد اجرایی، route، UI، auth، database، migration، localStorage و schema محک تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P19-BATCH
 
@@ -443,7 +460,7 @@
 
 ## P پیشنهادی بعدی
 
-طراحی `Document Approval Status Model` و `Document Audit Trail Boundary`، یا ادامه `Product Feature Engine` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
+طراحی `Product Feature Engine` و `Core Product Attribute Model`، یا ادامه `Read Model Contract` بدون کدنویسی، فقط پس از تأیید مرکز کنترل.
 
 ## قالب ثبت فاز بعدی
 

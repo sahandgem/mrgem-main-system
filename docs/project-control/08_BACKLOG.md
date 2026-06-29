@@ -147,6 +147,11 @@
 | CORE | طراحی Business Event Contract | قرارداد event شامل eventId، eventType، sourceModule، confidence، riskFlags و auditReference |
 | CORE/DATA | طراحی Document Approval Status Model | وضعیت تایید سند شامل draft، pending، approved، rejected، reversed و archived |
 | CORE/CONTROL | طراحی Document Audit Trail Boundary | مرز audit برای سندها، itemها، import، approval، correction و rollback |
+| CORE/DATA | طراحی Document Status Model | چرخه وضعیت سند از draft تا finalized، cancelled و archived |
+| CORE/CONTROL | طراحی Document Change Log | ثبت actionType، actor، before/after، reason، confidence، risk و relatedEvent |
+| CORE/DATA | طراحی Read Model Strategy | ساختار خواندنی برای cockpit، report و AI summary بدون mutate داده اصلی |
+| CORE/DATA | طراحی Audit Trail Report | گزارش audit سند، event، import، rollback و تصمیم مدیر |
+| CORE/DATA | طراحی Crisis Signal Report | گزارش crisis signal از eventها، snapshotها و risk flags چندماژولی |
 | WF | کوچک‌سازی ادامه‌دار `WorkforcePages.tsx` | ادامه استخراج صفحه‌ها در فازهای کوچک و قابل rollback |
 | CORE | dashboard مرکزی چندشاخه | اتصال KPIهای WF به کابین مرکزی مستر جم |
 | UI | تست responsive و accessibility | keyboard، contrast، overflow و mobile viewport |

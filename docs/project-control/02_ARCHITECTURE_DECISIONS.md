@@ -52,6 +52,8 @@
 | ADR-044 | Manager Review UI تنها مرجع تصمیم حساس در سطح UI است و هر تصمیم approve، reject، correction، attach، create، confirm، duplicate، ignore یا escalate باید audit trail داشته باشد. | فعال |
 | ADR-045 | Core Document Architecture باید مستقل از محک و بر اساس BaseDocument/BaseDocumentItem مفهومی طراحی شود؛ هیچ schema، جدول، ستون، query یا view محک وارد قرارداد سندهای مستر جم نمی‌شود. | فعال |
 | ADR-046 | Master Data Registry و Central Business Event Bus فعلاً مفهومی هستند و قبل از هر database، migration، route یا implementation باید در فاز مستقل تایید شوند. | فعال |
+| ADR-047 | سند حساس بدون approval و audit trail نهایی نمی‌شود؛ conflict و low confidence نباید auto approve شوند و AI فقط پیشنهاد می‌دهد. | فعال |
+| ADR-048 | Reporting View Layer و Read Model فقط خواندنی هستند و نباید داده اصلی را mutate کنند یا query/view/schema محک را کپی کنند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -115,6 +117,10 @@
 - تبدیل BaseDocument یا Master Data Registry به schema اجرایی بدون فاز مستقل
 - ساخت event bus، queue، database table یا migration برای business events بدون تایید مرکز کنترل
 - کپی هر نام جدول/ستون/query/view محک در قرارداد سند یا master data
+- final کردن سند حساس بدون approvalStatus معتبر و audit trail
+- تغییر سند، item، receipt attachment، import یا rollback بدون DocumentAuditTrail
+- mutate کردن داده اصلی از reporting layer یا read model
+- ساخت گزارش بر پایه query/view/schema محک
 - merge مستقیم خروجی labها به main بدون approval و checklist
 - کار همزمان دو Codex روی یک فایل مشترک
 - ساخت repo جدید بدون تصمیم صریح مرکز فرمان

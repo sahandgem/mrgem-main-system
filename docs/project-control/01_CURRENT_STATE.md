@@ -12,7 +12,18 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P36-BATCH**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P37-BATCH**
+
+## وضعیت CONTROL-P37-BATCH
+
+CONTROL-P37-BATCH انجام شد. در این فاز فقط `docs/project-control` تغییر کرد و هیچ کد اجرایی، UI واقعی، prototype واقعی، route، component، repo، migration، auth، database، production storage، localStorage یا داده واقعی اضافه نشد.
+
+- تصمیم محدود `Prototype Build Decision = APPROVED_FOR_ISOLATED_BUILD` در `111_COCKPIT_ISOLATED_PROTOTYPE_BUILD_APPROVAL_DECISION.md` ثبت شد.
+- build هنوز شروع نشده و فقط با دستور اجرایی مستقل بعدی مجاز است.
+- file scope و dependency boundary در `112_COCKPIT_PROTOTYPE_FILE_SCOPE_AND_BOUNDARY.md` ثبت شد.
+- guardrailهای قبل، هنگام و بعد از build در `113_COCKPIT_PROTOTYPE_EXECUTION_GUARDRAILS.md` ثبت شدند.
+- stop ruleهای فوری در `114_COCKPIT_PROTOTYPE_BUILD_STOP_RULES.md` ثبت شدند.
+- Main Integration، Real Implementation و Production Data Usage همچنان `NOT_APPROVED` هستند.
 
 ## وضعیت CONTROL-P36-BATCH
 

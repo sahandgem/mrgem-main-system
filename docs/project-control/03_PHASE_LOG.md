@@ -81,12 +81,31 @@
 | CONTROL-P34-BATCH | انجام شده | طراحی Cockpit Prototype Isolation Boundary، Test Plan و Rollback/Exit Plan بدون ساخت prototype یا تغییر main |
 | CONTROL-P35-BATCH | انجام شده | آماده‌سازی Overview Screen Spec Review، Mock Signal Dataset Spec، Layout/Card Behavior و Prototype Readiness Report بدون ساخت UI یا prototype |
 | CONTROL-P36-BATCH | انجام شده | ثبت Environment Decision، Work Order Draft، Build Approval Review و Pre-build Checklist بدون ساخت محیط یا prototype |
+| CONTROL-P37-BATCH | انجام شده | صدور approval محدود برای build ایزوله آینده، تعیین File Scope، Execution Guardrails و Build Stop Rules بدون کدنویسی یا ساخت prototype |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P36-BATCH**
+آخرین P کنترل پروژه: **CONTROL-P37-BATCH**
+
+## جزئیات ثبت CONTROL-P37-BATCH
+
+فایل‌های جدید:
+
+- `docs/project-control/111_COCKPIT_ISOLATED_PROTOTYPE_BUILD_APPROVAL_DECISION.md`
+- `docs/project-control/112_COCKPIT_PROTOTYPE_FILE_SCOPE_AND_BOUNDARY.md`
+- `docs/project-control/113_COCKPIT_PROTOTYPE_EXECUTION_GUARDRAILS.md`
+- `docs/project-control/114_COCKPIT_PROTOTYPE_BUILD_STOP_RULES.md`
+
+نتیجه:
+
+- ساخت prototype ایزوله آینده فقط برای Central Cockpit Overview Screen و mock/synthetic signals با وضعیت `APPROVED_FOR_ISOLATED_BUILD` تایید شد.
+- build در این فاز شروع نشد و به دستور اجرایی مستقل بعدی نیاز دارد.
+- ناحیه‌های prototype/mock/demo مجاز و production route/navigation/storage/database/auth/adapters ممنوع شدند.
+- guardrailهای قبل، هنگام و بعد از build و stop ruleهای production dependency، real data و main mutation ثبت شدند.
+- Main Integration و Real Implementation همچنان `NOT_APPROVED` هستند.
+- هیچ کد اجرایی، UI، prototype، route، component، localStorage، database، auth یا داده واقعی تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P36-BATCH
 

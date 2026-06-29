@@ -128,6 +128,14 @@
 | UI/CONTROL | Cockpit Prototype File Scope | فهرست محدود فایل‌های مجاز و مالک هر فایل پیش از build |
 | UI/CONTROL | Cockpit Prototype Mock Fixture | fixture مصنوعی نسخه‌دار با expected result و reset کامل |
 | UI/CONTROL | Cockpit Prototype Rollback Owner | تعیین مسئول توقف، پاک‌سازی و verification پس از rollback |
+| UI/CONTROL | Cockpit Isolated Prototype Build Approval Decision | approval محدود build آینده بدون مجوز main integration |
+| UI/CONTROL | Cockpit Prototype File Scope and Boundary | ناحیه‌های مجاز prototype و ممنوعیت فایل‌های production |
+| UI/CONTROL | Cockpit Prototype Execution Guardrails | کنترل‌های قبل، هنگام و بعد از build ایزوله |
+| UI/CONTROL | Cockpit Prototype Build Stop Rules | توقف فوری در صورت production dependency، real data یا main mutation |
+| UI/CONTROL | Cockpit Overview Isolated Prototype Build | فقط با دستور اجرایی مستقل و scope مصوب P37 |
+| UI/CONTROL | Cockpit Mock Fixture Implementation | fixture synthetic نسخه‌دار، resetپذیر و بدون production persistence |
+| UI/CONTROL | Cockpit Prototype Test Execution | اجرای isolation، mock behavior، risk/confidence/audit و rollback tests |
+| UI/CONTROL | Cockpit Prototype Review Report | ثبت نتیجه، محدودیت‌ها، evidence و exit outcome پس از build آینده |
 | WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
 | FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |
 | PROD/DATA | طراحی Production Formula Architecture | مدل مفهومی فرمول تولید، مواد و هزینه بدون engine اجرایی |

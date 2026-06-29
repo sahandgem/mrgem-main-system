@@ -100,13 +100,17 @@
 | ADR-092 | prototype cockpit حق route، UI/component production، database، localStorage production، auth، production storage، داده واقعی یا تصمیم واقعی مدیر را ندارد. | فعال |
 | ADR-093 | نقض data/storage/main/audit boundary یا نمایش AI به عنوان تصمیم نهایی، محرک توقف و rollback فوری prototype است. | فعال |
 | ADR-094 | Central Cockpit Overview Screen spec برای بازبینی مرکز کنترل READY است، اما این وضعیت مجوز ساخت prototype یا UI نیست. | فعال |
-| ADR-095 | Cockpit Prototype Build و Cockpit Implementation همچنان NOT_APPROVED و prototype همچنان ON_HOLD است. | فعال |
+| ADR-095 | Cockpit Prototype Build و Cockpit Implementation همچنان NOT_APPROVED و prototype همچنان ON_HOLD است. | جایگزین‌شده با ADR-102 |
 | ADR-096 | Mock Signal Dataset آینده cockpit باید کاملاً synthetic، ایزوله، resetپذیر و مستقل از main و production storage باشد. | فعال |
 | ADR-097 | هیچ cockpit route، UI، component، database، localStorage، auth یا production storage change در CONTROL-P35 تایید نشده است. | فعال |
-| ADR-098 | برنامه‌ریزی محیط prototype ایزوله cockpit READY است، اما Environment Creation و Prototype Build در CONTROL-P36 تایید نشده‌اند. | فعال |
+| ADR-098 | برنامه‌ریزی محیط prototype ایزوله cockpit READY است، اما Environment Creation و Prototype Build در CONTROL-P36 تایید نشده‌اند. | جایگزین‌شده با ADR-102 |
 | ADR-099 | Cockpit Implementation همچنان NOT_APPROVED است و هر build آینده فقط با تصمیم صریح `approved_for_build` مرکز کنترل مجاز می‌شود. | فعال |
 | ADR-100 | محیط آینده cockpit باید mock-only، resetپذیر و بدون main route، production component/storage، database، auth یا real data باشد. | فعال |
 | ADR-101 | Work Order و Pre-build Checklist فقط draftهای کنترلی هستند؛ route، UI، component، database، localStorage، auth یا production storage change را مجاز نمی‌کنند. | فعال |
+| ADR-102 | ساخت آینده prototype ایزوله cockpit فقط برای Central Cockpit Overview Screen و فقط با mock/synthetic data در وضعیت `APPROVED_FOR_ISOLATED_BUILD` قرار گرفت؛ build در CONTROL-P37 شروع نمی‌شود. | فعال |
+| ADR-103 | Main Integration و Real Implementation cockpit همچنان NOT_APPROVED هستند و approval prototype به main یا production قابل تعمیم نیست. | فعال |
+| ADR-104 | هیچ production route، database، auth، localStorage، migration، storage، real data یا real decision mutation برای cockpit تایید نشده است. | فعال |
+| ADR-105 | build آینده باید در صورت نیاز به production dependency، real data، main mutation یا خروج از file scope فوراً متوقف شود و approval جدید بگیرد. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

@@ -87,12 +87,32 @@
 | CONTROL-P40-RECORD | انجام شده | ثبت نتیجه Sahand با `approved_for_iteration`؛ Desktop PASS، Mobile PASS_WITH_MINOR_NOTE و merge همچنان ON_HOLD |
 | CONTROL-P41-ITERATION | انجام شده | اصلاح محدود responsive sizing فقط در CSS prototype ایزوله؛ بدون تغییر behavior، main یا production |
 | CONTROL-P42-RECORD | انجام شده | ثبت Mobile re-review با نتیجه `approved_after_mobile_refinement`؛ Mobile و Desktop PASS و merge همچنان ON_HOLD |
+| CONTROL-P43-DESIGN | انجام شده | انتخاب Manager Review Queue Drill-down به‌عنوان صفحه بعدی concept، طراحی Screen Spec/Mock Dataset/Safety Rules و freeze کردن Overview prototype |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P42-RECORD**
+آخرین P کنترل پروژه: **CONTROL-P43-DESIGN**
+
+## جزئیات ثبت CONTROL-P43-DESIGN
+
+فایل‌های جدید:
+
+- `docs/project-control/120_COCKPIT_NEXT_SCREEN_DESIGN_DECISION.md`
+- `docs/project-control/121_MANAGER_REVIEW_QUEUE_SCREEN_SPEC.md`
+- `docs/project-control/122_MANAGER_REVIEW_QUEUE_MOCK_DATASET_SPEC.md`
+- `docs/project-control/123_MANAGER_REVIEW_QUEUE_INTERACTION_AND_SAFETY_RULES.md`
+- `docs/project-control/124_COCKPIT_OVERVIEW_PROTOTYPE_FREEZE_NOTE.md`
+
+نتیجه:
+
+- Manager Review Queue Drill-down به‌عنوان صفحه بعدی cockpit با وضعیت `APPROVED_FOR_CONCEPT` انتخاب شد.
+- بخش‌های summary، filters، priority lanes، item list، detail، AI suggestion، risk/confidence/audit و timeline مفهومی طراحی شدند.
+- ده نوع review item مصنوعی و قرارداد ۱۵ فیلدی mock dataset ثبت شد.
+- no-write، no-approval، no-storage، no-database، no-auth و no-production-dependency به‌عنوان guardrail ثبت شدند.
+- Overview prototype در وضعیت `FROZEN_AFTER_APPROVED_ITERATION` قرار گرفت.
+- هیچ کد، CSS، UI، prototype، route، src، package یا main تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P42-RECORD
 

@@ -1,6 +1,6 @@
 ﻿# Architecture Decisions
 
-آخرین به‌روزرسانی: 2026-06-29
+آخرین به‌روزرسانی: 2026-06-30
 
 ## تصمیم‌های معماری گرفته‌شده
 
@@ -111,6 +111,10 @@
 | ADR-103 | Main Integration و Real Implementation cockpit همچنان NOT_APPROVED هستند و approval prototype به main یا production قابل تعمیم نیست. | فعال |
 | ADR-104 | هیچ production route، database، auth، localStorage، migration، storage، real data یا real decision mutation برای cockpit تایید نشده است. | فعال |
 | ADR-105 | build آینده باید در صورت نیاز به production dependency، real data، main mutation یا خروج از file scope فوراً متوقف شود و approval جدید بگیرد. | فعال |
+| ADR-106 | Overview prototype با نتیجه `approved_after_mobile_refinement` تایید شده ولی به main merge نشده و تا approval مستقل در وضعیت freeze باقی می‌ماند. | فعال |
+| ADR-107 | صفحه بعدی cockpit در سطح concept برابر Manager Review Queue Drill-down است تا Human-in-the-loop و صف تصمیم چندماژولی استاندارد شود. | فعال |
+| ADR-108 | Manager Review Queue در CONTROL-P43 فقط concept-only است؛ Prototype Build، Main Integration و Implementation آن NOT_APPROVED هستند. | فعال |
+| ADR-109 | هیچ prototype، route، UI، component، database، storage، auth، real data یا main integration جدید در CONTROL-P43 تایید نشده است. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

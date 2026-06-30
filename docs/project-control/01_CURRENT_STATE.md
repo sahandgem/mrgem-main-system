@@ -12,7 +12,19 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P42-RECORD**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P43-DESIGN**
+
+## وضعیت CONTROL-P43-DESIGN
+
+صفحه بعدی cockpit در سطح concept انتخاب و بسته طراحی آن ثبت شد.
+
+- Selected screen: `Manager Review Queue Drill-down Screen`
+- Screen Design: `APPROVED_FOR_CONCEPT`
+- دلیل انتخاب: استانداردسازی Human-in-the-loop، صف تصمیم مدیر، evidence، risk، confidence و audit برای همه ماژول‌ها
+- Screen Spec، Mock Dataset Spec و Interaction/Safety Rules طراحی شدند.
+- Overview prototype بعد از نتیجه `approved_after_mobile_refinement` در وضعیت freeze قرار گرفت.
+- Prototype Build صفحه جدید، Main Integration و Implementation همچنان `NOT_APPROVED` هستند.
+- هیچ کد، CSS، UI، prototype، route، src، package، storage، database یا auth تغییر نکرد.
 
 ## وضعیت CONTROL-P42-RECORD
 

@@ -140,6 +140,12 @@
 | UI/CONTROL | Cockpit Prototype Iteration Review | Mobile iteration بسته شد؛ review بعدی فقط برای تغییر مستقل آینده لازم است |
 | UI/CONTROL | Cockpit Main Merge Approval Review | تصمیم مستقل مرکز کنترل؛ `approved_for_iteration` مجوز merge نیست |
 | UI/CONTROL | Cockpit Future Screen Design Planning | مسیر بعدی cockpit؛ طراحی صفحه‌های آینده بدون اصلاح بیشتر prototype فعلی |
+| UI/CONTROL | Manager Review Queue Drill-down Screen Spec | طراحی summary، filters، lanes، item list، detail، AI و audit در سطح concept |
+| UI/CONTROL | Manager Review Queue Mock Dataset | ده review item مصنوعی با risk، confidence، audit، evidence و decisionOptions مفهومی |
+| UI/CONTROL | Manager Review Queue Interaction Rules | مرز interaction، visual language و block شدن actionهای حساس |
+| UI/CONTROL | Manager Review Queue Prototype Candidate | فقط پس از approval مستقل؛ CONTROL-P43 مجوز build نیست |
+| UI/CONTROL | Cockpit Overview Prototype Freeze | Overview پس از mobile approval بدون دستور مستقل تغییر نکند |
+| UI/CONTROL | Cockpit Future Screen Design Package | ادامه Screen Specهای cockpit بدون ساخت UI، route یا component |
 | WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
 | FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |
 | PROD/DATA | طراحی Production Formula Architecture | مدل مفهومی فرمول تولید، مواد و هزینه بدون engine اجرایی |

@@ -88,12 +88,30 @@
 | CONTROL-P41-ITERATION | انجام شده | اصلاح محدود responsive sizing فقط در CSS prototype ایزوله؛ بدون تغییر behavior، main یا production |
 | CONTROL-P42-RECORD | انجام شده | ثبت Mobile re-review با نتیجه `approved_after_mobile_refinement`؛ Mobile و Desktop PASS و merge همچنان ON_HOLD |
 | CONTROL-P43-DESIGN | انجام شده | انتخاب Manager Review Queue Drill-down به‌عنوان صفحه بعدی concept، طراحی Screen Spec/Mock Dataset/Safety Rules و freeze کردن Overview prototype |
+| CONTROL-P44-DESIGN-REVIEW | انجام شده | تایید concept iteration، طراحی User Flow Storyboard، ثبت Prototype Approval Gate و Build Hold Policy بدون ساخت prototype |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P43-DESIGN**
+آخرین P کنترل پروژه: **CONTROL-P44-DESIGN-REVIEW**
+
+## جزئیات ثبت CONTROL-P44-DESIGN-REVIEW
+
+فایل‌های جدید:
+
+- `docs/project-control/125_MANAGER_REVIEW_QUEUE_DESIGN_REVIEW_RESULT.md`
+- `docs/project-control/126_MANAGER_REVIEW_QUEUE_USER_FLOW_STORYBOARD.md`
+- `docs/project-control/127_MANAGER_REVIEW_QUEUE_PROTOTYPE_APPROVAL_GATE.md`
+- `docs/project-control/128_MANAGER_REVIEW_QUEUE_BUILD_HOLD_POLICY.md`
+
+نتیجه:
+
+- Design Review برابر `APPROVED_FOR_CONCEPT_ITERATION` ثبت شد.
+- هشت flow برای normal، financial urgent، duplicate، audit missing، low confidence، manual only، crisis و manager hold طراحی شد.
+- Gate برابر `NOT_READY_FOR_BUILD` است زیرا file scope، Test Plan و Rollback Plan هنوز تایید نشده‌اند.
+- Manager Review Queue Prototype برابر `ON_HOLD` و Overview Prototype همچنان frozen است.
+- هیچ کد، CSS، UI، prototype، route، component، src، package یا main تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P43-DESIGN
 

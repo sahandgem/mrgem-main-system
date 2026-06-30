@@ -115,6 +115,10 @@
 | ADR-107 | صفحه بعدی cockpit در سطح concept برابر Manager Review Queue Drill-down است تا Human-in-the-loop و صف تصمیم چندماژولی استاندارد شود. | فعال |
 | ADR-108 | Manager Review Queue در CONTROL-P43 فقط concept-only است؛ Prototype Build، Main Integration و Implementation آن NOT_APPROVED هستند. | فعال |
 | ADR-109 | هیچ prototype، route، UI، component، database، storage، auth، real data یا main integration جدید در CONTROL-P43 تایید نشده است. | فعال |
+| ADR-110 | Manager Review Queue Drill-down فقط برای concept iteration تایید شده و Design Review مجوز Prototype Build نیست. | فعال |
+| ADR-111 | Manager Review Queue Prototype تا تعریف و تایید exact file scope، Test Plan، Rollback Plan و build approval مستقل در وضعیت ON_HOLD است. | فعال |
+| ADR-112 | Overview prototype پس از iteration تاییدشده frozen باقی می‌ماند و Main Merge همچنان ON_HOLD است. | فعال |
+| ADR-113 | هیچ route، UI، component، storage، database، auth، backend، real data یا production dependency جدید در CONTROL-P44 تایید نشده است. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

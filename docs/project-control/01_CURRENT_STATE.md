@@ -12,7 +12,20 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P43-DESIGN**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P44-DESIGN-REVIEW**
+
+## وضعیت CONTROL-P44-DESIGN-REVIEW
+
+بسته طراحی Manager Review Queue Drill-down بازبینی و user flow آن تکمیل شد.
+
+- Design Review: `APPROVED_FOR_CONCEPT_ITERATION`
+- User Flow Storyboard شامل مسیر Overview تا queue، evidence، AI suggestion، decision reason و audit timeline است.
+- Prototype Approval Gate برابر `NOT_READY_FOR_BUILD` است.
+- دلیل hold: file scope، Test Plan و Rollback Plan مخصوص این صفحه هنوز تایید نشده‌اند.
+- Manager Review Queue Prototype برابر `ON_HOLD` است.
+- Overview Prototype برابر `FROZEN_AFTER_APPROVED_ITERATION` باقی ماند.
+- Main Merge، Main Integration و Implementation همچنان `NOT_APPROVED` هستند.
+- هیچ کد، CSS، UI، prototype، route، src، package یا production dependency تغییر نکرد.
 
 ## وضعیت CONTROL-P43-DESIGN
 

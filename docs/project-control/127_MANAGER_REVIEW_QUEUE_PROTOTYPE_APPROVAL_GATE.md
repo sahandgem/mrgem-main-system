@@ -7,7 +7,7 @@
 | موضوع | وضعیت |
 |---|---|
 | Design Review | `APPROVED_FOR_CONCEPT_ITERATION` |
-| Gate Status | `NOT_READY_FOR_BUILD` |
+| Gate Status | `READY_FOR_CONTROL_ROOM_REVIEW` |
 | Prototype Build | `NOT_APPROVED` |
 | Main Integration | `NOT_APPROVED` |
 | Implementation | `NOT_APPROVED` |
@@ -49,11 +49,18 @@
 - no test plan
 - no rollback path یا owner
 
-## دلیل وضعیت فعلی
+## وضعیت Planning پس از CONTROL-P45
 
-Prototype file scope، Test Plan و Rollback Plan مخصوص Manager Review Queue هنوز تعریف و تایید نشده‌اند. بنابراین:
+- Test Plan مستنداتی آماده است.
+- Rollback/Exit Plan مستنداتی آماده است.
+- Future File Scope Draft آماده است.
+- Build Readiness برای review مرکز کنترل آماده است.
 
-`Gate Status = NOT_READY_FOR_BUILD`
+موارد باقی‌مانده شامل تایید نهایی file scope، mock dataset، test execution، rollback owner و build approval مستقل هستند. بنابراین:
+
+`Gate Status = READY_FOR_CONTROL_ROOM_REVIEW`
+
+`Prototype Build = NOT_APPROVED`
 
 ## قانون
 

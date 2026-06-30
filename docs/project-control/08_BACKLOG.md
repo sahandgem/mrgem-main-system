@@ -150,9 +150,12 @@
 | UI/CONTROL | Manager Review Queue User Flow Storyboard | مسیر Overview تا evidence، AI، reason و audit timeline با هشت سناریوی mock |
 | UI/CONTROL | Manager Review Queue Prototype Approval Gate | gate مستقل برای file scope، data، test، rollback و build approval |
 | UI/CONTROL | Manager Review Queue Build Hold Policy | prototype تا تکمیل gate برابر ON_HOLD باقی بماند |
-| UI/CONTROL | Manager Review Queue Test Plan | سناریوهای isolation، visual state، interaction و blocked action |
-| UI/CONTROL | Manager Review Queue Rollback Plan | حذف کامل prototype آینده، reset mock state و verification |
+| UI/CONTROL | Manager Review Queue Test Plan | آماده شد؛ ۹ سناریوی mock برای state، AI، audit و blocked action |
+| UI/CONTROL | Manager Review Queue Rollback Plan | آماده شد؛ حذف پوشه، cleanup، checkpoint و verification |
 | UI/CONTROL | Manager Review Queue Isolated Prototype Candidate | فقط پس از gate pass و approval مستقل مرکز کنترل |
+| UI/CONTROL | Manager Review Queue Future File Scope Draft | پوشه و شش فایل احتمالی standalone، بدون dependency به main |
+| UI/CONTROL | Manager Review Queue Build Readiness Decision | READY_FOR_CONTROL_ROOM_REVIEW؛ build همچنان NOT_APPROVED |
+| UI/CONTROL | Manager Review Queue Future Isolated Prototype Approval | تصمیم مستقل برای file scope، fixture، test execution و rollback owner |
 | WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
 | FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |
 | PROD/DATA | طراحی Production Formula Architecture | مدل مفهومی فرمول تولید، مواد و هزینه بدون engine اجرایی |

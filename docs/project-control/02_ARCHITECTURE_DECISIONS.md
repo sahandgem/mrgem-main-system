@@ -119,6 +119,10 @@
 | ADR-111 | Manager Review Queue Prototype تا تعریف و تایید exact file scope، Test Plan، Rollback Plan و build approval مستقل در وضعیت ON_HOLD است. | فعال |
 | ADR-112 | Overview prototype پس از iteration تاییدشده frozen باقی می‌ماند و Main Merge همچنان ON_HOLD است. | فعال |
 | ADR-113 | هیچ route، UI، component، storage، database، auth، backend، real data یا production dependency جدید در CONTROL-P44 تایید نشده است. | فعال |
+| ADR-114 | Test Plan، Rollback/Exit Plan و Future File Scope Draft مربوط به Manager Review Queue در سطح مستندات آماده‌اند. | فعال |
+| ADR-115 | Manager Review Queue برای review تصمیم build آماده‌تر است، اما Prototype Build همچنان NOT_APPROVED و نیازمند approval مستقل است. | فعال |
+| ADR-116 | Overview prototype frozen و Main Merge ON_HOLD باقی می‌مانند. | فعال |
+| ADR-117 | هیچ کد، CSS، route، component، storage، database، auth، backend یا production dependency در CONTROL-P45 تایید نشده است. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

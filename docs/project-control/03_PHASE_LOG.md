@@ -89,12 +89,31 @@
 | CONTROL-P42-RECORD | انجام شده | ثبت Mobile re-review با نتیجه `approved_after_mobile_refinement`؛ Mobile و Desktop PASS و merge همچنان ON_HOLD |
 | CONTROL-P43-DESIGN | انجام شده | انتخاب Manager Review Queue Drill-down به‌عنوان صفحه بعدی concept، طراحی Screen Spec/Mock Dataset/Safety Rules و freeze کردن Overview prototype |
 | CONTROL-P44-DESIGN-REVIEW | انجام شده | تایید concept iteration، طراحی User Flow Storyboard، ثبت Prototype Approval Gate و Build Hold Policy بدون ساخت prototype |
+| CONTROL-P45-DESIGN | انجام شده | طراحی Test Plan، Rollback/Exit Plan، Future File Scope Draft و Build Readiness بدون ساخت prototype |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P44-DESIGN-REVIEW**
+آخرین P کنترل پروژه: **CONTROL-P45-DESIGN**
+
+## جزئیات ثبت CONTROL-P45-DESIGN
+
+فایل‌های جدید:
+
+- `docs/project-control/129_MANAGER_REVIEW_QUEUE_TEST_PLAN.md`
+- `docs/project-control/130_MANAGER_REVIEW_QUEUE_ROLLBACK_AND_EXIT_PLAN.md`
+- `docs/project-control/131_MANAGER_REVIEW_QUEUE_FUTURE_FILE_SCOPE_DRAFT.md`
+- `docs/project-control/132_MANAGER_REVIEW_QUEUE_BUILD_READINESS_DECISION.md`
+
+نتیجه:
+
+- ۹ سناریوی تست برای queue، financial urgent، duplicate، audit missing، low confidence، manual only، crisis، hold و AI suggestion طراحی شد.
+- محرک‌ها، مراحل، record و exit outcomeهای rollback ثبت شدند.
+- پوشه پیشنهادی آینده `prototypes/cockpit-manager-review-queue/` با شش فایل احتمالی تعریف شد.
+- Gate برای review مرکز کنترل `READY_FOR_CONTROL_ROOM_REVIEW` شد، اما Prototype Build همچنان `NOT_APPROVED` است.
+- Overview prototype frozen و Main Merge ON_HOLD باقی ماندند.
+- هیچ کد، CSS، UI، prototype، route، component، src، package یا main تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P44-DESIGN-REVIEW
 

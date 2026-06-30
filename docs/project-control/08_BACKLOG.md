@@ -8,6 +8,7 @@
 |---|---|---|---|
 | بالا | WF | extraction کنترل‌شده adapterهای کم‌ریسک باقی‌مانده | فقط فازهای کوچک، بدون تغییر route/storage/model/behavior |
 | بالا | WF | WF-P56 ادامه تثبیت هسته Workforce | انتخاب یک صفحه کم‌ریسک باقی‌مانده و extraction واقعی فقط در branch اختصاصی |
+| بالا | CORE | CORE-P02 طراحی Master Gem Central Data Model Contract | docs-only؛ قرارداد داده مرکزی بین WF، Product/Inventory، Finance، Production، Media و Cockpit |
 | بالا | CONTROL | نگه‌داری sync اسناد کنترل پروژه | بعد از هر P، current state و phase log اصلاح شود |
 
 ## بعداً

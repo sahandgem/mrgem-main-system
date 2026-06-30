@@ -102,11 +102,40 @@
 |---|---|---|
 | OPS-01 | انجام شده | ثبت Project Operating Rules، Parallel Workstream Control، Code Room Gate، Codex Report Standard و Project Stop Rules |
 
+## جدول فازهای CORE
+
+| فاز | وضعیت | خلاصه خروجی |
+|---|---|---|
+| CORE-P01 | انجام شده | ساخت `146_MASTER_GEM_UNIFIED_PUZZLE_ARCHITECTURE.md` و قفل معماری مادر مستر جم به عنوان پازل/هواپیمای یکپارچه؛ Workforce P0-P22 به عنوان `Workforce Operations Engine` ثبت شد؛ cockpit فقط قطعه visual/executive است؛ docs-only و بدون تغییر کد. |
+
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
 آخرین P تثبیت/بازبینی WF: **WF-P55**
+
+آخرین قفل معماری CORE: **CORE-P01**
+
+## جزئیات ثبت CORE-P01
+
+شاخه کاری:
+
+- `docs/master-gem-unified-puzzle-core-p01`
+
+فایل اصلی:
+
+- `docs/project-control/146_MASTER_GEM_UNIFIED_PUZZLE_ARCHITECTURE.md`
+
+نتیجه:
+
+- مستر جم به عنوان سیستم‌عامل مدیریتی/هواپیمای کامل ثبت شد.
+- Workforce P0-P22 به عنوان `Workforce Operations Engine` وارد معماری مادر شد.
+- cockpit و prototypeهای تصویری به عنوان قطعه visual/executive و نه کل پروژه ثبت شدند.
+- قطعات Product/Inventory، Finance/Cashflow، Production، Visual Inventory/Media، Sales/Friday Market، AI Review/Decision Queue و Audit/Backup/History در پازل مادر ثبت شدند.
+- موجودیت‌های اولیه central data model فهرست شدند.
+- Project Core Operating Law ثبت شد.
+- پیشنهاد بعدی `CORE-P02 — Master Gem Central Data Model Contract` است.
+- هیچ کد اجرایی، route، UI، prototype، package، storage، backend، auth، database یا main تغییر نکرد.
 
 ## جزئیات ثبت WF-P55
 

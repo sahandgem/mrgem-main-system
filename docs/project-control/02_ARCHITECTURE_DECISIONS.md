@@ -131,6 +131,10 @@
 | ADR-123 | Code Room Gate پیش از اجرای Codex الزامی است، مگر Control Room ماموریت را صریحاً docs-only و safe اعلام کند. | فعال |
 | ADR-124 | workstreamهای موازی به branch ایزوله، owner مشخص و file scope غیرهم‌پوشان نیاز دارند؛ conflict فایل حساس باعث توقف یکی از مسیرها می‌شود. | فعال |
 | ADR-125 | هر merge به main نیازمند approval مستقل است و هیچ Design/Prototype/Implementation approval جای Merge Approval را نمی‌گیرد. | فعال |
+| ADR-126 | مستر جم فقط cockpit یا داشبورد نیست؛ معماری مادر به عنوان سیستم‌عامل مدیریتی/هواپیمای کامل قفل شد و cockpit فقط یک قطعه visual/executive از پازل است. | فعال |
+| ADR-127 | Workforce P0-P22 به عنوان `Workforce Operations Engine` ثبت می‌شود؛ این موتور باید پایدار و تکمیل شود اما کل پروژه محسوب نمی‌شود. | فعال |
+| ADR-128 | هر UI آینده باید Input، Processing، Output و Decision/Operation Effect داشته باشد؛ صفحه صرفاً تزئینی یا جدا از عملیات واقعی ساخته نمی‌شود. | فعال |
+| ADR-129 | اجرای بعدی پس از CORE-P01 نباید implementation باشد؛ پیشنهاد مجاز بعدی طراحی docs-only قرارداد داده مرکزی CORE-P02 است. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -263,6 +267,9 @@
 - نمایش پیشنهاد AI بدون reason، related data، required approval و audit reference
 - اجرای تصمیم حساس از UI بدون Manager Review و audit trail
 - تغییر نام شاخه‌های مادر یا کدهای branch registry
+- تلقی کردن cockpit، prototype یا Workforce به عنوان کل پروژه مستر جم
+- ساخت UI بدون input، پردازش، خروجی و اثر تصمیمی/عملیاتی
+- شروع implementation بعدی بدون تصمیم صریح Project Core
 
 ## قانون ثبت تصمیم جدید
 

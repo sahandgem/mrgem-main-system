@@ -14,6 +14,8 @@
 
 آخرین P تثبیت/بازبینی WF: **WF-P55**
 
+آخرین قفل معماری CORE: **CORE-P01**
+
 آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P48-REVIEW**
 
 آخرین کار عملیاتی پروژه: **OPS-01**
@@ -29,6 +31,18 @@
 - approvalهای Design، Prototype، Implementation و Merge مستقل ثبت شدند.
 - branch `main` همچنان locked و روی `b16b1a0` است.
 - OPS-01 فقط docs/control است و هیچ code، prototype، src، package، database یا auth تغییر نمی‌دهد.
+
+## وضعیت CORE-P01
+
+معماری مادر «پازل یکپارچه مستر جم» در `docs/project-control/146_MASTER_GEM_UNIFIED_PUZZLE_ARCHITECTURE.md` قفل شد.
+
+- مستر جم فقط cockpit یا داشبورد نیست؛ سیستم‌عامل مدیریتی و هواپیمای کامل است.
+- پروژه Workforce P0-P22 به عنوان `Workforce Operations Engine` ثبت شد، نه کل پروژه.
+- Central Cockpit فقط `Executive Visual Layer` و یک قطعه از پازل است.
+- هر UI آینده باید Input، Processing، Output و Decision/Operation Effect داشته باشد.
+- Product/Inventory، Finance، Production، Sales، Media، AI Review و Audit/Backup/History به عنوان قطعات جدا ثبت شدند.
+- Project Core operating law ثبت شد: Codex فقط دستور دقیق، scope دار و دارای preflight/stop rule/report را اجرا می‌کند.
+- این فاز docs-only بود و هیچ source، prototype، route، package، storage، backend یا main تغییر نکرد.
 
 ## وضعیت CONTROL-P48-REVIEW
 
@@ -640,4 +654,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-WF-P56: ادامه تثبیت هسته Workforce با استخراج کنترل‌شده یک adapter کم‌ریسک باقی‌مانده از `WorkforcePages.tsx`، بدون route/storage/model/service/analyzer/UI redesign.
+CORE-P02: طراحی `Master Gem Central Data Model Contract` به صورت docs-only بین Workforce، Product/Inventory، Finance، Production، Media و Cockpit.

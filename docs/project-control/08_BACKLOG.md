@@ -163,6 +163,10 @@
 | UI/CONTROL | Manager Review Queue Stop Rules | توقف در صورت route/src/package/storage/database/auth/backend/real data |
 | UI/CONTROL | Manager Review Queue Rollback Owner | Control Room؛ حذف کامل پوشه و verification |
 | UI/CONTROL | Manager Review Queue Isolated Prototype Build | مرحله اجرایی بعدی، فقط با scope مصوب P46 و بدون merge |
+| UI/CONTROL | Manager Review Queue Static Review | انجام شد؛ commit `56c6075` برابر PASS |
+| UI/CONTROL | Manager Review Queue Human Visual Review | در انتظار بررسی Sahand روی desktop و mobile |
+| UI/CONTROL | Manager Review Queue Branch Merge Hold | تا Visual Review و approval مستقل، Main Merge برابر ON_HOLD |
+| UI/CONTROL | Manager Review Queue Prototype Review Result | ثبت outcome رسمی پس از Human Visual Review |
 | WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
 | FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |
 | PROD/DATA | طراحی Production Formula Architecture | مدل مفهومی فرمول تولید، مواد و هزینه بدون engine اجرایی |

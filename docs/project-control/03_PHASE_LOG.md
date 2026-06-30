@@ -91,12 +91,32 @@
 | CONTROL-P44-DESIGN-REVIEW | انجام شده | تایید concept iteration، طراحی User Flow Storyboard، ثبت Prototype Approval Gate و Build Hold Policy بدون ساخت prototype |
 | CONTROL-P45-DESIGN | انجام شده | طراحی Test Plan، Rollback/Exit Plan، Future File Scope Draft و Build Readiness بدون ساخت prototype |
 | CONTROL-P46-APPROVAL | انجام شده | صدور approval محدود build ایزوله مرحله بعد، Final File Scope، Mock Fixture Approval، Guardrails و Ownerها بدون ساخت prototype |
+| CONTROL-P47-BUILD | انجام شده | ساخت prototype ایزوله Manager Review Queue با ۱۰ item مصنوعی و بدون اتصال به main یا production |
+| CONTROL-P48-REVIEW | انجام شده | Static Review برابر PASS، ایجاد Human Visual Review Gate و حفظ Main Merge در وضعیت ON_HOLD |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P46-APPROVAL**
+آخرین P کنترل پروژه: **CONTROL-P48-REVIEW**
+
+## جزئیات ثبت CONTROL-P48-REVIEW
+
+فایل‌های جدید:
+
+- `docs/project-control/138_MANAGER_REVIEW_QUEUE_STATIC_REVIEW_REPORT.md`
+- `docs/project-control/139_MANAGER_REVIEW_QUEUE_HUMAN_VISUAL_REVIEW_GATE.md`
+- `docs/project-control/140_MANAGER_REVIEW_QUEUE_BRANCH_MERGE_HOLD.md`
+- `prototypes/cockpit-manager-review-queue/review-notes.md`
+
+نتیجه:
+
+- commit `56c6075` و شش فایل prototype بررسی شدند.
+- JavaScript، CSS، قرارداد ۱۰ item و scope بررسی و تایید شدند.
+- هیچ storage، fetch، API، backend، database، auth، production import، Overview change یا main change پیدا نشد.
+- Static Review برابر `PASS` و Human Visual Review برابر `PENDING` ثبت شد.
+- Main Merge همچنان `ON_HOLD` است.
+- هیچ کد، CSS، UI یا behavior در review تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P46-APPROVAL
 

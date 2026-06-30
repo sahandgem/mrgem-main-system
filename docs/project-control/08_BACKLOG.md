@@ -11,7 +11,8 @@
 | انجام‌شده | CORE | CORE-P02 طراحی Master Gem Central Data Model Contract | docs-only؛ ثبت‌شده در سند 147، بدون implementation یا merge |
 | انجام‌شده | CORE | CORE-P03 طراحی Task and Decision Core Contract | docs-only؛ ثبت‌شده در سند 148، بدون implementation یا merge |
 | انجام‌شده | CORE | CORE-P04 طراحی Master Gem Module Interaction Map | docs-only؛ ثبت‌شده در سند 149، بدون implementation یا merge |
-| بالا | CORE | CORE-P05 طراحی V1 Build Boundary و No-Code Freeze Rules | docs-only؛ تعیین دقیق مجاز/ممنوع پیش از هر بازگشت به implementation |
+| انجام‌شده | CORE | CORE-P05 طراحی V1 Build Boundary و No-Code Freeze Rules | docs-only؛ ثبت‌شده در سند 150، Code Main همچنان paused |
+| بالا | CORE | CORE-P06 طراحی Master Gem Module Readiness Scorecard | docs-only؛ سنجش data، contract، risk، dependency و وضعیت هر ماژول |
 | بالا | CONTROL | نگه‌داری sync اسناد کنترل پروژه | بعد از هر P، current state و phase log اصلاح شود |
 
 ## بعداً

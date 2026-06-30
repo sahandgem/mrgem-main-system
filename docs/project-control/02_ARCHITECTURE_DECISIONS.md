@@ -141,6 +141,9 @@
 | ADR-133 | هیچ ماژولی جزیره‌ای ساخته نمی‌شود؛ هر ماژول باید data، Task، DecisionItem، Audit Event، Alert یا Cockpit summary تولید/مصرف کند. | فعال |
 | ADR-134 | ارتباط ماژول‌ها با reference، event، Task، DecisionItem و read model انجام می‌شود؛ mutate مستقیم داده مالکیت‌شده ماژول دیگر ممنوع است. | فعال |
 | ADR-135 | Cockpit فقط داده‌ای را نمایش می‌دهد که source، Task/Decision، freshness و audit قابل ردیابی داشته باشد. | فعال |
+| ADR-136 | No-Code Freeze پیش‌فرض فعال است؛ فقط `docs/project-control` مجاز است تا Project Core با `CORE-RESUME` یا phase صریح کد را باز کند. | فعال |
+| ADR-137 | V1 باید زنجیره Data Entity → Task → DecisionItem → Audit → Cockpit Summary → Human Action را اثبات کند. | فعال |
+| ADR-138 | هر build واقعی باید V1 Build Gate و فرم Page/Feature Acceptance را کامل و PASS کند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

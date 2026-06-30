@@ -662,7 +662,7 @@ CORE-P02 به صورت docs-only انجام شد و قرارداد داده مر
 
 ## P پیشنهادی بعدی
 
-CORE-P05: طراحی docs-only مرز ساخت V1 و قوانین No-Code Freeze؛ هر implementation همچنان نیازمند approval مستقل Project Core است.
+CORE-P06: طراحی docs-only `Master Gem Module Readiness Scorecard`؛ هر implementation همچنان نیازمند `CORE-RESUME` و approval مستقل Project Core است.
 
 ## وضعیت CORE-P03
 
@@ -684,3 +684,14 @@ CORE-P04 به صورت docs-only انجام شد و نقشه تعامل ماژو
 - Cockpit read-only و AI پیشنهاددهنده باقی ماندند.
 - کد اجرایی، prototype، package، route، storage، database، auth، API و backend تغییر نکرد.
 - P55/P55A/P56 همچنان paused هستند.
+
+## وضعیت CORE-P05
+
+CORE-P05 به صورت docs-only انجام شد و مرز V1 و قوانین No-Code Freeze در `150_MASTER_GEM_V1_BUILD_BOUNDARY_AND_FREEZE_RULES.md` ثبت شد.
+
+- Code Main paused و `main` قفل باقی ماند.
+- فقط `docs/project-control` فعلاً مجاز است.
+- خروج از freeze فقط با `CORE-RESUME` یا phase صریح و کامل مجاز است.
+- P55A/P56، Cockpit implementation و subproject merge متوقف ماندند.
+- V1 Build Gate و Page/Feature Acceptance Rule ثبت شدند.
+- هیچ کد اجرایی، prototype، package، route، storage، database، auth، API یا backend تغییر نکرد.

@@ -170,6 +170,17 @@
 - Git: branch مستقل؛ بدون merge و بدون push.
 - توقف‌ها: P55/P55A/P56 paused باقی ماندند.
 - پیشنهاد بعدی: `CORE-P05 — Master Gem V1 Build Boundary and No-Code Freeze Rules` به صورت docs-only.
+
+## CORE-P05 — Master Gem V1 Build Boundary and No-Code Freeze Rules
+
+- تاریخ: 2026-07-01
+- وضعیت: انجام‌شده، docs-only
+- خروجی اصلی: `docs/project-control/150_MASTER_GEM_V1_BUILD_BOUNDARY_AND_FREEZE_RULES.md`
+- نتیجه: تعریف V1، trackهای مجاز، No-Code Freeze، CORE-RESUME gate، P55A/P56 rule، Cockpit/subproject freeze و V1 Build Gate.
+- قفل اجرایی: فقط `docs/project-control` مجاز؛ کدنویسی، refactor، implementation، merge، push و main change ممنوع.
+- اثر اجرایی: ندارد؛ `src`، prototype، package/lock، route، storage، database، auth، API و backend تغییر نکردند.
+- Git: branch مستقل؛ بدون merge و بدون push.
+- پیشنهاد بعدی: `CORE-P06 — Master Gem Module Readiness Scorecard` به صورت docs-only.
 - هیچ کد اجرایی، route، UI، prototype، package، storage، backend، auth، database یا main تغییر نکرد.
 
 ## جزئیات ثبت WF-P55

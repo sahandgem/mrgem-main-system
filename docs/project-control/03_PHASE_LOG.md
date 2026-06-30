@@ -135,6 +135,17 @@
 - موجودیت‌های اولیه central data model فهرست شدند.
 - Project Core Operating Law ثبت شد.
 - پیشنهاد بعدی `CORE-P02 — Master Gem Central Data Model Contract` است.
+
+## CORE-P02 — Master Gem Central Data Model Contract
+
+- تاریخ: 2026-06-30
+- وضعیت: انجام‌شده، docs-only
+- خروجی اصلی: `docs/project-control/147_MASTER_GEM_CENTRAL_DATA_MODEL_CONTRACT.md`
+- نتیجه: واژگان مرکزی، مالکیت دامنه‌ها، روابط، lifecycle، reference/event/snapshot، confidence، audit و مرز داده خارجی قفل شد.
+- اثر اجرایی: ندارد؛ `src`، prototype، package، route، storage، database، auth، API و backend تغییر نکردند.
+- Git: branch مستقل؛ بدون merge و بدون push.
+- توقف‌ها: P55/P55A/P56 paused باقی ماندند.
+- پیشنهاد بعدی: `CORE-P03 — Task and Decision Core Contract` به صورت docs-only.
 - هیچ کد اجرایی، route، UI، prototype، package، storage، backend، auth، database یا main تغییر نکرد.
 
 ## جزئیات ثبت WF-P55

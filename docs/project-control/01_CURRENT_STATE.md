@@ -652,6 +652,14 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 4. پروژه هنوز local-only است؛ پاک شدن storage مرورگر باعث از دست رفتن داده محلی می‌شود.
 5. backend، auth و sync هنوز طراحی/پیاده‌سازی نشده‌اند.
 
+## وضعیت CORE-P02
+
+CORE-P02 به صورت docs-only انجام شد و قرارداد داده مرکزی میان Workforce، Product/Inventory، Finance، Production، Media، Decision و Central Cockpit در `147_MASTER_GEM_CENTRAL_DATA_MODEL_CONTRACT.md` ثبت شد.
+
+- هیچ کد اجرایی، prototype، route، package، storage، database، auth، API یا backend تغییر نکرد.
+- هیچ implementation، merge یا push انجام نشد.
+- P55/P55A/P56 همچنان paused هستند.
+
 ## P پیشنهادی بعدی
 
-CORE-P02: طراحی `Master Gem Central Data Model Contract` به صورت docs-only بین Workforce، Product/Inventory، Finance، Production، Media و Cockpit.
+CORE-P03: طراحی docs-only قرارداد `Task and Decision Core`؛ هر implementation همچنان نیازمند approval مستقل Project Core است.

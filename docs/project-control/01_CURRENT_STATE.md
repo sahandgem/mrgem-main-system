@@ -12,6 +12,8 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
+آخرین P تثبیت/بازبینی WF: **WF-P54**
+
 آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P48-REVIEW**
 
 آخرین کار عملیاتی پروژه: **OPS-01**
@@ -624,6 +626,7 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 - داده‌ها در localStorage و serviceهای داخلی هستند.
 - analyzerها، recommendation، simulator، decision queue، report، backup، readiness، launch، drift، history، retention، operations calendar و maintenance وجود دارند.
 - `MaintenancePage`، `HistoryRetentionPage`، `OperationalHistoryPage` و `DataCenterPage` از `WorkforcePages.tsx` جدا شده‌اند.
+- در WF-P54 بررسی شد که `MaintenancePage` و `HistoryRetentionPage` همچنان page واقعی مستقل هستند و از `WorkforceRouteAdapter` یا re-export خام استفاده نمی‌کنند.
 - `WorkforcePages.tsx` هنوز بزرگ است و نیازمند extraction مرحله‌ای بیشتر است.
 
 ## ریسک‌های فعلی
@@ -636,4 +639,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-Cockpit prototype isolation boundary و test/rollback plan، فقط در سطح مستندات و پیش از هر مجوز ساخت.
+WF-P55: ادامه تثبیت هسته Workforce با استخراج کنترل‌شده یک adapter کم‌ریسک باقی‌مانده از `WorkforcePages.tsx`، بدون route/storage/model/service/analyzer/UI redesign.

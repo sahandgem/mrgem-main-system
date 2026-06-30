@@ -38,6 +38,7 @@
 | WF-P29 | انجام و verify شد | `MaintenancePage` و `HistoryRetentionPage` قبلاً از `WorkforcePages.tsx` جدا شده بودند؛ فایل‌های مستقل موجودند؛ test/build موفق؛ route/storage/UI تغییر نکرد. |
 | WF-P30 | انجام و verify شد | `OperationalHistoryPage` واقعاً از `WorkforcePages.tsx` خارج شد؛ `WorkforcePages.tsx` از `4733` خط به `4614` خط رسید؛ test/build موفق؛ route/storage/UI تغییر نکرد. |
 | WF-P31 | انجام و verify شد | `DataCenterPage` از adapter به صفحه واقعی تبدیل شد؛ `WorkforcePages.tsx` از `4331` خط به `4119` خط رسید؛ test/build موفق؛ route/storage/docs تغییر نکرد. |
+| WF-P54 | انجام و verify شد | تثبیت هسته Workforce پیش از توسعه هواپیما؛ بررسی شد `MaintenancePage` و `HistoryRetentionPage` از قبل به page واقعی مستقل تبدیل شده‌اند، adapter خام نیستند و source refactor تازه لازم نبود؛ route/storage/UI تغییر نکرد. |
 
 ## جدول فازهای CONTROL
 
@@ -103,6 +104,26 @@
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
+
+آخرین P تثبیت/بازبینی WF: **WF-P54**
+
+## جزئیات ثبت WF-P54
+
+شاخه کاری:
+
+- `refactor/workforce-core-stabilization-p54`
+
+نتیجه:
+
+- `MaintenancePage` در `src/pages/workforce/system/MaintenancePage.tsx` صفحه واقعی مستقل است.
+- `HistoryRetentionPage` در `src/pages/workforce/operations/HistoryRetentionPage.tsx` صفحه واقعی مستقل است.
+- هیچ‌کدام از این دو صفحه re-export خام از `WorkforcePages` یا `WorkforceRouteAdapter` نیستند.
+- `tests/analysis.test.ts` قبلاً این وضعیت را پوشش می‌دهد.
+- `WorkforcePages.tsx` در P54 تغییر source نداشت، چون extraction هدف از قبل انجام شده بود.
+- route جدید ساخته نشد.
+- localStorage key جدید ساخته نشد.
+- prototypeها، package، src business logic، analyzer/service و UI تغییر نکردند.
+- ریسک باقی‌مانده: `WorkforcePages.tsx` هنوز بزرگ است و adapterهای کم‌ریسک دیگری برای extraction مرحله‌ای باقی مانده‌اند.
 
 آخرین P کنترل پروژه: **CONTROL-P48-REVIEW**
 

@@ -13,7 +13,7 @@
 | Test Plan | `READY` |
 | Rollback Plan | `READY` |
 | File Scope Draft | `READY` |
-| Prototype Build | `NOT_APPROVED` |
+| Prototype Build | `APPROVED_FOR_ISOLATED_BUILD_NEXT_STEP` |
 | Main Integration | `NOT_APPROVED` |
 | Implementation | `NOT_APPROVED` |
 
@@ -21,22 +21,22 @@
 
 صفحه Manager Review Queue برای تصمیم آینده مرکز کنترل آماده‌تر شده است، اما readiness مستنداتی مجوز ساخت نیست.
 
-## موارد باقی‌مانده پیش از Build
+## موارد تاییدشده در CONTROL-P46
 
 - approval مستقل مرکز کنترل
-- تایید نهایی file scope و مسیر پیشنهادی
-- تایید mock dataset و fixture contract نهایی
-- تایید test execution command، owner و evidence
-- تعیین و تایید rollback owner
-- تایید checkpoint و stop rules پیش از build
+- Final File Scope و مسیر پیشنهادی
+- Mock Fixture Contract
+- Build Guardrails و Stop Rules
+- Rollback Owner و Test Owner
+- Test Plan و Rollback Plan
 
 ## تصمیم جاری
 
-- `Build Readiness = READY_FOR_CONTROL_ROOM_REVIEW`
-- `Prototype Build = NOT_APPROVED`
+- `Build Readiness = APPROVED_FOR_ISOLATED_BUILD_NEXT_STEP`
+- `Prototype Build = APPROVED_FOR_ISOLATED_BUILD_NEXT_STEP`
 - `Main Merge = ON_HOLD`
 - `Overview Prototype = FROZEN_AFTER_APPROVED_ITERATION`
 
 ## قانون
 
-هر build احتمالی فقط با تصمیم مستقل آینده، file scope نهایی و approval صریح قابل شروع است.
+build فقط در دستور اجرایی مستقل بعدی و دقیقاً در Final File Scope سند 134 قابل شروع است. Main Integration و Implementation همچنان `NOT_APPROVED` هستند.

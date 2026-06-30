@@ -156,6 +156,13 @@
 | UI/CONTROL | Manager Review Queue Future File Scope Draft | پوشه و شش فایل احتمالی standalone، بدون dependency به main |
 | UI/CONTROL | Manager Review Queue Build Readiness Decision | READY_FOR_CONTROL_ROOM_REVIEW؛ build همچنان NOT_APPROVED |
 | UI/CONTROL | Manager Review Queue Future Isolated Prototype Approval | تصمیم مستقل برای file scope، fixture، test execution و rollback owner |
+| UI/CONTROL | Manager Review Queue Build Approval Decision | تایید شد فقط برای isolated build مرحله بعد؛ main integration ممنوع |
+| UI/CONTROL | Manager Review Queue Final File Scope | فقط پوشه `prototypes/cockpit-manager-review-queue/` و شش فایل مصوب |
+| UI/CONTROL | Manager Review Queue Mock Fixture Approval | ده item synthetic با decisionOptions صرفاً مفهومی |
+| UI/CONTROL | Manager Review Queue Build Guardrails | boundary پیش از، حین و بعد از build آینده |
+| UI/CONTROL | Manager Review Queue Stop Rules | توقف در صورت route/src/package/storage/database/auth/backend/real data |
+| UI/CONTROL | Manager Review Queue Rollback Owner | Control Room؛ حذف کامل پوشه و verification |
+| UI/CONTROL | Manager Review Queue Isolated Prototype Build | مرحله اجرایی بعدی، فقط با scope مصوب P46 و بدون merge |
 | WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
 | FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |
 | PROD/DATA | طراحی Production Formula Architecture | مدل مفهومی فرمول تولید، مواد و هزینه بدون engine اجرایی |

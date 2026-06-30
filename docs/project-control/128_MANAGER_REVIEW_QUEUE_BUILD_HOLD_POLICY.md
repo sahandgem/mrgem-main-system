@@ -6,7 +6,8 @@
 
 | موضوع | وضعیت |
 |---|---|
-| Manager Review Queue Prototype | `ON_HOLD` |
+| Manager Review Queue Prototype | `APPROVED_FOR_ISOLATED_BUILD_NEXT_STEP` |
+| Build Hold | `LIFTED_FOR_APPROVED_ISOLATED_NEXT_STEP` |
 | Manager Review Queue Implementation | `NOT_APPROVED` |
 | Overview Prototype | `FROZEN_AFTER_APPROVED_ITERATION` |
 | Main Merge | `ON_HOLD` |
@@ -49,8 +50,8 @@
 
 ## وضعیت پس از CONTROL-P45
 
-Test Plan، Rollback Plan و Future File Scope Draft آماده‌اند، اما approval نهایی file scope، mock dataset، test execution، rollback owner و build approval مستقل هنوز صادر نشده‌اند. بنابراین hold بدون تغییر باقی می‌ماند.
+Test Plan، Rollback Plan، Final File Scope، Mock Fixture Contract، Guardrails، Rollback Owner و Test Owner تایید شده‌اند. Hold فقط برای یک build ایزوله و مستقل آینده برداشته شده است. Implementation، main integration و merge همچنان روی hold باقی می‌مانند.
 
 ## قانون نهایی
 
-تا صدور تصمیم مستقل، Manager Review Queue Prototype برابر `ON_HOLD` است. Overview prototype نیز frozen باقی می‌ماند و main merge همچنان مجاز نیست.
+ساخت ایزوله مرحله بعد مجاز شده، اما هنوز شروع نشده است. Overview prototype frozen باقی می‌ماند و main merge همچنان مجاز نیست.

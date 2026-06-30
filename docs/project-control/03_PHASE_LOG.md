@@ -90,12 +90,32 @@
 | CONTROL-P43-DESIGN | انجام شده | انتخاب Manager Review Queue Drill-down به‌عنوان صفحه بعدی concept، طراحی Screen Spec/Mock Dataset/Safety Rules و freeze کردن Overview prototype |
 | CONTROL-P44-DESIGN-REVIEW | انجام شده | تایید concept iteration، طراحی User Flow Storyboard، ثبت Prototype Approval Gate و Build Hold Policy بدون ساخت prototype |
 | CONTROL-P45-DESIGN | انجام شده | طراحی Test Plan، Rollback/Exit Plan، Future File Scope Draft و Build Readiness بدون ساخت prototype |
+| CONTROL-P46-APPROVAL | انجام شده | صدور approval محدود build ایزوله مرحله بعد، Final File Scope، Mock Fixture Approval، Guardrails و Ownerها بدون ساخت prototype |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P45-DESIGN**
+آخرین P کنترل پروژه: **CONTROL-P46-APPROVAL**
+
+## جزئیات ثبت CONTROL-P46-APPROVAL
+
+فایل‌های جدید:
+
+- `docs/project-control/133_MANAGER_REVIEW_QUEUE_BUILD_APPROVAL_DECISION.md`
+- `docs/project-control/134_MANAGER_REVIEW_QUEUE_FINAL_FILE_SCOPE.md`
+- `docs/project-control/135_MANAGER_REVIEW_QUEUE_MOCK_FIXTURE_APPROVAL.md`
+- `docs/project-control/136_MANAGER_REVIEW_QUEUE_BUILD_GUARDRAILS_AND_STOP_RULES.md`
+- `docs/project-control/137_MANAGER_REVIEW_QUEUE_ROLLBACK_OWNER_AND_TEST_EXECUTION_DECISION.md`
+
+نتیجه:
+
+- Build آینده با وضعیت `APPROVED_FOR_ISOLATED_BUILD_NEXT_STEP` و فقط برای Manager Review Queue تایید شد.
+- Final File Scope فقط پوشه `prototypes/cockpit-manager-review-queue/` و شش فایل standalone است.
+- ده نوع mock item و قرارداد ۱۵ فیلدی آن تایید شد.
+- route، src، package، storage، database، auth، backend، real data و تغییر Overview به‌عنوان Stop Rule ثبت شدند.
+- Rollback Owner برابر Control Room و Test Owner برابر Sahand / Control Room Review است.
+- ساخت واقعی در P46 انجام نشد و main تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P45-DESIGN
 

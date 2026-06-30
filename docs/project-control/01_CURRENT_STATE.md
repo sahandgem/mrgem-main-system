@@ -12,7 +12,22 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P45-DESIGN**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P46-APPROVAL**
+
+## وضعیت CONTROL-P46-APPROVAL
+
+مرکز کنترل اجازه محدود build ایزوله Manager Review Queue را برای مرحله اجرایی مستقل بعدی صادر کرد.
+
+- Prototype Build Decision: `APPROVED_FOR_ISOLATED_BUILD_NEXT_STEP`
+- Build Started: `NO`
+- Final File Scope: فقط `prototypes/cockpit-manager-review-queue/` و شش فایل مصوب
+- Mock Fixture Contract: approved و کاملاً synthetic
+- Rollback Owner: `Control Room`
+- Test Owner: `Sahand / Control Room Review`
+- Overview Prototype همچنان `FROZEN_AFTER_APPROVED_ITERATION` است.
+- Main Merge همچنان `ON_HOLD` است.
+- Main Integration و Real Implementation همچنان `NOT_APPROVED` هستند.
+- هیچ کد، CSS، UI، prototype، route، src، package یا production dependency در P46 تغییر نکرد.
 
 ## وضعیت CONTROL-P45-DESIGN
 

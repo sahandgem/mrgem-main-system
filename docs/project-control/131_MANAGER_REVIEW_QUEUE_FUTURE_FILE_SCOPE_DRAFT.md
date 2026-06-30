@@ -4,7 +4,9 @@
 
 ## وضعیت
 
-این سند فقط `DRAFT` است و مجوز ساخت فایل، prototype، UI یا component نیست.
+این سند draft تاریخی P45 است و با Final File Scope سند 134 جایگزین شده است. برای build آینده فقط سند 134 مرجع است.
+
+`Status = SUPERSEDED_BY_134`
 
 ## پوشه پیشنهادی آینده
 

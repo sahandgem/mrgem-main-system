@@ -7,8 +7,8 @@
 | موضوع | وضعیت |
 |---|---|
 | Design Review | `APPROVED_FOR_CONCEPT_ITERATION` |
-| Gate Status | `READY_FOR_CONTROL_ROOM_REVIEW` |
-| Prototype Build | `NOT_APPROVED` |
+| Gate Status | `PASSED_FOR_ISOLATED_BUILD_NEXT_STEP` |
+| Prototype Build | `APPROVED_FOR_ISOLATED_BUILD_NEXT_STEP` |
 | Main Integration | `NOT_APPROVED` |
 | Implementation | `NOT_APPROVED` |
 
@@ -56,11 +56,13 @@
 - Future File Scope Draft آماده است.
 - Build Readiness برای review مرکز کنترل آماده است.
 
-موارد باقی‌مانده شامل تایید نهایی file scope، mock dataset، test execution، rollback owner و build approval مستقل هستند. بنابراین:
+در CONTROL-P46، Final File Scope، Mock Fixture Contract، Guardrails، Rollback Owner و Test Owner تایید و build approval محدود صادر شد. بنابراین:
 
-`Gate Status = READY_FOR_CONTROL_ROOM_REVIEW`
+`Gate Status = PASSED_FOR_ISOLATED_BUILD_NEXT_STEP`
 
-`Prototype Build = NOT_APPROVED`
+`Prototype Build = APPROVED_FOR_ISOLATED_BUILD_NEXT_STEP`
+
+این approval برای دستور اجرایی مستقل بعدی است و Main Integration و Implementation را مجاز نمی‌کند.
 
 ## قانون
 

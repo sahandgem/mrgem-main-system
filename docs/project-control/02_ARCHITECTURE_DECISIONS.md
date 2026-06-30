@@ -116,13 +116,17 @@
 | ADR-108 | Manager Review Queue در CONTROL-P43 فقط concept-only است؛ Prototype Build، Main Integration و Implementation آن NOT_APPROVED هستند. | فعال |
 | ADR-109 | هیچ prototype، route، UI، component، database، storage، auth، real data یا main integration جدید در CONTROL-P43 تایید نشده است. | فعال |
 | ADR-110 | Manager Review Queue Drill-down فقط برای concept iteration تایید شده و Design Review مجوز Prototype Build نیست. | فعال |
-| ADR-111 | Manager Review Queue Prototype تا تعریف و تایید exact file scope، Test Plan، Rollback Plan و build approval مستقل در وضعیت ON_HOLD است. | فعال |
+| ADR-111 | Manager Review Queue Prototype تا تعریف و تایید exact file scope، Test Plan، Rollback Plan و build approval مستقل در وضعیت ON_HOLD است. | جایگزین‌شده با ADR-118 |
 | ADR-112 | Overview prototype پس از iteration تاییدشده frozen باقی می‌ماند و Main Merge همچنان ON_HOLD است. | فعال |
 | ADR-113 | هیچ route، UI، component، storage، database، auth، backend، real data یا production dependency جدید در CONTROL-P44 تایید نشده است. | فعال |
 | ADR-114 | Test Plan، Rollback/Exit Plan و Future File Scope Draft مربوط به Manager Review Queue در سطح مستندات آماده‌اند. | فعال |
-| ADR-115 | Manager Review Queue برای review تصمیم build آماده‌تر است، اما Prototype Build همچنان NOT_APPROVED و نیازمند approval مستقل است. | فعال |
+| ADR-115 | Manager Review Queue برای review تصمیم build آماده‌تر است، اما Prototype Build همچنان NOT_APPROVED و نیازمند approval مستقل است. | جایگزین‌شده با ADR-118 |
 | ADR-116 | Overview prototype frozen و Main Merge ON_HOLD باقی می‌مانند. | فعال |
 | ADR-117 | هیچ کد، CSS، route، component، storage، database، auth، backend یا production dependency در CONTROL-P45 تایید نشده است. | فعال |
+| ADR-118 | Manager Review Queue isolated prototype build فقط برای مرحله بعد و فقط داخل Final File Scope سند 134 با وضعیت `APPROVED_FOR_ISOLATED_BUILD_NEXT_STEP` تایید شد. | فعال |
+| ADR-119 | Main Integration و Real Implementation همچنان NOT_APPROVED و Main Merge همچنان ON_HOLD هستند. | فعال |
+| ADR-120 | Overview prototype frozen باقی می‌ماند و build آینده حق تغییر هیچ فایل Overview را ندارد. | فعال |
+| ADR-121 | هیچ route، src، package، storage، database، auth، backend، API، real data یا production dependency در approval P46 مجاز نیست. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

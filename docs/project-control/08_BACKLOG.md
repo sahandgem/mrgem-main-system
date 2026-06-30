@@ -167,6 +167,12 @@
 | UI/CONTROL | Manager Review Queue Human Visual Review | در انتظار بررسی Sahand روی desktop و mobile |
 | UI/CONTROL | Manager Review Queue Branch Merge Hold | تا Visual Review و approval مستقل، Main Merge برابر ON_HOLD |
 | UI/CONTROL | Manager Review Queue Prototype Review Result | ثبت outcome رسمی پس از Human Visual Review |
+| CONTROL | Enforce Project Operating Rules | اعمال preflight، gate، rollback و approval separation در همه ماموریت‌ها |
+| CONTROL | Parallel Branch Ownership Registry | ثبت owner، branch و file scope هر workstream فعال |
+| CONTROL | Sensitive File Conflict Check | جلوگیری از تغییر همزمان Current State، Decisions، Phase Log، Backlog و production files |
+| CONTROL | Code Room Gate Checklist | تبدیل Policy سند 002 به checklist ثابت قبل از Codex |
+| CONTROL | Codex Report Compliance Review | کنترل گزارش‌های پایان بر اساس استاندارد سند 003 |
+| CONTROL | Split Future Control Work to Dedicated Branch | پایان استثنای bootstrap OPS-01 و جداسازی workstream کنترل از branch cockpit |
 | WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
 | FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |
 | PROD/DATA | طراحی Production Formula Architecture | مدل مفهومی فرمول تولید، مواد و هزینه بدون engine اجرایی |

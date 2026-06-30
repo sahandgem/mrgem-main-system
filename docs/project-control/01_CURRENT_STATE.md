@@ -14,6 +14,20 @@
 
 آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P48-REVIEW**
 
+آخرین کار عملیاتی پروژه: **OPS-01**
+
+## وضعیت OPS-01
+
+قوانین عملیاتی مادر پروژه و کنترل کار همزمان رسمی شدند.
+
+- Project Operating Rules ثبت شد.
+- Parallel Workstream Control پیش از گسترش کار موازی الزامی شد.
+- Code Room مالک Cockpit Review Track در محدوده P48 تا P50 است.
+- Code Room Gate برای اجرای Codex الزامی است، مگر ماموریت صریحاً docs-only و safe اعلام شود.
+- approvalهای Design، Prototype، Implementation و Merge مستقل ثبت شدند.
+- branch `main` همچنان locked و روی `b16b1a0` است.
+- OPS-01 فقط docs/control است و هیچ code، prototype، src، package، database یا auth تغییر نمی‌دهد.
+
 ## وضعیت CONTROL-P48-REVIEW
 
 Prototype ایزوله Manager Review Queue در commit `56c6075` ممیزی شد.

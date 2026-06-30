@@ -94,6 +94,12 @@
 | CONTROL-P47-BUILD | انجام شده | ساخت prototype ایزوله Manager Review Queue با ۱۰ item مصنوعی و بدون اتصال به main یا production |
 | CONTROL-P48-REVIEW | انجام شده | Static Review برابر PASS، ایجاد Human Visual Review Gate و حفظ Main Merge در وضعیت ON_HOLD |
 
+## جدول عملیات پروژه
+
+| فاز | وضعیت | خلاصه خروجی |
+|---|---|---|
+| OPS-01 | انجام شده | ثبت Project Operating Rules، Parallel Workstream Control، Code Room Gate، Codex Report Standard و Project Stop Rules |
+
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**

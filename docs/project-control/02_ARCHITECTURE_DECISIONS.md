@@ -127,6 +127,10 @@
 | ADR-119 | Main Integration و Real Implementation همچنان NOT_APPROVED و Main Merge همچنان ON_HOLD هستند. | فعال |
 | ADR-120 | Overview prototype frozen باقی می‌ماند و build آینده حق تغییر هیچ فایل Overview را ندارد. | فعال |
 | ADR-121 | هیچ route، src، package، storage، database، auth، backend، API، real data یا production dependency در approval P46 مجاز نیست. | فعال |
+| ADR-122 | قواعد عملیاتی پروژه در تعارض میان promptهای داخلی پروژه مرجع هستند؛ اعمال آن‌ها تابع دستورات بالادستی system/developer است. | فعال |
+| ADR-123 | Code Room Gate پیش از اجرای Codex الزامی است، مگر Control Room ماموریت را صریحاً docs-only و safe اعلام کند. | فعال |
+| ADR-124 | workstreamهای موازی به branch ایزوله، owner مشخص و file scope غیرهم‌پوشان نیاز دارند؛ conflict فایل حساس باعث توقف یکی از مسیرها می‌شود. | فعال |
+| ADR-125 | هر merge به main نیازمند approval مستقل است و هیچ Design/Prototype/Implementation approval جای Merge Approval را نمی‌گیرد. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

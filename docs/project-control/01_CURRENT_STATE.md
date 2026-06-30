@@ -662,7 +662,7 @@ CORE-P02 به صورت docs-only انجام شد و قرارداد داده مر
 
 ## P پیشنهادی بعدی
 
-CORE-P06: طراحی docs-only `Master Gem Module Readiness Scorecard`؛ هر implementation همچنان نیازمند `CORE-RESUME` و approval مستقل Project Core است.
+CORE-P07: تصمیم docs-only درباره ادامه freeze، بازکردن احتمالی P55A با `CORE-RESUME` یا ادامه contractهای Product/Finance/Production.
 
 ## وضعیت CORE-P03
 
@@ -694,4 +694,14 @@ CORE-P05 به صورت docs-only انجام شد و مرز V1 و قوانین No
 - خروج از freeze فقط با `CORE-RESUME` یا phase صریح و کامل مجاز است.
 - P55A/P56، Cockpit implementation و subproject merge متوقف ماندند.
 - V1 Build Gate و Page/Feature Acceptance Rule ثبت شدند.
+- هیچ کد اجرایی، prototype، package، route، storage، database، auth، API یا backend تغییر نکرد.
+
+## وضعیت CORE-P06
+
+CORE-P06 به صورت docs-only انجام شد و Scorecard آمادگی ماژول‌ها در `151_MASTER_GEM_MODULE_READINESS_SCORECARD.md` ثبت شد.
+
+- Workforce P55A فقط به‌عنوان `code_resume_candidate` شناسایی شد؛ مجوز اجرا صادر نشد.
+- Cockpit frozen، Product/Finance در وضعیت subproject-only و P56 blocked باقی ماندند.
+- design-nextهای Product، Finance، Production، Media، Audit و Cockpit read-only ثبت شدند.
+- Code Main paused و خروج از freeze همچنان نیازمند `CORE-RESUME` جداگانه است.
 - هیچ کد اجرایی، prototype، package، route، storage، database، auth، API یا backend تغییر نکرد.

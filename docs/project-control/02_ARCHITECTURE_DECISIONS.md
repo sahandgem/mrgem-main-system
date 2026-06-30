@@ -144,6 +144,9 @@
 | ADR-136 | No-Code Freeze پیش‌فرض فعال است؛ فقط `docs/project-control` مجاز است تا Project Core با `CORE-RESUME` یا phase صریح کد را باز کند. | فعال |
 | ADR-137 | V1 باید زنجیره Data Entity → Task → DecisionItem → Audit → Cockpit Summary → Human Action را اثبات کند. | فعال |
 | ADR-138 | هر build واقعی باید V1 Build Gate و فرم Page/Feature Acceptance را کامل و PASS کند. | فعال |
+| ADR-139 | Readiness score مجوز کدنویسی نیست؛ حتی score برابر 5 نیز نیازمند `CORE-RESUME` مستقل است. | فعال |
+| ADR-140 | تنها code resume candidate فعلی Workforce P55A verification است؛ P56 و سایر implementationها blocked هستند. | فعال |
+| ADR-141 | ترتیب readiness فعلی: Project Core docs، P55A candidate، Task/Decision review، contractهای موتورهای داده، سپس Cockpit read-only design. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

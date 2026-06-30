@@ -181,6 +181,17 @@
 - اثر اجرایی: ندارد؛ `src`، prototype، package/lock، route، storage، database، auth، API و backend تغییر نکردند.
 - Git: branch مستقل؛ بدون merge و بدون push.
 - پیشنهاد بعدی: `CORE-P06 — Master Gem Module Readiness Scorecard` به صورت docs-only.
+
+## CORE-P06 — Master Gem Module Readiness Scorecard
+
+- تاریخ: 2026-07-01
+- وضعیت: انجام‌شده، docs-only
+- خروجی اصلی: `docs/project-control/151_MASTER_GEM_MODULE_READINESS_SCORECARD.md`
+- نتیجه: scoring scale، معیارهای readiness، scorecard سیزده ماژول، diagnosis، ranking، blocked/design-next و resume candidate ثبت شد.
+- تصمیم: Workforce P55A فقط candidate است؛ هیچ مجوز کدنویسی صادر نشد و P56 blocked ماند.
+- اثر اجرایی: ندارد؛ `src`، prototype، package/lock، route، storage، database، auth، API و backend تغییر نکردند.
+- Git: branch مستقل؛ بدون merge و بدون push.
+- پیشنهاد بعدی: `CORE-P07 — Master Gem Resume Candidate Decision` به صورت docs-only، مگر صدور جداگانه `CORE-RESUME`.
 - هیچ کد اجرایی، route، UI، prototype، package، storage، backend، auth، database یا main تغییر نکرد.
 
 ## جزئیات ثبت WF-P55

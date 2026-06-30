@@ -67,7 +67,7 @@ import { StatusBadge } from "./components/StatusBadge";
 import { BaselineCompatibilityNotice } from "./components/workforce/BaselineCompatibilityNotice";
 import HistoryRetentionPage from "./pages/workforce/operations/HistoryRetentionPage";
 import MaintenancePage from "./pages/workforce/system/MaintenancePage";
-import OperationalHistoryPage from "./pages/workforce/system/OperationalHistoryPage";
+import OperationalHistoryPage from "./pages/workforce/operations/OperationalHistoryPage";
 import DataCenterPage from "./pages/workforce/system/DataCenterPage";
 import {
   currentBaselineDriftReport,

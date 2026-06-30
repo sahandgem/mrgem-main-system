@@ -137,6 +137,7 @@ const timestamp = "2026-01-01T00:00:00.000Z";
     "/organization/workforce-dashboard/simulator",
     "/organization/workforce-dashboard/data-center",
     "/organization/workforce-dashboard/baseline-drift",
+    "/organization/workforce-dashboard/operational-history",
     "/organization/workforce-dashboard/operations-calendar",
     "/organization/workforce-dashboard/operations-control-settings",
   ];
@@ -171,7 +172,7 @@ const timestamp = "2026-01-01T00:00:00.000Z";
   const p29ExtractedPages = [
     "src/pages/workforce/system/MaintenancePage.tsx",
     "src/pages/workforce/operations/HistoryRetentionPage.tsx",
-    "src/pages/workforce/system/OperationalHistoryPage.tsx",
+    "src/pages/workforce/operations/OperationalHistoryPage.tsx",
     "src/pages/workforce/system/DataCenterPage.tsx",
   ];
 

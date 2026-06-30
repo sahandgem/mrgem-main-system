@@ -12,7 +12,7 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P تثبیت/بازبینی WF: **WF-P54**
+آخرین P تثبیت/بازبینی WF: **WF-P55**
 
 آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P48-REVIEW**
 
@@ -553,10 +553,10 @@ WF-P31 انجام شد و verify شد. در این فاز فقط extraction مع
 WF-P30 انجام شد و verify شد. در این فاز فقط extraction معماری انجام شد و رفتار برنامه تغییر نکرد.
 
 - `OperationalHistoryPage` واقعاً از `src/WorkforcePages.tsx` خارج شد.
-- فایل صفحه: `src/pages/workforce/system/OperationalHistoryPage.tsx`
+- فایل صفحه در P55 به مسیر عملیاتی منتقل شد: `src/pages/workforce/operations/OperationalHistoryPage.tsx`
 - فایل‌های تغییرکرده در WF-P30:
   - `src/WorkforcePages.tsx`
-  - `src/pages/workforce/system/OperationalHistoryPage.tsx`
+  - `src/pages/workforce/operations/OperationalHistoryPage.tsx`
   - `tests/analysis.test.ts`
 - `WorkforcePages.tsx` از `4733` خط به `4614` خط رسید.
 - route تغییر نکرد.
@@ -627,6 +627,7 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 - analyzerها، recommendation، simulator، decision queue، report، backup، readiness، launch، drift، history، retention، operations calendar و maintenance وجود دارند.
 - `MaintenancePage`، `HistoryRetentionPage`، `OperationalHistoryPage` و `DataCenterPage` از `WorkforcePages.tsx` جدا شده‌اند.
 - در WF-P54 بررسی شد که `MaintenancePage` و `HistoryRetentionPage` همچنان page واقعی مستقل هستند و از `WorkforceRouteAdapter` یا re-export خام استفاده نمی‌کنند.
+- در WF-P55 مسیر واقعی `OperationalHistoryPage` به `src/pages/workforce/operations/OperationalHistoryPage.tsx` منتقل شد و route path بدون تغییر باقی ماند.
 - `WorkforcePages.tsx` هنوز بزرگ است و نیازمند extraction مرحله‌ای بیشتر است.
 
 ## ریسک‌های فعلی
@@ -639,4 +640,4 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 
 ## P پیشنهادی بعدی
 
-WF-P55: ادامه تثبیت هسته Workforce با استخراج کنترل‌شده یک adapter کم‌ریسک باقی‌مانده از `WorkforcePages.tsx`، بدون route/storage/model/service/analyzer/UI redesign.
+WF-P56: ادامه تثبیت هسته Workforce با استخراج کنترل‌شده یک adapter کم‌ریسک باقی‌مانده از `WorkforcePages.tsx`، بدون route/storage/model/service/analyzer/UI redesign.

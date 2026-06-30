@@ -39,6 +39,7 @@
 | WF-P30 | انجام و verify شد | `OperationalHistoryPage` واقعاً از `WorkforcePages.tsx` خارج شد؛ `WorkforcePages.tsx` از `4733` خط به `4614` خط رسید؛ test/build موفق؛ route/storage/UI تغییر نکرد. |
 | WF-P31 | انجام و verify شد | `DataCenterPage` از adapter به صفحه واقعی تبدیل شد؛ `WorkforcePages.tsx` از `4331` خط به `4119` خط رسید؛ test/build موفق؛ route/storage/docs تغییر نکرد. |
 | WF-P54 | انجام و verify شد | تثبیت هسته Workforce پیش از توسعه هواپیما؛ بررسی شد `MaintenancePage` و `HistoryRetentionPage` از قبل به page واقعی مستقل تبدیل شده‌اند، adapter خام نیستند و source refactor تازه لازم نبود؛ route/storage/UI تغییر نکرد. |
+| WF-P55 | انجام و verify شد | `OperationalHistoryPage` از مسیر سیستم به `src/pages/workforce/operations/OperationalHistoryPage.tsx` منتقل شد؛ page واقعی مستقل و بدون adapter خام باقی ماند؛ route path/storage/UI تغییر نکرد. |
 
 ## جدول فازهای CONTROL
 
@@ -105,7 +106,24 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P تثبیت/بازبینی WF: **WF-P54**
+آخرین P تثبیت/بازبینی WF: **WF-P55**
+
+## جزئیات ثبت WF-P55
+
+شاخه کاری:
+
+- `refactor/workforce-core-stabilization-p55`
+
+نتیجه:
+
+- `OperationalHistoryPage` به مسیر `src/pages/workforce/operations/OperationalHistoryPage.tsx` منتقل شد.
+- صفحه همچنان component واقعی مستقل است و از `WorkforceRouteAdapter` یا re-export خام استفاده نمی‌کند.
+- route `/organization/workforce-dashboard/operational-history` بدون تغییر باقی ماند.
+- فقط مسیر import در route registry و `WorkforcePages.tsx` اصلاح شد.
+- تست route/extraction در `tests/analysis.test.ts` برای مسیر جدید و وجود route عملیاتی به‌روزرسانی شد.
+- localStorage key جدید ساخته نشد.
+- business model، analyzer/service logic، prototype، package و UI تغییر نکردند.
+- ریسک باقی‌مانده: `WorkforcePages.tsx` هنوز بزرگ است و adapterهای کم‌ریسک دیگری برای extraction مرحله‌ای باقی مانده‌اند.
 
 ## جزئیات ثبت WF-P54
 
@@ -890,12 +908,12 @@
 
 فایل صفحه:
 
-- `src/pages/workforce/system/OperationalHistoryPage.tsx`
+- `src/pages/workforce/operations/OperationalHistoryPage.tsx`
 
 فایل‌های تغییرکرده در WF-P30:
 
 - `src/WorkforcePages.tsx`
-- `src/pages/workforce/system/OperationalHistoryPage.tsx`
+- `src/pages/workforce/operations/OperationalHistoryPage.tsx`
 - `tests/analysis.test.ts`
 
 نتیجه:

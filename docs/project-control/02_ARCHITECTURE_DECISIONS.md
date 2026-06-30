@@ -138,6 +138,9 @@
 | ADR-130 | Task ستون فقرات اجرای قابل پیگیری و DecisionItem مرز تصمیم انسانی در همه ماژول‌های مستر جم است. | فعال |
 | ADR-131 | Task با وضعیت waiting_for_decision باید به DecisionItem متصل باشد و تصمیم resolved باید اثر ثبت‌شده روی Task یا entity داشته باشد. | فعال |
 | ADR-132 | AI فقط پیشنهاد می‌دهد؛ Cockpit مالک Task/Decision نیست و action واقعی یا auto-approval نیازمند approval مستقل است. | فعال |
+| ADR-133 | هیچ ماژولی جزیره‌ای ساخته نمی‌شود؛ هر ماژول باید data، Task، DecisionItem، Audit Event، Alert یا Cockpit summary تولید/مصرف کند. | فعال |
+| ADR-134 | ارتباط ماژول‌ها با reference، event، Task، DecisionItem و read model انجام می‌شود؛ mutate مستقیم داده مالکیت‌شده ماژول دیگر ممنوع است. | فعال |
+| ADR-135 | Cockpit فقط داده‌ای را نمایش می‌دهد که source، Task/Decision، freshness و audit قابل ردیابی داشته باشد. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

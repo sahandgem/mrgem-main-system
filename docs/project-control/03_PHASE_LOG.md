@@ -158,6 +158,18 @@
 - Git: branch مستقل؛ بدون merge و بدون push.
 - توقف‌ها: P55/P55A/P56 paused باقی ماندند.
 - پیشنهاد بعدی: `CORE-P04 — Master Gem Module Interaction Map` به صورت docs-only.
+
+## CORE-P04 — Master Gem Module Interaction Map
+
+- تاریخ: 2026-06-30
+- وضعیت: انجام‌شده، docs-only
+- خروجی اصلی: `docs/project-control/149_MASTER_GEM_MODULE_INTERACTION_MAP.md`
+- نتیجه: مالکیت و تعامل Project Core، Workforce، Product/Inventory، Finance، Production، Media، Sales، AI/Decision، Cockpit و Audit ثبت شد.
+- خروجی معماری: interaction matrix، data flow chainها، Cockpit visibility، Task/Decision routing و V1 interaction boundary.
+- اثر اجرایی: ندارد؛ `src`، prototype، package/lock، route، storage، database، auth، API و backend تغییر نکردند.
+- Git: branch مستقل؛ بدون merge و بدون push.
+- توقف‌ها: P55/P55A/P56 paused باقی ماندند.
+- پیشنهاد بعدی: `CORE-P05 — Master Gem V1 Build Boundary and No-Code Freeze Rules` به صورت docs-only.
 - هیچ کد اجرایی، route، UI، prototype، package، storage، backend، auth، database یا main تغییر نکرد.
 
 ## جزئیات ثبت WF-P55

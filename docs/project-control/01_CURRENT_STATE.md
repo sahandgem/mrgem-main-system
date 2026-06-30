@@ -662,4 +662,15 @@ CORE-P02 به صورت docs-only انجام شد و قرارداد داده مر
 
 ## P پیشنهادی بعدی
 
-CORE-P03: طراحی docs-only قرارداد `Task and Decision Core`؛ هر implementation همچنان نیازمند approval مستقل Project Core است.
+CORE-P04: طراحی docs-only نقشه تعامل ماژول‌های مستر جم؛ هر implementation همچنان نیازمند approval مستقل Project Core است.
+
+## وضعیت CORE-P03
+
+CORE-P03 به صورت docs-only انجام شد و قرارداد مرکزی `Task + Decision Core` در `148_MASTER_GEM_TASK_DECISION_CORE_CONTRACT.md` ثبت شد.
+
+- Task به‌عنوان واحد اجرای قابل انجام و قابل پیگیری تعریف شد.
+- DecisionItem به‌عنوان مرز تصمیم، تایید، رد، hold، اصلاح و escalation مدیر تعریف شد.
+- statusها، typeها، جریان Task به Decision، ارتباط ماژول‌ها و مرز V1 ثبت شدند.
+- AI فقط پیشنهاد می‌دهد و Cockpit فقط summary/read-only state نمایش می‌دهد.
+- کد اجرایی، prototype، package، route، storage، database، auth، API و backend تغییر نکرد.
+- P55/P55A/P56 همچنان paused هستند.

@@ -9,7 +9,8 @@
 | بالا | WF | extraction کنترل‌شده adapterهای کم‌ریسک باقی‌مانده | فقط فازهای کوچک، بدون تغییر route/storage/model/behavior |
 | بالا | WF | WF-P56 ادامه تثبیت هسته Workforce | انتخاب یک صفحه کم‌ریسک باقی‌مانده و extraction واقعی فقط در branch اختصاصی |
 | انجام‌شده | CORE | CORE-P02 طراحی Master Gem Central Data Model Contract | docs-only؛ ثبت‌شده در سند 147، بدون implementation یا merge |
-| بالا | CORE | CORE-P03 طراحی Task and Decision Core Contract | docs-only؛ اتصال Task، WorkOrder، DecisionItem، review و approval |
+| انجام‌شده | CORE | CORE-P03 طراحی Task and Decision Core Contract | docs-only؛ ثبت‌شده در سند 148، بدون implementation یا merge |
+| بالا | CORE | CORE-P04 طراحی Master Gem Module Interaction Map | docs-only؛ نقشه ارتباط Workforce، Production، Product، Finance، Media، Sales و Cockpit |
 | بالا | CONTROL | نگه‌داری sync اسناد کنترل پروژه | بعد از هر P، current state و phase log اصلاح شود |
 
 ## بعداً

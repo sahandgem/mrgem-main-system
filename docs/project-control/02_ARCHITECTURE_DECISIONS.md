@@ -135,6 +135,9 @@
 | ADR-127 | Workforce P0-P22 به عنوان `Workforce Operations Engine` ثبت می‌شود؛ این موتور باید پایدار و تکمیل شود اما کل پروژه محسوب نمی‌شود. | فعال |
 | ADR-128 | هر UI آینده باید Input، Processing، Output و Decision/Operation Effect داشته باشد؛ صفحه صرفاً تزئینی یا جدا از عملیات واقعی ساخته نمی‌شود. | فعال |
 | ADR-129 | اجرای بعدی پس از CORE-P01 نباید implementation باشد؛ پیشنهاد مجاز بعدی طراحی docs-only قرارداد داده مرکزی CORE-P02 است. | فعال |
+| ADR-130 | Task ستون فقرات اجرای قابل پیگیری و DecisionItem مرز تصمیم انسانی در همه ماژول‌های مستر جم است. | فعال |
+| ADR-131 | Task با وضعیت waiting_for_decision باید به DecisionItem متصل باشد و تصمیم resolved باید اثر ثبت‌شده روی Task یا entity داشته باشد. | فعال |
+| ADR-132 | AI فقط پیشنهاد می‌دهد؛ Cockpit مالک Task/Decision نیست و action واقعی یا auto-approval نیازمند approval مستقل است. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

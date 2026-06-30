@@ -146,6 +146,18 @@
 - Git: branch مستقل؛ بدون merge و بدون push.
 - توقف‌ها: P55/P55A/P56 paused باقی ماندند.
 - پیشنهاد بعدی: `CORE-P03 — Task and Decision Core Contract` به صورت docs-only.
+
+## CORE-P03 — Master Gem Task and Decision Core Contract
+
+- تاریخ: 2026-06-30
+- وضعیت: انجام‌شده، docs-only
+- خروجی اصلی: `docs/project-control/148_MASTER_GEM_TASK_DECISION_CORE_CONTRACT.md`
+- نتیجه: تعریف Task، DecisionItem، type/statusها، جریان تصمیم، module flow، اولویت/ریسک و مرز V1.
+- قفل رفتاری: AI فقط پیشنهاد می‌دهد؛ تصمیم حساس human-approved است؛ Cockpit read-only باقی می‌ماند.
+- اثر اجرایی: ندارد؛ `src`، prototype، package/lock، route، storage، database، auth، API و backend تغییر نکردند.
+- Git: branch مستقل؛ بدون merge و بدون push.
+- توقف‌ها: P55/P55A/P56 paused باقی ماندند.
+- پیشنهاد بعدی: `CORE-P04 — Master Gem Module Interaction Map` به صورت docs-only.
 - هیچ کد اجرایی، route، UI، prototype، package، storage، backend، auth، database یا main تغییر نکرد.
 
 ## جزئیات ثبت WF-P55

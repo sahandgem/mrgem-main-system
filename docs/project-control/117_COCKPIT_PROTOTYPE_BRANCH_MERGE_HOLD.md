@@ -10,6 +10,8 @@
 | Prototype Commit Reviewed | `f5f8b5e` |
 | Static Review | `PASS` |
 | Human Visual Review | `approved_for_iteration` |
+| Mobile Re-review | `approved_after_mobile_refinement` |
+| Mobile Iteration | `APPROVED` |
 | Main Merge | `ON_HOLD` |
 | Main Integration | `NOT_APPROVED` |
 | Production Implementation | `NOT_APPROVED` |
@@ -21,7 +23,8 @@
 ## دلیل hold
 
 - `approved_for_iteration` فقط اجازه iteration ایزوله است و merge approval محسوب نمی‌شود.
-- یادداشت جزئی mobile درباره بزرگ بودن اندازه‌ها blocker نیست، اما باید در iteration آینده مدیریت شود.
+- Mobile refinement در P41 انجام و در P42 تایید شد؛ این تایید فقط iteration موبایل را می‌بندد.
+- approval مربوط به iteration با approval مستقل مورد نیاز برای merge تفاوت دارد.
 - rollback با حذف کامل پوشه باید در review تایید شود.
 - scope باید prototype-only و isolated باقی بماند.
 - تایید مستقل مرکز کنترل برای هر merge احتمالی وجود ندارد.
@@ -46,4 +49,4 @@
 
 ## قانون نهایی
 
-با وجود نتیجه `approved_for_iteration`، این branch تا اطلاع بعدی و تصمیم مستقل مرکز کنترل به main merge نشود. وضعیت جاری `Main Merge = ON_HOLD` است.
+با وجود نتیجه `approved_after_mobile_refinement`، این branch تا اطلاع بعدی و تصمیم مستقل مرکز کنترل به main merge نشود. وضعیت جاری `Main Merge = ON_HOLD` است.

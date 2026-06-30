@@ -12,7 +12,22 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P40-RECORD**
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P42-RECORD**
+
+## وضعیت CONTROL-P42-RECORD
+
+Mobile re-review مربوط به prototype ایزوله Central Cockpit Overview پس از اصلاح P41 ثبت شد.
+
+- Reviewer: Sahand
+- Reviewed commit: `8f6083c`
+- Result: `approved_after_mobile_refinement`
+- Mobile: `PASS`؛ اندازه‌ها بهتر شده‌اند و issue فعالی باقی نمانده است.
+- Desktop quick check: `PASS` و بدون issue
+- Decision: `mobile_iteration_approved`
+- Main Merge همچنان `ON_HOLD` است.
+- Main Integration و Implementation همچنان `NOT_APPROVED` هستند.
+- کار بعدی cockpit باید به طراحی صفحه‌های آینده منتقل شود، نه اصلاح prototype فعلی.
+- هیچ کد، CSS، UI یا behavior در CONTROL-P42 تغییر نکرد.
 
 ## وضعیت CONTROL-P40-RECORD
 

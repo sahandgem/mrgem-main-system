@@ -17,7 +17,7 @@
 - Main Merge: `ON_HOLD`
 - Main Integration: `NOT_APPROVED`
 - Implementation: `NOT_APPROVED`
-- Current Decision: `approved_for_iteration`
+- Current Decision: `mobile_iteration_approved`
 
 ## checklist کوتاه انسانی
 
@@ -50,6 +50,22 @@
 - decision: `approved_for_iteration`
 - mergeDecision: `ON_HOLD`
 - implementationDecision: `NOT_APPROVED`
+
+## بازبینی مجدد موبایل پس از P41
+
+- reviewer: Sahand
+- reviewDate: 2026-06-30
+- reviewedCommit: `8f6083c`
+- mobileReReviewResult: `approved_after_mobile_refinement`
+- mobileOverall: `PASS`
+- mobileSizing: `improved`
+- mobileIssue: `none`
+- desktopQuickCheck: `PASS`
+- desktopIssue: `none`
+- decision: `mobile_iteration_approved`
+- mergeDecision: `ON_HOLD`
+- implementationDecision: `NOT_APPROVED`
+- nextDesignNotes: باقی موارد مربوط به طراحی صفحه‌های آینده است، نه اصلاح prototype فعلی.
 
 ## outcomeهای مجاز
 

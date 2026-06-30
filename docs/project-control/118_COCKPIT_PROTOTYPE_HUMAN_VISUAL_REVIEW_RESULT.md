@@ -10,8 +10,10 @@
 | Review Date | 2026-06-30 |
 | Human Visual Review | `approved_for_iteration` |
 | Desktop | `PASS` |
-| Mobile | `PASS_WITH_MINOR_NOTE` |
-| Mobile Issue Severity | `NON_BLOCKING` |
+| Mobile Initial Review | `PASS_WITH_MINOR_NOTE` |
+| Mobile Re-review | `approved_after_mobile_refinement` |
+| Mobile Current Status | `PASS` |
+| Mobile Issue | `RESOLVED` |
 | Main Merge | `ON_HOLD` |
 | Main Integration | `NOT_APPROVED` |
 | Implementation | `NOT_APPROVED` |
@@ -33,18 +35,33 @@
 - نتیجه: `PASS`
 - issue: ندارد.
 
-## نتیجه Mobile
+## نتیجه Mobile اولیه در P40
 
 - وضعیت کلی: خوب است.
 - نتیجه: `PASS_WITH_MINOR_NOTE`
 - یادداشت: اندازه‌ها کمی بزرگ هستند.
 - شدت: non-blocking؛ مانع iteration بعدی نیست.
 
+این یادداشت برای حفظ تاریخچه review نگه‌داری می‌شود و بعد از اصلاح P41 دیگر active issue نیست.
+
+## نتیجه Mobile Re-review پس از P41
+
+- Reviewer: Sahand
+- Review date: 2026-06-30
+- Reviewed commit: `8f6083c`
+- نتیجه: `approved_after_mobile_refinement`
+- Mobile overall: `PASS`
+- Mobile sizing: `improved`
+- Mobile issue: `none`
+- Desktop quick check: `PASS`
+- Desktop issue: `none`
+- Decision: `mobile_iteration_approved`
+
 ## تصمیم
 
-`approved_for_iteration`
+`mobile_iteration_approved`
 
-prototype می‌تواند در یک مرحله مستقل بعدی و فقط داخل scope ایزوله ادامه پیدا کند. این تصمیم اجازه merge، main integration یا production implementation نمی‌دهد.
+اصلاح mobile تایید شده و iteration فعلی بسته می‌شود. باقی کارها مربوط به طراحی صفحه‌های آینده است. این تصمیم اجازه merge، main integration یا production implementation نمی‌دهد.
 
 ## مرز تصمیم
 

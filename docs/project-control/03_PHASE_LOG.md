@@ -85,12 +85,27 @@
 | CONTROL-P38-BUILD | انجام شده | ساخت prototype ایزوله Central Cockpit Overview فقط با mock/synthetic data روی branch مستقل، بدون اتصال به main |
 | CONTROL-P39-REVIEW | انجام شده | Static Review برابر PASS، ثبت Human Visual Review Gate و حفظ Main Merge در وضعیت ON_HOLD |
 | CONTROL-P40-RECORD | انجام شده | ثبت نتیجه Sahand با `approved_for_iteration`؛ Desktop PASS، Mobile PASS_WITH_MINOR_NOTE و merge همچنان ON_HOLD |
+| CONTROL-P41-ITERATION | انجام شده | اصلاح محدود responsive sizing فقط در CSS prototype ایزوله؛ بدون تغییر behavior، main یا production |
+| CONTROL-P42-RECORD | انجام شده | ثبت Mobile re-review با نتیجه `approved_after_mobile_refinement`؛ Mobile و Desktop PASS و merge همچنان ON_HOLD |
 
 ## P فعلی قطعی
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین P کنترل پروژه: **CONTROL-P40-RECORD**
+آخرین P کنترل پروژه: **CONTROL-P42-RECORD**
+
+## جزئیات ثبت CONTROL-P42-RECORD
+
+- Reviewer: Sahand
+- Review date: 2026-06-30
+- Reviewed commit: `8f6083c`
+- Result: `approved_after_mobile_refinement`
+- Mobile: `PASS`، sizing بهتر شده و issue برابر `none` است.
+- Desktop quick check: `PASS`، بدون issue
+- Decision: `mobile_iteration_approved`
+- فایل `119_COCKPIT_PROTOTYPE_MOBILE_REVIEW_RESULT.md` ساخته شد.
+- Main Merge همچنان `ON_HOLD` و Implementation همچنان `NOT_APPROVED` است.
+- هیچ کد prototype، CSS، UI، behavior، route، src یا package تغییر نکرد.
 
 ## جزئیات ثبت CONTROL-P40-RECORD
 

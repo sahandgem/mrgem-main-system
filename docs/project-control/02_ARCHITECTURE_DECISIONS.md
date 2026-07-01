@@ -153,6 +153,9 @@
 | ADR-145 | P55A ابهام P55 را بست؛ برابرماندن 4384 خط نشانه باقی‌ماندن بدنه OperationalHistory نیست. | فعال |
 | ADR-146 | پس از P55A، No-Code Freeze دوباره فعال است و P56 فقط با `CORE-RESUME-P56` مستقل مجاز خواهد بود. | فعال |
 | ADR-147 | جهت پیشنهادی بعدی CORE-P09 docs-only برای هم‌راستاسازی Product & Inventory Preparation Core است. | فعال |
+| ADR-148 | Product & Inventory Preparation Core یک subproject آماده‌سازی قابل اتصال است؛ نه ابزار موقت و نه کل Product + Inventory Core. | فعال |
+| ADR-149 | Mahak فقط Export Connector است؛ مدل مادر به فرمت محک وابسته نمی‌شود و direct merge ممنوع می‌ماند. | فعال |
+| ADR-150 | Product Entry، Workbench، Mobile Companion، MediaAsset، InventoryMovement و DecisionItem مرزهای جدا دارند و باید به Core قابل mapping باشند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

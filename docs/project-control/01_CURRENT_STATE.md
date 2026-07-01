@@ -662,7 +662,7 @@ CORE-P02 به صورت docs-only انجام شد و قرارداد داده مر
 
 ## P پیشنهادی بعدی
 
-CORE-P09: طراحی docs-only `Product & Inventory Preparation Core Alignment` با یازده بخش اجباری ثبت‌شده در CORE-P08.
+PRODUCT-P01 فقط به‌عنوان plan آینده subproject مطرح است و هنوز مجوز اجرا ندارد؛ Code Main و Master Gem Core در No-Code Freeze باقی می‌مانند.
 
 ## وضعیت CORE-P03
 
@@ -731,3 +731,14 @@ CORE-P08 نتیجه را در `153_MASTER_GEM_POST_RESUME_LOCK_AND_NEXT_DECISION
 - P56 فقط با `CORE-RESUME-P56` جدا قابل اجراست.
 - Cockpit frozen و direct subproject merge ممنوع باقی مانده است.
 - جهت پیشنهادی بعدی CORE-P09 docs-only برای Product & Inventory است.
+
+## وضعیت CORE-P09
+
+CORE-P09 به صورت docs-only انجام شد و alignment زیرسیستم Product/Inventory در `PRODUCT_INVENTORY_PREPARATION_CORE_ALIGNMENT.md` ثبت شد.
+
+- نام مفهومی `Product & Inventory Preparation Core` و جایگاه آن زیر Product + Inventory Core قفل شد.
+- subproject محک/web-version مستقل ماند و direct merge ممنوع باقی ماند.
+- Product، structured name، MediaAsset، Workbench Task، InventoryMovement، DecisionItem و Mahak Connector boundary ثبت شدند.
+- MVP فقط Product Entry سریع، Operation Queue، Mobile Photo Task، Workbench Status و Export Warning است.
+- PRODUCT-P01 فقط پیشنهاد plan آینده در subproject است و implementation approval محسوب نمی‌شود.
+- هیچ source، web-version، prototype، package، schema، database، auth، API، backend یا storage تغییر نکرد.

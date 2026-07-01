@@ -223,6 +223,18 @@
 - اثر اجرایی: ندارد؛ `src`، prototype، package/lock، route، storage، database، auth، API و backend تغییر نکردند.
 - Git: branch مستقل؛ بدون merge/cherry-pick/rebase و بدون push.
 - پیشنهاد بعدی: CORE-P09 Product & Inventory Preparation Core Alignment به صورت docs-only.
+
+## CORE-P09 — Product & Inventory Preparation Core Alignment
+
+- تاریخ: 2026-07-02
+- وضعیت: انجام‌شده، docs-only
+- خروجی اصلی: `docs/project-control/PRODUCT_INVENTORY_PREPARATION_CORE_ALIGNMENT.md`
+- نتیجه: چهارده بخش شامل یازده قرارداد اجباری، Final Principle، اقدام پیشنهادی و Non-Goals ثبت شد.
+- مرزها: subproject مستقل، direct merge ممنوع، Mahak فقط connector و Master Gem Core همچنان frozen.
+- قراردادها: Product identity، structured name، MediaAsset، operation_tasks/Workbench، InventoryMovement، DecisionItem و export boundary.
+- اثر اجرایی: ندارد؛ source، web-version، prototype، package/lock، schema، database، auth، API، backend و storage تغییر نکردند.
+- Git: branch مستقل؛ بدون merge/cherry-pick/rebase و بدون push.
+- پیشنهاد بعدی: PRODUCT-P01 فقط در حد plan جداگانه subproject و با backup/migration/no-touch gate؛ هنوز مجوز اجرا ندارد.
 - هیچ کد اجرایی، route، UI، prototype، package، storage، backend، auth، database یا main تغییر نکرد.
 
 ## جزئیات ثبت WF-P55

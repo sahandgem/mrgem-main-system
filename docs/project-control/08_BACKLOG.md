@@ -16,7 +16,8 @@
 | انجام‌شده | CORE | CORE-P07 تصمیم Master Gem Resume Candidate | P55A تنها candidate؛ هیچ CORE-RESUME صادر نشد |
 | انجام‌شده | CORE/WF | CORE-RESUME-P55A | verification OperationalHistory در commit `a1416bf`؛ ambiguity بسته شد |
 | paused | WF | P56 extraction | فقط با دستور مستقل `CORE-RESUME-P56` |
-| بالا | CORE/PRODUCT | CORE-P09 Product & Inventory Preparation Core Alignment | docs-only؛ شامل یازده بخش اجباری contract و integration questions |
+| انجام‌شده | CORE/PRODUCT | CORE-P09 Product & Inventory Preparation Core Alignment | docs-only؛ ثبت‌شده در سند alignment، بدون implementation یا merge |
+| plan لازم | PRODUCT | PRODUCT-P01 Product Entry + Workbench Photo MVP Plan | فقط داخل subproject؛ نیازمند timestamped backup، scope، no-touch list، migration و report |
 | بالا | CONTROL | نگه‌داری sync اسناد کنترل پروژه | بعد از هر P، current state و phase log اصلاح شود |
 
 ## بعداً

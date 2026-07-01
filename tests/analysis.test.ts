@@ -185,6 +185,24 @@ const timestamp = "2026-01-01T00:00:00.000Z";
   });
 }
 
+{
+  const workforcePagesSource = readFileSync("src/WorkforcePages.tsx", "utf8");
+  const routeSource = readFileSync("src/routes/workforceRoutes.tsx", "utf8");
+  const operationalHistoryPath = "/organization/workforce-dashboard/operational-history";
+
+  assert.equal(workforcePagesSource.includes("function OperationalHistoryPage"), false);
+  assert.equal(workforcePagesSource.includes("export function OperationalHistoryPage"), false);
+  assert.equal(workforcePagesSource.match(/<OperationalHistoryPage \/>/g)?.length, 1);
+  assert.equal(
+    routeSource.includes('import("../pages/workforce/operations/OperationalHistoryPage")'),
+    true,
+  );
+  assert.equal(
+    workforceRouteManifest.find((route) => route.path === operationalHistoryPath)?.componentKey,
+    "operationalHistory",
+  );
+}
+
 const activeRules: AnalysisRule[] = [
   { id: "rule-capacity", key: "space-capacity", title: "capacity", description: "", tone: "warn", isActive: true, createdAt: timestamp, updatedAt: timestamp },
   { id: "rule-focus", key: "focus", title: "focus", description: "", tone: "focus", isActive: true, createdAt: timestamp, updatedAt: timestamp },

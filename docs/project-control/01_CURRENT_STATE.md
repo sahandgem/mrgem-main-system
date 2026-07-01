@@ -662,7 +662,7 @@ CORE-P02 به صورت docs-only انجام شد و قرارداد داده مر
 
 ## P پیشنهادی بعدی
 
-تصمیم بعدی Project Core: صدور جداگانه `CORE-RESUME-P55A` یا ادامه freeze با CORE-P08 docs-only برای Product/Finance.
+CORE-P09: طراحی docs-only `Product & Inventory Preparation Core Alignment` با یازده بخش اجباری ثبت‌شده در CORE-P08.
 
 ## وضعیت CORE-P03
 
@@ -715,3 +715,19 @@ CORE-P07 به صورت docs-only انجام شد و تصمیم resume candidate 
 - P56 blocked، Cockpit frozen و direct subproject merge ممنوع باقی ماندند.
 - اجرای P55A فقط با دستور جداگانه `CORE-RESUME-P55A` مجاز خواهد بود.
 - هیچ کد اجرایی، prototype، package، route، storage، database، auth، API یا backend تغییر نکرد.
+
+## وضعیت CORE-P08 و P55A
+
+P55A با دستور مستقل `CORE-RESUME-P55A` روی branch `refactor/workforce-core-stabilization-p55` اجرا و در commit `a1416bf` ثبت شد.
+
+- مسیر OperationalHistory تغییر نکرد و صفحه مستقل بدون adapter باقی ماند.
+- بدنه قدیمی در `WorkforcePages.tsx` باقی نمانده و dead import مرتبط پیدا نشد.
+- line count قبل و بعد `4384` است؛ این برابری دیگر ambiguity محسوب نمی‌شود.
+- test و build PASS شدند؛ P56 شروع نشد و main/merge/push تغییر نکرد.
+
+CORE-P08 نتیجه را در `153_MASTER_GEM_POST_RESUME_LOCK_AND_NEXT_DECISION.md` ثبت و No-Code Freeze را دوباره فعال کرد.
+
+- Code Main paused است.
+- P56 فقط با `CORE-RESUME-P56` جدا قابل اجراست.
+- Cockpit frozen و direct subproject merge ممنوع باقی مانده است.
+- جهت پیشنهادی بعدی CORE-P09 docs-only برای Product & Inventory است.

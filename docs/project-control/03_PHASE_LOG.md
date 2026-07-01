@@ -203,6 +203,26 @@
 - اثر اجرایی: ندارد؛ `src`، prototype، package/lock، route، storage، database، auth، API و backend تغییر نکردند.
 - Git: branch مستقل؛ بدون merge و بدون push.
 - پیشنهاد بعدی: تصمیم مستقل Project Core برای `CORE-RESUME-P55A` یا ادامه CORE-P08 docs-only.
+
+## CORE-RESUME-P55A — Verify OperationalHistory Extraction Cleanup
+
+- تاریخ: 2026-07-01
+- branch/commit: `refactor/workforce-core-stabilization-p55` / `a1416bf`
+- نتیجه: route ثابت، standalone page تایید، adapter و بدنه قدیمی رد، dead import یافت نشد.
+- line count: `4384` قبل و بعد؛ برابری به دلیل نیاز compatibility import/dispatch است، نه بدنه تکراری.
+- verification: `npm test` PASS و `npm run build` PASS؛ preview به دلیل مشکل محلی Path/PATH انجام نشد.
+- اثر: فقط تست تقویت شد؛ P56، main، merge و push انجام نشد.
+
+## CORE-P08 — Post Resume Lock and Next Decision Gate
+
+- تاریخ: 2026-07-02
+- وضعیت: انجام‌شده، docs-only
+- خروجی اصلی: `docs/project-control/153_MASTER_GEM_POST_RESUME_LOCK_AND_NEXT_DECISION.md`
+- نتیجه: ابهام P55 بسته و No-Code Freeze دوباره فعال شد.
+- قفل‌ها: P56 paused، Cockpit frozen، subproject merge ممنوع و main locked.
+- اثر اجرایی: ندارد؛ `src`، prototype، package/lock، route، storage، database، auth، API و backend تغییر نکردند.
+- Git: branch مستقل؛ بدون merge/cherry-pick/rebase و بدون push.
+- پیشنهاد بعدی: CORE-P09 Product & Inventory Preparation Core Alignment به صورت docs-only.
 - هیچ کد اجرایی، route، UI، prototype، package، storage، backend، auth، database یا main تغییر نکرد.
 
 ## جزئیات ثبت WF-P55

@@ -150,6 +150,9 @@
 | ADR-142 | تنها code resume candidate پیشنهادی P55A verification است؛ CORE-P07 خود مجوز اجرا یا CORE-RESUME نیست. | فعال |
 | ADR-143 | P56 تا verification کامل P55A blocked می‌ماند؛ Cockpit و سایر ماژول‌ها نیز frozen هستند. | فعال |
 | ADR-144 | اجرای P55A فقط با دستور مستقل `CORE-RESUME-P55A` و scope، test/build و rollback مصوب مجاز است. | فعال |
+| ADR-145 | P55A ابهام P55 را بست؛ برابرماندن 4384 خط نشانه باقی‌ماندن بدنه OperationalHistory نیست. | فعال |
+| ADR-146 | پس از P55A، No-Code Freeze دوباره فعال است و P56 فقط با `CORE-RESUME-P56` مستقل مجاز خواهد بود. | فعال |
+| ADR-147 | جهت پیشنهادی بعدی CORE-P09 docs-only برای هم‌راستاسازی Product & Inventory Preparation Core است. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

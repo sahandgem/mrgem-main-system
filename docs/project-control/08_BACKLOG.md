@@ -14,8 +14,9 @@
 | انجام‌شده | CORE | CORE-P05 طراحی V1 Build Boundary و No-Code Freeze Rules | docs-only؛ ثبت‌شده در سند 150، Code Main همچنان paused |
 | انجام‌شده | CORE | CORE-P06 طراحی Master Gem Module Readiness Scorecard | docs-only؛ ثبت‌شده در سند 151، بدون مجوز کدنویسی |
 | انجام‌شده | CORE | CORE-P07 تصمیم Master Gem Resume Candidate | P55A تنها candidate؛ هیچ CORE-RESUME صادر نشد |
-| تصمیم لازم | CORE/WF | CORE-RESUME-P55A احتمالی | فقط verification/cleanup OperationalHistory؛ اجرای واقعی نیازمند دستور جداگانه |
-| جایگزین docs-only | CORE | CORE-P08 قرارداد جزئی Product/Inventory یا Finance Transaction Mapping | در صورت ادامه No-Code Freeze |
+| انجام‌شده | CORE/WF | CORE-RESUME-P55A | verification OperationalHistory در commit `a1416bf`؛ ambiguity بسته شد |
+| paused | WF | P56 extraction | فقط با دستور مستقل `CORE-RESUME-P56` |
+| بالا | CORE/PRODUCT | CORE-P09 Product & Inventory Preparation Core Alignment | docs-only؛ شامل یازده بخش اجباری contract و integration questions |
 | بالا | CONTROL | نگه‌داری sync اسناد کنترل پروژه | بعد از هر P، current state و phase log اصلاح شود |
 
 ## بعداً

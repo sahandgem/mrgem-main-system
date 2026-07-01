@@ -192,6 +192,17 @@
 - اثر اجرایی: ندارد؛ `src`، prototype، package/lock، route، storage، database، auth، API و backend تغییر نکردند.
 - Git: branch مستقل؛ بدون merge و بدون push.
 - پیشنهاد بعدی: `CORE-P07 — Master Gem Resume Candidate Decision` به صورت docs-only، مگر صدور جداگانه `CORE-RESUME`.
+
+## CORE-P07 — Master Gem Resume Candidate Decision
+
+- تاریخ: 2026-07-01
+- وضعیت: انجام‌شده، docs-only؛ بدون CORE-RESUME
+- خروجی اصلی: `docs/project-control/152_MASTER_GEM_RESUME_CANDIDATE_DECISION.md`
+- نتیجه: Option A/B/C ارزیابی و P55A verification تنها code resume candidate پیشنهادی شد.
+- قفل‌ها: P56 blocked، Cockpit frozen، subproject merge ممنوع و main locked باقی ماند.
+- اثر اجرایی: ندارد؛ `src`، prototype، package/lock، route، storage، database، auth، API و backend تغییر نکردند.
+- Git: branch مستقل؛ بدون merge و بدون push.
+- پیشنهاد بعدی: تصمیم مستقل Project Core برای `CORE-RESUME-P55A` یا ادامه CORE-P08 docs-only.
 - هیچ کد اجرایی، route، UI، prototype، package، storage، backend، auth، database یا main تغییر نکرد.
 
 ## جزئیات ثبت WF-P55

@@ -147,6 +147,9 @@
 | ADR-139 | Readiness score مجوز کدنویسی نیست؛ حتی score برابر 5 نیز نیازمند `CORE-RESUME` مستقل است. | فعال |
 | ADR-140 | تنها code resume candidate فعلی Workforce P55A verification است؛ P56 و سایر implementationها blocked هستند. | فعال |
 | ADR-141 | ترتیب readiness فعلی: Project Core docs، P55A candidate، Task/Decision review، contractهای موتورهای داده، سپس Cockpit read-only design. | فعال |
+| ADR-142 | تنها code resume candidate پیشنهادی P55A verification است؛ CORE-P07 خود مجوز اجرا یا CORE-RESUME نیست. | فعال |
+| ADR-143 | P56 تا verification کامل P55A blocked می‌ماند؛ Cockpit و سایر ماژول‌ها نیز frozen هستند. | فعال |
+| ADR-144 | اجرای P55A فقط با دستور مستقل `CORE-RESUME-P55A` و scope، test/build و rollback مصوب مجاز است. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 

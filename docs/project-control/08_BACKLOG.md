@@ -13,7 +13,9 @@
 | انجام‌شده | CORE | CORE-P04 طراحی Master Gem Module Interaction Map | docs-only؛ ثبت‌شده در سند 149، بدون implementation یا merge |
 | انجام‌شده | CORE | CORE-P05 طراحی V1 Build Boundary و No-Code Freeze Rules | docs-only؛ ثبت‌شده در سند 150، Code Main همچنان paused |
 | انجام‌شده | CORE | CORE-P06 طراحی Master Gem Module Readiness Scorecard | docs-only؛ ثبت‌شده در سند 151، بدون مجوز کدنویسی |
-| بالا | CORE | CORE-P07 تصمیم Master Gem Resume Candidate | docs-only؛ ادامه freeze، CORE-RESUME احتمالی P55A یا ادامه contractهای دامنه‌ای |
+| انجام‌شده | CORE | CORE-P07 تصمیم Master Gem Resume Candidate | P55A تنها candidate؛ هیچ CORE-RESUME صادر نشد |
+| تصمیم لازم | CORE/WF | CORE-RESUME-P55A احتمالی | فقط verification/cleanup OperationalHistory؛ اجرای واقعی نیازمند دستور جداگانه |
+| جایگزین docs-only | CORE | CORE-P08 قرارداد جزئی Product/Inventory یا Finance Transaction Mapping | در صورت ادامه No-Code Freeze |
 | بالا | CONTROL | نگه‌داری sync اسناد کنترل پروژه | بعد از هر P، current state و phase log اصلاح شود |
 
 ## بعداً

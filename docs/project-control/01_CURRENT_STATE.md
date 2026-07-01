@@ -662,7 +662,7 @@ CORE-P02 به صورت docs-only انجام شد و قرارداد داده مر
 
 ## P پیشنهادی بعدی
 
-CORE-P07: تصمیم docs-only درباره ادامه freeze، بازکردن احتمالی P55A با `CORE-RESUME` یا ادامه contractهای Product/Finance/Production.
+تصمیم بعدی Project Core: صدور جداگانه `CORE-RESUME-P55A` یا ادامه freeze با CORE-P08 docs-only برای Product/Finance.
 
 ## وضعیت CORE-P03
 
@@ -704,4 +704,14 @@ CORE-P06 به صورت docs-only انجام شد و Scorecard آمادگی ما�
 - Cockpit frozen، Product/Finance در وضعیت subproject-only و P56 blocked باقی ماندند.
 - design-nextهای Product، Finance، Production، Media، Audit و Cockpit read-only ثبت شدند.
 - Code Main paused و خروج از freeze همچنان نیازمند `CORE-RESUME` جداگانه است.
+- هیچ کد اجرایی، prototype، package، route، storage، database، auth، API یا backend تغییر نکرد.
+
+## وضعیت CORE-P07
+
+CORE-P07 به صورت docs-only انجام شد و تصمیم resume candidate در `152_MASTER_GEM_RESUME_CANDIDATE_DECISION.md` ثبت شد.
+
+- Option B، یعنی P55A verification، تنها code resume candidate پیشنهادی است.
+- هیچ `CORE-RESUME` صادر نشد و کد همچنان paused است.
+- P56 blocked، Cockpit frozen و direct subproject merge ممنوع باقی ماندند.
+- اجرای P55A فقط با دستور جداگانه `CORE-RESUME-P55A` مجاز خواهد بود.
 - هیچ کد اجرایی، prototype، package، route، storage، database، auth، API یا backend تغییر نکرد.

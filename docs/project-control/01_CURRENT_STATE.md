@@ -1,6 +1,29 @@
 ﻿# Current State
 
-آخرین به‌روزرسانی: 2026-06-30
+## Canonical Current Snapshot
+
+تاریخ snapshot رسمی: 2026-07-29
+
+این بخش وضعیت رسمی فعلی را خلاصه می‌کند. تمام بخش‌های بعدی این فایل سابقه تاریخی‌اند و در صورت تعارض، این snapshot مرجع جاری است.
+
+| مورد | وضعیت رسمی |
+|---|---|
+| Stable main baseline | `main` در `b16b1a0`؛ قفل و بدون تغییر |
+| Current Project Core docs branch | `docs/master-gem-integration-readiness-core-p11` |
+| Current Project Core docs commit | base تاییدشده `4515b93`؛ CORE-P11 روی همین خط مستنداتی ثبت می‌شود |
+| Latest Workforce verification branch | `refactor/workforce-core-stabilization-p55` |
+| Latest Workforce verification commit | `a1416bf P55A verify operational history extraction cleanup` |
+| Code Main | paused |
+| P56 | not approved |
+| Cockpit | prototypeهای mock-only و frozen؛ implementation تایید نشده |
+| Subprojects | Product/Mahak، Finance/Audit، Production، Mobile و Automation isolated |
+| Integration | اجرا نشده؛ integration branch ساخته نشده و main merge نشده |
+| Candidate readiness | آماده ساخت candidate با شرایط ثبت‌شده در CORE-P11؛ آماده merge به main نیست |
+| Recommended next gate | `CORE-INTEGRATE-P01 — Create Master Gem Core V1 Integration Candidate` با دستور مستقل |
+
+## Historical Record
+
+آخرین به‌روزرسانی snapshot تاریخی زیر: 2026-06-30
 
 ## وضعیت فعلی پروژه
 

@@ -9,17 +9,21 @@
 | مورد | وضعیت رسمی |
 |---|---|
 | Stable main baseline | `main` در `b16b1a0`؛ قفل و بدون تغییر |
-| Current Project Core docs branch | `docs/master-gem-integration-readiness-core-p11` |
-| Current Project Core docs commit | base تاییدشده `4515b93`؛ CORE-P11 روی همین خط مستنداتی ثبت می‌شود |
+| Current integration candidate branch | `integration/master-gem-core-v1-candidate` |
+| Candidate exact base | `aa153672ab6e29345082a5aedbe1c954435563b9` از CORE-P11 |
+| Candidate P55A commit | `487d74a`؛ patch-equivalent با `a1416bf` |
 | Latest Workforce verification branch | `refactor/workforce-core-stabilization-p55` |
 | Latest Workforce verification commit | `a1416bf P55A verify operational history extraction cleanup` |
 | Code Main | paused |
 | P56 | not approved |
 | Cockpit | prototypeهای mock-only و frozen؛ implementation تایید نشده |
 | Subprojects | Product/Mahak، Finance/Audit، Production، Mobile و Automation isolated |
-| Integration | اجرا نشده؛ integration branch ساخته نشده و main merge نشده |
-| Candidate readiness | آماده ساخت candidate با شرایط ثبت‌شده در CORE-P11؛ آماده merge به main نیست |
-| Recommended next gate | `CORE-INTEGRATE-P01 — Create Master Gem Core V1 Integration Candidate` با دستور مستقل |
+| Integration | candidate ساخته و P55A بدون conflict وارد شد؛ main merge و push انجام نشده |
+| Test gate | `FAILED` در `tests/analysis.test.ts:333`؛ expected `snoozed` و actual `overdue` |
+| Build gate | `PASS`؛ warning جدی ندارد |
+| Encoding gate | `BLOCKING_MAIN_MERGE`؛ mojibake در UI و فایل‌های قدیمی باقی است |
+| Candidate verdict | `FAILED_TEST_GATE`؛ آماده merge به main نیست |
+| Recommended next gate | `CORE-STABILIZE-P01 — Operations Calendar Snooze Status Test Gate` |
 
 ## Historical Record
 

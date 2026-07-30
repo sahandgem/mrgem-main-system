@@ -2,7 +2,7 @@
 
 ## Canonical Current Snapshot
 
-تاریخ snapshot رسمی: 2026-07-29
+تاریخ snapshot رسمی: 2026-07-30
 
 این بخش وضعیت رسمی فعلی را خلاصه می‌کند. تمام بخش‌های بعدی این فایل سابقه تاریخی‌اند و در صورت تعارض، این snapshot مرجع جاری است.
 
@@ -12,6 +12,7 @@
 | Current integration candidate branch | `integration/master-gem-core-v1-candidate` |
 | Candidate exact base | `aa153672ab6e29345082a5aedbe1c954435563b9` از CORE-P11 |
 | Candidate P55A commit | `487d74a`؛ patch-equivalent با `a1416bf` |
+| Candidate stabilization parent | `79d6682`؛ HEAD نهایی همان commit حاوی گزارش CORE-STABILIZE-P01 است |
 | Latest Workforce verification branch | `refactor/workforce-core-stabilization-p55` |
 | Latest Workforce verification commit | `a1416bf P55A verify operational history extraction cleanup` |
 | Code Main | paused |
@@ -19,11 +20,13 @@
 | Cockpit | prototypeهای mock-only و frozen؛ implementation تایید نشده |
 | Subprojects | Product/Mahak، Finance/Audit، Production، Mobile و Automation isolated |
 | Integration | candidate ساخته و P55A بدون conflict وارد شد؛ main merge و push انجام نشده |
-| Test gate | `FAILED` در `tests/analysis.test.ts:333`؛ expected `snoozed` و actual `overdue` |
+| Test stabilization | `CORE-STABILIZE-P01`؛ root cause برابر `MISSING_FIXED_CLOCK` و production defect برابر NO |
+| Test gate | `PASS`؛ focused test و `npm.cmd test` هر دو موفق |
 | Build gate | `PASS`؛ warning جدی ندارد |
 | Encoding gate | `BLOCKING_MAIN_MERGE`؛ mojibake در UI و فایل‌های قدیمی باقی است |
-| Candidate verdict | `FAILED_TEST_GATE`؛ آماده merge به main نیست |
-| Recommended next gate | `CORE-STABILIZE-P01 — Operations Calendar Snooze Status Test Gate` |
+| Candidate verdict | `TEST_GATE_RECOVERED`؛ به دلیل encoding هنوز آماده merge به main نیست |
+| Main merge readiness | `NOT_READY_ENCODING_BLOCKER` |
+| Recommended next gate | `CORE-RESUME-ENCODING-P01 — Persian UI Encoding Audit and Repair` |
 
 ## Historical Record
 

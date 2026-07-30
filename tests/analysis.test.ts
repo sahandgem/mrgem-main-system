@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { mock } from "node:test";
 import {
   applyScenarioBatchToSchedule,
   detectScenarioConflicts,
@@ -319,19 +320,24 @@ assert.equal(overlaps(item("a", "e1", "s1", "09:00", "10:00"), item("b", "e2", "
   assert.equal(buildOperationsCalendarReport(controls).overdueCount > 0, true);
   assert.equal(JSON.stringify(systemState), before);
 
-  operationsCalendarService.__memory.clear();
-  const initial = operationsCalendarService.rebuild(systemState);
-  const completedId = initial.controls.find((item) => item.type === "maintenance_review")?.id;
-  const snoozedId = initial.controls.find((item) => item.type === "archive_due")?.id;
-  assert.ok(completedId);
-  assert.ok(snoozedId);
-  operationsCalendarService.markCompleted(completedId, "reviewed");
-  operationsCalendarService.snooze(snoozedId, "2026-07-15T12:00:00.000Z", "next review");
-  const rebuilt = operationsCalendarService.rebuild(systemState);
-  assert.equal(rebuilt.controls.find((item) => item.id === completedId)?.status, "completed");
-  assert.equal(rebuilt.controls.find((item) => item.id === completedId)?.managerNote, "reviewed");
-  assert.equal(rebuilt.controls.find((item) => item.id === snoozedId)?.status, "snoozed");
-  assert.equal(rebuilt.controls.find((item) => item.id === snoozedId)?.snoozedUntil, "2026-07-15T12:00:00.000Z");
+  mock.timers.enable({ apis: ["Date"], now: new Date(now) });
+  try {
+    operationsCalendarService.__memory.clear();
+    const initial = operationsCalendarService.rebuild(systemState);
+    const completedId = initial.controls.find((item) => item.type === "maintenance_review")?.id;
+    const snoozedId = initial.controls.find((item) => item.type === "archive_due")?.id;
+    assert.ok(completedId);
+    assert.ok(snoozedId);
+    operationsCalendarService.markCompleted(completedId, "reviewed");
+    operationsCalendarService.snooze(snoozedId, "2026-07-15T12:00:00.000Z", "next review");
+    const rebuilt = operationsCalendarService.rebuild(systemState);
+    assert.equal(rebuilt.controls.find((item) => item.id === completedId)?.status, "completed");
+    assert.equal(rebuilt.controls.find((item) => item.id === completedId)?.managerNote, "reviewed");
+    assert.equal(rebuilt.controls.find((item) => item.id === snoozedId)?.status, "snoozed");
+    assert.equal(rebuilt.controls.find((item) => item.id === snoozedId)?.snoozedUntil, "2026-07-15T12:00:00.000Z");
+  } finally {
+    mock.timers.reset();
+  }
 }
 
 {

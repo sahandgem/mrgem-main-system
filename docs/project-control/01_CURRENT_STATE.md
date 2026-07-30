@@ -23,10 +23,13 @@
 | Test stabilization | `CORE-STABILIZE-P01`؛ root cause برابر `MISSING_FIXED_CLOCK` و production defect برابر NO |
 | Test gate | `PASS`؛ focused test و `npm.cmd test` هر دو موفق |
 | Build gate | `PASS`؛ warning جدی ندارد |
-| Encoding gate | `BLOCKING_MAIN_MERGE`؛ mojibake در UI و فایل‌های قدیمی باقی است |
-| Candidate verdict | `TEST_GATE_RECOVERED`؛ به دلیل encoding هنوز آماده merge به main نیست |
+| Encoding repair phase | `CORE-RESUME-ENCODING-P01A`؛ Batch 1 روی سه فایل source تکمیل و verify شد |
+| Encoding repair result | ۱٬۲۸۸ مورد از ۱٬۲۹۹ مورد Batch 1 بازیابی شد؛ ۱۱ ثابت machine-readable عمداً unresolved ماند |
+| Encoding inventory remaining | ۱۵۰ مورد در ۹ فایل؛ شامل ۱۱ مورد Batch 1 و ۱۳۹ مورد deferred |
+| Encoding gate | `ENCODING_GATE_PARTIALLY_RECOVERED`؛ mojibake خارج whitelist هنوز در بعضی routeها قابل مشاهده است |
+| Candidate verdict | `BATCH_1_PARTIAL`؛ test/build و structure gate موفق، اما encoding هنوز blocker است |
 | Main merge readiness | `NOT_READY_ENCODING_BLOCKER` |
-| Recommended next gate | `CORE-RESUME-ENCODING-P01 — Persian UI Encoding Audit and Repair` |
+| Recommended next gate | `CORE-RESUME-ENCODING-P01B` برای HistoryRetention، Maintenance و workforcePageUtils |
 
 ## Historical Record
 

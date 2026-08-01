@@ -8,8 +8,9 @@
 |---|---|---|---|
 | frozen | WF | extraction کنترل‌شده adapterهای کم‌ریسک باقی‌مانده | بدون approval مستقل Project Core اجرا نشود؛ P56 همچنان ممنوع است |
 | انجام‌شده، docs-only | CORE | CORE-P13 — Master Gem V1 Operational Hardening Readiness Plan | posture ممیزی و H1-H5 تعریف شدند؛ verdict برابر `HARDENING_PLAN_READY_WITH_GAPS`؛ implementation انجام نشد |
-| P0 پیشنهادی، شروع‌نشده | CORE/HARDEN | CORE-HARDEN-P01 — Critical Route Browser Smoke Baseline | H1؛ direct-load، console، RTL، Persian label و viewport evidence؛ نیازمند مجوز مستقل و بدون تغییر behavior |
-| P0 بعدی | CORE/HARDEN | CORE-HARDEN-P02 — Disposable Storage Backup Restore Drill | H2؛ فقط fixture مصنوعی و storage disposable، بدون migration یا داده واقعی |
+| انجام‌شده با verdict جزئی | CORE/HARDEN | CORE-HARDEN-P01 — Critical Route Browser Smoke Baseline | desktop 7/7 PASS؛ mobile Employees PASS؛ Dashboard و Operational History overflow؛ `BROWSER_SMOKE_BASELINE_PARTIAL` |
+| P0 پیشنهادی، شروع‌نشده | CORE/HARDEN | CORE-HARDEN-ROUTE-P01 — Workforce Critical Routes Mobile Overflow Stabilization Audit | audit-first برای Dashboard و Operational History در 390px؛ بدون redesign یا refactor؛ نیازمند مجوز مستقل |
+| deferred تا تصمیم route gate | CORE/HARDEN | CORE-HARDEN-P02 — Disposable Storage Backup Restore Drill | H2؛ فقط fixture مصنوعی و storage disposable؛ بعد از رفع یا پذیرش صریح finding موبایل |
 | P1 بعدی | CORE/HARDEN | CORE-HARDEN-P04 — V1 Runtime Regression Evidence Gate | H4؛ RTL، encoding، labels، console و isolation بر پایه خروجی H1 |
 | P1 بعدی | CORE/HARDEN | CORE-HARDEN-P03 — V1 Release Evidence And Rollback Gate | H3؛ پس از H1/H2، بدون push یا release خودکار |
 | P2 بعدی | CORE/HARDEN | CORE-HARDEN-P05 — V1 Technical Debt Ownership Review | H5؛ فقط ownership و gate بدهی‌ها، بدون اجرای P56/migration/refactor |

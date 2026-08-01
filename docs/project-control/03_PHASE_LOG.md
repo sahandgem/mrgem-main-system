@@ -110,6 +110,7 @@
 | CORE-MERGE-P01 | انجام و verify شد | Master Gem Core V1 با merge محلی `--no-ff` وارد `main` شد؛ merge commit برابر `23c5e29`، final local main برابر `e42b320`، test/build/preview پاس و push انجام نشد. |
 | CORE-POST-MERGE-P01 | انجام شده، docs-only | baseline محلی V1 روی `e42b320` قفل شد؛ بدهی‌ها و کارهای frozen ثبت شدند؛ گزینه E یعنی V1 Operational Hardening به عنوان track بعدی پیشنهاد شد ولی شروع نشد. |
 | CORE-P13 | انجام شده، docs-only | posture عملیاتی V1 ممیزی و H1-H5 با gate کامل تعریف شد؛ verdict برابر `HARDENING_PLAN_READY_WITH_GAPS` و فاز پیشنهادی بعدی `CORE-HARDEN-P01` است؛ هیچ hardening implementation شروع نشد. |
+| CORE-HARDEN-P01 | baseline اجرا و جزئی ثبت شد | tooling برابر `RECORDER_ONLY_AVAILABLE`؛ test/build قبل و بعد PASS؛ desktop هفت مسیر PASS و mobile Employees PASS؛ Dashboard و Operational History در 390px overflow دارند؛ verdict برابر `BROWSER_SMOKE_BASELINE_PARTIAL` و هیچ source/UI/CSS اصلاح نشد. |
 
 ## P فعلی قطعی
 

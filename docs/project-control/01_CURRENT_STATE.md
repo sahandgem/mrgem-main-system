@@ -46,7 +46,12 @@
 | Selected next track | گزینه E: `V1 Operational Hardening`؛ فقط توصیه شده و هنوز شروع نشده |
 | Hardening verdict | `HARDENING_PLAN_READY_WITH_GAPS`؛ H1-H5 تعریف شدند و هیچ implementation شروع نشد |
 | Selected first hardening phase | `CORE-HARDEN-P01 — Critical Route Browser Smoke Baseline`؛ فقط پیشنهاد، نیازمند مجوز مستقل |
-| Recommended next gate | `CORE-HARDEN-P01 — Critical Route Browser Smoke Baseline` فقط با دستور صریح Project Core |
+| CORE-HARDEN-P01 branch | `hardening/master-gem-v1-critical-route-browser-smoke-p01`؛ recorder-only و بدون browser test/package جدید |
+| Browser tooling | `RECORDER_ONLY_AVAILABLE`؛ Playwright/Cypress/Puppeteer/WebDriver داخل repo وجود ندارد |
+| Browser smoke verdict | `BROWSER_SMOKE_BASELINE_PARTIAL`؛ desktop هفت مسیر PASS، mobile Employees PASS |
+| Mobile route findings | Dashboard در 390px به 1112px و Operational History به 729px overflow می‌کنند؛ code/CSS اصلاح نشد |
+| Test/build hardening gate | قبل و بعد PASS؛ ۱۷۵۱ module؛ فقط هشدار قدیمی `--experimental-loader` |
+| Recommended next gate | `CORE-HARDEN-ROUTE-P01 — Workforce Critical Routes Mobile Overflow Stabilization Audit` فقط با دستور صریح Project Core |
 
 ## Historical Record
 

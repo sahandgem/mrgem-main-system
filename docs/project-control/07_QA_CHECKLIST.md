@@ -114,3 +114,13 @@
 - [ ] local/remote hash و وضعیت push صریح ثبت شده است.
 - [ ] P56، runtimeهای frozen، migrationها و feature work ناخواسته شروع نشده‌اند.
 - [ ] هر failure از hardening stop rule عبور نکرده و به‌صورت blocker گزارش شده است.
+
+### CORE-HARDEN-P01 Baseline Result
+
+- [x] test و build قبل و بعد PASS؛ ۱۷۵۱ module و فقط warning قدیمی loader.
+- [x] هفت route بحرانی desktop مستقیم load شدند؛ console error، redirect و visible mojibake نداشتند.
+- [x] `OperationalHistoryPage` مستقل و trend label فارسی `پایدار` ثبت شد.
+- [x] mobile Employees در viewport 390 x 844 بدون overflow پاس شد.
+- [ ] mobile Dashboard: overflow فعال؛ document width برابر 1112px.
+- [ ] mobile Operational History: overflow فعال؛ document width برابر 729px.
+- [x] stop rule رعایت شد و هیچ source/UI/CSS fix داخل smoke phase انجام نشد.

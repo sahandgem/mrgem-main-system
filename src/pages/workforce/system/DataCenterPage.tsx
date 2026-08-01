@@ -86,7 +86,7 @@ export default function DataCenterPage({ resetDemo = defaultResetDemo }: { reset
     const ok = window.confirm("داده‌های فعلی به وضعیت این snapshot برگردند؟ قبل از restore یک snapshot خودکار ساخته می‌شود.");
     if (!ok) return;
     const restored = workforceBackupService.restoreSnapshot(snapshotId);
-    if (restored) operationalHistoryService.recordImportRestore(restored.id, `Snapshot آ«${restored.title}» بازیابی شد.`);
+    if (restored) operationalHistoryService.recordImportRestore(restored.id, `Snapshot «${restored.title}» بازیابی شد.`);
     refresh();
     setMessage("Restore انجام شد. صفحه را refresh کن.");
   };

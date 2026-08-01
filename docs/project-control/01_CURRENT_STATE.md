@@ -2,7 +2,7 @@
 
 ## Canonical Current Snapshot
 
-تاریخ snapshot رسمی: 2026-07-30
+تاریخ snapshot رسمی: 2026-08-01
 
 این بخش وضعیت رسمی فعلی را خلاصه می‌کند. تمام بخش‌های بعدی این فایل سابقه تاریخی‌اند و در صورت تعارض، این snapshot مرجع جاری است.
 
@@ -23,15 +23,15 @@
 | Test stabilization | `CORE-STABILIZE-P01`؛ root cause برابر `MISSING_FIXED_CLOCK` و production defect برابر NO |
 | Test gate | `PASS`؛ focused test و `npm.cmd test` هر دو موفق |
 | Build gate | `PASS`؛ warning جدی ندارد |
-| Encoding repair phase | `CORE-RESUME-ENCODING-P01B`؛ Batch 2 روی HistoryRetention، Maintenance و workforcePageUtils تکمیل و verify شد |
-| Encoding repair result | Batch 2: ۱۱۳ repair از ۱۱۷ مورد؛ چهار trend label machine-coupled عمداً unresolved ماند |
-| Encoding inventory correction | یک TemplateHead نمایشی در DataCenter از ممیزی P01A جا افتاده بود؛ موجودی واقعی قبل از Batch 2 برابر ۱۵۱ بود |
-| Encoding inventory remaining | ۳۸ مورد در ۸ فایل؛ ۵ مورد visible و ۳۷ مورد machine-readable با چهار مورد overlap |
-| Encoding preview | dashboard، employees، analysis، history-retention و maintenance سالم؛ operational-history هنوز trend label خراب دارد |
-| Encoding gate | `ENCODING_GATE_PARTIALLY_RECOVERED`؛ visible mojibake هنوز در active runtime باقی است |
-| Candidate verdict | `BATCH_2_PARTIAL`؛ test/build/structure PASS، ولی encoding هنوز blocker است |
-| Main merge readiness | `NOT_READY_ENCODING_BLOCKER` |
-| Recommended next gate | `CORE-RESUME-ENCODING-P01C` برای مورد DataCenter و repair هماهنگ قرارداد trend |
+| Encoding repair phase | `CORE-RESUME-ENCODING-P01C`؛ visible closure و machine-readable contract audit تکمیل شد |
+| Encoding repair result | پنج finding نمایشی repair شد؛ یک TemplateHead و چهار trend label از طریق presentation mapping امن |
+| Encoding inventory remaining | ۳۷ machine-readable literal در ۷ فایل؛ user-visible mojibake برابر صفر؛ یک false positive ثبت شد |
+| Machine contract | `PASS`؛ machine values، comparisonها، storage keys، statusها و serialization schema بدون تغییر |
+| Encoding preview | هفت route اصلی و regression بررسی شد؛ همه markerهای نمایشی صفر و RTL/lang سالم |
+| Encoding gate | `ENCODING_GATE_RECOVERED_WITH_MACHINE_CONSTANT_DEBT` |
+| Candidate verdict | `READY_FOR_FINAL_REVIEW`؛ focused/full test، build، preview و contract fingerprint همگی PASS |
+| Main merge readiness | `READY_FOR_FINAL_REVIEW`؛ هنوز مجوز merge نیست |
+| Recommended next gate | `CORE-P12 — Integration Candidate Final Review and Main Merge Gate` |
 
 ## Historical Record
 

@@ -102,11 +102,22 @@ export function historyEventTypeLabel(value: OperationalHistoryEventType) {
 
 
 
+const historyTrendPresentation = {
+  insufficient: { machine: "ط¯ط§ط¯ظ‡ ط±ظˆظ†ط¯ ع©ط§ظپغŒ ظ†غŒط³طھ", display: "داده روند کافی نیست" },
+  worsening: { machine: "ط±ظˆ ط¨ظ‡ ط¨ط¯طھط±ط´ط¯ظ†", display: "رو به بدترشدن" },
+  improving: { machine: "ط±ظˆ ط¨ظ‡ ط¨ظ‡ط¨ظˆط¯", display: "رو به بهبود" },
+  stable: { machine: "ظ¾ط§غŒط¯ط§ط±", display: "پایدار" },
+} as const;
+
 export function historyTrendLabel(trend: ReturnType<typeof operationalHistoryService.buildOperationalHistoryReport>["driftTrend"]) {
-  if (trend.length < 2) return "ط¯ط§ط¯ظ‡ ط±ظˆظ†ط¯ ع©ط§ظپغŒ ظ†غŒط³طھ";
-  if (detectIncreasingDriftTrend(trend)) return "ط±ظˆ ط¨ظ‡ ط¨ط¯طھط±ط´ط¯ظ†";
-  if (trend[trend.length - 1].driftScore < trend[0].driftScore) return "ط±ظˆ ط¨ظ‡ ط¨ظ‡ط¨ظˆط¯";
-  return "ظ¾ط§غŒط¯ط§ط±";
+  if (trend.length < 2) return historyTrendPresentation.insufficient.machine;
+  if (detectIncreasingDriftTrend(trend)) return historyTrendPresentation.worsening.machine;
+  if (trend[trend.length - 1].driftScore < trend[0].driftScore) return historyTrendPresentation.improving.machine;
+  return historyTrendPresentation.stable.machine;
+}
+
+export function historyTrendDisplayLabel(value: string) {
+  return Object.values(historyTrendPresentation).find((item) => item.machine === value)?.display ?? value;
 }
 
 

@@ -123,8 +123,34 @@ import {
   workforceRouteManifest,
 } from "../src/routes/workforceRouteManifest.ts";
 import { workforceStorageKeyRegistry, type WorkforceStorageKeyRegistryItem } from "../src/registry/workforceStorageKeys.ts";
+import { historyTrendDisplayLabel, historyTrendLabel } from "../src/pages/workforce/workforcePageUtils.ts";
 
 const timestamp = "2026-01-01T00:00:00.000Z";
+
+{
+  const point = (driftScore: number, index: number) => ({
+    id: `trend-${index}`,
+    generatedAt: `2026-01-0${index + 1}T00:00:00.000Z`,
+    driftScore,
+    driftLevel: "none" as const,
+    requiresResignoff: false,
+    baselineChecksum: "baseline",
+    currentChecksum: `current-${index}`,
+  });
+  const cases = [
+    { trend: [], machine: "ط¯ط§ط¯ظ‡ ط±ظˆظ†ط¯ ع©ط§ظپغŒ ظ†غŒط³طھ", display: "داده روند کافی نیست" },
+    { trend: [point(10, 0), point(20, 1)], machine: "ط±ظˆ ط¨ظ‡ ط¨ط¯طھط±ط´ط¯ظ†", display: "رو به بدترشدن" },
+    { trend: [point(20, 0), point(10, 1)], machine: "ط±ظˆ ط¨ظ‡ ط¨ظ‡ط¨ظˆط¯", display: "رو به بهبود" },
+    { trend: [point(10, 0), point(10, 1)], machine: "ظ¾ط§غŒط¯ط§ط±", display: "پایدار" },
+  ];
+
+  for (const item of cases) {
+    const machineValue = historyTrendLabel(item.trend);
+    assert.equal(machineValue, item.machine);
+    assert.equal(historyTrendDisplayLabel(machineValue), item.display);
+  }
+  assert.equal(historyTrendDisplayLabel("unknown-trend"), "unknown-trend");
+}
 
 {
   const paths = workforceRouteManifest.map((route) => route.path);

@@ -107,6 +107,8 @@
 | فاز | وضعیت | خلاصه خروجی |
 |---|---|---|
 | CORE-P01 | انجام شده | ساخت `146_MASTER_GEM_UNIFIED_PUZZLE_ARCHITECTURE.md` و قفل معماری مادر مستر جم به عنوان پازل/هواپیمای یکپارچه؛ Workforce P0-P22 به عنوان `Workforce Operations Engine` ثبت شد؛ cockpit فقط قطعه visual/executive است؛ docs-only و بدون تغییر کد. |
+| CORE-MERGE-P01 | انجام و verify شد | Master Gem Core V1 با merge محلی `--no-ff` وارد `main` شد؛ merge commit برابر `23c5e29`، final local main برابر `e42b320`، test/build/preview پاس و push انجام نشد. |
+| CORE-POST-MERGE-P01 | انجام شده، docs-only | baseline محلی V1 روی `e42b320` قفل شد؛ بدهی‌ها و کارهای frozen ثبت شدند؛ گزینه E یعنی V1 Operational Hardening به عنوان track بعدی پیشنهاد شد ولی شروع نشد. |
 
 ## P فعلی قطعی
 

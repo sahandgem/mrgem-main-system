@@ -1,6 +1,6 @@
 ﻿# Branch Registry
 
-آخرین به‌روزرسانی: 2026-06-28
+آخرین به‌روزرسانی: 2026-08-02
 
 ## کد شاخه‌ها
 
@@ -32,10 +32,13 @@
 
 ## شاخه فعال فعلی
 
-شاخه اجرایی اصلی: `WF`
+- baseline اجرایی محلی: `main` روی `e42b320`؛ قفل‌شده و بدون مجوز push
+- شاخه docs فعال: `docs/master-gem-core-v1-post-merge-lock`؛ ساخته‌شده مستقیم از baseline
+- rollback: `backup/main-before-master-gem-core-v1-merge-b16b1a0` روی `b16b1a0`
+- review نگه‌داری‌شده: `review/master-gem-core-v1-final-gate` روی `276d526`
+- candidate نگه‌داری‌شده: `integration/master-gem-core-v1-candidate` روی `d977037`
+- شاخه اجرایی `WF`: frozen؛ P56 مجاز نیست
+- شاخه کنترل فعال: `CONTROL/CORE` فقط برای baseline lock و تصمیم readiness
+- زیرپروژه‌های ثبت‌شده اما merge نشده: `FIN-AUDIT`, `DATA-MAHAK`
 
-شاخه کنترل فعال: `CONTROL`
-
-شاخه‌های پشتیبان: `CORE`, `UI`, `DATA`
-
-زیرپروژه‌های ثبت‌شده اما merge نشده: `FIN-AUDIT`, `DATA-MAHAK`
+هیچ branch در CORE-POST-MERGE-P01 حذف، merge، rebase یا push نشد.

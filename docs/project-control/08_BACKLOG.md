@@ -6,7 +6,8 @@
 
 | اولویت | شاخه | کار | توضیح |
 |---|---|---|---|
-| بالا | WF | extraction کنترل‌شده adapterهای کم‌ریسک باقی‌مانده | فقط فازهای کوچک، بدون تغییر route/storage/model/behavior |
+| frozen | WF | extraction کنترل‌شده adapterهای کم‌ریسک باقی‌مانده | بدون approval مستقل Project Core اجرا نشود؛ P56 همچنان ممنوع است |
+| پیشنهاد بعدی، شروع‌نشده | CORE | CORE-P13 — Master Gem V1 Operational Hardening Readiness Plan | فقط docs/readiness برای E2E، storage/backup verification، rollback evidence و release discipline؛ بدون feature یا runtime change |
 | paused | WF | WF-P56 ادامه تثبیت هسته Workforce | فقط با دستور مستقل و approval صریح Project Core در branch اختصاصی |
 | انجام‌شده | CORE | CORE-P02 طراحی Master Gem Central Data Model Contract | docs-only؛ ثبت‌شده در سند 147، بدون implementation یا merge |
 | انجام‌شده | CORE | CORE-P03 طراحی Task and Decision Core Contract | docs-only؛ ثبت‌شده در سند 148، بدون implementation یا merge |

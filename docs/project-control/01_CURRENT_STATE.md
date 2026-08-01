@@ -8,10 +8,10 @@
 
 | مورد | وضعیت رسمی |
 |---|---|
-| Stable main baseline | `main` در `b16b1a0`؛ قفل و بدون تغییر |
-| Current integration candidate branch | `integration/master-gem-core-v1-candidate` |
+| Stable main baseline | `main` شامل Master Gem Core V1؛ runtime merge در `23c5e29573615d8dd729494cf22b60ac060df9bd` و final HEAD برابر commit docs-only مربوط به CORE-MERGE-P01 |
+| Integration candidate branch | `integration/master-gem-core-v1-candidate`؛ در merge تاییدشده مصرف شد و اکنون مرجع تاریخی است |
 | Candidate reviewed commit | `d97703739a33496127ca406b44dba9f37d439f78` |
-| Final review branch | `review/master-gem-core-v1-final-gate`؛ ساخته‌شده مستقیم از `d977037` |
+| Final review branch | `review/master-gem-core-v1-final-gate`؛ در `23c5e29` به‌صورت محلی در main merge شد |
 | Candidate exact base | `aa153672ab6e29345082a5aedbe1c954435563b9` از CORE-P11 |
 | Candidate P55A commit | `487d74a`؛ patch-equivalent با `a1416bf` |
 | Candidate stabilization | `0e7006d`؛ تست snooze deterministic شد و production source تغییر نکرد |
@@ -21,7 +21,7 @@
 | P56 | not approved |
 | Cockpit | prototypeهای mock-only و frozen؛ implementation تایید نشده |
 | Subprojects | Product/Mahak، Finance/Audit، Production، Mobile و Automation isolated |
-| Integration | CORE-P12 ممیزی نهایی candidate را انجام داد؛ main merge و push انجام نشده |
+| Integration | CORE-MERGE-P01 با `--no-ff` روی `main` به‌صورت محلی انجام و verify شد؛ tree دقیقاً با review branch برابر است |
 | Test stabilization | `CORE-STABILIZE-P01`؛ root cause برابر `MISSING_FIXED_CLOCK` و production defect برابر NO |
 | Test gate | `PASS`؛ `npm.cmd test` با exit code صفر؛ فقط warning قدیمی `--experimental-loader` |
 | Build gate | `PASS`؛ ۱۷۵۱ module و خروجی `dist`؛ artifact tracked یا warning جدی ندارد |
@@ -33,9 +33,13 @@
 | Storage compatibility | `PASS`؛ ۲۴ کلید یکتا، صفر duplicate و صفر کلید خارج registry |
 | Encoding gate | `ENCODING_GATE_RECOVERED_WITH_MACHINE_CONSTANT_DEBT` |
 | Final review verdict | `FINAL_REVIEW_PASS_WITH_DOCUMENTED_DEBT` |
-| Candidate readiness | آماده درخواست مجوز merge مستقل؛ بدهی‌های پذیرفته‌شده blocker نیستند |
-| Main merge recommendation | `RECOMMEND_SEPARATE_MERGE_AUTHORIZATION`؛ این توصیه مجوز merge نیست |
-| Recommended next gate | `CORE-MERGE-P01 — Merge Master Gem Core V1 Final Review Branch into main` فقط با دستور صریح Project Core |
+| Candidate readiness | gate تکمیل و در CORE-MERGE-P01 مصرف شد؛ بدهی‌های پذیرفته‌شده همچنان ثبت و فعال‌اند |
+| Main merge result | `LOCAL_MERGE_VERIFIED`؛ merge commit برابر `23c5e29`، push و remote update انجام نشده |
+| Rollback reference | branch محلی `backup/main-before-master-gem-core-v1-merge-b16b1a0` روی `b16b1a020168516b2f8ad3e0bcd41e1193c8a824` |
+| Route/storage post-merge | ۲۸ route یکتا، ۲۴ storage key یکتا، صفر duplicate و صفر storage literal خارج registry |
+| Runtime boundary post-merge | P56 اجرا نشده؛ cockpitها frozen؛ Task/Decision runtime و subproject source وارد `main` نشده‌اند |
+| Remote state | push/fetch/pull انجام نشده؛ نتیجه merge فقط local است |
+| Recommended next gate | `CORE-POST-MERGE-P01 — Lock Main Baseline and Define Next Core Track` فقط با دستور صریح Project Core |
 
 ## Historical Record
 

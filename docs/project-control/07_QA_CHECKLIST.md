@@ -96,3 +96,21 @@
 - [ ] route registry برای page منتقل‌شده همان URL قبلی را نگه می‌دارد.
 - [ ] بعد از استخراج، `WorkforcePages.tsx` هم build می‌شود و fallback/compat pageهای باقی‌مانده سالم‌اند.
 - [ ] اگر helper مشترک ساخته شد، service/analyzer/model را معکوس import نمی‌کند.
+
+## V1 Operational Hardening Gate
+
+- [ ] commit و branch baseline دقیق و working tree تمیز ثبت شده‌اند.
+- [ ] critical route inventory نسخه‌دار است و direct URL هر route بررسی شده است.
+- [ ] lazy-load completion، `dir=rtl`، `lang=fa` و critical Persian labels ثبت شده‌اند.
+- [ ] console error/warning برای هر route و viewport ثبت شده است.
+- [ ] desktop و mobile viewport matrix دارای نتیجه و evidence است.
+- [ ] `OperationalHistoryPage` همچنان مستقل از `WorkforcePages` و adapter است.
+- [ ] prototype و subproject isolation scan پاس شده است.
+- [ ] storage registry برابر ۲۴، backup set برابر ۲۳ و excluded snapshot container برابر یک است.
+- [ ] backup/import/restore فقط روی fixture مصنوعی و محیط disposable اجرا شده است.
+- [ ] malformed JSON، missing critical key، checksum mismatch و unknown key رفتار ثبت‌شده دارند.
+- [ ] rollback reference، dry-run procedure، actor و approval boundary ثبت شده‌اند.
+- [ ] test، build، smoke، storage، secret scan و rollback evidence به یک release pack متصل‌اند.
+- [ ] local/remote hash و وضعیت push صریح ثبت شده است.
+- [ ] P56، runtimeهای frozen، migrationها و feature work ناخواسته شروع نشده‌اند.
+- [ ] هر failure از hardening stop rule عبور نکرده و به‌صورت blocker گزارش شده است.

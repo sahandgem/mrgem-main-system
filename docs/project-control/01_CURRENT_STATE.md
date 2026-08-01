@@ -11,6 +11,7 @@
 | Stable main baseline | `main` شامل Master Gem Core V1؛ runtime merge در `23c5e29573615d8dd729494cf22b60ac060df9bd` و final HEAD برابر commit docs-only مربوط به CORE-MERGE-P01 |
 | Canonical local main HEAD | `e42b32027cf642a1d1dc369786490a7427d16034`؛ در CORE-POST-MERGE-P01 قفل شد |
 | Post-merge lock branch | `docs/master-gem-core-v1-post-merge-lock`؛ ساخته‌شده مستقیم از `e42b320` و فقط docs-only |
+| CORE-P13 docs branch | `docs/master-gem-v1-operational-hardening-core-p13`؛ ساخته‌شده مستقیم از `a145606` |
 | Integration candidate branch | `integration/master-gem-core-v1-candidate`؛ در merge تاییدشده مصرف شد و اکنون مرجع تاریخی است |
 | Candidate reviewed commit | `d97703739a33496127ca406b44dba9f37d439f78` |
 | Final review branch | `review/master-gem-core-v1-final-gate`؛ در `23c5e29` به‌صورت محلی در main merge شد |
@@ -43,7 +44,9 @@
 | Remote state | push/fetch/pull انجام نشده؛ نتیجه merge فقط local است |
 | Frozen work | P56، Cockpit runtime، Task/Decision runtime، subproject integration، backend/database/auth/API، storage migration، machine constant migration و remote push |
 | Selected next track | گزینه E: `V1 Operational Hardening`؛ فقط توصیه شده و هنوز شروع نشده |
-| Recommended next gate | `CORE-P13 — Master Gem V1 Operational Hardening Readiness Plan`؛ docs/readiness-only و فقط با دستور صریح Project Core |
+| Hardening verdict | `HARDENING_PLAN_READY_WITH_GAPS`؛ H1-H5 تعریف شدند و هیچ implementation شروع نشد |
+| Selected first hardening phase | `CORE-HARDEN-P01 — Critical Route Browser Smoke Baseline`؛ فقط پیشنهاد، نیازمند مجوز مستقل |
+| Recommended next gate | `CORE-HARDEN-P01 — Critical Route Browser Smoke Baseline` فقط با دستور صریح Project Core |
 
 ## Historical Record
 

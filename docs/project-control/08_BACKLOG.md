@@ -7,7 +7,12 @@
 | اولویت | شاخه | کار | توضیح |
 |---|---|---|---|
 | frozen | WF | extraction کنترل‌شده adapterهای کم‌ریسک باقی‌مانده | بدون approval مستقل Project Core اجرا نشود؛ P56 همچنان ممنوع است |
-| پیشنهاد بعدی، شروع‌نشده | CORE | CORE-P13 — Master Gem V1 Operational Hardening Readiness Plan | فقط docs/readiness برای E2E، storage/backup verification، rollback evidence و release discipline؛ بدون feature یا runtime change |
+| انجام‌شده، docs-only | CORE | CORE-P13 — Master Gem V1 Operational Hardening Readiness Plan | posture ممیزی و H1-H5 تعریف شدند؛ verdict برابر `HARDENING_PLAN_READY_WITH_GAPS`؛ implementation انجام نشد |
+| P0 پیشنهادی، شروع‌نشده | CORE/HARDEN | CORE-HARDEN-P01 — Critical Route Browser Smoke Baseline | H1؛ direct-load، console، RTL، Persian label و viewport evidence؛ نیازمند مجوز مستقل و بدون تغییر behavior |
+| P0 بعدی | CORE/HARDEN | CORE-HARDEN-P02 — Disposable Storage Backup Restore Drill | H2؛ فقط fixture مصنوعی و storage disposable، بدون migration یا داده واقعی |
+| P1 بعدی | CORE/HARDEN | CORE-HARDEN-P04 — V1 Runtime Regression Evidence Gate | H4؛ RTL، encoding، labels، console و isolation بر پایه خروجی H1 |
+| P1 بعدی | CORE/HARDEN | CORE-HARDEN-P03 — V1 Release Evidence And Rollback Gate | H3؛ پس از H1/H2، بدون push یا release خودکار |
+| P2 بعدی | CORE/HARDEN | CORE-HARDEN-P05 — V1 Technical Debt Ownership Review | H5؛ فقط ownership و gate بدهی‌ها، بدون اجرای P56/migration/refactor |
 | paused | WF | WF-P56 ادامه تثبیت هسته Workforce | فقط با دستور مستقل و approval صریح Project Core در branch اختصاصی |
 | انجام‌شده | CORE | CORE-P02 طراحی Master Gem Central Data Model Contract | docs-only؛ ثبت‌شده در سند 147، بدون implementation یا merge |
 | انجام‌شده | CORE | CORE-P03 طراحی Task and Decision Core Contract | docs-only؛ ثبت‌شده در سند 148، بدون implementation یا merge |

@@ -1,13 +1,13 @@
 ﻿# Backlog
 
-آخرین به‌روزرسانی: 2026-06-30
+آخرین به‌روزرسانی: 2026-08-02
 
 ## الان
 
 | اولویت | شاخه | کار | توضیح |
 |---|---|---|---|
 | بالا | WF | extraction کنترل‌شده adapterهای کم‌ریسک باقی‌مانده | فقط فازهای کوچک، بدون تغییر route/storage/model/behavior |
-| بالا | WF | WF-P56 ادامه تثبیت هسته Workforce | انتخاب یک صفحه کم‌ریسک باقی‌مانده و extraction واقعی فقط در branch اختصاصی |
+| paused | WF | WF-P56 ادامه تثبیت هسته Workforce | فقط با دستور مستقل و approval صریح Project Core در branch اختصاصی |
 | انجام‌شده | CORE | CORE-P02 طراحی Master Gem Central Data Model Contract | docs-only؛ ثبت‌شده در سند 147، بدون implementation یا merge |
 | انجام‌شده | CORE | CORE-P03 طراحی Task and Decision Core Contract | docs-only؛ ثبت‌شده در سند 148، بدون implementation یا merge |
 | انجام‌شده | CORE | CORE-P04 طراحی Master Gem Module Interaction Map | docs-only؛ ثبت‌شده در سند 149، بدون implementation یا merge |
@@ -24,6 +24,7 @@
 
 | شاخه | کار | توضیح |
 |---|---|---|
+| WF/ENCODING | ممیزی و migration آینده ۳۷ machine-readable constant | بدهی compatibility ثبت‌شده و غیرنمایشی؛ blocker خودکار merge نیست؛ هر migration نیازمند contract audit، تست و مجوز مستقل است |
 | WF | ادامه کوچک‌سازی adapterهای باقی‌مانده | پس از WF-P31، DataCenterPage هم جدا شده است |
 | FIN-AUDIT | بررسی استخراج مدل نقدینگی از پروژه پول | فقط schema/model/idea؛ merge مستقیم ممنوع |
 | DATA-MAHAK | بررسی استخراج مدل کالا و بارکد از پروژه کالا | فقط schema/model/idea؛ merge مستقیم ممنوع |

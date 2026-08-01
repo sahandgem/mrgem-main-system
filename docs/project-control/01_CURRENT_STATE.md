@@ -52,6 +52,13 @@
 | Mobile route findings | Dashboard در 390px به 1112px و Operational History به 729px overflow می‌کنند؛ code/CSS اصلاح نشد |
 | Test/build hardening gate | قبل و بعد PASS؛ ۱۷۵۱ module؛ فقط هشدار قدیمی `--experimental-loader` |
 | Recommended next gate | `CORE-HARDEN-ROUTE-P01 — Workforce Critical Routes Mobile Overflow Stabilization Audit` فقط با دستور صریح Project Core |
+| CORE-HARDEN-ROUTE-P01 branch | `hardening/master-gem-v1-mobile-overflow-audit-p01`؛ audit-only و docs-only از `b7d89a1` |
+| Mobile overflow audit | `MOBILE_OVERFLOW_ROOT_CAUSE_CONFIRMED`؛ Dashboard و Operational History در عرض‌های 320/360/390/430 بازتولید شدند |
+| Exact overflow causes | Dashboard: نشت min-content جدول هفتگی 68rem؛ Operational History: placeholder چاپی 96 نقطه‌ای؛ shared 320px: `body min-width` با scrollbar |
+| Repair scope decision | `SHARED_PLUS_ROUTE_LOCAL_FIX`؛ بدون redesign، route، storage یا business logic change؛ فایل پیشنهادی 1 و حداکثر 2 |
+| Audit test/build gate | PASS؛ test با warning قدیمی loader و build با ۱۷۵۱ module و بدون build warning |
+| Main/origin during audit | local `main=e42b320` و observed `origin/main=b16b1a0`؛ بدون push یا remote update |
+| Recommended next gate after audit | `CORE-HARDEN-ROUTE-P02 — Workforce Critical Routes Mobile Overflow Repair` فقط با مجوز مستقل Project Core |
 
 ## Historical Record
 

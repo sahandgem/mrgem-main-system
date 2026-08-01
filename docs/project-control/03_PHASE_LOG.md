@@ -111,6 +111,7 @@
 | CORE-POST-MERGE-P01 | انجام شده، docs-only | baseline محلی V1 روی `e42b320` قفل شد؛ بدهی‌ها و کارهای frozen ثبت شدند؛ گزینه E یعنی V1 Operational Hardening به عنوان track بعدی پیشنهاد شد ولی شروع نشد. |
 | CORE-P13 | انجام شده، docs-only | posture عملیاتی V1 ممیزی و H1-H5 با gate کامل تعریف شد؛ verdict برابر `HARDENING_PLAN_READY_WITH_GAPS` و فاز پیشنهادی بعدی `CORE-HARDEN-P01` است؛ هیچ hardening implementation شروع نشد. |
 | CORE-HARDEN-P01 | baseline اجرا و جزئی ثبت شد | tooling برابر `RECORDER_ONLY_AVAILABLE`؛ test/build قبل و بعد PASS؛ desktop هفت مسیر PASS و mobile Employees PASS؛ Dashboard و Operational History در 390px overflow دارند؛ verdict برابر `BROWSER_SMOKE_BASELINE_PARTIAL` و هیچ source/UI/CSS اصلاح نشد. |
+| CORE-HARDEN-ROUTE-P01 | audit انجام شد، docs-only | ماتریس 320/360/390/430/1280 برای Dashboard، Operational History و Employees ثبت شد؛ سه علت دقیق شامل `body min-width:320px`، نشت min-content جدول هفتگی و placeholder چاپی بدون شکست تایید شدند؛ verdict برابر `MOBILE_OVERFLOW_ROOT_CAUSE_CONFIRMED` و scope آینده `SHARED_PLUS_ROUTE_LOCAL_FIX` است؛ test/build PASS و هیچ source/UI/CSS تغییر نکرد. |
 
 ## P فعلی قطعی
 

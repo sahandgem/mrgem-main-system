@@ -124,3 +124,15 @@
 - [ ] mobile Dashboard: overflow فعال؛ document width برابر 1112px.
 - [ ] mobile Operational History: overflow فعال؛ document width برابر 729px.
 - [x] stop rule رعایت شد و هیچ source/UI/CSS fix داخل smoke phase انجام نشد.
+
+### CORE-HARDEN-ROUTE-P01 Mobile Overflow Audit Result
+
+- [x] Dashboard، Operational History و Employees در viewportهای 320/360/390/430 و مرجع desktop برابر 1280 اندازه‌گیری شدند.
+- [x] Dashboard: `.weekly-grid` با `min-width:68rem` و زنجیره grid min-content به عنوان علت اصلی trace شد.
+- [x] Operational History: placeholder چاپی 96 نقطه‌ای با min-content حدود 681px به عنوان علت اصلی trace شد.
+- [x] Employees control: overflow مشترک 15px در عرض 320 به `body { min-width:320px }` و scrollbar trace شد؛ عرض‌های 360/390/430/1280 PASS هستند.
+- [x] classification، source trace، propagation chain و repair option برای هر finding ثبت شد.
+- [x] regression matrix آینده شامل Dashboard، Operational History، Employees، Analysis و Data Center ثبت شد.
+- [x] test و build PASS؛ ۱۷۵۱ module و فقط warning قدیمی test loader.
+- [x] verdict برابر `MOBILE_OVERFLOW_ROOT_CAUSE_CONFIRMED` و repair scope برابر `SHARED_PLUS_ROUTE_LOCAL_FIX` است.
+- [x] هیچ source، UI، CSS، test، package، route یا storage contract تغییر نکرد.

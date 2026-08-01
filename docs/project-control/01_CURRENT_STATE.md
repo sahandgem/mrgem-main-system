@@ -1,6 +1,45 @@
 ﻿# Current State
 
-آخرین به‌روزرسانی: 2026-06-29
+## Canonical Current Snapshot
+
+تاریخ snapshot رسمی: 2026-08-02
+
+این بخش وضعیت رسمی فعلی را خلاصه می‌کند. تمام بخش‌های بعدی این فایل سابقه تاریخی‌اند و در صورت تعارض، این snapshot مرجع جاری است.
+
+| مورد | وضعیت رسمی |
+|---|---|
+| Stable main baseline | `main` در `b16b1a0`؛ قفل و بدون تغییر |
+| Current integration candidate branch | `integration/master-gem-core-v1-candidate` |
+| Candidate reviewed commit | `d97703739a33496127ca406b44dba9f37d439f78` |
+| Final review branch | `review/master-gem-core-v1-final-gate`؛ ساخته‌شده مستقیم از `d977037` |
+| Candidate exact base | `aa153672ab6e29345082a5aedbe1c954435563b9` از CORE-P11 |
+| Candidate P55A commit | `487d74a`؛ patch-equivalent با `a1416bf` |
+| Candidate stabilization | `0e7006d`؛ تست snooze deterministic شد و production source تغییر نکرد |
+| Latest Workforce verification branch | `refactor/workforce-core-stabilization-p55` |
+| Latest Workforce verification commit | `a1416bf P55A verify operational history extraction cleanup` |
+| Code Main | paused |
+| P56 | not approved |
+| Cockpit | prototypeهای mock-only و frozen؛ implementation تایید نشده |
+| Subprojects | Product/Mahak، Finance/Audit، Production، Mobile و Automation isolated |
+| Integration | CORE-P12 ممیزی نهایی candidate را انجام داد؛ main merge و push انجام نشده |
+| Test stabilization | `CORE-STABILIZE-P01`؛ root cause برابر `MISSING_FIXED_CLOCK` و production defect برابر NO |
+| Test gate | `PASS`؛ `npm.cmd test` با exit code صفر؛ فقط warning قدیمی `--experimental-loader` |
+| Build gate | `PASS`؛ ۱۷۵۱ module و خروجی `dist`؛ artifact tracked یا warning جدی ندارد |
+| Preview gate | `PASS`؛ هفت route کلیدی load شدند، crash/console error نداشتند و RTL سالم بود |
+| Encoding repair phase | `CORE-RESUME-ENCODING-P01C`؛ visible closure و machine-readable contract audit تکمیل شد |
+| Encoding repair result | پنج finding نمایشی repair شد؛ یک TemplateHead و چهار trend label از طریق presentation mapping امن |
+| Encoding inventory remaining | ۳۷ machine-readable literal در ۷ فایل؛ user-visible mojibake برابر صفر؛ یک false positive ثبت شد |
+| Machine contract | `PASS`؛ machine values، comparisonها، storage keys، statusها و serialization schema بدون تغییر |
+| Storage compatibility | `PASS`؛ ۲۴ کلید یکتا، صفر duplicate و صفر کلید خارج registry |
+| Encoding gate | `ENCODING_GATE_RECOVERED_WITH_MACHINE_CONSTANT_DEBT` |
+| Final review verdict | `FINAL_REVIEW_PASS_WITH_DOCUMENTED_DEBT` |
+| Candidate readiness | آماده درخواست مجوز merge مستقل؛ بدهی‌های پذیرفته‌شده blocker نیستند |
+| Main merge recommendation | `RECOMMEND_SEPARATE_MERGE_AUTHORIZATION`؛ این توصیه مجوز merge نیست |
+| Recommended next gate | `CORE-MERGE-P01 — Merge Master Gem Core V1 Final Review Branch into main` فقط با دستور صریح Project Core |
+
+## Historical Record
+
+آخرین به‌روزرسانی snapshot تاریخی زیر: 2026-06-30
 
 ## وضعیت فعلی پروژه
 
@@ -12,7 +51,131 @@
 
 آخرین P اجرایی و کدی verify شده: **WF-P31**
 
-آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P37-BATCH**
+آخرین P تثبیت/بازبینی WF: **WF-P55**
+
+آخرین قفل معماری CORE: **CORE-P01**
+
+آخرین کار کنترل پروژه تکمیل‌شده: **CONTROL-P48-REVIEW**
+
+آخرین کار عملیاتی پروژه: **OPS-01**
+
+## وضعیت OPS-01
+
+قوانین عملیاتی مادر پروژه و کنترل کار همزمان رسمی شدند.
+
+- Project Operating Rules ثبت شد.
+- Parallel Workstream Control پیش از گسترش کار موازی الزامی شد.
+- Code Room مالک Cockpit Review Track در محدوده P48 تا P50 است.
+- Code Room Gate برای اجرای Codex الزامی است، مگر ماموریت صریحاً docs-only و safe اعلام شود.
+- approvalهای Design، Prototype، Implementation و Merge مستقل ثبت شدند.
+- branch `main` همچنان locked و روی `b16b1a0` است.
+- OPS-01 فقط docs/control است و هیچ code، prototype، src، package، database یا auth تغییر نمی‌دهد.
+
+## وضعیت CORE-P01
+
+معماری مادر «پازل یکپارچه مستر جم» در `docs/project-control/146_MASTER_GEM_UNIFIED_PUZZLE_ARCHITECTURE.md` قفل شد.
+
+- مستر جم فقط cockpit یا داشبورد نیست؛ سیستم‌عامل مدیریتی و هواپیمای کامل است.
+- پروژه Workforce P0-P22 به عنوان `Workforce Operations Engine` ثبت شد، نه کل پروژه.
+- Central Cockpit فقط `Executive Visual Layer` و یک قطعه از پازل است.
+- هر UI آینده باید Input، Processing، Output و Decision/Operation Effect داشته باشد.
+- Product/Inventory، Finance، Production، Sales، Media، AI Review و Audit/Backup/History به عنوان قطعات جدا ثبت شدند.
+- Project Core operating law ثبت شد: Codex فقط دستور دقیق، scope دار و دارای preflight/stop rule/report را اجرا می‌کند.
+- این فاز docs-only بود و هیچ source، prototype، route، package، storage، backend یا main تغییر نکرد.
+
+## وضعیت CONTROL-P48-REVIEW
+
+Prototype ایزوله Manager Review Queue در commit `56c6075` ممیزی شد.
+
+- Static Review: `PASS`
+- Mock Contract: ۱۰ reviewType دقیق و ۱۶ فیلد معتبر
+- هیچ localStorage، sessionStorage، fetch، API، backend، database، auth یا production import وجود ندارد.
+- Overview Prototype و main دست‌نخورده‌اند.
+- Human Visual Review: `PENDING`
+- Main Merge: `ON_HOLD`
+- Main Integration و Implementation همچنان `NOT_APPROVED` هستند.
+- هیچ کد، CSS، UI یا behavior در P48 تغییر نکرد.
+
+## وضعیت CONTROL-P46-APPROVAL
+
+مرکز کنترل اجازه محدود build ایزوله Manager Review Queue را برای مرحله اجرایی مستقل بعدی صادر کرد.
+
+- Prototype Build Decision: `APPROVED_FOR_ISOLATED_BUILD_NEXT_STEP`
+- Build Started: `NO`
+- Final File Scope: فقط `prototypes/cockpit-manager-review-queue/` و شش فایل مصوب
+- Mock Fixture Contract: approved و کاملاً synthetic
+- Rollback Owner: `Control Room`
+- Test Owner: `Sahand / Control Room Review`
+- Overview Prototype همچنان `FROZEN_AFTER_APPROVED_ITERATION` است.
+- Main Merge همچنان `ON_HOLD` است.
+- Main Integration و Real Implementation همچنان `NOT_APPROVED` هستند.
+- هیچ کد، CSS، UI، prototype، route، src، package یا production dependency در P46 تغییر نکرد.
+
+## وضعیت CONTROL-P45-DESIGN
+
+Planning مستنداتی prototype احتمالی Manager Review Queue تکمیل‌تر شد.
+
+- Test Plan: `READY`
+- Rollback/Exit Plan: `READY`
+- Future File Scope Draft: `READY`
+- Build Readiness: `READY_FOR_CONTROL_ROOM_REVIEW`
+- Prototype Build همچنان `NOT_APPROVED` است.
+- موارد باقی‌مانده: approval مستقل، file scope نهایی، mock dataset نهایی، test execution و rollback owner
+- Overview Prototype همچنان `FROZEN_AFTER_APPROVED_ITERATION` و Main Merge همچنان `ON_HOLD` است.
+- هیچ کد، CSS، UI، prototype، route، component، src، package یا production dependency تغییر نکرد.
+
+## وضعیت CONTROL-P44-DESIGN-REVIEW
+
+بسته طراحی Manager Review Queue Drill-down بازبینی و user flow آن تکمیل شد.
+
+- Design Review: `APPROVED_FOR_CONCEPT_ITERATION`
+- User Flow Storyboard شامل مسیر Overview تا queue، evidence، AI suggestion، decision reason و audit timeline است.
+- Prototype Approval Gate برابر `NOT_READY_FOR_BUILD` است.
+- دلیل hold: file scope، Test Plan و Rollback Plan مخصوص این صفحه هنوز تایید نشده‌اند.
+- Manager Review Queue Prototype برابر `ON_HOLD` است.
+- Overview Prototype برابر `FROZEN_AFTER_APPROVED_ITERATION` باقی ماند.
+- Main Merge، Main Integration و Implementation همچنان `NOT_APPROVED` هستند.
+- هیچ کد، CSS، UI، prototype، route، src، package یا production dependency تغییر نکرد.
+
+## وضعیت CONTROL-P43-DESIGN
+
+صفحه بعدی cockpit در سطح concept انتخاب و بسته طراحی آن ثبت شد.
+
+- Selected screen: `Manager Review Queue Drill-down Screen`
+- Screen Design: `APPROVED_FOR_CONCEPT`
+- دلیل انتخاب: استانداردسازی Human-in-the-loop، صف تصمیم مدیر، evidence، risk، confidence و audit برای همه ماژول‌ها
+- Screen Spec، Mock Dataset Spec و Interaction/Safety Rules طراحی شدند.
+- Overview prototype بعد از نتیجه `approved_after_mobile_refinement` در وضعیت freeze قرار گرفت.
+- Prototype Build صفحه جدید، Main Integration و Implementation همچنان `NOT_APPROVED` هستند.
+- هیچ کد، CSS، UI، prototype، route، src، package، storage، database یا auth تغییر نکرد.
+
+## وضعیت CONTROL-P42-RECORD
+
+Mobile re-review مربوط به prototype ایزوله Central Cockpit Overview پس از اصلاح P41 ثبت شد.
+
+- Reviewer: Sahand
+- Reviewed commit: `8f6083c`
+- Result: `approved_after_mobile_refinement`
+- Mobile: `PASS`؛ اندازه‌ها بهتر شده‌اند و issue فعالی باقی نمانده است.
+- Desktop quick check: `PASS` و بدون issue
+- Decision: `mobile_iteration_approved`
+- Main Merge همچنان `ON_HOLD` است.
+- Main Integration و Implementation همچنان `NOT_APPROVED` هستند.
+- کار بعدی cockpit باید به طراحی صفحه‌های آینده منتقل شود، نه اصلاح prototype فعلی.
+- هیچ کد، CSS، UI یا behavior در CONTROL-P42 تغییر نکرد.
+
+## وضعیت CONTROL-P40-RECORD
+
+نتیجه Human Visual Review مربوط به prototype ایزوله Central Cockpit Overview ثبت شد.
+
+- Reviewer: Sahand
+- Human Visual Review: `approved_for_iteration`
+- Desktop: `PASS` و بدون issue
+- Mobile: `PASS_WITH_MINOR_NOTE`؛ اندازه‌ها کمی بزرگ هستند، اما blocker نیست.
+- Static Review از CONTROL-P39 همچنان `PASS` است.
+- Main Merge همچنان `ON_HOLD` است.
+- Main Integration و Implementation همچنان `NOT_APPROVED` هستند.
+- هیچ UI، CSS، behavior، feature یا کد prototype در CONTROL-P40 تغییر نکرد.
 
 ## وضعیت CONTROL-P37-BATCH
 
@@ -443,10 +606,10 @@ WF-P31 انجام شد و verify شد. در این فاز فقط extraction مع
 WF-P30 انجام شد و verify شد. در این فاز فقط extraction معماری انجام شد و رفتار برنامه تغییر نکرد.
 
 - `OperationalHistoryPage` واقعاً از `src/WorkforcePages.tsx` خارج شد.
-- فایل صفحه: `src/pages/workforce/system/OperationalHistoryPage.tsx`
+- فایل صفحه در P55 به مسیر عملیاتی منتقل شد: `src/pages/workforce/operations/OperationalHistoryPage.tsx`
 - فایل‌های تغییرکرده در WF-P30:
   - `src/WorkforcePages.tsx`
-  - `src/pages/workforce/system/OperationalHistoryPage.tsx`
+  - `src/pages/workforce/operations/OperationalHistoryPage.tsx`
   - `tests/analysis.test.ts`
 - `WorkforcePages.tsx` از `4733` خط به `4614` خط رسید.
 - route تغییر نکرد.
@@ -516,6 +679,8 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 - داده‌ها در localStorage و serviceهای داخلی هستند.
 - analyzerها، recommendation، simulator، decision queue، report، backup، readiness، launch، drift، history، retention، operations calendar و maintenance وجود دارند.
 - `MaintenancePage`، `HistoryRetentionPage`، `OperationalHistoryPage` و `DataCenterPage` از `WorkforcePages.tsx` جدا شده‌اند.
+- در WF-P54 بررسی شد که `MaintenancePage` و `HistoryRetentionPage` همچنان page واقعی مستقل هستند و از `WorkforceRouteAdapter` یا re-export خام استفاده نمی‌کنند.
+- در WF-P55 مسیر واقعی `OperationalHistoryPage` به `src/pages/workforce/operations/OperationalHistoryPage.tsx` منتقل شد و route path بدون تغییر باقی ماند.
 - `WorkforcePages.tsx` هنوز بزرگ است و نیازمند extraction مرحله‌ای بیشتر است.
 
 ## ریسک‌های فعلی
@@ -526,6 +691,93 @@ WF-P29 انجام و verify شد. دو صفحه زیر قبلاً از `src/Work
 4. پروژه هنوز local-only است؛ پاک شدن storage مرورگر باعث از دست رفتن داده محلی می‌شود.
 5. backend، auth و sync هنوز طراحی/پیاده‌سازی نشده‌اند.
 
+## وضعیت CORE-P02
+
+CORE-P02 به صورت docs-only انجام شد و قرارداد داده مرکزی میان Workforce، Product/Inventory، Finance، Production، Media، Decision و Central Cockpit در `147_MASTER_GEM_CENTRAL_DATA_MODEL_CONTRACT.md` ثبت شد.
+
+- هیچ کد اجرایی، prototype، route، package، storage، database، auth، API یا backend تغییر نکرد.
+- هیچ implementation، merge یا push انجام نشد.
+- P55/P55A/P56 همچنان paused هستند.
+
 ## P پیشنهادی بعدی
 
-Cockpit prototype isolation boundary و test/rollback plan، فقط در سطح مستندات و پیش از هر مجوز ساخت.
+PRODUCT-P01 فقط به‌عنوان plan آینده subproject مطرح است و هنوز مجوز اجرا ندارد؛ Code Main و Master Gem Core در No-Code Freeze باقی می‌مانند.
+
+## وضعیت CORE-P03
+
+CORE-P03 به صورت docs-only انجام شد و قرارداد مرکزی `Task + Decision Core` در `148_MASTER_GEM_TASK_DECISION_CORE_CONTRACT.md` ثبت شد.
+
+- Task به‌عنوان واحد اجرای قابل انجام و قابل پیگیری تعریف شد.
+- DecisionItem به‌عنوان مرز تصمیم، تایید، رد، hold، اصلاح و escalation مدیر تعریف شد.
+- statusها، typeها، جریان Task به Decision، ارتباط ماژول‌ها و مرز V1 ثبت شدند.
+- AI فقط پیشنهاد می‌دهد و Cockpit فقط summary/read-only state نمایش می‌دهد.
+- کد اجرایی، prototype، package، route، storage، database، auth، API و backend تغییر نکرد.
+- P55/P55A/P56 همچنان paused هستند.
+
+## وضعیت CORE-P04
+
+CORE-P04 به صورت docs-only انجام شد و نقشه تعامل ماژول‌ها در `149_MASTER_GEM_MODULE_INTERACTION_MAP.md` ثبت شد.
+
+- مالکیت، ورودی/خروجی، Task، DecisionItem، Cockpit summary و ممنوعیت تغییر مستقیم هر ماژول مشخص شد.
+- interaction matrix، زنجیره‌های داده، قواعد visibility و مرز تعامل V1 ثبت شدند.
+- Cockpit read-only و AI پیشنهاددهنده باقی ماندند.
+- کد اجرایی، prototype، package، route، storage، database، auth، API و backend تغییر نکرد.
+- P55/P55A/P56 همچنان paused هستند.
+
+## وضعیت CORE-P05
+
+CORE-P05 به صورت docs-only انجام شد و مرز V1 و قوانین No-Code Freeze در `150_MASTER_GEM_V1_BUILD_BOUNDARY_AND_FREEZE_RULES.md` ثبت شد.
+
+- Code Main paused و `main` قفل باقی ماند.
+- فقط `docs/project-control` فعلاً مجاز است.
+- خروج از freeze فقط با `CORE-RESUME` یا phase صریح و کامل مجاز است.
+- P55A/P56، Cockpit implementation و subproject merge متوقف ماندند.
+- V1 Build Gate و Page/Feature Acceptance Rule ثبت شدند.
+- هیچ کد اجرایی، prototype، package، route، storage، database، auth، API یا backend تغییر نکرد.
+
+## وضعیت CORE-P06
+
+CORE-P06 به صورت docs-only انجام شد و Scorecard آمادگی ماژول‌ها در `151_MASTER_GEM_MODULE_READINESS_SCORECARD.md` ثبت شد.
+
+- Workforce P55A فقط به‌عنوان `code_resume_candidate` شناسایی شد؛ مجوز اجرا صادر نشد.
+- Cockpit frozen، Product/Finance در وضعیت subproject-only و P56 blocked باقی ماندند.
+- design-nextهای Product، Finance، Production، Media، Audit و Cockpit read-only ثبت شدند.
+- Code Main paused و خروج از freeze همچنان نیازمند `CORE-RESUME` جداگانه است.
+- هیچ کد اجرایی، prototype، package، route، storage، database، auth، API یا backend تغییر نکرد.
+
+## وضعیت CORE-P07
+
+CORE-P07 به صورت docs-only انجام شد و تصمیم resume candidate در `152_MASTER_GEM_RESUME_CANDIDATE_DECISION.md` ثبت شد.
+
+- Option B، یعنی P55A verification، تنها code resume candidate پیشنهادی است.
+- هیچ `CORE-RESUME` صادر نشد و کد همچنان paused است.
+- P56 blocked، Cockpit frozen و direct subproject merge ممنوع باقی ماندند.
+- اجرای P55A فقط با دستور جداگانه `CORE-RESUME-P55A` مجاز خواهد بود.
+- هیچ کد اجرایی، prototype، package، route، storage، database، auth، API یا backend تغییر نکرد.
+
+## وضعیت CORE-P08 و P55A
+
+P55A با دستور مستقل `CORE-RESUME-P55A` روی branch `refactor/workforce-core-stabilization-p55` اجرا و در commit `a1416bf` ثبت شد.
+
+- مسیر OperationalHistory تغییر نکرد و صفحه مستقل بدون adapter باقی ماند.
+- بدنه قدیمی در `WorkforcePages.tsx` باقی نمانده و dead import مرتبط پیدا نشد.
+- line count قبل و بعد `4384` است؛ این برابری دیگر ambiguity محسوب نمی‌شود.
+- test و build PASS شدند؛ P56 شروع نشد و main/merge/push تغییر نکرد.
+
+CORE-P08 نتیجه را در `153_MASTER_GEM_POST_RESUME_LOCK_AND_NEXT_DECISION.md` ثبت و No-Code Freeze را دوباره فعال کرد.
+
+- Code Main paused است.
+- P56 فقط با `CORE-RESUME-P56` جدا قابل اجراست.
+- Cockpit frozen و direct subproject merge ممنوع باقی مانده است.
+- جهت پیشنهادی بعدی CORE-P09 docs-only برای Product & Inventory است.
+
+## وضعیت CORE-P09
+
+CORE-P09 به صورت docs-only انجام شد و alignment زیرسیستم Product/Inventory در `PRODUCT_INVENTORY_PREPARATION_CORE_ALIGNMENT.md` ثبت شد.
+
+- نام مفهومی `Product & Inventory Preparation Core` و جایگاه آن زیر Product + Inventory Core قفل شد.
+- subproject محک/web-version مستقل ماند و direct merge ممنوع باقی ماند.
+- Product، structured name، MediaAsset، Workbench Task، InventoryMovement، DecisionItem و Mahak Connector boundary ثبت شدند.
+- MVP فقط Product Entry سریع، Operation Queue، Mobile Photo Task، Workbench Status و Export Warning است.
+- PRODUCT-P01 فقط پیشنهاد plan آینده در subproject است و implementation approval محسوب نمی‌شود.
+- هیچ source، web-version، prototype، package، schema، database، auth، API، backend یا storage تغییر نکرد.

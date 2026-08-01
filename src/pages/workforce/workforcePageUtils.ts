@@ -39,10 +39,10 @@ export function currentBaselineDriftReport() {
 
 
 export function maintenanceHealthLabel(value: MaintenanceHealthStatus) {
-  if (value === "healthy") return "ط³ط§ظ„ظ…";
-  if (value === "needs_attention") return "ظ†غŒط§ط²ظ…ظ†ط¯ طھظˆط¬ظ‡";
-  if (value === "risky") return "ظ¾ط±ط±غŒط³ع©";
-  return "ط¨ط­ط±ط§ظ†غŒ";
+  if (value === "healthy") return "سالم";
+  if (value === "needs_attention") return "نیازمند توجه";
+  if (value === "risky") return "پرریسک";
+  return "بحرانی";
 }
 
 
@@ -66,11 +66,11 @@ export function maintenanceSeverityTone(value: MaintenanceIssueSeverity): Status
 
 export function driftLevelLabel(value: BaselineDriftLevel) {
   const labels: Record<BaselineDriftLevel, string> = {
-    none: "ط¨ط¯ظˆظ† طھط؛غŒغŒط±",
+    none: "بدون تغییر",
     low: "کم",
     medium: "متوسط",
     high: "زیاد",
-    critical: "ط¨ط­ط±ط§ظ†غŒ",
+    critical: "بحرانی",
   };
   return labels[value];
 }
@@ -86,33 +86,44 @@ export function driftTone(value: BaselineDriftLevel | BaselineDriftSeverity): St
 
 export function historyEventTypeLabel(value: OperationalHistoryEventType) {
   const labels: Record<OperationalHistoryEventType, string> = {
-    drift_report: "ع¯ط²ط§ط±ط´ Drift",
-    resignoff_signed: "ط¨ط§ط²طھط£غŒغŒط¯",
-    resignoff_revoked: "ظ„ط؛ظˆ ط¨ط§ط²طھط£غŒغŒط¯",
-    launch_signoff_signed: "طھط£غŒغŒط¯ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ",
-    baseline_changed: "طھط؛غŒغŒط± Baseline",
-    backup_created: "ط³ط§ط®طھ Backup",
-    snapshot_created: "ط³ط§ط®طھ Snapshot",
-    maintenance_fix: "ط§طµظ„ط§ط­ ظ†ع¯ظ‡ط¯ط§ط±غŒ",
-    import_restored: "ط¨ط§ط²غŒط§ط¨غŒ ط¯ط§ط¯ظ‡",
-    decision_batch_applied: "ط§ط¹ظ…ط§ظ„ طھطµظ…غŒظ…",
+    drift_report: "گزارش Drift",
+    resignoff_signed: "بازتأیید",
+    resignoff_revoked: "لغو بازتأیید",
+    launch_signoff_signed: "تأیید راه‌اندازی",
+    baseline_changed: "تغییر Baseline",
+    backup_created: "ساخت Backup",
+    snapshot_created: "ساخت Snapshot",
+    maintenance_fix: "اصلاح نگهداری",
+    import_restored: "بازیابی داده",
+    decision_batch_applied: "اعمال تصمیم",
   };
   return labels[value];
 }
 
 
 
+const historyTrendPresentation = {
+  insufficient: { machine: "ط¯ط§ط¯ظ‡ ط±ظˆظ†ط¯ ع©ط§ظپغŒ ظ†غŒط³طھ", display: "داده روند کافی نیست" },
+  worsening: { machine: "ط±ظˆ ط¨ظ‡ ط¨ط¯طھط±ط´ط¯ظ†", display: "رو به بدترشدن" },
+  improving: { machine: "ط±ظˆ ط¨ظ‡ ط¨ظ‡ط¨ظˆط¯", display: "رو به بهبود" },
+  stable: { machine: "ظ¾ط§غŒط¯ط§ط±", display: "پایدار" },
+} as const;
+
 export function historyTrendLabel(trend: ReturnType<typeof operationalHistoryService.buildOperationalHistoryReport>["driftTrend"]) {
-  if (trend.length < 2) return "ط¯ط§ط¯ظ‡ ط±ظˆظ†ط¯ ع©ط§ظپغŒ ظ†غŒط³طھ";
-  if (detectIncreasingDriftTrend(trend)) return "ط±ظˆ ط¨ظ‡ ط¨ط¯طھط±ط´ط¯ظ†";
-  if (trend[trend.length - 1].driftScore < trend[0].driftScore) return "ط±ظˆ ط¨ظ‡ ط¨ظ‡ط¨ظˆط¯";
-  return "ظ¾ط§غŒط¯ط§ط±";
+  if (trend.length < 2) return historyTrendPresentation.insufficient.machine;
+  if (detectIncreasingDriftTrend(trend)) return historyTrendPresentation.worsening.machine;
+  if (trend[trend.length - 1].driftScore < trend[0].driftScore) return historyTrendPresentation.improving.machine;
+  return historyTrendPresentation.stable.machine;
+}
+
+export function historyTrendDisplayLabel(value: string) {
+  return Object.values(historyTrendPresentation).find((item) => item.machine === value)?.display ?? value;
 }
 
 
 
 export function retentionStatusLabel(value: HistoryRetentionStatus) {
-  const labels: Record<HistoryRetentionStatus, string> = { healthy: "ط³ط§ظ„ظ…", needs_archive: "ظ†غŒط§ط²ظ…ظ†ط¯ ط¢ط±ط´غŒظˆ", needs_review: "ظ†غŒط§ط²ظ…ظ†ط¯ ظ…ط±ظˆط±", risky: "ظ¾ط±ط±غŒط³ع©" };
+  const labels: Record<HistoryRetentionStatus, string> = { healthy: "سالم", needs_archive: "نیازمند آرشیو", needs_review: "نیازمند مرور", risky: "پرریسک" };
   return labels[value];
 }
 

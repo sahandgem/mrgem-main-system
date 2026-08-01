@@ -45,7 +45,7 @@ const ReadinessPage = lazy(() => import("../pages/workforce/system/ReadinessPage
 const LaunchChecklistPage = lazy(() => import("../pages/workforce/system/LaunchChecklistPage"));
 const LaunchSignoffPage = lazy(() => import("../pages/workforce/system/LaunchSignoffPage"));
 const BaselineDriftPage = lazy(() => import("../pages/workforce/system/BaselineDriftPage"));
-const OperationalHistoryPage = lazy(() => import("../pages/workforce/system/OperationalHistoryPage"));
+const OperationalHistoryPage = lazy(() => import("../pages/workforce/operations/OperationalHistoryPage"));
 const HistoryRetentionPage = lazy(() => import("../pages/workforce/operations/HistoryRetentionPage"));
 const OperationsCalendarPage = lazy(() => import("../pages/workforce/system/OperationsCalendarPage"));
 const OperationsControlSettingsPage = lazy(() => import("../pages/workforce/system/OperationsControlSettingsPage"));

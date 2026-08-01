@@ -1,18 +1,30 @@
 ﻿# Backlog
 
-آخرین به‌روزرسانی: 2026-06-29
+آخرین به‌روزرسانی: 2026-08-02
 
 ## الان
 
 | اولویت | شاخه | کار | توضیح |
 |---|---|---|---|
 | بالا | WF | extraction کنترل‌شده adapterهای کم‌ریسک باقی‌مانده | فقط فازهای کوچک، بدون تغییر route/storage/model/behavior |
+| paused | WF | WF-P56 ادامه تثبیت هسته Workforce | فقط با دستور مستقل و approval صریح Project Core در branch اختصاصی |
+| انجام‌شده | CORE | CORE-P02 طراحی Master Gem Central Data Model Contract | docs-only؛ ثبت‌شده در سند 147، بدون implementation یا merge |
+| انجام‌شده | CORE | CORE-P03 طراحی Task and Decision Core Contract | docs-only؛ ثبت‌شده در سند 148، بدون implementation یا merge |
+| انجام‌شده | CORE | CORE-P04 طراحی Master Gem Module Interaction Map | docs-only؛ ثبت‌شده در سند 149، بدون implementation یا merge |
+| انجام‌شده | CORE | CORE-P05 طراحی V1 Build Boundary و No-Code Freeze Rules | docs-only؛ ثبت‌شده در سند 150، Code Main همچنان paused |
+| انجام‌شده | CORE | CORE-P06 طراحی Master Gem Module Readiness Scorecard | docs-only؛ ثبت‌شده در سند 151، بدون مجوز کدنویسی |
+| انجام‌شده | CORE | CORE-P07 تصمیم Master Gem Resume Candidate | P55A تنها candidate؛ هیچ CORE-RESUME صادر نشد |
+| انجام‌شده | CORE/WF | CORE-RESUME-P55A | verification OperationalHistory در commit `a1416bf`؛ ambiguity بسته شد |
+| paused | WF | P56 extraction | فقط با دستور مستقل `CORE-RESUME-P56` |
+| انجام‌شده | CORE/PRODUCT | CORE-P09 Product & Inventory Preparation Core Alignment | docs-only؛ ثبت‌شده در سند alignment، بدون implementation یا merge |
+| plan لازم | PRODUCT | PRODUCT-P01 Product Entry + Workbench Photo MVP Plan | فقط داخل subproject؛ نیازمند timestamped backup، scope، no-touch list، migration و report |
 | بالا | CONTROL | نگه‌داری sync اسناد کنترل پروژه | بعد از هر P، current state و phase log اصلاح شود |
 
 ## بعداً
 
 | شاخه | کار | توضیح |
 |---|---|---|
+| WF/ENCODING | ممیزی و migration آینده ۳۷ machine-readable constant | بدهی compatibility ثبت‌شده و غیرنمایشی؛ blocker خودکار merge نیست؛ هر migration نیازمند contract audit، تست و مجوز مستقل است |
 | WF | ادامه کوچک‌سازی adapterهای باقی‌مانده | پس از WF-P31، DataCenterPage هم جدا شده است |
 | FIN-AUDIT | بررسی استخراج مدل نقدینگی از پروژه پول | فقط schema/model/idea؛ merge مستقیم ممنوع |
 | DATA-MAHAK | بررسی استخراج مدل کالا و بارکد از پروژه کالا | فقط schema/model/idea؛ merge مستقیم ممنوع |
@@ -136,6 +148,43 @@
 | UI/CONTROL | Cockpit Mock Fixture Implementation | fixture synthetic نسخه‌دار، resetپذیر و بدون production persistence |
 | UI/CONTROL | Cockpit Prototype Test Execution | اجرای isolation، mock behavior، risk/confidence/audit و rollback tests |
 | UI/CONTROL | Cockpit Prototype Review Report | ثبت نتیجه، محدودیت‌ها، evidence و exit outcome پس از build آینده |
+| UI/CONTROL | Cockpit Prototype Minor Mobile Sizing Iteration | انجام شد در P41؛ Mobile re-review در P42 تایید شد |
+| UI/CONTROL | Cockpit Prototype Iteration Review | Mobile iteration بسته شد؛ review بعدی فقط برای تغییر مستقل آینده لازم است |
+| UI/CONTROL | Cockpit Main Merge Approval Review | تصمیم مستقل مرکز کنترل؛ `approved_for_iteration` مجوز merge نیست |
+| UI/CONTROL | Cockpit Future Screen Design Planning | مسیر بعدی cockpit؛ طراحی صفحه‌های آینده بدون اصلاح بیشتر prototype فعلی |
+| UI/CONTROL | Manager Review Queue Drill-down Screen Spec | طراحی summary، filters، lanes، item list، detail، AI و audit در سطح concept |
+| UI/CONTROL | Manager Review Queue Mock Dataset | ده review item مصنوعی با risk، confidence، audit، evidence و decisionOptions مفهومی |
+| UI/CONTROL | Manager Review Queue Interaction Rules | مرز interaction، visual language و block شدن actionهای حساس |
+| UI/CONTROL | Manager Review Queue Prototype Candidate | فقط پس از approval مستقل؛ CONTROL-P43 مجوز build نیست |
+| UI/CONTROL | Cockpit Overview Prototype Freeze | Overview پس از mobile approval بدون دستور مستقل تغییر نکند |
+| UI/CONTROL | Cockpit Future Screen Design Package | ادامه Screen Specهای cockpit بدون ساخت UI، route یا component |
+| UI/CONTROL | Manager Review Queue Design Review Result | concept iteration تایید شد؛ build همچنان NOT_APPROVED |
+| UI/CONTROL | Manager Review Queue User Flow Storyboard | مسیر Overview تا evidence، AI، reason و audit timeline با هشت سناریوی mock |
+| UI/CONTROL | Manager Review Queue Prototype Approval Gate | gate مستقل برای file scope، data، test، rollback و build approval |
+| UI/CONTROL | Manager Review Queue Build Hold Policy | prototype تا تکمیل gate برابر ON_HOLD باقی بماند |
+| UI/CONTROL | Manager Review Queue Test Plan | آماده شد؛ ۹ سناریوی mock برای state، AI، audit و blocked action |
+| UI/CONTROL | Manager Review Queue Rollback Plan | آماده شد؛ حذف پوشه، cleanup، checkpoint و verification |
+| UI/CONTROL | Manager Review Queue Isolated Prototype Candidate | فقط پس از gate pass و approval مستقل مرکز کنترل |
+| UI/CONTROL | Manager Review Queue Future File Scope Draft | پوشه و شش فایل احتمالی standalone، بدون dependency به main |
+| UI/CONTROL | Manager Review Queue Build Readiness Decision | READY_FOR_CONTROL_ROOM_REVIEW؛ build همچنان NOT_APPROVED |
+| UI/CONTROL | Manager Review Queue Future Isolated Prototype Approval | تصمیم مستقل برای file scope، fixture، test execution و rollback owner |
+| UI/CONTROL | Manager Review Queue Build Approval Decision | تایید شد فقط برای isolated build مرحله بعد؛ main integration ممنوع |
+| UI/CONTROL | Manager Review Queue Final File Scope | فقط پوشه `prototypes/cockpit-manager-review-queue/` و شش فایل مصوب |
+| UI/CONTROL | Manager Review Queue Mock Fixture Approval | ده item synthetic با decisionOptions صرفاً مفهومی |
+| UI/CONTROL | Manager Review Queue Build Guardrails | boundary پیش از، حین و بعد از build آینده |
+| UI/CONTROL | Manager Review Queue Stop Rules | توقف در صورت route/src/package/storage/database/auth/backend/real data |
+| UI/CONTROL | Manager Review Queue Rollback Owner | Control Room؛ حذف کامل پوشه و verification |
+| UI/CONTROL | Manager Review Queue Isolated Prototype Build | مرحله اجرایی بعدی، فقط با scope مصوب P46 و بدون merge |
+| UI/CONTROL | Manager Review Queue Static Review | انجام شد؛ commit `56c6075` برابر PASS |
+| UI/CONTROL | Manager Review Queue Human Visual Review | در انتظار بررسی Sahand روی desktop و mobile |
+| UI/CONTROL | Manager Review Queue Branch Merge Hold | تا Visual Review و approval مستقل، Main Merge برابر ON_HOLD |
+| UI/CONTROL | Manager Review Queue Prototype Review Result | ثبت outcome رسمی پس از Human Visual Review |
+| CONTROL | Enforce Project Operating Rules | اعمال preflight، gate، rollback و approval separation در همه ماموریت‌ها |
+| CONTROL | Parallel Branch Ownership Registry | ثبت owner، branch و file scope هر workstream فعال |
+| CONTROL | Sensitive File Conflict Check | جلوگیری از تغییر همزمان Current State، Decisions، Phase Log، Backlog و production files |
+| CONTROL | Code Room Gate Checklist | تبدیل Policy سند 002 به checklist ثابت قبل از Codex |
+| CONTROL | Codex Report Compliance Review | کنترل گزارش‌های پایان بر اساس استاندارد سند 003 |
+| CONTROL | Split Future Control Work to Dedicated Branch | پایان استثنای bootstrap OPS-01 و جداسازی workstream کنترل از branch cockpit |
 | WF | ادامه Workforce Refactor Continuation | ادامه extraction کنترل‌شده در فاز اجرایی جدا |
 | FIN-AUDIT | طراحی Finance Bank Excel Automation Architecture | معماری اتوماسیون اکسل بانک بدون import واقعی |
 | PROD/DATA | طراحی Production Formula Architecture | مدل مفهومی فرمول تولید، مواد و هزینه بدون engine اجرایی |

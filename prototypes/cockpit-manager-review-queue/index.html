@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>نمونه ایزوله صف بررسی مدیر</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="prototype-banner" role="status">
+      <span class="demo-mark">DEMO</span>
+      <strong>نمونه نمایشی ایزوله — داده‌ها ساختگی هستند</strong>
+      <span>هیچ تصمیم واقعی انجام نمی‌شود</span>
+    </div>
+
+    <main class="queue-shell">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">CENTRAL COCKPIT / MANAGER REVIEW</p>
+          <h1>صف بررسی مدیر</h1>
+          <p class="header-copy">مرور تصمیم‌های حساس، شواهد و مرزهای کنترل در یک نمای ساختگی</p>
+        </div>
+        <div class="read-only-indicator">
+          <span class="indicator-dot" aria-hidden="true"></span>
+          <div><small>حالت prototype</small><strong>فقط خواندنی</strong></div>
+        </div>
+      </header>
+
+      <section id="summary-band" class="summary-band" aria-label="خلاصه صف"></section>
+
+      <section class="filter-bar" aria-label="فیلترهای مفهومی">
+        <div class="filter-title"><span>فیلتر صف</span><small>فقط در حافظه همین صفحه</small></div>
+        <label>اولویت<select id="priority-filter"><option value="all">همه</option><option value="urgent">فوری</option><option value="high">بالا</option><option value="normal">عادی</option><option value="low">پایین</option></select></label>
+        <label>ریسک<select id="risk-filter"><option value="all">همه</option><option value="high">بالا</option><option value="medium">متوسط</option><option value="low">پایین</option><option value="conflict">تعارض</option><option value="manual_only">فقط انسانی</option></select></label>
+        <label>Audit<select id="audit-filter"><option value="all">همه</option><option value="audit_available">موجود</option><option value="audit_required">الزامی</option><option value="audit_missing">مفقود</option></select></label>
+        <button id="reset-filters" class="secondary-button" type="button">پاک‌کردن فیلتر</button>
+      </section>
+
+      <section id="priority-lanes" class="priority-lanes" aria-label="مسیرهای اولویت"></section>
+
+      <section class="workspace-layout">
+        <aside class="queue-panel" aria-labelledby="queue-heading">
+          <div class="panel-heading">
+            <div><span class="section-kicker">REVIEW ITEMS</span><h2 id="queue-heading">موارد منتظر بررسی</h2></div>
+            <span id="visible-count" class="count-badge">۰ مورد</span>
+          </div>
+          <div id="review-list" class="review-list"></div>
+          <div id="empty-state" class="empty-state" hidden>موردی با این فیلترها پیدا نشد.</div>
+        </aside>
+
+        <article class="detail-panel" aria-labelledby="detail-title">
+          <div class="detail-header">
+            <div><span id="detail-module" class="section-kicker">ITEM DETAIL</span><h2 id="detail-title">یک مورد را انتخاب کنید</h2></div>
+            <span id="detail-priority" class="priority-badge">—</span>
+          </div>
+
+          <p id="detail-summary" class="detail-summary">جزئیات item انتخاب‌شده در این بخش نمایش داده می‌شود.</p>
+
+          <div id="detail-statuses" class="status-grid"></div>
+
+          <section class="detail-section">
+            <div class="detail-section-title"><span>شواهد ساختگی</span><small>EVIDENCE</small></div>
+            <p id="evidence-summary">—</p>
+          </section>
+
+          <section class="detail-section ai-section">
+            <div class="detail-section-title"><span>پیشنهاد هوش مصنوعی</span><small>SUGGESTION ONLY</small></div>
+            <p id="ai-suggestion">—</p>
+            <div class="ai-warning">AI فقط پیشنهاد می‌دهد؛ تصمیم حساس فقط با مدیر است.</div>
+          </section>
+
+          <section id="blocked-section" class="blocked-section" hidden>
+            <strong>اقدام مفهومی مسدود است</strong>
+            <p id="blocked-reason"></p>
+          </section>
+
+          <section class="detail-section">
+            <div class="detail-section-title"><span>مسیرهای تصمیم مفهومی</span><small>NO REAL ACTION</small></div>
+            <div id="decision-options" class="decision-options"></div>
+          </section>
+
+          <section class="reason-placeholder" aria-label="جایگاه دلیل تصمیم">
+            <span>دلیل تصمیم مدیر</span>
+            <p>در نسخه مفهومی فقط جایگاه دلیل نمایش داده می‌شود؛ چیزی ذخیره نخواهد شد.</p>
+          </section>
+
+          <section class="detail-section timeline-section">
+            <div class="detail-section-title"><span>تایم‌لاین Audit</span><small>CONCEPT</small></div>
+            <ol id="audit-timeline" class="audit-timeline"></ol>
+          </section>
+        </article>
+      </section>
+    </main>
+
+    <div id="concept-notice" class="concept-notice" role="status" aria-live="polite"></div>
+
+    <noscript>برای نمایش این نمونه، JavaScript مرورگر باید فعال باشد.</noscript>
+    <script src="mock-review-items.js"></script>
+    <script src="prototype.js"></script>
+  </body>
+</html>

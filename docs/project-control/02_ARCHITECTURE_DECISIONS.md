@@ -1,6 +1,6 @@
 ﻿# Architecture Decisions
 
-آخرین به‌روزرسانی: 2026-06-29
+آخرین به‌روزرسانی: 2026-06-30
 
 ## تصمیم‌های معماری گرفته‌شده
 
@@ -111,6 +111,51 @@
 | ADR-103 | Main Integration و Real Implementation cockpit همچنان NOT_APPROVED هستند و approval prototype به main یا production قابل تعمیم نیست. | فعال |
 | ADR-104 | هیچ production route، database، auth، localStorage، migration، storage، real data یا real decision mutation برای cockpit تایید نشده است. | فعال |
 | ADR-105 | build آینده باید در صورت نیاز به production dependency، real data، main mutation یا خروج از file scope فوراً متوقف شود و approval جدید بگیرد. | فعال |
+| ADR-106 | Overview prototype با نتیجه `approved_after_mobile_refinement` تایید شده ولی به main merge نشده و تا approval مستقل در وضعیت freeze باقی می‌ماند. | فعال |
+| ADR-107 | صفحه بعدی cockpit در سطح concept برابر Manager Review Queue Drill-down است تا Human-in-the-loop و صف تصمیم چندماژولی استاندارد شود. | فعال |
+| ADR-108 | Manager Review Queue در CONTROL-P43 فقط concept-only است؛ Prototype Build، Main Integration و Implementation آن NOT_APPROVED هستند. | فعال |
+| ADR-109 | هیچ prototype، route، UI، component، database، storage، auth، real data یا main integration جدید در CONTROL-P43 تایید نشده است. | فعال |
+| ADR-110 | Manager Review Queue Drill-down فقط برای concept iteration تایید شده و Design Review مجوز Prototype Build نیست. | فعال |
+| ADR-111 | Manager Review Queue Prototype تا تعریف و تایید exact file scope، Test Plan، Rollback Plan و build approval مستقل در وضعیت ON_HOLD است. | جایگزین‌شده با ADR-118 |
+| ADR-112 | Overview prototype پس از iteration تاییدشده frozen باقی می‌ماند و Main Merge همچنان ON_HOLD است. | فعال |
+| ADR-113 | هیچ route، UI، component، storage، database، auth، backend، real data یا production dependency جدید در CONTROL-P44 تایید نشده است. | فعال |
+| ADR-114 | Test Plan، Rollback/Exit Plan و Future File Scope Draft مربوط به Manager Review Queue در سطح مستندات آماده‌اند. | فعال |
+| ADR-115 | Manager Review Queue برای review تصمیم build آماده‌تر است، اما Prototype Build همچنان NOT_APPROVED و نیازمند approval مستقل است. | جایگزین‌شده با ADR-118 |
+| ADR-116 | Overview prototype frozen و Main Merge ON_HOLD باقی می‌مانند. | فعال |
+| ADR-117 | هیچ کد، CSS، route، component، storage، database، auth، backend یا production dependency در CONTROL-P45 تایید نشده است. | فعال |
+| ADR-118 | Manager Review Queue isolated prototype build فقط برای مرحله بعد و فقط داخل Final File Scope سند 134 با وضعیت `APPROVED_FOR_ISOLATED_BUILD_NEXT_STEP` تایید شد. | فعال |
+| ADR-119 | Main Integration و Real Implementation همچنان NOT_APPROVED و Main Merge همچنان ON_HOLD هستند. | فعال |
+| ADR-120 | Overview prototype frozen باقی می‌ماند و build آینده حق تغییر هیچ فایل Overview را ندارد. | فعال |
+| ADR-121 | هیچ route، src، package، storage، database، auth، backend، API، real data یا production dependency در approval P46 مجاز نیست. | فعال |
+| ADR-122 | قواعد عملیاتی پروژه در تعارض میان promptهای داخلی پروژه مرجع هستند؛ اعمال آن‌ها تابع دستورات بالادستی system/developer است. | فعال |
+| ADR-123 | Code Room Gate پیش از اجرای Codex الزامی است، مگر Control Room ماموریت را صریحاً docs-only و safe اعلام کند. | فعال |
+| ADR-124 | workstreamهای موازی به branch ایزوله، owner مشخص و file scope غیرهم‌پوشان نیاز دارند؛ conflict فایل حساس باعث توقف یکی از مسیرها می‌شود. | فعال |
+| ADR-125 | هر merge به main نیازمند approval مستقل است و هیچ Design/Prototype/Implementation approval جای Merge Approval را نمی‌گیرد. | فعال |
+| ADR-126 | مستر جم فقط cockpit یا داشبورد نیست؛ معماری مادر به عنوان سیستم‌عامل مدیریتی/هواپیمای کامل قفل شد و cockpit فقط یک قطعه visual/executive از پازل است. | فعال |
+| ADR-127 | Workforce P0-P22 به عنوان `Workforce Operations Engine` ثبت می‌شود؛ این موتور باید پایدار و تکمیل شود اما کل پروژه محسوب نمی‌شود. | فعال |
+| ADR-128 | هر UI آینده باید Input، Processing، Output و Decision/Operation Effect داشته باشد؛ صفحه صرفاً تزئینی یا جدا از عملیات واقعی ساخته نمی‌شود. | فعال |
+| ADR-129 | اجرای بعدی پس از CORE-P01 نباید implementation باشد؛ پیشنهاد مجاز بعدی طراحی docs-only قرارداد داده مرکزی CORE-P02 است. | فعال |
+| ADR-130 | Task ستون فقرات اجرای قابل پیگیری و DecisionItem مرز تصمیم انسانی در همه ماژول‌های مستر جم است. | فعال |
+| ADR-131 | Task با وضعیت waiting_for_decision باید به DecisionItem متصل باشد و تصمیم resolved باید اثر ثبت‌شده روی Task یا entity داشته باشد. | فعال |
+| ADR-132 | AI فقط پیشنهاد می‌دهد؛ Cockpit مالک Task/Decision نیست و action واقعی یا auto-approval نیازمند approval مستقل است. | فعال |
+| ADR-133 | هیچ ماژولی جزیره‌ای ساخته نمی‌شود؛ هر ماژول باید data، Task، DecisionItem، Audit Event، Alert یا Cockpit summary تولید/مصرف کند. | فعال |
+| ADR-134 | ارتباط ماژول‌ها با reference، event، Task، DecisionItem و read model انجام می‌شود؛ mutate مستقیم داده مالکیت‌شده ماژول دیگر ممنوع است. | فعال |
+| ADR-135 | Cockpit فقط داده‌ای را نمایش می‌دهد که source، Task/Decision، freshness و audit قابل ردیابی داشته باشد. | فعال |
+| ADR-136 | No-Code Freeze پیش‌فرض فعال است؛ فقط `docs/project-control` مجاز است تا Project Core با `CORE-RESUME` یا phase صریح کد را باز کند. | فعال |
+| ADR-137 | V1 باید زنجیره Data Entity → Task → DecisionItem → Audit → Cockpit Summary → Human Action را اثبات کند. | فعال |
+| ADR-138 | هر build واقعی باید V1 Build Gate و فرم Page/Feature Acceptance را کامل و PASS کند. | فعال |
+| ADR-139 | Readiness score مجوز کدنویسی نیست؛ حتی score برابر 5 نیز نیازمند `CORE-RESUME` مستقل است. | فعال |
+| ADR-140 | تنها code resume candidate فعلی Workforce P55A verification است؛ P56 و سایر implementationها blocked هستند. | فعال |
+| ADR-141 | ترتیب readiness فعلی: Project Core docs، P55A candidate، Task/Decision review، contractهای موتورهای داده، سپس Cockpit read-only design. | فعال |
+| ADR-142 | تنها code resume candidate پیشنهادی P55A verification است؛ CORE-P07 خود مجوز اجرا یا CORE-RESUME نیست. | فعال |
+| ADR-143 | P56 تا verification کامل P55A blocked می‌ماند؛ Cockpit و سایر ماژول‌ها نیز frozen هستند. | فعال |
+| ADR-144 | اجرای P55A فقط با دستور مستقل `CORE-RESUME-P55A` و scope، test/build و rollback مصوب مجاز است. | فعال |
+| ADR-145 | P55A ابهام P55 را بست؛ برابرماندن 4384 خط نشانه باقی‌ماندن بدنه OperationalHistory نیست. | فعال |
+| ADR-146 | پس از P55A، No-Code Freeze دوباره فعال است و P56 فقط با `CORE-RESUME-P56` مستقل مجاز خواهد بود. | فعال |
+| ADR-147 | جهت پیشنهادی بعدی CORE-P09 docs-only برای هم‌راستاسازی Product & Inventory Preparation Core است. | فعال |
+| ADR-148 | Product & Inventory Preparation Core یک subproject آماده‌سازی قابل اتصال است؛ نه ابزار موقت و نه کل Product + Inventory Core. | فعال |
+| ADR-149 | Mahak فقط Export Connector است؛ مدل مادر به فرمت محک وابسته نمی‌شود و direct merge ممنوع می‌ماند. | فعال |
+| ADR-150 | Product Entry، Workbench، Mobile Companion، MediaAsset، InventoryMovement و DecisionItem مرزهای جدا دارند و باید به Core قابل mapping باشند. | فعال |
 
 ## چیزهایی که بدون تأیید مرکز کنترل نباید عوض شوند
 
@@ -243,6 +288,9 @@
 - نمایش پیشنهاد AI بدون reason، related data، required approval و audit reference
 - اجرای تصمیم حساس از UI بدون Manager Review و audit trail
 - تغییر نام شاخه‌های مادر یا کدهای branch registry
+- تلقی کردن cockpit، prototype یا Workforce به عنوان کل پروژه مستر جم
+- ساخت UI بدون input، پردازش، خروجی و اثر تصمیمی/عملیاتی
+- شروع implementation بعدی بدون تصمیم صریح Project Core
 
 ## قانون ثبت تصمیم جدید
 

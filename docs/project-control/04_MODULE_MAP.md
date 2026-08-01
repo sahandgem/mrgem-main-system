@@ -76,34 +76,33 @@
 - `models/workforce.ts`: قرارداد تمام لایه‌ها
 - `docs/project-control/10_BASELINE_COMPATIBILITY.md`: سیاست legacy baseline، comparable checksum و migration note بعد از P25/P26
 
-## P28 page entry split
+## Workforce page split status
 
-در P28 لایه entry صفحه‌های سیستم از re-export مستقیم `WorkforceRoutePage` جدا شد. این فایل‌ها اکنون از `src/pages/workforce/WorkforceRouteAdapter.tsx` استفاده می‌کنند و مسیر خود را صریح به `WorkforceRoutePageByPath` می‌دهند:
+در P28 لایه entry صفحه‌های سیستم از re-export مستقیم `WorkforceRoutePage` جدا شد. بخشی از page entryها هنوز برای سازگاری از `src/pages/workforce/WorkforceRouteAdapter.tsx` استفاده می‌کنند و مسیر خود را صریح به `WorkforceRoutePageByPath` می‌دهند:
 
-- `src/pages/workforce/system/DataCenterPage.tsx`
-- `src/pages/workforce/system/MaintenancePage.tsx`
 - `src/pages/workforce/system/BaselineDriftPage.tsx`
 - `src/pages/workforce/system/LaunchSignoffPage.tsx`
 - `src/pages/workforce/system/ReadinessPage.tsx`
 - `src/pages/workforce/system/LaunchChecklistPage.tsx`
 - `src/pages/workforce/system/OperationsCalendarPage.tsx`
 - `src/pages/workforce/system/OperationsControlSettingsPage.tsx`
-- `src/pages/workforce/system/OperationalHistoryPage.tsx`
+
+صفحه‌های زیر اکنون body واقعی مستقل دارند و از adapter خام استفاده نمی‌کنند:
+
+- `src/pages/workforce/system/DataCenterPage.tsx`
+- `src/pages/workforce/system/MaintenancePage.tsx`
+- `src/pages/workforce/operations/OperationalHistoryPage.tsx`
 - `src/pages/workforce/operations/HistoryRetentionPage.tsx`
 
-بدنه implementation این صفحه‌ها هنوز برای سازگاری داخل `src/WorkforcePages.tsx` است. component مشترک `BaselineCompatibilityNotice` به `src/components/workforce/BaselineCompatibilityNotice.tsx` منتقل شد.
+component مشترک `BaselineCompatibilityNotice` به `src/components/workforce/BaselineCompatibilityNotice.tsx` منتقل شد.
 
-## WF-P29 proposed real page body extraction
+## WF page body extraction record
 
-طبق تصمیم مرکز کنترل، WF-P29 هنوز فاز اجرایی تأییدشده نیست و فعلاً فقط پیشنهاد بعدی است.
-
-هدف پیشنهادی WF-P29: استخراج واقعی 2 تا 4 صفحه کم‌ریسک از `src/WorkforcePages.tsx`، بدون تغییر route، localStorage key، مدل داده، analyzer/service یا UI behavior.
-
-کاندیداهای پیشنهادی:
+صفحه‌های زیر طی فازهای کوچک و verify شده از `src/WorkforcePages.tsx` جدا یا تثبیت شدند:
 
 - `MaintenancePage`
 - `HistoryRetentionPage`
 - `OperationalHistoryPage`
 - `DataCenterPage`
 
-تا قبل از اجرای رسمی WF-P29، این بخش نباید به عنوان وضعیت انجام‌شده گزارش شود.
+ادامه extraction باید فقط برای adapterهای کم‌ریسک باقی‌مانده و بدون تغییر route، localStorage key، مدل داده، analyzer/service یا UI behavior انجام شود.

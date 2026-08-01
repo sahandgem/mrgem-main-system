@@ -67,7 +67,7 @@ import { StatusBadge } from "./components/StatusBadge";
 import { BaselineCompatibilityNotice } from "./components/workforce/BaselineCompatibilityNotice";
 import HistoryRetentionPage from "./pages/workforce/operations/HistoryRetentionPage";
 import MaintenancePage from "./pages/workforce/system/MaintenancePage";
-import OperationalHistoryPage from "./pages/workforce/system/OperationalHistoryPage";
+import OperationalHistoryPage from "./pages/workforce/operations/OperationalHistoryPage";
 import DataCenterPage from "./pages/workforce/system/DataCenterPage";
 import {
   currentBaselineDriftReport,
@@ -268,7 +268,7 @@ const blankSchedule = (): Omit<WeeklyScheduleItem, "id" | "createdAt" | "updated
   description: "",
 });
 
-function optionList<T extends { id: string; name: string; isActive: boolean }>(rows: T[], emptyLabel = "ط§ظ†طھط®ط§ط¨ ع©ظ†غŒط¯") {
+function optionList<T extends { id: string; name: string; isActive: boolean }>(rows: T[], emptyLabel = "انتخاب کنید") {
   return [{ label: emptyLabel, value: "" }, ...rows.filter((row) => row.isActive).map((row) => ({ label: row.name, value: row.id }))];
 }
 
@@ -317,11 +317,11 @@ function DashboardPage({
   }).length;
 
   const kpis = [
-    { label: "ظˆط¶ط¹غŒطھ ظ‡ظپطھظ‡", value: conflicts ? "ظ†غŒط§ط²ظ…ظ†ط¯ طھظˆط¬ظ‡" : "ظ¾ط§غŒط¯ط§ط±", caption: `${toPersianNumber(activeSchedule.length)} ط¢غŒطھظ… ط«ط¨طھâ€Œط´ط¯ظ‡`, tone: conflicts ? "warn" : "good", icon: CheckCircle2 },
-    { label: "ظ‡ط´ط¯ط§ط±ظ‡ط§غŒ ظپط¹ط§ظ„", value: toPersianNumber(urgentCount), caption: `${toPersianNumber(activeRuleCount)} ظ‚ط§ظ†ظˆظ† ظپط¹ط§ظ„`, tone: urgentCount ? "warn" : "good", icon: AlertTriangle },
-    { label: "ظ¾ظˆط´ط´ ظپط±ظˆط´ع¯ط§ظ‡", value: toPersianNumber(salesItems), caption: "ط¢غŒطھظ…â€Œظ‡ط§غŒ ظپط±ظˆط´ ظˆ ظ…ط´طھط±غŒ", tone: "sales", icon: Store },
-    { label: "ط²ظ…ط§ظ† طھظ…ط±ع©ط²", value: toPersianNumber(focusItems), caption: "ط¨ط§ط²ظ‡â€Œظ‡ط§غŒ طھظ…ط±ع©ط²غŒ ط«ط¨طھâ€Œط´ط¯ظ‡", tone: "focus", icon: Brain },
-    { label: "طھط¯ط§ط®ظ„â€Œظ‡ط§", value: toPersianNumber(conflicts), caption: "ظ‡ظ…â€Œظ¾ظˆط´ط§ظ†غŒ ظپط¶ط§ ظˆ ط²ظ…ط§ظ†", tone: conflicts ? "critical" : "good", icon: Flame },
+    { label: "وضعیت هفته", value: conflicts ? "نیازمند توجه" : "پایدار", caption: `${toPersianNumber(activeSchedule.length)} آیتم ثبت‌شده`, tone: conflicts ? "warn" : "good", icon: CheckCircle2 },
+    { label: "هشدارهای فعال", value: toPersianNumber(urgentCount), caption: `${toPersianNumber(activeRuleCount)} قانون فعال`, tone: urgentCount ? "warn" : "good", icon: AlertTriangle },
+    { label: "پوشش فروشگاه", value: toPersianNumber(salesItems), caption: "آیتم‌های فروش و مشتری", tone: "sales", icon: Store },
+    { label: "زمان تمرکز", value: toPersianNumber(focusItems), caption: "بازه‌های تمرکزی ثبت‌شده", tone: "focus", icon: Brain },
+    { label: "تداخل‌ها", value: toPersianNumber(conflicts), caption: "هم‌پوشانی فضا و زمان", tone: conflicts ? "critical" : "good", icon: Flame },
   ] satisfies { label: string; value: string; caption: string; tone: StatusTone; icon: typeof CheckCircle2 }[];
 
   const capacityItems = activeSpaces.map((space) => {
@@ -330,30 +330,30 @@ function DashboardPage({
     return {
       name: space.name,
       usage,
-      caption: `${toPersianNumber(used)} ط¢غŒطھظ… ط¯ط± ظ‡ظپطھظ‡`,
+      caption: `${toPersianNumber(used)} آیتم در هفته`,
       tone: usage > 85 ? "warn" as StatusTone : space.type.includes("ظپط±ظˆط´") ? "sales" as StatusTone : "good" as StatusTone,
     };
   });
 
   const urgentAlerts = [
-    { title: "طھط¯ط§ط®ظ„â€Œظ‡ط§", caption: conflicts ? `${toPersianNumber(conflicts)} ظ‡ظ…â€Œظ¾ظˆط´ط§ظ†غŒ ظ†غŒط§ط²ظ…ظ†ط¯ ط¨ط±ط±ط³غŒ ط§ط³طھ.` : "طھط¯ط§ط®ظ„ ظپط¹ط§ظ„غŒ ط¯غŒط¯ظ‡ ظ†ط´ط¯.", tone: conflicts ? "critical" as StatusTone : "good" as StatusTone },
-    { title: "ظ¾ظˆط´ط´ ظپط±ظˆط´ع¯ط§ظ‡", caption: salesItems ? `${toPersianNumber(salesItems)} ط¨ط§ط²ظ‡ ظپط±ظˆط´ ط«ط¨طھ ط´ط¯ظ‡ ط§ط³طھ.` : "ط¨ط±ط§غŒ ظپط±ظˆط´ع¯ط§ظ‡ ط¨ط§ط²ظ‡â€Œط§غŒ ط«ط¨طھ ظ†ط´ط¯ظ‡ ط§ط³طھ.", tone: salesItems ? "sales" as StatusTone : "warn" as StatusTone },
-    { title: "ظ‚ظˆط§ظ†غŒظ†", caption: `${toPersianNumber(activeRuleCount)} ظ‚ط§ظ†ظˆظ† ظ¾ط§غŒظ‡ ظپط¹ط§ظ„ ط§ط³طھ.`, tone: "info" as StatusTone },
+    { title: "تداخل‌ها", caption: conflicts ? `${toPersianNumber(conflicts)} هم‌پوشانی نیازمند بررسی است.` : "تداخل فعالی دیده نشد.", tone: conflicts ? "critical" as StatusTone : "good" as StatusTone },
+    { title: "پوشش فروشگاه", caption: salesItems ? `${toPersianNumber(salesItems)} بازه فروش ثبت شده است.` : "برای فروشگاه بازه‌ای ثبت نشده است.", tone: salesItems ? "sales" as StatusTone : "warn" as StatusTone },
+    { title: "قوانین", caption: `${toPersianNumber(activeRuleCount)} قانون پایه فعال است.`, tone: "info" as StatusTone },
   ];
 
   const smartSuggestions = [
-    { title: "طھظ…ط±ع©ط²", caption: focusItems ? "ط¨ط§ط²ظ‡â€Œظ‡ط§غŒ طھظ…ط±ع©ط²غŒ ط±ط§ ط¯ط± ظپط¶ط§ظ‡ط§غŒ کمâ€Œط­ظˆط§ط³â€Œظ¾ط±طھغŒ ظ†ع¯ظ‡ ط¯ط§ط±غŒط¯." : "ط¨ط±ط§غŒ ع©ط§ط±ظ‡ط§غŒ طھظ…ط±ع©ط²غŒ ط¨ط±ظ†ط§ظ…ظ‡ ط«ط¨طھ ع©ظ†غŒط¯.", tone: "focus" as StatusTone },
-    { title: "ط¸ط±ظپغŒطھ", caption: "ط¸ط±ظپغŒطھ ظپط¶ط§ظ‡ط§ ط§ط² ط¯ط§ط¯ظ‡â€Œظ‡ط§غŒ ط°ط®غŒط±ظ‡â€Œط´ط¯ظ‡ ظ…ط­ط§ط³ط¨ظ‡ ظ…غŒâ€Œط´ظˆط¯.", tone: "info" as StatusTone },
-    { title: "ظ¾ط§ع©ط³ط§ط²غŒ demo", caption: "ظ‡ط± ط²ظ…ط§ظ† ظ„ط§ط²ظ… ط¨ظˆط¯ ط¯ط§ط¯ظ‡â€Œظ‡ط§ ط±ط§ ط¨ظ‡ seed ط§ظˆظ„غŒظ‡ ط¨ط±ع¯ط±ط¯ط§ظ†غŒط¯.", tone: "empty" as StatusTone },
+    { title: "تمرکز", caption: focusItems ? "بازه‌های تمرکزی را در فضاهای کم‌حواس‌پرتی نگه دارید." : "برای کارهای تمرکزی برنامه ثبت کنید.", tone: "focus" as StatusTone },
+    { title: "ظرفیت", caption: "ظرفیت فضاها از داده‌های ذخیره‌شده محاسبه می‌شود.", tone: "info" as StatusTone },
+    { title: "پاکسازی demo", caption: "هر زمان لازم بود داده‌ها را به seed اولیه برگردانید.", tone: "empty" as StatusTone },
   ];
 
   const employeeSummaries = activeEmployees.map((employee) => {
     const defaultSpace = spaces.find((space) => space.id === employee.defaultSpaceId);
     return {
       name: employee.name,
-      role: employee.primaryRole || "ط¨ط¯ظˆظ† ظ†ظ‚ط´",
+      role: employee.primaryRole || "بدون نقش",
       focus: employee.focusNeed,
-      location: defaultSpace?.name ?? "ط¨ط¯ظˆظ† ظ…ط­ظ„",
+      location: defaultSpace?.name ?? "بدون محل",
       status: employee.goodForSales ? "sales" as StatusTone : employee.goodForDigital ? "focus" as StatusTone : "info" as StatusTone,
     };
   });
@@ -369,16 +369,16 @@ function DashboardPage({
     <div className="page-stack">
       <header className="hero-header">
         <div>
-          <span className="eyebrow">ط¯ط§ط´ط¨ظˆط±ط¯ ظ‡ظپطھع¯غŒ</span>
-          <h1>ط§طھط§ظ‚ ظپط±ظ…ط§ظ† ظ‡ظپطھظ‡</h1>
-          <p>ظ†ظ…ط§غŒ ط²ظ†ط¯ظ‡ ط§ط² ط¯ط§ط¯ظ‡â€Œظ‡ط§غŒ ط°ط®غŒط±ظ‡â€Œط´ط¯ظ‡ ط¯ط± ظ…ط±ظˆط±ع¯ط±ط› ط¢ظ…ط§ط¯ظ‡ ط¨ط±ط§غŒ ط¬ط§غŒع¯ط²غŒظ†غŒ ط¨ط§ ط¯غŒطھط§ط¨غŒط³ ط¯ط± ظ…ط±ط­ظ„ظ‡ ط¨ط¹ط¯.</p>
+          <span className="eyebrow">داشبورد هفتگی</span>
+          <h1>اتاق فرمان هفته</h1>
+          <p>نمای زنده از داده‌های ذخیره‌شده در مرورگر؛ آماده برای جایگزینی با دیتابیس در مرحله بعد.</p>
         </div>
         <div className="hero-actions">
           <button className="ghost-button" type="button" onClick={resetDemo}>
-            <RotateCcw size={17} /> ط¨ط§ط²ع¯ط´طھ demo
+            <RotateCcw size={17} /> بازگشت demo
           </button>
           <a className="primary-button" href="/organization/workforce-dashboard/schedule">
-            <Sparkles size={17} /> ط¨ط±ظ†ط§ظ…ظ‡ ظ‡ظپطھع¯غŒ
+            <Sparkles size={17} /> برنامه هفتگی
           </a>
         </div>
       </header>
@@ -409,23 +409,23 @@ function DashboardPage({
           <WeeklyGrid employees={employees} items={scheduleItems} spaces={spaces} taskTypes={taskTypes} />
         </div>
         <div className="side-column">
-          <InfoPanel title="ظ‡ط´ط¯ط§ط±ظ‡ط§غŒ ظپظˆط±غŒ" items={urgentAlerts} />
-          <InfoPanel title="ظ¾غŒط´ظ†ظ‡ط§ط¯ظ‡ط§غŒ ظ‡ظˆط´ظ…ظ†ط¯" items={smartSuggestions} />
+          <InfoPanel title="هشدارهای فوری" items={urgentAlerts} />
+          <InfoPanel title="پیشنهادهای هوشمند" items={smartSuggestions} />
           <a className="primary-button full-button" href="/organization/workforce-dashboard/recommendations">
-            <Sparkles size={17} /> ظ…ط´ط§ظ‡ط¯ظ‡ ظ‡ظ…ظ‡ ظ¾غŒط´ظ†ظ‡ط§ط¯ظ‡ط§
+            <Sparkles size={17} /> مشاهده همه پیشنهادها
           </a>
         </div>
       </section>
 
       <section className="bottom-grid">
         <section className="panel wide-panel">
-          <h2>ظˆط¶ط¹غŒطھ ط®ظ„ط§طµظ‡ ع©ط§ط±ظ…ظ†ط¯ظ‡ط§</h2>
+          <h2>وضعیت خلاصه کارمندها</h2>
           <div className="employee-list">
             {employeeSummaries.map((employee) => (
               <article key={employee.name}>
                 <div>
                   <strong>{employee.name}</strong>
-                  <span>{employee.role}طŒ طھظ…ط±ع©ط² {employee.focus}</span>
+                  <span>{employee.role}، تمرکز {employee.focus}</span>
                 </div>
                 <StatusBadge tone={employee.status}>{employee.location}</StatusBadge>
               </article>
@@ -433,17 +433,17 @@ function DashboardPage({
           </div>
         </section>
         <section className="panel">
-          <h2>ظ†ظ‚ط´ظ‡ طھظ…ط±ع©ط² ظ‡ظپطھظ‡</h2>
+          <h2>نقشه تمرکز هفته</h2>
           <div className="heatmap">
             {focusHeatmap.map((item) => (
               <div className={`heat-cell tone-${item.tone}`} key={item.label}>
-                <strong>{toPersianNumber(item.value)}ظھ</strong>
+                <strong>{toPersianNumber(item.value)}٪</strong>
                 <span>{item.label}</span>
               </div>
             ))}
           </div>
         </section>
-        <InfoPanel title="ظ…ط±ع©ط² طھطµظ…غŒظ… ظ‡ظپطھظ‡" items={smartSuggestions} />
+        <InfoPanel title="مرکز تصمیم هفته" items={smartSuggestions} />
       </section>
     </div>
   );
@@ -466,18 +466,18 @@ function SpacesPage({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [error, setError] = useState("");
   const columns: EntityColumn<Space>[] = [
-    { label: "ظ†ط§ظ…", render: (item) => item.name },
-    { label: "ظ†ظˆط¹", render: (item) => item.type || "ط«ط¨طھ ظ†ط´ط¯ظ‡" },
-    { label: "ط¸ط±ظپغŒطھ", render: (item) => `${toPersianNumber(item.normalCapacity)} / ${toPersianNumber(item.maxCapacity)}` },
+    { label: "نام", render: (item) => item.name },
+    { label: "نوع", render: (item) => item.type || "ثبت نشده" },
+    { label: "ظرفیت", render: (item) => `${toPersianNumber(item.normalCapacity)} / ${toPersianNumber(item.maxCapacity)}` },
   ];
 
   const submit = () => {
     if (!form.name.trim()) {
-      setError("ظ†ط§ظ… ظپط¶ط§ ط§ظ„ط²ط§ظ…غŒ ط§ط³طھ.");
+      setError("نام فضا الزامی است.");
       return;
     }
     if (form.normalCapacity < 1 || form.maxCapacity < form.normalCapacity) {
-      setError("ط¸ط±ظپغŒطھ ط­ط¯ط§ع©ط«ط± ط¨ط§غŒط¯ ط§ط² ط¸ط±ظپغŒطھ ط¹ط§ط¯غŒ ط¨غŒط´طھط± غŒط§ ط¨ط±ط§ط¨ط± ط¨ط§ط´ط¯.");
+      setError("ظرفیت حداکثر باید از ظرفیت عادی بیشتر یا برابر باشد.");
       return;
     }
     editingId ? updateItem(editingId, form) : createItem(form);
@@ -488,21 +488,21 @@ function SpacesPage({
 
   return (
     <EntityPanel
-      addLabel="ط§ظپط²ظˆط¯ظ† ظپط¶ط§"
+      addLabel="افزودن فضا"
       columns={columns}
       editingId={editingId}
       error={error}
       form={
         <>
-          <TextField label="ظ†ط§ظ… ظپط¶ط§" value={form.name} onChange={(name) => setForm({ ...form, name })} />
-          <TextField label="ظ†ظˆط¹ ظپط¶ط§" value={form.type} onChange={(type) => setForm({ ...form, type })} />
-          <TextField label="ط¸ط±ظپغŒطھ ط¹ط§ط¯غŒ" type="number" value={form.normalCapacity} onChange={(value) => setForm({ ...form, normalCapacity: Number(value) })} />
-          <TextField label="ط¸ط±ظپغŒطھ ط­ط¯ط§ع©ط«ط±" type="number" value={form.maxCapacity} onChange={(value) => setForm({ ...form, maxCapacity: Number(value) })} />
-          <SelectField label="ط³ط·ط­ ط­ظˆط§ط³â€Œظ¾ط±طھغŒ" value={form.distractionLevel} options={distractionOptions.map((item) => ({ label: item, value: item }))} onChange={(value) => setForm({ ...form, distractionLevel: value as DistractionLevel })} />
-          <SelectField label="ظˆط¶ط¹غŒطھ" value={String(form.isActive)} options={[{ label: "ظپط¹ط§ظ„", value: "true" }, { label: "ط؛غŒط±ظپط¹ط§ظ„", value: "false" }]} onChange={(value) => setForm({ ...form, isActive: value === "true" })} />
-          <ToggleField label="ظ†غŒط§ط²ظ…ظ†ط¯ ظ‡ظ…ط±ط§ظ‡" checked={form.requiresCompanion} onChange={(requiresCompanion) => setForm({ ...form, requiresCompanion })} />
-          <ToggleField label="ع©ط§ط± طھع©â€Œظ†ظپط±ظ‡ ظ…ط¬ط§ط² ط§ط³طھ" checked={form.soloWorkAllowed} onChange={(soloWorkAllowed) => setForm({ ...form, soloWorkAllowed })} />
-          <TextAreaField label="طھظˆط¶غŒط­ط§طھ" value={form.description} onChange={(description) => setForm({ ...form, description })} />
+          <TextField label="نام فضا" value={form.name} onChange={(name) => setForm({ ...form, name })} />
+          <TextField label="نوع فضا" value={form.type} onChange={(type) => setForm({ ...form, type })} />
+          <TextField label="ظرفیت عادی" type="number" value={form.normalCapacity} onChange={(value) => setForm({ ...form, normalCapacity: Number(value) })} />
+          <TextField label="ظرفیت حداکثر" type="number" value={form.maxCapacity} onChange={(value) => setForm({ ...form, maxCapacity: Number(value) })} />
+          <SelectField label="سطح حواس‌پرتی" value={form.distractionLevel} options={distractionOptions.map((item) => ({ label: item, value: item }))} onChange={(value) => setForm({ ...form, distractionLevel: value as DistractionLevel })} />
+          <SelectField label="وضعیت" value={String(form.isActive)} options={[{ label: "فعال", value: "true" }, { label: "غیرفعال", value: "false" }]} onChange={(value) => setForm({ ...form, isActive: value === "true" })} />
+          <ToggleField label="نیازمند همراه" checked={form.requiresCompanion} onChange={(requiresCompanion) => setForm({ ...form, requiresCompanion })} />
+          <ToggleField label="کار تک‌نفره مجاز است" checked={form.soloWorkAllowed} onChange={(soloWorkAllowed) => setForm({ ...form, soloWorkAllowed })} />
+          <TextAreaField label="توضیحات" value={form.description} onChange={(description) => setForm({ ...form, description })} />
         </>
       }
       onCancel={() => {
@@ -522,8 +522,8 @@ function SpacesPage({
       onResetDemo={resetDemo}
       onSubmit={submit}
       rows={spaces}
-      subtitle="طھط¹ط±غŒظپ ظˆ ظ†ع¯ظ‡ط¯ط§ط±غŒ ظپط¶ط§ظ‡ط§غŒ ع©ط§ط±غŒطŒ ط¸ط±ظپغŒطھ ظˆ ظ…ط­ط¯ظˆط¯غŒطھâ€Œظ‡ط§غŒ ط³ط§ط¯ظ‡."
-      title="ظ…ط¯غŒط±غŒطھ ظپط¶ط§ظ‡ط§"
+      subtitle="تعریف و نگهداری فضاهای کاری، ظرفیت و محدودیت‌های ساده."
+      title="مدیریت فضاها"
     />
   );
 }
@@ -546,16 +546,16 @@ function EmployeesPage({
   const [form, setForm] = useState(blankEmployee());
   const [editingId, setEditingId] = useState<string | null>(null);
   const [error, setError] = useState("");
-  const spaceOptions = optionList(spaces, "ط¨ط¯ظˆظ† ظ…ط­ظ„ ظ¾غŒط´â€Œظپط±ط¶");
+  const spaceOptions = optionList(spaces, "بدون محل پیش‌فرض");
   const columns: EntityColumn<Employee>[] = [
-    { label: "ظ†ط§ظ…", render: (item) => item.name },
-    { label: "ظ†ظ‚ط´", render: (item) => item.primaryRole || "ط«ط¨طھ ظ†ط´ط¯ظ‡" },
-    { label: "طھظ…ط±ع©ط²", render: (item) => item.focusNeed },
+    { label: "نام", render: (item) => item.name },
+    { label: "نقش", render: (item) => item.primaryRole || "ثبت نشده" },
+    { label: "تمرکز", render: (item) => item.focusNeed },
   ];
 
   const submit = () => {
     if (!form.name.trim()) {
-      setError("ظ†ط§ظ… ع©ط§ط±ظ…ظ†ط¯ ط§ظ„ط²ط§ظ…غŒ ط§ط³طھ.");
+      setError("نام کارمند الزامی است.");
       return;
     }
     editingId ? updateItem(editingId, form) : createItem(form);
@@ -566,22 +566,22 @@ function EmployeesPage({
 
   return (
     <EntityPanel
-      addLabel="ط§ظپط²ظˆط¯ظ† ع©ط§ط±ظ…ظ†ط¯"
+      addLabel="افزودن کارمند"
       columns={columns}
       editingId={editingId}
       error={error}
       form={
         <>
-          <TextField label="ظ†ط§ظ… ع©ط§ط±ظ…ظ†ط¯" value={form.name} onChange={(name) => setForm({ ...form, name })} />
-          <TextField label="ظ†ظ‚ط´ ط§طµظ„غŒ" value={form.primaryRole} onChange={(primaryRole) => setForm({ ...form, primaryRole })} />
-          <TextField label="ظ…ظ‡ط§ط±طھâ€Œظ‡ط§" value={form.skills.join("طŒ ")} onChange={(value) => setForm({ ...form, skills: value.split(/[طŒ,]/).map((item) => item.trim()).filter(Boolean) })} />
-          <SelectField label="ط³ط·ط­ ظ†غŒط§ط² ط¨ظ‡ طھظ…ط±ع©ط²" value={form.focusNeed} options={focusOptions.map((item) => ({ label: item, value: item }))} onChange={(value) => setForm({ ...form, focusNeed: value as FocusLevel })} />
-          <SelectField label="ظ…ط­ظ„ ظ¾غŒط´â€Œظپط±ط¶" value={form.defaultSpaceId} options={spaceOptions} onChange={(defaultSpaceId) => setForm({ ...form, defaultSpaceId })} />
-          <SelectField label="ظˆط¶ط¹غŒطھ" value={String(form.isActive)} options={[{ label: "ظپط¹ط§ظ„", value: "true" }, { label: "ط؛غŒط±ظپط¹ط§ظ„", value: "false" }]} onChange={(value) => setForm({ ...form, isActive: value === "true" })} />
-          <ToggleField label="ظ…ظ†ط§ط³ط¨ ط¨ط±ط§غŒ ظپط±ظˆط´" checked={form.goodForSales} onChange={(goodForSales) => setForm({ ...form, goodForSales })} />
-          <ToggleField label="ظ…ظ†ط§ط³ط¨ ط¨ط±ط§غŒ طھظˆظ„غŒط¯" checked={form.goodForProduction} onChange={(goodForProduction) => setForm({ ...form, goodForProduction })} />
-          <ToggleField label="ظ…ظ†ط§ط³ط¨ ط¨ط±ط§غŒ دیجیتال" checked={form.goodForDigital} onChange={(goodForDigital) => setForm({ ...form, goodForDigital })} />
-          <TextAreaField label="طھظˆط¶غŒط­ط§طھ" value={form.description} onChange={(description) => setForm({ ...form, description })} />
+          <TextField label="نام کارمند" value={form.name} onChange={(name) => setForm({ ...form, name })} />
+          <TextField label="نقش اصلی" value={form.primaryRole} onChange={(primaryRole) => setForm({ ...form, primaryRole })} />
+          <TextField label="مهارت‌ها" value={form.skills.join("، ")} onChange={(value) => setForm({ ...form, skills: value.split(/[طŒ,]/).map((item) => item.trim()).filter(Boolean) })} />
+          <SelectField label="سطح نیاز به تمرکز" value={form.focusNeed} options={focusOptions.map((item) => ({ label: item, value: item }))} onChange={(value) => setForm({ ...form, focusNeed: value as FocusLevel })} />
+          <SelectField label="محل پیش‌فرض" value={form.defaultSpaceId} options={spaceOptions} onChange={(defaultSpaceId) => setForm({ ...form, defaultSpaceId })} />
+          <SelectField label="وضعیت" value={String(form.isActive)} options={[{ label: "فعال", value: "true" }, { label: "غیرفعال", value: "false" }]} onChange={(value) => setForm({ ...form, isActive: value === "true" })} />
+          <ToggleField label="مناسب برای فروش" checked={form.goodForSales} onChange={(goodForSales) => setForm({ ...form, goodForSales })} />
+          <ToggleField label="مناسب برای تولید" checked={form.goodForProduction} onChange={(goodForProduction) => setForm({ ...form, goodForProduction })} />
+          <ToggleField label="مناسب برای دیجیتال" checked={form.goodForDigital} onChange={(goodForDigital) => setForm({ ...form, goodForDigital })} />
+          <TextAreaField label="توضیحات" value={form.description} onChange={(description) => setForm({ ...form, description })} />
         </>
       }
       onCancel={() => {
@@ -601,8 +601,8 @@ function EmployeesPage({
       onResetDemo={resetDemo}
       onSubmit={submit}
       rows={employees}
-      subtitle="ط«ط¨طھ ظ¾ط±ظˆظپط§غŒظ„ ع©ط§ط±غŒطŒ ظ…ظ‡ط§ط±طھâ€Œظ‡ط§ ظˆ ظˆط¶ط¹غŒطھ ظپط¹ط§ظ„غŒطھ ط§ط¹ط¶ط§غŒ طھغŒظ…."
-      title="ظ…ط¯غŒط±غŒطھ ع©ط§ط±ظ…ظ†ط¯ط§ظ†"
+      subtitle="ثبت پروفایل کاری، مهارت‌ها و وضعیت فعالیت اعضای تیم."
+      title="مدیریت کارمندان"
     />
   );
 }
@@ -625,16 +625,16 @@ function TasksPage({
   const [form, setForm] = useState(blankTask());
   const [editingId, setEditingId] = useState<string | null>(null);
   const [error, setError] = useState("");
-  const spaceOptions = optionList(spaces, "ط¨ط¯ظˆظ† ظ…ط­ظ„ ظ¾غŒط´ظ†ظ‡ط§ط¯غŒ");
+  const spaceOptions = optionList(spaces, "بدون محل پیشنهادی");
   const columns: EntityColumn<TaskType>[] = [
-    { label: "ظ†ط§ظ…", render: (item) => item.name },
-    { label: "ط¯ط³طھظ‡", render: (item) => item.category || "ط«ط¨طھ ظ†ط´ط¯ظ‡" },
-    { label: "طھظ…ط±ع©ط²", render: (item) => item.focusNeed },
+    { label: "نام", render: (item) => item.name },
+    { label: "دسته", render: (item) => item.category || "ثبت نشده" },
+    { label: "تمرکز", render: (item) => item.focusNeed },
   ];
 
   const submit = () => {
     if (!form.name.trim()) {
-      setError("ظ†ط§ظ… ظ†ظˆط¹ ع©ط§ط± ط§ظ„ط²ط§ظ…غŒ ط§ط³طھ.");
+      setError("نام نوع کار الزامی است.");
       return;
     }
     editingId ? updateItem(editingId, form) : createItem(form);
@@ -645,21 +645,21 @@ function TasksPage({
 
   return (
     <EntityPanel
-      addLabel="ط§ظپط²ظˆط¯ظ† ظ†ظˆط¹ ع©ط§ط±"
+      addLabel="افزودن نوع کار"
       columns={columns}
       editingId={editingId}
       error={error}
       form={
         <>
-          <TextField label="ظ†ط§ظ… ع©ط§ط±" value={form.name} onChange={(name) => setForm({ ...form, name })} />
-          <TextField label="ط¯ط³طھظ‡ ع©ط§ط±" value={form.category} onChange={(category) => setForm({ ...form, category })} />
-          <SelectField label="ظ†غŒط§ط² ط¨ظ‡ طھظ…ط±ع©ط²" value={form.focusNeed} options={focusOptions.map((item) => ({ label: item, value: item }))} onChange={(value) => setForm({ ...form, focusNeed: value as FocusLevel })} />
-          <SelectField label="ظ…ط­ظ„ ظ¾غŒط´ظ†ظ‡ط§ط¯غŒ" value={form.suggestedSpaceId} options={spaceOptions} onChange={(suggestedSpaceId) => setForm({ ...form, suggestedSpaceId })} />
-          <SelectField label="ظˆط¶ط¹غŒطھ" value={String(form.isActive)} options={[{ label: "ظپط¹ط§ظ„", value: "true" }, { label: "ط؛غŒط±ظپط¹ط§ظ„", value: "false" }]} onChange={(value) => setForm({ ...form, isActive: value === "true" })} />
-          <ToggleField label="ظ†غŒط§ط² ط¨ظ‡ ظپط¶ط§غŒ طھظ…غŒط²" checked={form.needsCleanSpace} onChange={(needsCleanSpace) => setForm({ ...form, needsCleanSpace })} />
-          <ToggleField label="ظ†غŒط§ط² ط¨ظ‡ ظ‡ظ…ط±ط§ظ‡" checked={form.requiresCompanion} onChange={(requiresCompanion) => setForm({ ...form, requiresCompanion })} />
-          <ToggleField label="ظ†غŒط§ط² ط¨ظ‡ ط­ط¶ظˆط± ظ…ط´طھط±غŒ" checked={form.requiresCustomerPresence} onChange={(requiresCustomerPresence) => setForm({ ...form, requiresCustomerPresence })} />
-          <TextAreaField label="طھظˆط¶غŒط­ط§طھ" value={form.description} onChange={(description) => setForm({ ...form, description })} />
+          <TextField label="نام کار" value={form.name} onChange={(name) => setForm({ ...form, name })} />
+          <TextField label="دسته کار" value={form.category} onChange={(category) => setForm({ ...form, category })} />
+          <SelectField label="نیاز به تمرکز" value={form.focusNeed} options={focusOptions.map((item) => ({ label: item, value: item }))} onChange={(value) => setForm({ ...form, focusNeed: value as FocusLevel })} />
+          <SelectField label="محل پیشنهادی" value={form.suggestedSpaceId} options={spaceOptions} onChange={(suggestedSpaceId) => setForm({ ...form, suggestedSpaceId })} />
+          <SelectField label="وضعیت" value={String(form.isActive)} options={[{ label: "فعال", value: "true" }, { label: "غیرفعال", value: "false" }]} onChange={(value) => setForm({ ...form, isActive: value === "true" })} />
+          <ToggleField label="نیاز به فضای تمیز" checked={form.needsCleanSpace} onChange={(needsCleanSpace) => setForm({ ...form, needsCleanSpace })} />
+          <ToggleField label="نیاز به همراه" checked={form.requiresCompanion} onChange={(requiresCompanion) => setForm({ ...form, requiresCompanion })} />
+          <ToggleField label="نیاز به حضور مشتری" checked={form.requiresCustomerPresence} onChange={(requiresCustomerPresence) => setForm({ ...form, requiresCustomerPresence })} />
+          <TextAreaField label="توضیحات" value={form.description} onChange={(description) => setForm({ ...form, description })} />
         </>
       }
       onCancel={() => {
@@ -679,8 +679,8 @@ function TasksPage({
       onResetDemo={resetDemo}
       onSubmit={submit}
       rows={taskTypes}
-      subtitle="طھط¹ط±غŒظپ ظ†ظˆط¹ ع©ط§ط±ظ‡ط§طŒ ظ†غŒط§ط²ظ‡ط§غŒ طھظ…ط±ع©ط²غŒ ظˆ ظ¾غŒط´ظ†ظ‡ط§ط¯ ظ…ع©ط§ظ†."
-      title="ظ†ظˆط¹ ع©ط§ط±ظ‡ط§"
+      subtitle="تعریف نوع کارها، نیازهای تمرکزی و پیشنهاد مکان."
+      title="نوع کارها"
     />
   );
 }
@@ -715,18 +715,18 @@ function SchedulePage({
   const [filters, setFilters] = useState<ScheduleFilters>({ employeeId: "", spaceId: "", taskTypeId: "", day: "" });
 
   const columns: EntityColumn<WeeklyScheduleItem>[] = [
-    { label: "ط±ظˆط²", render: (item) => item.day },
-    { label: "ط²ظ…ط§ظ†", render: (item) => `${toPersianNumber(item.startTime)} طھط§ ${toPersianNumber(item.endTime)}` },
-    { label: "ع©ط§ط±ظ…ظ†ط¯", render: (item) => employees.find((employee) => employee.id === item.employeeId)?.name ?? "ظ†ط§ظ…ط´ط®طµ" },
+    { label: "روز", render: (item) => item.day },
+    { label: "زمان", render: (item) => `${toPersianNumber(item.startTime)} تا ${toPersianNumber(item.endTime)}` },
+    { label: "کارمند", render: (item) => employees.find((employee) => employee.id === item.employeeId)?.name ?? "نامشخص" },
   ];
 
   const submit = () => {
     if (!form.employeeId || !form.spaceId || !form.taskTypeId) {
-      setError("ط§ظ†طھط®ط§ط¨ ع©ط§ط±ظ…ظ†ط¯طŒ ظپط¶ط§ ظˆ ظ†ظˆط¹ ع©ط§ط± ط§ظ„ط²ط§ظ…غŒ ط§ط³طھ.");
+      setError("انتخاب کارمند، فضا و نوع کار الزامی است.");
       return;
     }
     if (form.startTime >= form.endTime) {
-      setError("ط³ط§ط¹طھ ظ¾ط§غŒط§ظ† ط¨ط§غŒط¯ ط¨ط¹ط¯ ط§ط² ط³ط§ط¹طھ ط´ط±ظˆط¹ ط¨ط§ط´ط¯.");
+      setError("ساعت پایان باید بعد از ساعت شروع باشد.");
       return;
     }
     editingId ? updateItem(editingId, form) : createItem(form);
@@ -739,16 +739,16 @@ function SchedulePage({
     <div className="page-stack">
       <header className="page-header">
         <div>
-          <span className="eyebrow">ط¨ط±ظ†ط§ظ…ظ‡â€Œط±غŒط²غŒ P1</span>
-          <h1>ط¨ط±ظ†ط§ظ…ظ‡ ظ‡ظپطھع¯غŒ</h1>
-          <p>ط§ظپط²ظˆط¯ظ†طŒ ظˆغŒط±ط§غŒط´طŒ ط؛غŒط±ظپط¹ط§ظ„â€Œط³ط§ط²غŒ ظˆ ظپغŒظ„طھط± ظˆط§ظ‚ط¹غŒ ط¨ط±ظ†ط§ظ…ظ‡ ظ‡ظپطھظ‡.</p>
+          <span className="eyebrow">برنامه‌ریزی P1</span>
+          <h1>برنامه هفتگی</h1>
+          <p>افزودن، ویرایش، غیرفعال‌سازی و فیلتر واقعی برنامه هفته.</p>
         </div>
         <div className="hero-actions">
           <button className="ghost-button" type="button" onClick={resetDemo}>
-            <RotateCcw size={17} /> ط¨ط§ط²ع¯ط´طھ demo
+            <RotateCcw size={17} /> بازگشت demo
           </button>
           <button className="primary-button" type="button" onClick={() => setForm({ ...blankSchedule(), employeeId: activeEmployees[0]?.id ?? "", spaceId: activeSpaces[0]?.id ?? "", taskTypeId: activeTasks[0]?.id ?? "" })}>
-            <Plus size={17} /> ط¢غŒطھظ… ط¬ط¯غŒط¯
+            <Plus size={17} /> آیتم جدید
           </button>
         </div>
       </header>
@@ -756,13 +756,13 @@ function SchedulePage({
       <section className="filter-bar">
         <Filter size={16} />
         <select value={filters.employeeId} onChange={(event) => setFilters({ ...filters, employeeId: event.target.value })}>
-          {optionList(employees, "ظ‡ظ…ظ‡ ع©ط§ط±ظ…ظ†ط¯ط§ظ†").map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
+          {optionList(employees, "همه کارمندان").map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
         </select>
         <select value={filters.spaceId} onChange={(event) => setFilters({ ...filters, spaceId: event.target.value })}>
-          {optionList(spaces, "ظ‡ظ…ظ‡ ظپط¶ط§ظ‡ط§").map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
+          {optionList(spaces, "همه فضاها").map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
         </select>
         <select value={filters.taskTypeId} onChange={(event) => setFilters({ ...filters, taskTypeId: event.target.value })}>
-          {optionList(taskTypes, "ظ‡ظ…ظ‡ ظ†ظˆط¹ ع©ط§ط±ظ‡ط§").map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
+          {optionList(taskTypes, "همه نوع کارها").map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
         </select>
         <select value={filters.day} onChange={(event) => setFilters({ ...filters, day: event.target.value })}>
           {dayOptions().map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
@@ -773,31 +773,31 @@ function SchedulePage({
 
       <section className="management-layout">
         <section className="config-card">
-          <h2>{editingId ? "ظˆغŒط±ط§غŒط´ ط¢غŒطھظ… ط¨ط±ظ†ط§ظ…ظ‡" : "ط§ظپط²ظˆط¯ظ† ط¢غŒطھظ… ط¨ط±ظ†ط§ظ…ظ‡"}</h2>
+          <h2>{editingId ? "ویرایش آیتم برنامه" : "افزودن آیتم برنامه"}</h2>
           {error && <p className="form-error">{error}</p>}
           <div className="field-grid">
-            <SelectField label="ط±ظˆط² ظ‡ظپطھظ‡" value={form.day} options={weekDays.map((day) => ({ label: day, value: day }))} onChange={(day) => setForm({ ...form, day: day as WorkDay })} />
-            <TextField label="ط³ط§ط¹طھ ط´ط±ظˆط¹" type="time" value={form.startTime} onChange={(startTime) => setForm({ ...form, startTime })} />
-            <TextField label="ط³ط§ط¹طھ ظ¾ط§غŒط§ظ†" type="time" value={form.endTime} onChange={(endTime) => setForm({ ...form, endTime })} />
-            <SelectField label="ع©ط§ط±ظ…ظ†ط¯" value={form.employeeId} options={optionList(employees)} onChange={(employeeId) => setForm({ ...form, employeeId })} />
-            <SelectField label="ظپط¶ط§" value={form.spaceId} options={optionList(spaces)} onChange={(spaceId) => setForm({ ...form, spaceId })} />
-            <SelectField label="ظ†ظˆط¹ ع©ط§ط±" value={form.taskTypeId} options={optionList(taskTypes)} onChange={(taskTypeId) => setForm({ ...form, taskTypeId })} />
-            <SelectField label="ط§ظˆظ„ظˆغŒطھ" value={form.priority} options={priorityOptions.map((item) => ({ label: item, value: item }))} onChange={(priority) => setForm({ ...form, priority: priority as PriorityLevel })} />
-            <SelectField label="ظˆط¶ط¹غŒطھ" value={String(form.isActive)} options={[{ label: "ظپط¹ط§ظ„", value: "true" }, { label: "ط؛غŒط±ظپط¹ط§ظ„", value: "false" }]} onChange={(value) => setForm({ ...form, isActive: value === "true" })} />
-            <TextAreaField label="طھظˆط¶غŒط­ط§طھ" value={form.description} onChange={(description) => setForm({ ...form, description })} />
+            <SelectField label="روز هفته" value={form.day} options={weekDays.map((day) => ({ label: day, value: day }))} onChange={(day) => setForm({ ...form, day: day as WorkDay })} />
+            <TextField label="ساعت شروع" type="time" value={form.startTime} onChange={(startTime) => setForm({ ...form, startTime })} />
+            <TextField label="ساعت پایان" type="time" value={form.endTime} onChange={(endTime) => setForm({ ...form, endTime })} />
+            <SelectField label="کارمند" value={form.employeeId} options={optionList(employees)} onChange={(employeeId) => setForm({ ...form, employeeId })} />
+            <SelectField label="فضا" value={form.spaceId} options={optionList(spaces)} onChange={(spaceId) => setForm({ ...form, spaceId })} />
+            <SelectField label="نوع کار" value={form.taskTypeId} options={optionList(taskTypes)} onChange={(taskTypeId) => setForm({ ...form, taskTypeId })} />
+            <SelectField label="اولویت" value={form.priority} options={priorityOptions.map((item) => ({ label: item, value: item }))} onChange={(priority) => setForm({ ...form, priority: priority as PriorityLevel })} />
+            <SelectField label="وضعیت" value={String(form.isActive)} options={[{ label: "فعال", value: "true" }, { label: "غیرفعال", value: "false" }]} onChange={(value) => setForm({ ...form, isActive: value === "true" })} />
+            <TextAreaField label="توضیحات" value={form.description} onChange={(description) => setForm({ ...form, description })} />
           </div>
           <div className="form-actions">
-            <button className="primary-button" type="button" onClick={submit}>ط°ط®غŒط±ظ‡</button>
+            <button className="primary-button" type="button" onClick={submit}>ذخیره</button>
             <button className="ghost-button" type="button" onClick={() => {
               setForm({ ...blankSchedule(), employeeId: activeEmployees[0]?.id ?? "", spaceId: activeSpaces[0]?.id ?? "", taskTypeId: activeTasks[0]?.id ?? "" });
               setEditingId(null);
               setError("");
-            }}>ط§ظ†طµط±ط§ظپ</button>
+            }}>انصراف</button>
           </div>
         </section>
 
         <section className="config-card table-card">
-          <h2>ط¢غŒطھظ…â€Œظ‡ط§غŒ ط¨ط±ظ†ط§ظ…ظ‡</h2>
+          <h2>آیتم‌های برنامه</h2>
           <div className="entity-table">
             {scheduleItems.map((item) => (
               <article className={`${item.isActive ? "" : "inactive-row"} ${highlightedItemId === item.id ? "highlight-row" : ""}`} key={item.id}>
@@ -811,13 +811,13 @@ function SchedulePage({
                 </div>
                 <div className="row-actions">
                   <StatusBadge tone={toneForTask(taskTypes.find((task) => task.id === item.taskTypeId))}>
-                    {taskTypes.find((task) => task.id === item.taskTypeId)?.name ?? "ظ†ط§ظ…ط´ط®طµ"}
+                    {taskTypes.find((task) => task.id === item.taskTypeId)?.name ?? "نامشخص"}
                   </StatusBadge>
                   <button type="button" onClick={() => {
                     setForm(item);
                     setEditingId(item.id);
-                  }}>ظˆغŒط±ط§غŒط´</button>
-                  {item.isActive && <button className="danger-button" type="button" onClick={() => deactivateItem(item.id)}>ط؛غŒط±ظپط¹ط§ظ„â€Œط³ط§ط²غŒ</button>}
+                  }}>ویرایش</button>
+                  {item.isActive && <button className="danger-button" type="button" onClick={() => deactivateItem(item.id)}>غیرفعال‌سازی</button>}
                 </div>
               </article>
             ))}
@@ -841,12 +841,12 @@ function RulesPage({ rules, updateItem, resetDemo }: { rules: AnalysisRule[]; up
     <div className="page-stack">
       <header className="page-header">
         <div>
-          <span className="eyebrow">ظ‚ظˆط§ظ†غŒظ† طھط­ظ„غŒظ„</span>
-          <h1>ظ‚ظˆط§ط¹ط¯ ظ¾ط§غŒظ‡ طھطµظ…غŒظ…â€Œع¯غŒط±غŒ</h1>
-          <p>ط¯ط± P1 ظپظ‚ط· ظپط¹ط§ظ„ غŒط§ ط؛غŒط±ظپط¹ط§ظ„ ط¨ظˆط¯ظ† ظ‚ظˆط§ظ†غŒظ† ظ¾ط§غŒظ‡ ط°ط®غŒط±ظ‡ ظ…غŒâ€Œط´ظˆط¯.</p>
+          <span className="eyebrow">قوانین تحلیل</span>
+          <h1>قواعد پایه تصمیم‌گیری</h1>
+          <p>در P1 فقط فعال یا غیرفعال بودن قوانین پایه ذخیره می‌شود.</p>
         </div>
         <button className="ghost-button" type="button" onClick={resetDemo}>
-          <RotateCcw size={17} /> ط¨ط§ط²ع¯ط´طھ demo
+          <RotateCcw size={17} /> بازگشت demo
         </button>
       </header>
       <section className="rules-grid">
@@ -857,11 +857,11 @@ function RulesPage({ rules, updateItem, resetDemo }: { rules: AnalysisRule[]; up
               <div className="icon-shell">
                 <Icon size={22} />
               </div>
-              <StatusBadge tone={rule.isActive ? rule.tone : "empty"}>{rule.isActive ? "ظپط¹ط§ظ„" : "ط؛غŒط±ظپط¹ط§ظ„"}</StatusBadge>
+              <StatusBadge tone={rule.isActive ? rule.tone : "empty"}>{rule.isActive ? "فعال" : "غیرفعال"}</StatusBadge>
               <h2>{rule.title}</h2>
               <p>{rule.description}</p>
               <button className="ghost-button" type="button" onClick={() => updateItem(rule.id, { isActive: !rule.isActive })}>
-                {rule.isActive ? "ط؛غŒط±ظپط¹ط§ظ„â€Œط³ط§ط²غŒ" : "ظپط¹ط§ظ„â€Œط³ط§ط²غŒ"}
+                {rule.isActive ? "غیرفعال‌سازی" : "فعال‌سازی"}
               </button>
             </article>
           );
@@ -951,37 +951,37 @@ function DashboardPageV2({
 
   const kpis = [
     {
-      label: "ظˆط¶ط¹غŒطھ ظ‡ظپطھظ‡",
-      value: analysis.controlScore >= 80 ? "ع©ظ†طھط±ظ„â€Œط´ط¯ظ‡" : analysis.controlScore >= 55 ? "ظ†غŒط§ط²ظ…ظ†ط¯ طھظˆط¬ظ‡" : "ط¨ط­ط±ط§ظ†غŒ",
-      caption: `ط§ظ…طھغŒط§ط² ع©ظ†طھط±ظ„ ${toPersianNumber(analysis.controlScore)} ط§ط² غ±غ°غ°`,
+      label: "وضعیت هفته",
+      value: analysis.controlScore >= 80 ? "کنترل‌شده" : analysis.controlScore >= 55 ? "نیازمند توجه" : "بحرانی",
+      caption: `امتیاز کنترل ${toPersianNumber(analysis.controlScore)} از ۱۰۰`,
       tone: analysis.controlScore >= 80 ? "good" as StatusTone : analysis.controlScore >= 55 ? "warn" as StatusTone : "critical" as StatusTone,
       icon: CheckCircle2,
     },
     {
-      label: "ظ‡ط´ط¯ط§ط±ظ‡ط§غŒ ظپط¹ط§ظ„",
+      label: "هشدارهای فعال",
       value: toPersianNumber(analysis.findings.length),
-      caption: `${toPersianNumber(analysis.criticalCount)} ط¨ط­ط±ط§ظ†غŒطŒ ${toPersianNumber(analysis.warningCount)} ظ‡ط´ط¯ط§ط±`,
+      caption: `${toPersianNumber(analysis.criticalCount)} بحرانی، ${toPersianNumber(analysis.warningCount)} هشدار`,
       tone: analysis.criticalCount ? "critical" as StatusTone : analysis.warningCount ? "warn" as StatusTone : "good" as StatusTone,
       icon: AlertTriangle,
     },
     {
-      label: "ظ¾ظˆط´ط´ ظپط±ظˆط´ع¯ط§ظ‡",
+      label: "پوشش فروشگاه",
       value: toPersianNumber(analysis.salesCoverageScore),
-      caption: "ط§ظ…طھغŒط§ط² ظ¾ظˆط´ط´ ط§ط² ظ…ظˆطھظˆط± طھط­ظ„غŒظ„",
+      caption: "امتیاز پوشش از موتور تحلیل",
       tone: analysis.salesCoverageScore >= 80 ? "sales" as StatusTone : analysis.salesCoverageScore >= 55 ? "warn" as StatusTone : "critical" as StatusTone,
       icon: Store,
     },
     {
-      label: "ط²ظ…ط§ظ† طھظ…ط±ع©ط²",
+      label: "زمان تمرکز",
       value: toPersianNumber(analysis.focusScore),
-      caption: "ط§ظ…طھغŒط§ط² طھظ…ط±ع©ط² ظˆ طھط¯ط§ط®ظ„ طھظ…ط±ع©ط²",
+      caption: "امتیاز تمرکز و تداخل تمرکز",
       tone: analysis.focusScore >= 80 ? "focus" as StatusTone : analysis.focusScore >= 55 ? "warn" as StatusTone : "critical" as StatusTone,
       icon: Brain,
     },
     {
-      label: "طھط¯ط§ط®ظ„â€Œظ‡ط§",
+      label: "تداخل‌ها",
       value: toPersianNumber(conflictCount),
-      caption: "غŒط§ظپطھظ‡â€Œظ‡ط§غŒ ظ…ط±طھط¨ط· ط¨ط§ طھط¯ط§ط®ظ„",
+      caption: "یافته‌های مرتبط با تداخل",
       tone: conflictCount ? "critical" as StatusTone : "good" as StatusTone,
       icon: Flame,
     },
@@ -996,7 +996,7 @@ function DashboardPageV2({
     return {
       name: space.name,
       usage,
-      caption: `ط§ظˆط¬ ط­ط¶ظˆط± ${toPersianNumber(peak)} ظ†ظپط±`,
+      caption: `اوج حضور ${toPersianNumber(peak)} نفر`,
       tone: critical ? "critical" as StatusTone : warning ? "warn" as StatusTone : isSalesSpaceName(space) ? "sales" as StatusTone : "good" as StatusTone,
     };
   });
@@ -1008,7 +1008,7 @@ function DashboardPageV2({
       caption: item.dayOfWeek ? `${item.dayOfWeek} ${toPersianNumber(item.startTime ?? "")}: ${item.description}` : item.description,
       tone: severityTone(item.severity),
     }))
-    : [{ title: "ط¨ط¯ظˆظ† ظ‡ط´ط¯ط§ط± ظ…ظ‡ظ…", caption: "ظ…ظˆطھظˆط± طھط­ظ„غŒظ„ ظ…ظˆط±ط¯ ط¨ط­ط±ط§ظ†غŒ غŒط§ ظ‡ط´ط¯ط§ط± ط¬ط¯غŒ ظ¾غŒط¯ط§ ظ†ع©ط±ط¯.", tone: "good" as StatusTone }];
+    : [{ title: "بدون هشدار مهم", caption: "موتور تحلیل مورد بحرانی یا هشدار جدی پیدا نکرد.", tone: "good" as StatusTone }];
 
   const smartSuggestions = weeklyScenarios.length
     ? weeklyScenarios.slice(0, 5).map((item) => ({
@@ -1016,7 +1016,7 @@ function DashboardPageV2({
       caption: item.reason,
       tone: item.canApply ? "good" as StatusTone : severityTone(item.riskLevel),
     }))
-    : [{ title: "ظ¾ط§غŒط´ ظ‡ظپطھظ‡", caption: "ط¨ط±ظ†ط§ظ…ظ‡ ظپط¹ظ„غŒ ط±ط§ ط¨ط§ ط¯ط§ط¯ظ‡â€Œظ‡ط§غŒ ع©ط§ظ…ظ„â€Œطھط± ظ¾ط§غŒط´ ع©ظ†.", tone: "info" as StatusTone }];
+    : [{ title: "پایش هفته", caption: "برنامه فعلی را با داده‌های کامل‌تر پایش کن.", tone: "info" as StatusTone }];
 
   const employeeSummaries = activeEmployees.map((employee) => {
     const employeeItems = activeSchedule.filter((item) => item.employeeId === employee.id);
@@ -1024,7 +1024,7 @@ function DashboardPageV2({
     const relatedFindings = analysis.findings.filter((findingItem) => findingItem.affectedEmployeeIds.includes(employee.id));
     return {
       name: employee.name,
-      role: employee.primaryRole || "ط¨ط¯ظˆظ† ظ†ظ‚ط´",
+      role: employee.primaryRole || "بدون نقش",
       hours: Math.round(hours),
       alerts: relatedFindings.length,
       tone: relatedFindings.some((item) => item.severity === "critical")
@@ -1040,93 +1040,93 @@ function DashboardPageV2({
   });
 
   const scoreCells = [
-    { label: "طھظ…ط±ع©ط²", value: analysis.focusScore, tone: analysis.focusScore >= 80 ? "focus" as StatusTone : "warn" as StatusTone },
-    { label: "ظپط±ظˆط´", value: analysis.salesCoverageScore, tone: analysis.salesCoverageScore >= 80 ? "sales" as StatusTone : "warn" as StatusTone },
-    { label: "ط¸ط±ظپغŒطھ", value: analysis.spaceCapacityScore, tone: analysis.spaceCapacityScore >= 80 ? "good" as StatusTone : "critical" as StatusTone },
-    { label: "ط§غŒظ…ظ†غŒ", value: analysis.safetyScore, tone: analysis.safetyScore >= 80 ? "good" as StatusTone : "critical" as StatusTone },
+    { label: "تمرکز", value: analysis.focusScore, tone: analysis.focusScore >= 80 ? "focus" as StatusTone : "warn" as StatusTone },
+    { label: "فروش", value: analysis.salesCoverageScore, tone: analysis.salesCoverageScore >= 80 ? "sales" as StatusTone : "warn" as StatusTone },
+    { label: "ظرفیت", value: analysis.spaceCapacityScore, tone: analysis.spaceCapacityScore >= 80 ? "good" as StatusTone : "critical" as StatusTone },
+    { label: "ایمنی", value: analysis.safetyScore, tone: analysis.safetyScore >= 80 ? "good" as StatusTone : "critical" as StatusTone },
   ];
 
   const decisionItems = [
-    { title: "ظ…ط³ط¦ظ„ظ‡ ط§طµظ„غŒ", caption: analysis.mainProblem, tone: analysis.criticalCount ? "critical" as StatusTone : analysis.warningCount ? "warn" as StatusTone : "good" as StatusTone },
-    { title: "ط¨ظ‡طھط±غŒظ† ظ¾غŒط´ظ†ظ‡ط§ط¯", caption: bestScenario ? `${bestScenario.title} - ${bestScenario.expectedEffect}` : analysis.nextBestAction, tone: bestScenario?.canApply ? "good" as StatusTone : "info" as StatusTone },
-    { title: "طµظپ طھطµظ…غŒظ…â€Œع¯غŒط±غŒ", caption: `${toPersianNumber(weeklyScenarios.filter((item) => item.canApply).length)} ظ¾غŒط´ظ†ظ‡ط§ط¯ ظ‚ط§ط¨ظ„ ط¨ط±ط±ط³غŒ ط¨ط±ط§غŒ طھط±ع©غŒط¨ ط§ظ…ظ† ط¢ظ…ط§ط¯ظ‡ ط§ط³طھ.`, tone: "focus" as StatusTone },
-    { title: "ط¢ط®ط±غŒظ† ع¯ط²ط§ط±ط´", caption: latestReport ? `${latestReport.status} | ع©ظ†طھط±ظ„ ${toPersianNumber(latestReport.summary.controlScoreBefore)} ط¨ظ‡ ${toPersianNumber(latestReport.summary.controlScoreAfter)}` : "ظ‡ظ†ظˆط² ع¯ط²ط§ط±ط´ طھطµظ…غŒظ…غŒ ط³ط§ط®طھظ‡ ظ†ط´ط¯ظ‡ ط§ط³طھ.", tone: latestReport ? "info" as StatusTone : "empty" as StatusTone },
-    { title: "ط±ظˆظ†ط¯ ظ…ط¯غŒط±غŒطھغŒ", caption: latestTrendPoint && previousTrendPoint ? `ط¢ط®ط±غŒظ† ع©ظ†طھط±ظ„ ${toPersianNumber(latestTrendPoint.controlScoreAfter)} | طھط؛غŒغŒط± ${toPersianNumber(trendDelta)}` : "ط¨ط±ط§غŒ ط±ظˆظ†ط¯طŒ ط­ط¯ط§ظ‚ظ„ ط¯ظˆ ع¯ط²ط§ط±ط´ ظ„ط§ط²ظ… ط§ط³طھ.", tone: trendDelta > 0 ? "good" as StatusTone : trendDelta < 0 ? "critical" as StatusTone : "info" as StatusTone },
-    { title: "ط³ظ„ط§ظ…طھ ظ…ط§ظ‡ط§ظ†ظ‡", caption: `${monthlyHealth.healthLevel} | ع©ظ†طھط±ظ„ ${toPersianNumber(monthlyHealth.averageControlScore)} | ${monthlyHealth.topRecurringRisks[0] ?? "ط±غŒط³ع© طھع©ط±ط§ط±غŒ ظ…ظ‡ظ… ظ†ط¯ط§ط±ط¯"}`, tone: monthlyHealth.healthLevel === "critical" ? "critical" as StatusTone : monthlyHealth.healthLevel === "needs_attention" ? "warn" as StatusTone : "good" as StatusTone },
-    { title: "ظ‡ط´ط¯ط§ط± ظ¾غŒط´ع¯غŒط±ط§ظ†ظ‡", caption: topPreventiveAlert ? `${topPreventiveAlert.title} | ${topPreventiveAlert.recommendedAction}` : "ظ‡ط´ط¯ط§ط± ظ¾غŒط´ع¯غŒط±ط§ظ†ظ‡ ظپط¹ط§ظ„غŒ ظˆط¬ظˆط¯ ظ†ط¯ط§ط±ط¯.", tone: topPreventiveAlert ? preventiveSeverityTone(topPreventiveAlert.severity) : "good" as StatusTone },
-    { title: "ط¬ط¹ط¨ظ‡ ط³غŒط§ظ‡ ط¯ط§ط¯ظ‡â€Œظ‡ط§", caption: snapshotCount ? `${toPersianNumber(snapshotCount)} snapshot ط°ط®غŒط±ظ‡ ط´ط¯ظ‡ ط§ط³طھ.` : "ظ‡ظ†ظˆط² ط¨ع©ط§ظ¾غŒ ط«ط¨طھ ظ†ط´ط¯ظ‡ط› غŒع© snapshot ط¨ط³ط§ط².", tone: snapshotCount ? "focus" as StatusTone : "warn" as StatusTone },
-    { title: "ط³ظ„ط§ظ…طھ ط¯ط§ط¯ظ‡â€Œظ‡ط§", caption: `${maintenanceHealthLabel(maintenanceReport.healthStatus)} | ${toPersianNumber(maintenanceReport.totalIssues)} ظ…ظˆط±ط¯ ظ†ع¯ظ‡ط¯ط§ط±غŒ`, tone: maintenanceHealthTone(maintenanceReport.healthStatus) },
-    { title: "ط¢ظ…ط§ط¯ع¯غŒ ط¹ظ…ظ„غŒط§طھغŒ", caption: `${readinessStatusLabel(readinessReport.status)} | ط§ظ…طھغŒط§ط² ${toPersianNumber(readinessReport.score)} | ${readinessReport.topActions[0]?.title ?? "ط§ظ‚ط¯ط§ظ… ظپظˆط±غŒ ظ†ط¯ط§ط±ط¯"}`, tone: readinessStatusTone(readinessReport.status) },
-    { title: "Drift ظ†ط³ط¨طھ ط¨ظ‡ baseline", caption: `${driftLevelLabel(baselineDrift.driftLevel)} | ط§ظ…طھغŒط§ط² ${toPersianNumber(baselineDrift.driftScore)} | ${baselineDrift.requiresResignoff ? "ظ†غŒط§ط²ظ…ظ†ط¯ ط¨ط§ط²طھط£غŒغŒط¯" : "ط¯ط± ظ…ط­ط¯ظˆط¯ظ‡ ظ¾ط§غŒط´"}`, tone: driftTone(baselineDrift.driftLevel) },
-    { title: "طھط§ط±غŒط®ع†ظ‡ ط¹ظ…ظ„غŒط§طھغŒ", caption: `${toPersianNumber(operationalHistory.events.length)} ط±ظˆغŒط¯ط§ط¯ | ${driftWorsening ? "ط±ظˆظ†ط¯ drift ط¨ط¯طھط±ط´ظˆظ†ط¯ظ‡" : "ط±ظˆظ†ط¯ ظ¾ط§غŒط¯ط§ط± غŒط§ ظ†ط§ع©ط§ظپغŒ"}`, tone: driftWorsening ? "critical" as StatusTone : "info" as StatusTone },
-    { title: "ط§ظ†ط¶ط¨ط§ط· طھط§ط±غŒط®ع†ظ‡", caption: `${retentionStatusLabel(retentionReport.status)} | ${toPersianNumber(retentionReport.archiveCandidateCount)} ظ‚ط§ط¨ظ„ ط¢ط±ط´غŒظˆ`, tone: retentionStatusTone(retentionReport.status) },
-    { title: "طھظ‚ظˆغŒظ… ع©ظ†طھط±ظ„â€Œظ‡ط§", caption: `${toPersianNumber(operationsCalendar.overdueCount)} ط¹ظ‚ط¨â€Œط§ظپطھط§ط¯ظ‡ | ${toPersianNumber(operationsCalendar.todayCount)} ط§ظ…ط±ظˆط² | ${operationsCalendar.nextBestControl?.title ?? "ع©ظ†طھط±ظ„ ط¨ط§ط²غŒ ط¨ط§ظ‚غŒ ظ†ظ…ط§ظ†ط¯ظ‡"}`, tone: operationsCalendar.urgentCount || operationsCalendar.overdueCount ? "critical" as StatusTone : operationsCalendar.todayCount ? "warn" as StatusTone : "good" as StatusTone },
-    { title: "ط§ط¹ظ„ط§ظ†â€Œظ‡ط§غŒ ط¹ظ…ظ„غŒط§طھغŒ", caption: `${toPersianNumber(operationalNotifications.unread)} ط®ظˆط§ظ†ط¯ظ‡â€Œظ†ط´ط¯ظ‡ | ${toPersianNumber(operationalNotifications.urgent)} ظپظˆط±غŒ | ${toPersianNumber(operationalNotifications.dueToday)} ط§ظ…ط±ظˆط²`, tone: operationalNotifications.urgent ? "critical" as StatusTone : operationalNotifications.unread ? "warn" as StatusTone : "good" as StatusTone },
-    { title: "ط±غŒط³ع© ع©ظ„", caption: `${toPersianNumber(analysis.totalRiskScore)} ط§ظ…طھغŒط§ط² ط±غŒط³ع© ط§ط² ${toPersianNumber(activeRuleCount)} ظ‚ط§ظ†ظˆظ† ظپط¹ط§ظ„`, tone: analysis.totalRiskScore > 40 ? "critical" as StatusTone : analysis.totalRiskScore > 15 ? "warn" as StatusTone : "good" as StatusTone },
+    { title: "مسئله اصلی", caption: analysis.mainProblem, tone: analysis.criticalCount ? "critical" as StatusTone : analysis.warningCount ? "warn" as StatusTone : "good" as StatusTone },
+    { title: "بهترین پیشنهاد", caption: bestScenario ? `${bestScenario.title} - ${bestScenario.expectedEffect}` : analysis.nextBestAction, tone: bestScenario?.canApply ? "good" as StatusTone : "info" as StatusTone },
+    { title: "صف تصمیم‌گیری", caption: `${toPersianNumber(weeklyScenarios.filter((item) => item.canApply).length)} پیشنهاد قابل بررسی برای ترکیب امن آماده است.`, tone: "focus" as StatusTone },
+    { title: "آخرین گزارش", caption: latestReport ? `${latestReport.status} | کنترل ${toPersianNumber(latestReport.summary.controlScoreBefore)} به ${toPersianNumber(latestReport.summary.controlScoreAfter)}` : "هنوز گزارش تصمیمی ساخته نشده است.", tone: latestReport ? "info" as StatusTone : "empty" as StatusTone },
+    { title: "روند مدیریتی", caption: latestTrendPoint && previousTrendPoint ? `آخرین کنترل ${toPersianNumber(latestTrendPoint.controlScoreAfter)} | تغییر ${toPersianNumber(trendDelta)}` : "برای روند، حداقل دو گزارش لازم است.", tone: trendDelta > 0 ? "good" as StatusTone : trendDelta < 0 ? "critical" as StatusTone : "info" as StatusTone },
+    { title: "سلامت ماهانه", caption: `${monthlyHealth.healthLevel} | کنترل ${toPersianNumber(monthlyHealth.averageControlScore)} | ${monthlyHealth.topRecurringRisks[0] ?? "ریسک تکراری مهم ندارد"}`, tone: monthlyHealth.healthLevel === "critical" ? "critical" as StatusTone : monthlyHealth.healthLevel === "needs_attention" ? "warn" as StatusTone : "good" as StatusTone },
+    { title: "هشدار پیشگیرانه", caption: topPreventiveAlert ? `${topPreventiveAlert.title} | ${topPreventiveAlert.recommendedAction}` : "هشدار پیشگیرانه فعالی وجود ندارد.", tone: topPreventiveAlert ? preventiveSeverityTone(topPreventiveAlert.severity) : "good" as StatusTone },
+    { title: "جعبه سیاه داده‌ها", caption: snapshotCount ? `${toPersianNumber(snapshotCount)} snapshot ذخیره شده است.` : "هنوز بکاپی ثبت نشده؛ یک snapshot بساز.", tone: snapshotCount ? "focus" as StatusTone : "warn" as StatusTone },
+    { title: "سلامت داده‌ها", caption: `${maintenanceHealthLabel(maintenanceReport.healthStatus)} | ${toPersianNumber(maintenanceReport.totalIssues)} مورد نگهداری`, tone: maintenanceHealthTone(maintenanceReport.healthStatus) },
+    { title: "آمادگی عملیاتی", caption: `${readinessStatusLabel(readinessReport.status)} | امتیاز ${toPersianNumber(readinessReport.score)} | ${readinessReport.topActions[0]?.title ?? "اقدام فوری ندارد"}`, tone: readinessStatusTone(readinessReport.status) },
+    { title: "Drift نسبت به baseline", caption: `${driftLevelLabel(baselineDrift.driftLevel)} | امتیاز ${toPersianNumber(baselineDrift.driftScore)} | ${baselineDrift.requiresResignoff ? "نیازمند بازتأیید" : "در محدوده پایش"}`, tone: driftTone(baselineDrift.driftLevel) },
+    { title: "تاریخچه عملیاتی", caption: `${toPersianNumber(operationalHistory.events.length)} رویداد | ${driftWorsening ? "روند drift بدترشونده" : "روند پایدار یا ناکافی"}`, tone: driftWorsening ? "critical" as StatusTone : "info" as StatusTone },
+    { title: "انضباط تاریخچه", caption: `${retentionStatusLabel(retentionReport.status)} | ${toPersianNumber(retentionReport.archiveCandidateCount)} قابل آرشیو`, tone: retentionStatusTone(retentionReport.status) },
+    { title: "تقویم کنترل‌ها", caption: `${toPersianNumber(operationsCalendar.overdueCount)} عقب‌افتاده | ${toPersianNumber(operationsCalendar.todayCount)} امروز | ${operationsCalendar.nextBestControl?.title ?? "کنترل بازی باقی نمانده"}`, tone: operationsCalendar.urgentCount || operationsCalendar.overdueCount ? "critical" as StatusTone : operationsCalendar.todayCount ? "warn" as StatusTone : "good" as StatusTone },
+    { title: "اعلان‌های عملیاتی", caption: `${toPersianNumber(operationalNotifications.unread)} خوانده‌نشده | ${toPersianNumber(operationalNotifications.urgent)} فوری | ${toPersianNumber(operationalNotifications.dueToday)} امروز`, tone: operationalNotifications.urgent ? "critical" as StatusTone : operationalNotifications.unread ? "warn" as StatusTone : "good" as StatusTone },
+    { title: "ریسک کل", caption: `${toPersianNumber(analysis.totalRiskScore)} امتیاز ریسک از ${toPersianNumber(activeRuleCount)} قانون فعال`, tone: analysis.totalRiskScore > 40 ? "critical" as StatusTone : analysis.totalRiskScore > 15 ? "warn" as StatusTone : "good" as StatusTone },
   ];
 
   return (
     <div className="page-stack">
       <header className="hero-header">
         <div>
-          <span className="eyebrow">ط¯ط§ط´ط¨ظˆط±ط¯ ظ‡ظپطھع¯غŒ P2</span>
-          <h1>ط§طھط§ظ‚ ظپط±ظ…ط§ظ† ظ‡ظپطھظ‡</h1>
-          <p>طھط­ظ„غŒظ„ ظˆط§ظ‚ط¹غŒ ط§ط² ط¯ط§ط¯ظ‡â€Œظ‡ط§غŒ ط°ط®غŒط±ظ‡â€Œط´ط¯ظ‡طŒ ظ‚ظˆط§ظ†غŒظ† ظپط¹ط§ظ„ ظˆ ط¨ط±ظ†ط§ظ…ظ‡ ظ‡ظپطھع¯غŒ.</p>
+          <span className="eyebrow">داشبورد هفتگی P2</span>
+          <h1>اتاق فرمان هفته</h1>
+          <p>تحلیل واقعی از داده‌های ذخیره‌شده، قوانین فعال و برنامه هفتگی.</p>
         </div>
         <div className="hero-actions">
           <button className="ghost-button" type="button" onClick={resetDemo}>
-            <RotateCcw size={17} /> ط¨ط§ط²ع¯ط´طھ demo
+            <RotateCcw size={17} /> بازگشت demo
           </button>
           <a className="primary-button" href="/organization/workforce-dashboard/rules">
-            <Sparkles size={17} /> ظ‚ظˆط§ظ†غŒظ† طھط­ظ„غŒظ„
+            <Sparkles size={17} /> قوانین تحلیل
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/analysis">
-            <AlertTriangle size={17} /> ظ…ط´ط§ظ‡ط¯ظ‡ ط¬ط²ط¦غŒط§طھ طھط­ظ„غŒظ„
+            <AlertTriangle size={17} /> مشاهده جزئیات تحلیل
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/recommendations">
-            <Sparkles size={17} /> ظ…ط´ط§ظ‡ط¯ظ‡ ظ‡ظ…ظ‡ ظ¾غŒط´ظ†ظ‡ط§ط¯ظ‡ط§
+            <Sparkles size={17} /> مشاهده همه پیشنهادها
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/decision-queue">
-            <CheckCircle2 size={17} /> طµظپ طھطµظ…غŒظ…â€Œع¯غŒط±غŒ
+            <CheckCircle2 size={17} /> صف تصمیم‌گیری
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/decision-report">
-            <Activity size={17} /> ع¯ط²ط§ط±ط´â€Œظ‡ط§غŒ طھطµظ…غŒظ…
+            <Activity size={17} /> گزارش‌های تصمیم
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/report-archive">
-            <CalendarDays size={17} /> ط¢ط±ط´غŒظˆ طھطµظ…غŒظ…â€Œظ‡ط§
+            <CalendarDays size={17} /> آرشیو تصمیم‌ها
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/monthly-health">
-            <Activity size={17} /> ط³ظ„ط§ظ…طھ ظ…ط§ظ‡ط§ظ†ظ‡
+            <Activity size={17} /> سلامت ماهانه
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/preventive-alerts">
-            <AlertTriangle size={17} /> ظ‡ط´ط¯ط§ط± ظ¾غŒط´ع¯غŒط±ط§ظ†ظ‡
+            <AlertTriangle size={17} /> هشدار پیشگیرانه
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/readiness">
-            <ShieldCheck size={17} /> ط¢ظ…ط§ط¯ع¯غŒ ط¹ظ…ظ„غŒط§طھغŒ
+            <ShieldCheck size={17} /> آمادگی عملیاتی
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/launch-checklist">
-            <ClipboardCheck size={17} /> ع†ع©â€Œظ„غŒط³طھ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ
+            <ClipboardCheck size={17} /> چک‌لیست راه‌اندازی
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/launch-signoff">
-            <FileCheck2 size={17} /> طھط£غŒغŒط¯ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ
+            <FileCheck2 size={17} /> تأیید راه‌اندازی
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/baseline-drift">
-            <Activity size={17} /> ظ¾ط§غŒط´ Drift
+            <Activity size={17} /> پایش Drift
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/operational-history">
-            <Clock3 size={17} /> طھط§ط±غŒط®ع†ظ‡ ط¹ظ…ظ„غŒط§طھغŒ
+            <Clock3 size={17} /> تاریخچه عملیاتی
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/history-retention">
-            <ShieldCheck size={17} /> ظ†ع¯ظ‡ط¯ط§ط±غŒ طھط§ط±غŒط®ع†ظ‡
+            <ShieldCheck size={17} /> نگهداری تاریخچه
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/operations-calendar">
-            <CalendarDays size={17} /> طھظ‚ظˆغŒظ… ع©ظ†طھط±ظ„â€Œظ‡ط§
+            <CalendarDays size={17} /> تقویم کنترل‌ها
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/data-center">
-            <ShieldCheck size={17} /> ط¬ط¹ط¨ظ‡ ط³غŒط§ظ‡ ط¯ط§ط¯ظ‡â€Œظ‡ط§
+            <ShieldCheck size={17} /> جعبه سیاه داده‌ها
           </a>
           <a className="ghost-button" href="/organization/workforce-dashboard/simulator">
-            <Sparkles size={17} /> ط´ط¨غŒظ‡â€Œط³ط§ط²
+            <Sparkles size={17} /> شبیه‌ساز
           </a>
         </div>
       </header>
@@ -1153,7 +1153,7 @@ function DashboardPageV2({
         <div className="side-column">
           <CapacityPanel items={capacityItems} />
           <section className="panel">
-            <h2>ط§ظ…طھغŒط§ط²ظ‡ط§غŒ طھط­ظ„غŒظ„</h2>
+            <h2>امتیازهای تحلیل</h2>
             <div className="score-grid">
               {scoreCells.map((item) => (
                 <div className={`heat-cell tone-${item.tone}`} key={item.label}>
@@ -1168,96 +1168,96 @@ function DashboardPageV2({
           <WeeklyGrid employees={employees} items={scheduleItems} spaces={spaces} taskTypes={taskTypes} />
         </div>
         <div className="side-column">
-          <InfoPanel title="ظ‡ط´ط¯ط§ط±ظ‡ط§غŒ ظپظˆط±غŒ" items={urgentAlerts} />
-          <InfoPanel title="ظ¾غŒط´ظ†ظ‡ط§ط¯ظ‡ط§غŒ ظ‡ظˆط´ظ…ظ†ط¯" items={smartSuggestions} />
+          <InfoPanel title="هشدارهای فوری" items={urgentAlerts} />
+          <InfoPanel title="پیشنهادهای هوشمند" items={smartSuggestions} />
           <a className="primary-button full-button" href="/organization/workforce-dashboard/recommendations">
-            <Sparkles size={17} /> ظ…ط´ط§ظ‡ط¯ظ‡ ظ‡ظ…ظ‡ ظ¾غŒط´ظ†ظ‡ط§ط¯ظ‡ط§
+            <Sparkles size={17} /> مشاهده همه پیشنهادها
           </a>
         </div>
       </section>
 
       <section className="bottom-grid">
         <section className={`panel launch-progress-card tone-${operationalNotifications.urgent ? "critical" : operationalNotifications.unread ? "warn" : "good"}`}>
-          <div className="section-head"><h2>ط§ط¹ظ„ط§ظ†â€Œظ‡ط§غŒ ط¹ظ…ظ„غŒط§طھغŒ</h2><StatusBadge tone={operationalNotifications.urgent ? "critical" : operationalNotifications.unread ? "warn" : "good"}>{toPersianNumber(operationalNotifications.unread)} ط®ظˆط§ظ†ط¯ظ‡â€Œظ†ط´ط¯ظ‡</StatusBadge></div>
-          <p>{toPersianNumber(operationalNotifications.urgent)} ظپظˆط±غŒ ظˆ {toPersianNumber(operationalNotifications.dueToday)} ظ…ظˆط±ط¯ ط¨ط§ ظ…ظˆط¹ط¯ ط§ظ…ط±ظˆط²</p>
-          <small>ط§ط¹ظ„ط§ظ†â€Œظ‡ط§ ظ…ط­ظ„غŒâ€Œط§ظ†ط¯ ظˆ ظپظ‚ط· ط¯ط§ط®ظ„ ط§غŒظ† ط¯ط§ط´ط¨ظˆط±ط¯ ظ†ع¯ظ‡ط¯ط§ط±غŒ ظ…غŒâ€Œط´ظˆظ†ط¯.</small>
-          <a className="primary-button" href="/organization/workforce-dashboard/operations-calendar">ظ…ط´ط§ظ‡ط¯ظ‡ ط§ط¹ظ„ط§ظ†â€Œظ‡ط§</a>
+          <div className="section-head"><h2>اعلان‌های عملیاتی</h2><StatusBadge tone={operationalNotifications.urgent ? "critical" : operationalNotifications.unread ? "warn" : "good"}>{toPersianNumber(operationalNotifications.unread)} خوانده‌نشده</StatusBadge></div>
+          <p>{toPersianNumber(operationalNotifications.urgent)} فوری و {toPersianNumber(operationalNotifications.dueToday)} مورد با موعد امروز</p>
+          <small>اعلان‌ها محلی‌اند و فقط داخل این داشبورد نگهداری می‌شوند.</small>
+          <a className="primary-button" href="/organization/workforce-dashboard/operations-calendar">مشاهده اعلان‌ها</a>
         </section>
         <section className={`panel launch-progress-card tone-${operationsCalendar.urgentCount || operationsCalendar.overdueCount ? "critical" : operationsCalendar.todayCount ? "warn" : "good"}`}>
-          <div className="section-head"><h2>طھظ‚ظˆغŒظ… ع©ظ†طھط±ظ„â€Œظ‡ط§غŒ ط¹ظ…ظ„غŒط§طھغŒ</h2><StatusBadge tone={operationsCalendar.urgentCount ? "critical" : operationsCalendar.todayCount ? "warn" : "good"}>{toPersianNumber(operationsCalendar.totalControls)} ع©ظ†طھط±ظ„</StatusBadge></div>
+          <div className="section-head"><h2>تقویم کنترل‌های عملیاتی</h2><StatusBadge tone={operationsCalendar.urgentCount ? "critical" : operationsCalendar.todayCount ? "warn" : "good"}>{toPersianNumber(operationsCalendar.totalControls)} کنترل</StatusBadge></div>
           <p>{operationsCalendar.summary}</p>
-          <small>{operationsCalendar.nextBestControl ? `ط§ظ‚ط¯ط§ظ… ط¨ط¹ط¯غŒ: ${operationsCalendar.nextBestControl.title}` : "ظ‡ظ…ظ‡ ع©ظ†طھط±ظ„â€Œظ‡ط§ ط±ط³غŒط¯ع¯غŒ ط´ط¯ظ‡â€Œط§ظ†ط¯."}</small>
-          <a className="primary-button" href="/organization/workforce-dashboard/operations-calendar"><CalendarDays size={17} /> ظ…ط´ط§ظ‡ط¯ظ‡ طھظ‚ظˆغŒظ…</a>
+          <small>{operationsCalendar.nextBestControl ? `اقدام بعدی: ${operationsCalendar.nextBestControl.title}` : "همه کنترل‌ها رسیدگی شده‌اند."}</small>
+          <a className="primary-button" href="/organization/workforce-dashboard/operations-calendar"><CalendarDays size={17} /> مشاهده تقویم</a>
         </section>
         {(retentionReport.status === "risky" || retentionReport.status === "needs_review") && (
           <section className={`panel launch-progress-card tone-${retentionStatusTone(retentionReport.status)}`}>
-            <div className="section-head"><h2>ط³غŒط§ط³طھ ظ†ع¯ظ‡ط¯ط§ط±غŒ</h2><StatusBadge tone={retentionStatusTone(retentionReport.status)}>{retentionStatusLabel(retentionReport.status)}</StatusBadge></div>
-            <p>{retentionReport.summary}</p><small>{retentionReport.recommendations[0]}</small><a className="primary-button" href="/organization/workforce-dashboard/history-retention">ط¨ط±ط±ط³غŒ retention</a>
+            <div className="section-head"><h2>سیاست نگهداری</h2><StatusBadge tone={retentionStatusTone(retentionReport.status)}>{retentionStatusLabel(retentionReport.status)}</StatusBadge></div>
+            <p>{retentionReport.summary}</p><small>{retentionReport.recommendations[0]}</small><a className="primary-button" href="/organization/workforce-dashboard/history-retention">بررسی retention</a>
           </section>
         )}
         <section className={`panel launch-progress-card tone-${driftWorsening ? "critical" : "info"}`}>
-          <div className="section-head"><h2>طھط§ط±غŒط®ع†ظ‡ ط¹ظ…ظ„غŒط§طھغŒ</h2><StatusBadge tone={driftWorsening ? "critical" : "info"}>{driftWorsening ? "ط±ظˆ ط¨ظ‡ ط¨ط¯طھط±ط´ط¯ظ†" : "ظ¾ط§غŒط´ ظپط¹ط§ظ„"}</StatusBadge></div>
+          <div className="section-head"><h2>تاریخچه عملیاتی</h2><StatusBadge tone={driftWorsening ? "critical" : "info"}>{driftWorsening ? "رو به بدترشدن" : "پایش فعال"}</StatusBadge></div>
           <p>{operationalHistory.summary}</p>
           <small>{operationalHistory.recommendedAction}</small>
-          <a className="primary-button" href="/organization/workforce-dashboard/operational-history">ظ…ط´ط§ظ‡ط¯ظ‡ طھط§ط±غŒط®ع†ظ‡</a>
+          <a className="primary-button" href="/organization/workforce-dashboard/operational-history">مشاهده تاریخچه</a>
         </section>
         <section className={`panel launch-progress-card tone-${driftTone(baselineDrift.driftLevel)}`}>
-          <div className="section-head"><h2>Drift ظ†ط³ط¨طھ ط¨ظ‡ baseline</h2><StatusBadge tone={driftTone(baselineDrift.driftLevel)}>{driftLevelLabel(baselineDrift.driftLevel)}</StatusBadge></div>
-          <strong>{toPersianNumber(baselineDrift.driftScore)} ط§ط² غ±غ°غ°</strong>
-          <small>{baselineDrift.requiresResignoff ? "ط¨ط§ط²طھط£غŒغŒط¯ ط¹ظ…ظ„غŒط§طھغŒ ظ„ط§ط²ظ… ط§ط³طھ." : baselineDrift.recommendedAction}</small>
-          <a className="primary-button" href="/organization/workforce-dashboard/baseline-drift">ظ…ط´ط§ظ‡ط¯ظ‡ طھط؛غŒغŒط±ط§طھ</a>
+          <div className="section-head"><h2>Drift نسبت به baseline</h2><StatusBadge tone={driftTone(baselineDrift.driftLevel)}>{driftLevelLabel(baselineDrift.driftLevel)}</StatusBadge></div>
+          <strong>{toPersianNumber(baselineDrift.driftScore)} از ۱۰۰</strong>
+          <small>{baselineDrift.requiresResignoff ? "بازتأیید عملیاتی لازم است." : baselineDrift.recommendedAction}</small>
+          <a className="primary-button" href="/organization/workforce-dashboard/baseline-drift">مشاهده تغییرات</a>
         </section>
         <section className={`panel launch-progress-card tone-${latestLaunchSignoff ? "good" : "warn"}`}>
           <div className="section-head">
-            <h2>ظˆط¶ط¹غŒطھ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ</h2>
-            <StatusBadge tone={latestLaunchSignoff ? "good" : "warn"}>{latestLaunchSignoff ? "ط¹ظ…ظ„غŒط§طھغŒ" : "طھط£غŒغŒط¯ظ†ط´ط¯ظ‡"}</StatusBadge>
+            <h2>وضعیت راه‌اندازی</h2>
+            <StatusBadge tone={latestLaunchSignoff ? "good" : "warn"}>{latestLaunchSignoff ? "عملیاتی" : "تأییدنشده"}</StatusBadge>
           </div>
-          <p>{latestLaunchSignoff ? "ط³غŒط³طھظ… ط¹ظ…ظ„غŒط§طھغŒ ط´ط¯ظ‡ ط§ط³طھ." : "ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ ظ‡ظ†ظˆط² طھط£غŒغŒط¯ ظ†ط´ط¯ظ‡ ط§ط³طھ."}</p>
-          <small>{latestLaunchSignoff ? `${latestLaunchSignoff.signedBy} | ${toPersianNumber(new Date(latestLaunchSignoff.signedAt ?? latestLaunchSignoff.updatedAt).toLocaleDateString("fa-IR"))}` : "ع¯ط²ط§ط±ط´ ظ†ظ‡ط§غŒغŒ ظˆ baseline ط±ط§ ط«ط¨طھ ع©ظ†غŒط¯."}</small>
-          <a className="primary-button" href="/organization/workforce-dashboard/launch-signoff"><FileCheck2 size={17} /> ع¯ط²ط§ط±ط´ طھط£غŒغŒط¯</a>
+          <p>{latestLaunchSignoff ? "سیستم عملیاتی شده است." : "راه‌اندازی هنوز تأیید نشده است."}</p>
+          <small>{latestLaunchSignoff ? `${latestLaunchSignoff.signedBy} | ${toPersianNumber(new Date(latestLaunchSignoff.signedAt ?? latestLaunchSignoff.updatedAt).toLocaleDateString("fa-IR"))}` : "گزارش نهایی و baseline را ثبت کنید."}</small>
+          <a className="primary-button" href="/organization/workforce-dashboard/launch-signoff"><FileCheck2 size={17} /> گزارش تأیید</a>
         </section>
         <section className="panel launch-progress-card">
           <div className="section-head">
-            <h2>ظ¾غŒط´ط±ظپطھ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ</h2>
+            <h2>پیشرفت راه‌اندازی</h2>
             <StatusBadge tone={launchReport.criticalOpenCount ? "critical" : launchReport.openCount ? "warn" : "good"}>
-              {toPersianNumber(launchReport.progressPercent)}ظھ
+              {toPersianNumber(launchReport.progressPercent)}٪
             </StatusBadge>
           </div>
           <div className="mini-meter readiness-meter"><span style={{ width: `${launchReport.progressPercent}%` }} /></div>
-          <p>{toPersianNumber(launchReport.openCount)} ط§ظ‚ط¯ط§ظ… ط¨ط§ط²</p>
-          <small>{launchReport.nextBestStep?.title ?? "ع¯ط§ظ… ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ ط¨ط§ط²غŒ ط¨ط§ظ‚غŒ ظ†ظ…ط§ظ†ط¯ظ‡ ط§ط³طھ."}</small>
+          <p>{toPersianNumber(launchReport.openCount)} اقدام باز</p>
+          <small>{launchReport.nextBestStep?.title ?? "گام راه‌اندازی بازی باقی نمانده است."}</small>
           <a className="primary-button" href="/organization/workforce-dashboard/launch-checklist">
-            <ClipboardCheck size={17} /> ط§ط¯ط§ظ…ظ‡ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ
+            <ClipboardCheck size={17} /> ادامه راه‌اندازی
           </a>
         </section>
         <section className="panel wide-panel">
-          <h2>ظˆط¶ط¹غŒطھ ط®ظ„ط§طµظ‡ ع©ط§ط±ظ…ظ†ط¯ظ‡ط§</h2>
+          <h2>وضعیت خلاصه کارمندها</h2>
           <div className="employee-list">
             {employeeSummaries.map((employee) => (
               <article key={employee.name}>
                 <div>
                   <strong>{employee.name}</strong>
-                  <span>{employee.role}طŒ {toPersianNumber(employee.hours)} ط³ط§ط¹طھطŒ {toPersianNumber(employee.alerts)} ظ‡ط´ط¯ط§ط±</span>
+                  <span>{employee.role}، {toPersianNumber(employee.hours)} ساعت، {toPersianNumber(employee.alerts)} هشدار</span>
                 </div>
-                <StatusBadge tone={employee.tone}>{employee.alerts ? "ظ†غŒط§ط²ظ…ظ†ط¯ طھظˆط¬ظ‡" : "ظ¾ط§غŒط¯ط§ط±"}</StatusBadge>
+                <StatusBadge tone={employee.tone}>{employee.alerts ? "نیازمند توجه" : "پایدار"}</StatusBadge>
               </article>
             ))}
           </div>
         </section>
-        <InfoPanel title="ظ…ط±ع©ط² طھطµظ…غŒظ… ظ‡ظپطھظ‡" items={decisionItems} />
+        <InfoPanel title="مرکز تصمیم هفته" items={decisionItems} />
         <section className="panel">
-          <h2>ط¬ط²ط¦غŒط§طھ طھط­ظ„غŒظ„</h2>
+          <h2>جزئیات تحلیل</h2>
           <div className="analysis-list">
             {topFindings.slice(0, 5).map((item) => (
               <article className={`panel-row tone-${severityTone(item.severity)}`} key={item.id}>
                 <StatusBadge tone={severityTone(item.severity)}>
-                  {item.severity === "critical" ? "ط¨ط­ط±ط§ظ†غŒ" : item.severity === "warning" ? "ظ‡ط´ط¯ط§ط±" : "ط§ط·ظ„ط§ط¹"}
+                  {item.severity === "critical" ? "بحرانی" : item.severity === "warning" ? "هشدار" : "اطلاع"}
                 </StatusBadge>
                 <p>{item.title}</p>
                 <small>{item.recommendation}</small>
               </article>
             ))}
-            {!topFindings.length && <p>ط¬ط²ط¦غŒط§طھ ظ…ظ‡ظ…غŒ ط¨ط±ط§غŒ ظ†ظ…ط§غŒط´ ظˆط¬ظˆط¯ ظ†ط¯ط§ط±ط¯.</p>}
+            {!topFindings.length && <p>جزئیات مهمی برای نمایش وجود ندارد.</p>}
           </div>
         </section>
       </section>
@@ -1270,35 +1270,35 @@ function isSalesSpaceName(space: Space) {
 }
 
 function severityLabel(severity: AnalysisSeverity) {
-  if (severity === "critical") return "ط¨ط­ط±ط§ظ†غŒ";
-  if (severity === "warning") return "ظ‡ط´ط¯ط§ط±";
-  if (severity === "info") return "ط§ط·ظ„ط§ط¹";
-  return "ظ¾ط§غŒط¯ط§ط±";
+  if (severity === "critical") return "بحرانی";
+  if (severity === "warning") return "هشدار";
+  if (severity === "info") return "اطلاع";
+  return "پایدار";
 }
 
 function scenarioTypeLabel(type: RecommendationScenarioType) {
   const labels: Record<RecommendationScenarioType, string> = {
-    move_space: "طھط؛غŒغŒط± ظپط¶ط§",
-    move_time: "طھط؛غŒغŒط± ط²ظ…ط§ظ†",
-    change_employee: "طھط؛غŒغŒط± ع©ط§ط±ظ…ظ†ط¯",
-    add_support_person: "ط§ظپط²ظˆط¯ظ† ظ‡ظ…ط±ط§ظ‡",
-    keep_but_warn: "ظ¾ط§غŒط´",
-    split_task: "طھظ‚ط³غŒظ… ع©ط§ط±",
-    no_safe_action: "ظ†غŒط§ط²ظ…ظ†ط¯ طھطµظ…غŒظ…",
+    move_space: "تغییر فضا",
+    move_time: "تغییر زمان",
+    change_employee: "تغییر کارمند",
+    add_support_person: "افزودن همراه",
+    keep_but_warn: "پایش",
+    split_task: "تقسیم کار",
+    no_safe_action: "نیازمند تصمیم",
   };
   return labels[type];
 }
 
 function confidenceLabel(value: RecommendationScenario["confidence"]) {
-  if (value === "high") return "ط§ط¹طھظ…ط§ط¯ بالا";
-  if (value === "medium") return "ط§ط¹طھظ…ط§ط¯ متوسط";
-  return "ط§ط¹طھظ…ط§ط¯ ظ¾ط§غŒغŒظ†";
+  if (value === "high") return "اعتماد بالا";
+  if (value === "medium") return "اعتماد متوسط";
+  return "اعتماد پایین";
 }
 
 function effortLabel(value: RecommendationScenario["effortLevel"]) {
-  if (value === "high") return "ط§ط¬ط±ط§غŒ ط³ط®طھ";
-  if (value === "medium") return "ط§ط¬ط±ط§غŒ متوسط";
-  return "ط§ط¬ط±ط§غŒ ط³ط§ط¯ظ‡";
+  if (value === "high") return "اجرای سخت";
+  if (value === "medium") return "اجرای متوسط";
+  return "اجرای ساده";
 }
 
 function confidenceTone(value: RecommendationScenario["confidence"]): StatusTone {
@@ -1375,38 +1375,38 @@ function AnalysisDetailsPage({
       return severityWeight[b.severity] - severityWeight[a.severity] || b.scoreImpact - a.scoreImpact;
     });
 
-  const ruleOptions = [{ label: "ظ‡ظ…ظ‡ ظ‚ظˆط§ظ†غŒظ†", value: "" }, ...rules.map((rule) => ({ label: rule.title, value: rule.id }))];
-  const employeeOptions = optionList(employees, "ظ‡ظ…ظ‡ ع©ط§ط±ظ…ظ†ط¯ط§ظ†");
-  const spaceOptions = optionList(spaces, "ظ‡ظ…ظ‡ ظپط¶ط§ظ‡ط§");
+  const ruleOptions = [{ label: "همه قوانین", value: "" }, ...rules.map((rule) => ({ label: rule.title, value: rule.id }))];
+  const employeeOptions = optionList(employees, "همه کارمندان");
+  const spaceOptions = optionList(spaces, "همه فضاها");
 
   return (
     <div className="page-stack">
       <header className="page-header">
         <div>
-          <span className="eyebrow">ط¬ط²ط¦غŒط§طھ طھط­ظ„غŒظ„</span>
-          <h1>ظ‡ط´ط¯ط§ط±ظ‡ط§ ظˆ ظ¾غŒط´ظ†ظ‡ط§ط¯ظ‡ط§غŒ ط³غŒط³طھظ…</h1>
-          <p>ظ‡ظ…ظ‡ findings ط§ط² ظ…ظˆطھظˆط± طھط­ظ„غŒظ„ ظˆط§ظ‚ط¹غŒ ظˆ ظ‚ظˆط§ظ†غŒظ† ظپط¹ط§ظ„ ط³ط§ط®طھظ‡ ظ…غŒâ€Œط´ظˆظ†ط¯.</p>
+          <span className="eyebrow">جزئیات تحلیل</span>
+          <h1>هشدارها و پیشنهادهای سیستم</h1>
+          <p>همه findings از موتور تحلیل واقعی و قوانین فعال ساخته می‌شوند.</p>
         </div>
         <a className="primary-button" href="/organization/workforce-dashboard/schedule">
-          <CalendarDays size={17} /> ط±ظپطھظ† ط¨ظ‡ ط¨ط±ظ†ط§ظ…ظ‡ ظ‡ظپطھع¯غŒ
+          <CalendarDays size={17} /> رفتن به برنامه هفتگی
         </a>
       </header>
 
       <section className="kpi-strip">
-        <article className="kpi-card tone-info"><div><p>ع©ظ„ غŒط§ظپطھظ‡â€Œظ‡ط§</p><strong>{toPersianNumber(analysis.findings.length)}</strong><span>ظ¾ط³ ط§ط² ظ‚ظˆط§ظ†غŒظ† ظپط¹ط§ظ„</span></div></article>
-        <article className="kpi-card tone-critical"><div><p>ط¨ط­ط±ط§ظ†غŒ</p><strong>{toPersianNumber(analysis.criticalCount)}</strong><span>ظ†غŒط§ط²ظ…ظ†ط¯ ط§ظ‚ط¯ط§ظ… ظپظˆط±غŒ</span></div></article>
-        <article className="kpi-card tone-warn"><div><p>ظ‡ط´ط¯ط§ط±</p><strong>{toPersianNumber(analysis.warningCount)}</strong><span>ظ†غŒط§ط²ظ…ظ†ط¯ طھظˆط¬ظ‡</span></div></article>
-        <article className="kpi-card tone-good"><div><p>ط§ظ…طھغŒط§ط² ع©ظ†طھط±ظ„</p><strong>{toPersianNumber(analysis.controlScore)}</strong><span>ط§ط² غ±غ°غ°</span></div></article>
-        <article className="kpi-card tone-focus"><div><p>ط±غŒط³ع© ع©ظ„</p><strong>{toPersianNumber(analysis.totalRiskScore)}</strong><span>ط¬ظ…ط¹ ط§ط«ط± ظ‡ط´ط¯ط§ط±ظ‡ط§</span></div></article>
+        <article className="kpi-card tone-info"><div><p>کل یافته‌ها</p><strong>{toPersianNumber(analysis.findings.length)}</strong><span>پس از قوانین فعال</span></div></article>
+        <article className="kpi-card tone-critical"><div><p>بحرانی</p><strong>{toPersianNumber(analysis.criticalCount)}</strong><span>نیازمند اقدام فوری</span></div></article>
+        <article className="kpi-card tone-warn"><div><p>هشدار</p><strong>{toPersianNumber(analysis.warningCount)}</strong><span>نیازمند توجه</span></div></article>
+        <article className="kpi-card tone-good"><div><p>امتیاز کنترل</p><strong>{toPersianNumber(analysis.controlScore)}</strong><span>از ۱۰۰</span></div></article>
+        <article className="kpi-card tone-focus"><div><p>ریسک کل</p><strong>{toPersianNumber(analysis.totalRiskScore)}</strong><span>جمع اثر هشدارها</span></div></article>
       </section>
 
       <section className="filter-bar">
         <Filter size={16} />
         <select value={severity} onChange={(event) => setSeverity(event.target.value)}>
-          <option value="">ظ‡ظ…ظ‡ ط´ط¯طھâ€Œظ‡ط§</option>
-          <option value="critical">ط¨ط­ط±ط§ظ†غŒ</option>
-          <option value="warning">ظ‡ط´ط¯ط§ط±</option>
-          <option value="info">ط§ط·ظ„ط§ط¹</option>
+          <option value="">همه شدت‌ها</option>
+          <option value="critical">بحرانی</option>
+          <option value="warning">هشدار</option>
+          <option value="info">اطلاع</option>
         </select>
         <select value={ruleId} onChange={(event) => setRuleId(event.target.value)}>
           {ruleOptions.map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
@@ -1421,10 +1421,10 @@ function AnalysisDetailsPage({
           {spaceOptions.map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
         </select>
         <select value={sortMode} onChange={(event) => setSortMode(event.target.value)}>
-          <option value="severity">ظ…ط±طھط¨â€Œط³ط§ط²غŒ ط´ط¯طھ</option>
-          <option value="time">ظ…ط±طھط¨â€Œط³ط§ط²غŒ ط²ظ…ط§ظ†</option>
+          <option value="severity">مرتب‌سازی شدت</option>
+          <option value="time">مرتب‌سازی زمان</option>
         </select>
-        <input className="search-input" value={query} placeholder="ط¬ط³طھâ€Œظˆط¬ظˆ ط¯ط± ظ‡ط´ط¯ط§ط±ظ‡ط§" onChange={(event) => setQuery(event.target.value)} />
+        <input className="search-input" value={query} placeholder="جست‌وجو در هشدارها" onChange={(event) => setQuery(event.target.value)} />
       </section>
 
       <section className="analysis-card-grid">
@@ -1437,7 +1437,7 @@ function AnalysisDetailsPage({
             <article className={`analysis-card tone-${severityTone(finding.severity)}`} key={finding.id}>
               <div className="analysis-card-head">
                 <StatusBadge tone={severityTone(finding.severity)}>{severityLabel(finding.severity)}</StatusBadge>
-                <span>{rule?.title ?? "ظ‚ط§ظ†ظˆظ† ظ†ط§ظ…ط´ط®طµ"}</span>
+                <span>{rule?.title ?? "قانون نامشخص"}</span>
               </div>
               <h2>{finding.title}</h2>
               <p>{finding.description}</p>
@@ -1446,17 +1446,17 @@ function AnalysisDetailsPage({
                 <small>{finding.whyItHappened}</small>
               </div>
               <div className="finding-meta">
-                <span>ط²ظ…ط§ظ†: {finding.dayOfWeek ?? "ع©ظ„ ظ‡ظپطھظ‡"} {toPersianNumber(finding.startTime ?? "")} {finding.endTime ? `طھط§ ${toPersianNumber(finding.endTime)}` : ""}</span>
-                <span>ع©ط§ط±ظ…ظ†ط¯ظ‡ط§: {names.length ? names.join("طŒ ") : "ط«ط¨طھ ظ†ط´ط¯ظ‡"}</span>
-                <span>ظپط¶ط§ظ‡ط§: {spaceNames.length ? spaceNames.join("طŒ ") : "ط«ط¨طھ ظ†ط´ط¯ظ‡"}</span>
-                <span>ط¢غŒطھظ…â€Œظ‡ط§: {toPersianNumber(finding.affectedScheduleItemIds.length)}</span>
-                <span>ط§ط«ط± ط±غŒط³ع©: {toPersianNumber(finding.scoreImpact)}</span>
+                <span>زمان: {finding.dayOfWeek ?? "کل هفته"} {toPersianNumber(finding.startTime ?? "")} {finding.endTime ? `تا ${toPersianNumber(finding.endTime)}` : ""}</span>
+                <span>کارمندها: {names.length ? names.join("، ") : "ثبت نشده"}</span>
+                <span>فضاها: {spaceNames.length ? spaceNames.join("، ") : "ثبت نشده"}</span>
+                <span>آیتم‌ها: {toPersianNumber(finding.affectedScheduleItemIds.length)}</span>
+                <span>اثر ریسک: {toPersianNumber(finding.scoreImpact)}</span>
               </div>
               <div className="recommendation-row">
                 <strong>{finding.recommendation}</strong>
-                <a className="ghost-button" href={`/organization/workforce-dashboard/schedule${finding.affectedScheduleItemIds[0] ? `?itemId=${finding.affectedScheduleItemIds[0]}` : ""}`}>ظ…ط´ط§ظ‡ط¯ظ‡ ط¯ط± ط¨ط±ظ†ط§ظ…ظ‡ ظ‡ظپطھع¯غŒ</a>
+                <a className="ghost-button" href={`/organization/workforce-dashboard/schedule${finding.affectedScheduleItemIds[0] ? `?itemId=${finding.affectedScheduleItemIds[0]}` : ""}`}>مشاهده در برنامه هفتگی</a>
                 {!!finding.affectedScheduleItemIds.length && (
-                  <a className="primary-button" href={`/organization/workforce-dashboard/simulator?findingId=${encodeURIComponent(finding.id)}`}>طھط³طھ ط¬ط§ط¨ظ‡â€Œط¬ط§غŒغŒ</a>
+                  <a className="primary-button" href={`/organization/workforce-dashboard/simulator?findingId=${encodeURIComponent(finding.id)}`}>تست جابه‌جایی</a>
                 )}
               </div>
               {!!finding.affectedScheduleItemIds.length && (
@@ -1469,26 +1469,26 @@ function AnalysisDetailsPage({
                     const task = taskTypes.find((row) => row.id === item.taskTypeId);
                     return (
                       <a className="schedule-mini-card" href={`/organization/workforce-dashboard/schedule?itemId=${item.id}`} key={item.id}>
-                        <strong>{item.day}طŒ {toPersianNumber(item.startTime)} طھط§ {toPersianNumber(item.endTime)}</strong>
-                        <span>{employee?.name ?? "ع©ط§ط±ظ…ظ†ط¯"} | {space?.name ?? "ظپط¶ط§"} | {task?.name ?? "ظ†ظˆط¹ ع©ط§ط±"}</span>
+                        <strong>{item.day}، {toPersianNumber(item.startTime)} تا {toPersianNumber(item.endTime)}</strong>
+                        <span>{employee?.name ?? "کارمند"} | {space?.name ?? "فضا"} | {task?.name ?? "نوع کار"}</span>
                       </a>
                     );
                   })}
                 </div>
               )}
               <div className="scenario-stack">
-                <strong>ظ¾غŒط´ظ†ظ‡ط§ط¯ظ‡ط§غŒ ظ‚ط§ط¨ظ„ ط¨ط±ط±ط³غŒ</strong>
+                <strong>پیشنهادهای قابل بررسی</strong>
                 {scenarios.map((scenario, index) => (
                   <div className="scenario-mini-card" key={scenario.id}>
                     <div>
-                      <StatusBadge tone={index === 0 ? "good" : confidenceTone(scenario.confidence)}>{index === 0 ? "ط¨ظ‡طھط±غŒظ† ع¯ط²غŒظ†ظ‡" : confidenceLabel(scenario.confidence)}</StatusBadge>
-                      <StatusBadge tone={scenario.canApply ? "good" : "warn"}>{scenario.canApply ? "ظ‚ط§ط¨ظ„ ط§ط¹ظ…ط§ظ„" : "طھطµظ…غŒظ… ظ…ط¯غŒط±"}</StatusBadge>
+                      <StatusBadge tone={index === 0 ? "good" : confidenceTone(scenario.confidence)}>{index === 0 ? "بهترین گزینه" : confidenceLabel(scenario.confidence)}</StatusBadge>
+                      <StatusBadge tone={scenario.canApply ? "good" : "warn"}>{scenario.canApply ? "قابل اعمال" : "تصمیم مدیر"}</StatusBadge>
                     </div>
                     <h3>{scenario.title}</h3>
                     <p>{scenario.reason}</p>
                     <div className="recommendation-row">
                       {scenario.change ? (
-                        <a className="primary-button" href={`/organization/workforce-dashboard/simulator?findingId=${encodeURIComponent(finding.id)}&scenarioId=${encodeURIComponent(scenario.id)}`}>طھط³طھ ط¯ط± ط´ط¨غŒظ‡â€Œط³ط§ط²</a>
+                        <a className="primary-button" href={`/organization/workforce-dashboard/simulator?findingId=${encodeURIComponent(finding.id)}&scenarioId=${encodeURIComponent(scenario.id)}`}>تست در شبیه‌ساز</a>
                       ) : (
                         <span className="inline-note">{scenario.reason}</span>
                       )}
@@ -1499,7 +1499,7 @@ function AnalysisDetailsPage({
             </article>
           );
         })}
-        {!filteredFindings.length && <section className="panel"><h2>ظ…ظˆط±ط¯غŒ ظ¾غŒط¯ط§ ظ†ط´ط¯</h2><p>ظپغŒظ„طھط±ظ‡ط§ ط±ط§ طھط؛غŒغŒط± ط¨ط¯ظ‡ غŒط§ ط¯ط§ط¯ظ‡â€Œظ‡ط§غŒ ط¨ط±ظ†ط§ظ…ظ‡ ط±ط§ ع©ط§ظ…ظ„â€Œطھط± ع©ظ†.</p></section>}
+        {!filteredFindings.length && <section className="panel"><h2>موردی پیدا نشد</h2><p>فیلترها را تغییر بده یا داده‌های برنامه را کامل‌تر کن.</p></section>}
       </section>
     </div>
   );
@@ -1547,7 +1547,7 @@ function RecommendationsPage({
 
   const applyScenario = (scenario: RecommendationScenario) => {
     if (!scenario.canApply || !scenario.change?.scheduleItemId) return;
-    const ok = window.confirm("ط§غŒظ† ظ¾غŒط´ظ†ظ‡ط§ط¯ ط±ظˆغŒ ط¨ط±ظ†ط§ظ…ظ‡ ط§طµظ„غŒ ط§ط¹ظ…ط§ظ„ ط´ظˆط¯طں ظپظ‚ط· ظ‡ظ…غŒظ† ط¢غŒطھظ… ط¨ط±ظ†ط§ظ…ظ‡ طھط؛غŒغŒط± ظ…غŒâ€Œع©ظ†ط¯.");
+    const ok = window.confirm("این پیشنهاد روی برنامه اصلی اعمال شود؟ فقط همین آیتم برنامه تغییر می‌کند.");
     if (!ok) return;
     const item = scheduleItems.find((row) => row.id === scenario.change?.scheduleItemId);
     if (!item) return;
@@ -1579,43 +1579,43 @@ function RecommendationsPage({
     <div className="page-stack">
       <header className="page-header">
         <div>
-          <span className="eyebrow">ظ…ظˆطھظˆط± ظ¾غŒط´ظ†ظ‡ط§ط¯ P6</span>
-          <h1>ظ¾غŒط´ظ†ظ‡ط§ط¯ظ‡ط§غŒ ظ†غŒظ…ظ‡â€Œط®ظˆط¯ع©ط§ط± ظ‡ظپطھظ‡</h1>
-          <p>ط³ظ†ط§ط±غŒظˆظ‡ط§ ط§ط² ط±ظˆغŒ ظ‡ط´ط¯ط§ط±ظ‡ط§غŒ ظˆط§ظ‚ط¹غŒ ط³ط§ط®طھظ‡طŒ ط¨ط§ ط´ط¨غŒظ‡â€Œط³ط§ط² طھط³طھ ظˆ ط¨ط±ط§ط³ط§ط³ ط§ط«ط±طŒ ط±غŒط³ع©طŒ ط§ط¹طھظ…ط§ط¯ ظˆ ظ‡ط²غŒظ†ظ‡ ط§ط¬ط±ط§ ط±طھط¨ظ‡â€Œط¨ظ†ط¯غŒ ظ…غŒâ€Œط´ظˆظ†ط¯.</p>
+          <span className="eyebrow">موتور پیشنهاد P6</span>
+          <h1>پیشنهادهای نیمه‌خودکار هفته</h1>
+          <p>سناریوها از روی هشدارهای واقعی ساخته، با شبیه‌ساز تست و براساس اثر، ریسک، اعتماد و هزینه اجرا رتبه‌بندی می‌شوند.</p>
         </div>
         <div className="hero-actions">
-          <a className="ghost-button" href="/organization/workforce-dashboard/analysis">ط¬ط²ط¦غŒط§طھ طھط­ظ„غŒظ„</a>
-          <a className="ghost-button" href="/organization/workforce-dashboard/decision-queue">ط±ظپطھظ† ط¨ظ‡ طµظپ طھطµظ…غŒظ…</a>
-          <a className="primary-button" href="/organization/workforce-dashboard/simulator">ط´ط¨غŒظ‡â€Œط³ط§ط²</a>
+          <a className="ghost-button" href="/organization/workforce-dashboard/analysis">جزئیات تحلیل</a>
+          <a className="ghost-button" href="/organization/workforce-dashboard/decision-queue">رفتن به صف تصمیم</a>
+          <a className="primary-button" href="/organization/workforce-dashboard/simulator">شبیه‌ساز</a>
         </div>
       </header>
 
       <section className="kpi-strip">
-        <article className="kpi-card tone-info"><div><p>ع©ظ„ ط³ظ†ط§ط±غŒظˆظ‡ط§</p><strong>{toPersianNumber(scenarios.length)}</strong><span>ط§ط² findings ظ…ظ‡ظ…</span></div></article>
-        <article className="kpi-card tone-good"><div><p>ظ‚ط§ط¨ظ„ ط§ط¹ظ…ط§ظ„</p><strong>{toPersianNumber(scenarios.filter((item) => item.canApply).length)}</strong><span>طھط؛غŒغŒط± طھع© ط¢غŒطھظ…غŒ ط§ظ…ظ†</span></div></article>
-        <article className="kpi-card tone-critical"><div><p>ظ†غŒط§ط²ظ…ظ†ط¯ طھطµظ…غŒظ…</p><strong>{toPersianNumber(scenarios.filter((item) => !item.canApply).length)}</strong><span>ع†ظ†ط¯ظ…ط±ط­ظ„ظ‡â€Œط§غŒ غŒط§ ظ†ط§ظ…ط·ظ…ط¦ظ†</span></div></article>
-        <article className="kpi-card tone-focus"><div><p>ط¨ظ‡طھط±غŒظ† ط§ظ…طھغŒط§ط²</p><strong>{toPersianNumber(Math.round(scenarios[0]?.rankScore ?? 0))}</strong><span>ط±طھط¨ظ‡ ظ…ط­ط§ط³ط¨ط§طھغŒ ظ…ظˆطھظˆط± ظ¾غŒط´ظ†ظ‡ط§ط¯</span></div></article>
-        <article className="kpi-card tone-warn"><div><p>ظ‡ط´ط¯ط§ط±ظ‡ط§غŒ ظ…ط¨ظ†ط§</p><strong>{toPersianNumber(analysis.criticalCount + analysis.warningCount)}</strong><span>critical ظˆ warning</span></div></article>
+        <article className="kpi-card tone-info"><div><p>کل سناریوها</p><strong>{toPersianNumber(scenarios.length)}</strong><span>از findings مهم</span></div></article>
+        <article className="kpi-card tone-good"><div><p>قابل اعمال</p><strong>{toPersianNumber(scenarios.filter((item) => item.canApply).length)}</strong><span>تغییر تک آیتمی امن</span></div></article>
+        <article className="kpi-card tone-critical"><div><p>نیازمند تصمیم</p><strong>{toPersianNumber(scenarios.filter((item) => !item.canApply).length)}</strong><span>چندمرحله‌ای یا نامطمئن</span></div></article>
+        <article className="kpi-card tone-focus"><div><p>بهترین امتیاز</p><strong>{toPersianNumber(Math.round(scenarios[0]?.rankScore ?? 0))}</strong><span>رتبه محاسباتی موتور پیشنهاد</span></div></article>
+        <article className="kpi-card tone-warn"><div><p>هشدارهای مبنا</p><strong>{toPersianNumber(analysis.criticalCount + analysis.warningCount)}</strong><span>critical و warning</span></div></article>
       </section>
 
       <section className="filter-bar">
         <Filter size={16} />
         <select value={severity} onChange={(event) => setSeverity(event.target.value)}>
-          <option value="">ظ‡ظ…ظ‡ ط´ط¯طھâ€Œظ‡ط§</option>
-          <option value="critical">ط¨ط­ط±ط§ظ†غŒ</option>
-          <option value="warning">ظ‡ط´ط¯ط§ط±</option>
+          <option value="">همه شدت‌ها</option>
+          <option value="critical">بحرانی</option>
+          <option value="warning">هشدار</option>
         </select>
         <select value={scenarioType} onChange={(event) => setScenarioType(event.target.value)}>
-          <option value="">ظ‡ظ…ظ‡ ظ†ظˆط¹ ط³ظ†ط§ط±غŒظˆظ‡ط§</option>
+          <option value="">همه نوع سناریوها</option>
           {(["move_space", "move_time", "change_employee", "add_support_person", "keep_but_warn", "split_task", "no_safe_action"] as RecommendationScenarioType[]).map((type) => (
             <option value={type} key={type}>{scenarioTypeLabel(type)}</option>
           ))}
         </select>
         <select value={employeeId} onChange={(event) => setEmployeeId(event.target.value)}>
-          {optionList(employees, "ظ‡ظ…ظ‡ ع©ط§ط±ظ…ظ†ط¯ط§ظ†").map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
+          {optionList(employees, "همه کارمندان").map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
         </select>
         <select value={spaceId} onChange={(event) => setSpaceId(event.target.value)}>
-          {optionList(spaces, "ظ‡ظ…ظ‡ ظپط¶ط§ظ‡ط§").map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
+          {optionList(spaces, "همه فضاها").map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
         </select>
         <select value={day} onChange={(event) => setDay(event.target.value)}>
           {dayOptions().map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
@@ -1633,21 +1633,21 @@ function RecommendationsPage({
           return (
             <article className={`analysis-card tone-${scenario.canApply ? "good" : severityTone(scenario.riskLevel)}`} key={scenario.id}>
               <div className="analysis-card-head">
-                <StatusBadge tone={scenario.canApply ? "good" : "warn"}>{scenario.canApply ? "ظ‚ط§ط¨ظ„ ط§ط¹ظ…ط§ظ„" : "ظ†غŒط§ط²ظ…ظ†ط¯ طھطµظ…غŒظ… ظ…ط¯غŒط±"}</StatusBadge>
+                <StatusBadge tone={scenario.canApply ? "good" : "warn"}>{scenario.canApply ? "قابل اعمال" : "نیازمند تصمیم مدیر"}</StatusBadge>
                 <StatusBadge tone={confidenceTone(scenario.confidence)}>{confidenceLabel(scenario.confidence)}</StatusBadge>
                 <StatusBadge tone="info">{scenarioTypeLabel(scenario.type)}</StatusBadge>
               </div>
               <h2>{scenario.title}</h2>
               <p>{scenario.description}</p>
               <div className="finding-meta">
-                <span>ظ…ط³ط¦ظ„ظ‡: {finding?.title ?? "finding ظ†ط§ظ…ط´ط®طµ"}</span>
-                <span>ط²ظ…ط§ظ†: {finding?.dayOfWeek ?? item?.day ?? "ع©ظ„ ظ‡ظپطھظ‡"} {toPersianNumber(finding?.startTime ?? item?.startTime ?? "")}</span>
-                <span>ظپط¶ط§غŒ ظ‡ط¯ظپ: {spaceName ?? "ط«ط¨طھ ظ†ط´ط¯ظ‡"}</span>
-                <span>ع©ط§ط±ظ…ظ†ط¯ ظ‡ط¯ظپ: {employeeName ?? "ط¨ط¯ظˆظ† طھط؛غŒغŒط±"}</span>
-                <span>ظ‚ط¨ظ„: {toPersianNumber(beforeScore)}</span>
-                <span>ط¨ط¹ط¯: {afterScore === undefined ? "ظ†غŒط§ط²ظ…ظ†ط¯ طھطµظ…غŒظ…" : toPersianNumber(afterScore)}</span>
-                <span>طھط؛غŒغŒط± ط±غŒط³ع©: {toPersianNumber(scenario.simulationResult?.riskScoreDelta ?? 0)}</span>
-                <span>ط§ظ…طھغŒط§ط² ط±طھط¨ظ‡: {toPersianNumber(Math.round(scenario.rankScore))}</span>
+                <span>مسئله: {finding?.title ?? "finding نامشخص"}</span>
+                <span>زمان: {finding?.dayOfWeek ?? item?.day ?? "کل هفته"} {toPersianNumber(finding?.startTime ?? item?.startTime ?? "")}</span>
+                <span>فضای هدف: {spaceName ?? "ثبت نشده"}</span>
+                <span>کارمند هدف: {employeeName ?? "بدون تغییر"}</span>
+                <span>قبل: {toPersianNumber(beforeScore)}</span>
+                <span>بعد: {afterScore === undefined ? "نیازمند تصمیم" : toPersianNumber(afterScore)}</span>
+                <span>تغییر ریسک: {toPersianNumber(scenario.simulationResult?.riskScoreDelta ?? 0)}</span>
+                <span>امتیاز رتبه: {toPersianNumber(Math.round(scenario.rankScore))}</span>
               </div>
               <div className="evidence-box">
                 <span>{scenario.expectedEffect}</span>
@@ -1655,17 +1655,17 @@ function RecommendationsPage({
               </div>
               <div className="recommendation-row">
                 <button className="ghost-button" type="button" onClick={() => addToQueue(scenario)}>
-                  ط§ظپط²ظˆط¯ظ† ط¨ظ‡ طµظپ طھطµظ…غŒظ…
+                  افزودن به صف تصمیم
                 </button>
-                {scenario.change && <a className="primary-button" href={`/organization/workforce-dashboard/simulator?findingId=${encodeURIComponent(scenario.findingId)}&scenarioId=${encodeURIComponent(scenario.id)}`}>طھط³طھ ط¯ط± ط´ط¨غŒظ‡â€Œط³ط§ط²</a>}
+                {scenario.change && <a className="primary-button" href={`/organization/workforce-dashboard/simulator?findingId=${encodeURIComponent(scenario.findingId)}&scenarioId=${encodeURIComponent(scenario.id)}`}>تست در شبیه‌ساز</a>}
                 <button className="danger-button" type="button" disabled={!scenario.canApply} onClick={() => applyScenario(scenario)}>
-                  {scenario.canApply ? "ط§ط¹ظ…ط§ظ„ طھط؛غŒغŒط±" : "ظ†غŒط§ط²ظ…ظ†ط¯ طھطµظ…غŒظ… ظ…ط¯غŒط±"}
+                  {scenario.canApply ? "اعمال تغییر" : "نیازمند تصمیم مدیر"}
                 </button>
               </div>
             </article>
           );
         })}
-        {!filtered.length && <section className="panel"><h2>ظ¾غŒط´ظ†ظ‡ط§ط¯غŒ ظ¾غŒط¯ط§ ظ†ط´ط¯</h2><p>ظپغŒظ„طھط±ظ‡ط§ ط±ط§ طھط؛غŒغŒط± ط¨ط¯ظ‡ غŒط§ ط¯ط§ط¯ظ‡â€Œظ‡ط§غŒ ط¨ط±ظ†ط§ظ…ظ‡ ط±ط§ ع©ط§ظ…ظ„â€Œطھط± ع©ظ†.</p></section>}
+        {!filtered.length && <section className="panel"><h2>پیشنهادی پیدا نشد</h2><p>فیلترها را تغییر بده یا داده‌های برنامه را کامل‌تر کن.</p></section>}
       </section>
     </div>
   );
@@ -1741,10 +1741,10 @@ function DecisionQueuePage({
     const result = simulateDecisionBatch(input, selectedScenarios);
     setBatchResult(result);
     if (!result.safeToApply) {
-      window.alert("ط§غŒظ† طھط±ع©غŒط¨ ظ‡ظ†ظˆط² ط§ظ…ظ† ظ†غŒط³طھ. ط§ط¨طھط¯ط§ طھط¯ط§ط®ظ„â€Œظ‡ط§ غŒط§ ظ‡ط´ط¯ط§ط±ظ‡ط§غŒ ط¨ط­ط±ط§ظ†غŒ طھط§ط²ظ‡ ط±ط§ ط±ظپط¹ ع©ظ†.");
+      window.alert("این ترکیب هنوز امن نیست. ابتدا تداخل‌ها یا هشدارهای بحرانی تازه را رفع کن.");
       return;
     }
-    const ok = window.confirm("طھطµظ…غŒظ…â€Œظ‡ط§غŒ ط§ظ†طھط®ط§ط¨â€Œط´ط¯ظ‡ ط±ظˆغŒ ط¨ط±ظ†ط§ظ…ظ‡ ط§طµظ„غŒ ط§ط¹ظ…ط§ظ„ ط´ظˆظ†ط¯طں ظپظ‚ط· ط¢غŒطھظ…â€Œظ‡ط§غŒ ط§ظ…ظ† ظˆ ط§ظ†طھط®ط§ط¨â€Œط´ط¯ظ‡ طھط؛غŒغŒط± ظ…غŒâ€Œع©ظ†ظ†ط¯.");
+    const ok = window.confirm("تصمیم‌های انتخاب‌شده روی برنامه اصلی اعمال شوند؟ فقط آیتم‌های امن و انتخاب‌شده تغییر می‌کنند.");
     if (!ok) return;
     workforceBackupService.createAutoSnapshotBeforeChange("before-apply-batch-decision");
     for (const change of result.appliedChanges) {
@@ -1760,7 +1760,7 @@ function DecisionQueuePage({
       });
     }
     persist(queueItems.map((item) => result.selectedScenarioIds.includes(item.scenarioId) ? { ...item, status: "applied", updatedAt: nowIso() } : item));
-    operationalHistoryService.recordDecisionBatchApplied(`decision-batch-${Date.now()}`, `${result.appliedChanges.length} طھط؛غŒغŒط± ط¨ط±ظ†ط§ظ…ظ‡ ط§ط¹ظ…ط§ظ„ ط´ط¯.`);
+    operationalHistoryService.recordDecisionBatchApplied(`decision-batch-${Date.now()}`, `${result.appliedChanges.length} تغییر برنامه اعمال شد.`);
     window.location.href = `/organization/workforce-dashboard/schedule${result.appliedChanges[0] ? `?itemId=${result.appliedChanges[0].scheduleItemId}` : ""}`;
   };
 
@@ -1768,8 +1768,8 @@ function DecisionQueuePage({
     const result = simulateDecisionBatch(input, selectedScenarios);
     setBatchResult(result);
     const report = decisionReportService.createFromBatch(result, {
-      title: "ع¯ط²ط§ط±ط´ طھطµظ…غŒظ…â€Œظ‡ط§غŒ ظ…ط¯غŒط±غŒطھغŒ ظ‡ظپطھظ‡",
-      weekLabel: "ظ‡ظپطھظ‡ ط¬ط§ط±غŒ",
+      title: "گزارش تصمیم‌های مدیریتی هفته",
+      weekLabel: "هفته جاری",
       status: result.safeToApply ? "draft" : "needs_review",
     });
     window.location.href = `/organization/workforce-dashboard/decision-report?reportId=${encodeURIComponent(report.id)}`;
@@ -1783,31 +1783,31 @@ function DecisionQueuePage({
       <header className="page-header">
         <div>
           <span className="eyebrow">P7 Decision Queue</span>
-          <h1>طµظپ طھطµظ…غŒظ…â€Œع¯غŒط±غŒ ظ…ط¯غŒط±غŒطھغŒ</h1>
-          <p>ع†ظ†ط¯ ظ¾غŒط´ظ†ظ‡ط§ط¯ ط±ط§ ط§ظ†طھط®ط§ط¨ ع©ظ†طŒ ط§ط«ط± طھط¬ظ…ط¹غŒ ط±ط§ ط¨ط¨غŒظ†طŒ طھط¯ط§ط®ظ„â€Œظ‡ط§ ط±ط§ ط­ط°ظپ ع©ظ† ظˆ ظپظ‚ط· طھط±ع©غŒط¨ ط§ظ…ظ† ط±ط§ ط§ط¹ظ…ط§ظ„ ع©ظ†.</p>
+          <h1>صف تصمیم‌گیری مدیریتی</h1>
+          <p>چند پیشنهاد را انتخاب کن، اثر تجمعی را ببین، تداخل‌ها را حذف کن و فقط ترکیب امن را اعمال کن.</p>
         </div>
         <div className="hero-actions">
-          <a className="ghost-button" href="/organization/workforce-dashboard/recommendations">ط¨ط§ط²ع¯ط´طھ ط¨ظ‡ ظ¾غŒط´ظ†ظ‡ط§ط¯ظ‡ط§</a>
-          <button className="ghost-button" type="button" onClick={selectBest}>ط§ظ†طھط®ط§ط¨ ط¨ظ‡طھط±غŒظ† طھط±ع©غŒط¨</button>
-          <button className="primary-button" type="button" onClick={() => setBatchResult(simulateDecisionBatch(input, selectedScenarios))}>طھط­ظ„غŒظ„ طھط±ع©غŒط¨</button>
-          <button className="ghost-button" type="button" onClick={createReport}>ط³ط§ط®طھ ع¯ط²ط§ط±ط´ طھطµظ…غŒظ…</button>
-          <button className="danger-button" type="button" onClick={applyBatch} disabled={!batchResult.safeToApply}>ط§ط¹ظ…ط§ظ„ طھطµظ…غŒظ…â€Œظ‡ط§غŒ ط§ظ†طھط®ط§ط¨â€Œط´ط¯ظ‡</button>
+          <a className="ghost-button" href="/organization/workforce-dashboard/recommendations">بازگشت به پیشنهادها</a>
+          <button className="ghost-button" type="button" onClick={selectBest}>انتخاب بهترین ترکیب</button>
+          <button className="primary-button" type="button" onClick={() => setBatchResult(simulateDecisionBatch(input, selectedScenarios))}>تحلیل ترکیب</button>
+          <button className="ghost-button" type="button" onClick={createReport}>ساخت گزارش تصمیم</button>
+          <button className="danger-button" type="button" onClick={applyBatch} disabled={!batchResult.safeToApply}>اعمال تصمیم‌های انتخاب‌شده</button>
         </div>
       </header>
 
       <section className="kpi-strip">
-        <article className="kpi-card tone-info"><div><p>ظ‚ط§ط¨ظ„ ط¨ط±ط±ط³غŒ</p><strong>{toPersianNumber(scenarios.length)}</strong><span>ظ¾غŒط´ظ†ظ‡ط§ط¯ ط±طھط¨ظ‡â€Œط¨ظ†ط¯غŒâ€Œط´ط¯ظ‡</span></div></article>
-        <article className="kpi-card tone-focus"><div><p>ط§ظ†طھط®ط§ط¨â€Œط´ط¯ظ‡</p><strong>{toPersianNumber(selectedCount)}</strong><span>ط¨ط±ط§غŒ طھط­ظ„غŒظ„ batch</span></div></article>
-        <article className="kpi-card tone-good"><div><p>ع©ظ†طھط±ظ„ ظ‚ط¨ظ„/ط¨ط¹ط¯</p><strong>{toPersianNumber(batchResult.controlScoreBefore)} / {toPersianNumber(batchResult.controlScoreAfter)}</strong><span>{verdictLabel(batchResult.verdict)}</span></div></article>
-        <article className={`kpi-card tone-${batchResult.riskScoreAfter <= batchResult.riskScoreBefore ? "good" : "critical"}`}><div><p>طھط؛غŒغŒط± ط±غŒط³ع©</p><strong>{toPersianNumber(batchResult.riskScoreAfter - batchResult.riskScoreBefore)}</strong><span>ظ‚ط¨ظ„ {toPersianNumber(batchResult.riskScoreBefore)} | ط¨ط¹ط¯ {toPersianNumber(batchResult.riskScoreAfter)}</span></div></article>
-        <article className={`kpi-card tone-${batchResult.safeToApply ? "good" : "warn"}`}><div><p>ظˆط¶ط¹غŒطھ ظ†ظ‡ط§غŒغŒ</p><strong>{batchResult.safeToApply ? "ط§ظ…ظ†" : "ظ†غŒط§ط²ظ…ظ†ط¯ ط¨ط±ط±ط³غŒ"}</strong><span>{toPersianNumber(batchResult.conflicts.length)} طھط¯ط§ط®ظ„</span></div></article>
+        <article className="kpi-card tone-info"><div><p>قابل بررسی</p><strong>{toPersianNumber(scenarios.length)}</strong><span>پیشنهاد رتبه‌بندی‌شده</span></div></article>
+        <article className="kpi-card tone-focus"><div><p>انتخاب‌شده</p><strong>{toPersianNumber(selectedCount)}</strong><span>برای تحلیل batch</span></div></article>
+        <article className="kpi-card tone-good"><div><p>کنترل قبل/بعد</p><strong>{toPersianNumber(batchResult.controlScoreBefore)} / {toPersianNumber(batchResult.controlScoreAfter)}</strong><span>{verdictLabel(batchResult.verdict)}</span></div></article>
+        <article className={`kpi-card tone-${batchResult.riskScoreAfter <= batchResult.riskScoreBefore ? "good" : "critical"}`}><div><p>تغییر ریسک</p><strong>{toPersianNumber(batchResult.riskScoreAfter - batchResult.riskScoreBefore)}</strong><span>قبل {toPersianNumber(batchResult.riskScoreBefore)} | بعد {toPersianNumber(batchResult.riskScoreAfter)}</span></div></article>
+        <article className={`kpi-card tone-${batchResult.safeToApply ? "good" : "warn"}`}><div><p>وضعیت نهایی</p><strong>{batchResult.safeToApply ? "امن" : "نیازمند بررسی"}</strong><span>{toPersianNumber(batchResult.conflicts.length)} تداخل</span></div></article>
       </section>
 
       <section className="decision-layout">
         <section className="panel decision-list">
           <div className="section-head">
-            <h2>ظ¾غŒط´ظ†ظ‡ط§ط¯ظ‡ط§</h2>
-            <button className="ghost-button" type="button" onClick={clearSelection}>ظ¾ط§ع© ع©ط±ط¯ظ† ط§ظ†طھط®ط§ط¨</button>
+            <h2>پیشنهادها</h2>
+            <button className="ghost-button" type="button" onClick={clearSelection}>پاک کردن انتخاب</button>
           </div>
           {queueItems.map((queueItem) => {
             const scenario = scenarioById.get(queueItem.scenarioId);
@@ -1824,8 +1824,8 @@ function DecisionQueuePage({
                   </span>
                 </label>
                 <div className="decision-badges">
-                  <StatusBadge tone={scenario.canApply ? "good" : "warn"}>{scenario.canApply ? "ظ‚ط§ط¨ظ„ ط§ط¹ظ…ط§ظ„" : "ظ†غŒط§ط²ظ…ظ†ط¯ ط¨ط±ط±ط³غŒ"}</StatusBadge>
-                  <StatusBadge tone={conflicted ? "critical" : "info"}>{conflicted ? "ظ…طھط¯ط§ط®ظ„" : scenarioTypeLabel(scenario.type)}</StatusBadge>
+                  <StatusBadge tone={scenario.canApply ? "good" : "warn"}>{scenario.canApply ? "قابل اعمال" : "نیازمند بررسی"}</StatusBadge>
+                  <StatusBadge tone={conflicted ? "critical" : "info"}>{conflicted ? "متداخل" : scenarioTypeLabel(scenario.type)}</StatusBadge>
                   <StatusBadge tone={confidenceTone(scenario.confidence)}>{confidenceLabel(scenario.confidence)}</StatusBadge>
                 </div>
               </article>
@@ -1834,26 +1834,26 @@ function DecisionQueuePage({
         </section>
 
         <section className="panel decision-report">
-          <h2>ع¯ط²ط§ط±ط´ ظ‚ط¨ظ„/ط¨ط¹ط¯</h2>
+          <h2>گزارش قبل/بعد</h2>
           <div className="score-grid">
-            <div className="heat-cell tone-info"><strong>{toPersianNumber(batchResult.controlScoreBefore)}</strong><span>ع©ظ†طھط±ظ„ ظ‚ط¨ظ„</span></div>
-            <div className="heat-cell tone-good"><strong>{toPersianNumber(batchResult.controlScoreAfter)}</strong><span>ع©ظ†طھط±ظ„ ط¨ط¹ط¯</span></div>
-            <div className="heat-cell tone-warn"><strong>{toPersianNumber(batchResult.warningBefore)} / {toPersianNumber(batchResult.warningAfter)}</strong><span>ظ‡ط´ط¯ط§ط±</span></div>
-            <div className="heat-cell tone-critical"><strong>{toPersianNumber(batchResult.criticalBefore)} / {toPersianNumber(batchResult.criticalAfter)}</strong><span>ط¨ط­ط±ط§ظ†غŒ</span></div>
+            <div className="heat-cell tone-info"><strong>{toPersianNumber(batchResult.controlScoreBefore)}</strong><span>کنترل قبل</span></div>
+            <div className="heat-cell tone-good"><strong>{toPersianNumber(batchResult.controlScoreAfter)}</strong><span>کنترل بعد</span></div>
+            <div className="heat-cell tone-warn"><strong>{toPersianNumber(batchResult.warningBefore)} / {toPersianNumber(batchResult.warningAfter)}</strong><span>هشدار</span></div>
+            <div className="heat-cell tone-critical"><strong>{toPersianNumber(batchResult.criticalBefore)} / {toPersianNumber(batchResult.criticalAfter)}</strong><span>بحرانی</span></div>
           </div>
           <div className="evidence-box">
             <span>{batchResult.summary}</span>
-            <small>ط§ط¹ظ…ط§ظ„ ظپظ‚ط· ظˆظ‚طھغŒ ظپط¹ط§ظ„ ط§ط³طھ ع©ظ‡ ظ‡ظ…ظ‡ ط§ظ†طھط®ط§ط¨â€Œظ‡ط§ canApply ط¨ط§ط´ظ†ط¯طŒ طھط¯ط§ط®ظ„ ظ†ط¯ط§ط´طھظ‡ ط¨ط§ط´ظ†ط¯ ظˆ critical طھط§ط²ظ‡ ظ†ط³ط§ط²ظ†ط¯.</small>
+            <small>اعمال فقط وقتی فعال است که همه انتخاب‌ها canApply باشند، تداخل نداشته باشند و critical تازه نسازند.</small>
           </div>
           <div className="recommendation-row">
-            <button className="primary-button" type="button" onClick={() => setBatchResult(simulateDecisionBatch(input, selectedScenarios))}>طھط­ظ„غŒظ„ طھط±ع©غŒط¨ ط§ظ†طھط®ط§ط¨â€Œط´ط¯ظ‡</button>
-            <button className="ghost-button" type="button" onClick={createReport}>ط³ط§ط®طھ ع¯ط²ط§ط±ط´ طھطµظ…غŒظ…</button>
-            <button className="danger-button" type="button" onClick={applyBatch} disabled={!batchResult.safeToApply}>ط§ط¹ظ…ط§ظ„ batch</button>
+            <button className="primary-button" type="button" onClick={() => setBatchResult(simulateDecisionBatch(input, selectedScenarios))}>تحلیل ترکیب انتخاب‌شده</button>
+            <button className="ghost-button" type="button" onClick={createReport}>ساخت گزارش تصمیم</button>
+            <button className="danger-button" type="button" onClick={applyBatch} disabled={!batchResult.safeToApply}>اعمال batch</button>
           </div>
         </section>
 
         <section className="panel conflict-panel">
-          <h2>طھط¯ط§ط®ظ„â€Œظ‡ط§</h2>
+          <h2>تداخل‌ها</h2>
           {batchResult.conflicts.map((conflict) => (
             <article className="panel-row tone-critical" key={conflict.id}>
               <StatusBadge tone="critical">{conflict.type}</StatusBadge>
@@ -1861,7 +1861,7 @@ function DecisionQueuePage({
               <small>{conflict.recommendation}</small>
             </article>
           ))}
-          {!batchResult.conflicts.length && <p>طھط¯ط§ط®ظ„غŒ ط¯ط± طھط±ع©غŒط¨ ط§ظ†طھط®ط§ط¨â€Œط´ط¯ظ‡ ط¯غŒط¯ظ‡ ظ†ط´ط¯.</p>}
+          {!batchResult.conflicts.length && <p>تداخلی در ترکیب انتخاب‌شده دیده نشد.</p>}
         </section>
       </section>
     </div>
@@ -1869,10 +1869,10 @@ function DecisionQueuePage({
 }
 
 function reportStatusLabel(status: DecisionReportStatus) {
-  if (status === "approved") return "طھط§غŒغŒط¯ ط´ط¯ظ‡";
-  if (status === "applied") return "ط§ط¹ظ…ط§ظ„ ط´ط¯ظ‡";
-  if (status === "needs_review") return "ظ†غŒط§ط²ظ…ظ†ط¯ ط¨ط±ط±ط³غŒ";
-  return "ظ¾غŒط´â€Œظ†ظˆغŒط³";
+  if (status === "approved") return "تایید شده";
+  if (status === "applied") return "اعمال شده";
+  if (status === "needs_review") return "نیازمند بررسی";
+  return "پیش‌نویس";
 }
 
 function reportStatusTone(status: DecisionReportStatus): StatusTone {
@@ -1883,17 +1883,17 @@ function reportStatusTone(status: DecisionReportStatus): StatusTone {
 }
 
 function healthLevelLabel(value: string) {
-  if (value === "excellent") return "ط¹ط§ظ„غŒ";
-  if (value === "good") return "ط®ظˆط¨";
-  if (value === "needs_attention") return "ظ†غŒط§ط²ظ…ظ†ط¯ طھظˆط¬ظ‡";
-  return "ط¨ط­ط±ط§ظ†غŒ";
+  if (value === "excellent") return "عالی";
+  if (value === "good") return "خوب";
+  if (value === "needs_attention") return "نیازمند توجه";
+  return "بحرانی";
 }
 
 function trendStatusLabel(value: string) {
-  if (value === "improving") return "ط¨ظ‡طھط± ط´ط¯ظ‡";
-  if (value === "worsening") return "ط¨ط¯طھط± ط´ط¯ظ‡";
-  if (value === "stable") return "طھظ‚ط±غŒط¨ط§ظ‹ ط«ط§ط¨طھ";
-  return "ط¯ط§ط¯ظ‡ ظ†ط§ع©ط§ظپغŒ";
+  if (value === "improving") return "بهتر شده";
+  if (value === "worsening") return "بدتر شده";
+  if (value === "stable") return "تقریباً ثابت";
+  return "داده ناکافی";
 }
 
 function healthTone(value: string): StatusTone {
@@ -1903,10 +1903,10 @@ function healthTone(value: string): StatusTone {
 }
 
 function goalStatusLabel(value: MonthlyGoalStatus) {
-  if (value === "in_progress") return "ط¯ط± ط­ط§ظ„ ط§ط¬ط±ط§";
-  if (value === "achieved") return "ظ…ط­ظ‚ظ‚ ط´ط¯ظ‡";
-  if (value === "missed") return "ظ†ط§ظ…ظˆظپظ‚";
-  return "ط¨ط±ظ†ط§ظ…ظ‡â€Œط±غŒط²غŒ";
+  if (value === "in_progress") return "در حال اجرا";
+  if (value === "achieved") return "محقق شده";
+  if (value === "missed") return "ناموفق";
+  return "برنامه‌ریزی";
 }
 
 function preventiveSeverityTone(value: PreventiveAlertSeverity): StatusTone {
@@ -1923,27 +1923,27 @@ function preventivePriorityTone(value: PreventiveAlertPriority): StatusTone {
 }
 
 function preventiveStatusLabel(value: PreventiveAlertStatus) {
-  if (value === "acknowledged") return "طھط§غŒغŒط¯ ط´ط¯";
-  if (value === "planned") return "ط¨ط±ظ†ط§ظ…ظ‡â€Œط±غŒط²غŒ ط´ط¯";
-  if (value === "resolved") return "ط­ظ„ ط´ط¯";
-  if (value === "dismissed") return "ط±ط¯ ط´ط¯";
-  return "ط¨ط§ط²";
+  if (value === "acknowledged") return "تایید شد";
+  if (value === "planned") return "برنامه‌ریزی شد";
+  if (value === "resolved") return "حل شد";
+  if (value === "dismissed") return "رد شد";
+  return "باز";
 }
 
 function preventiveSourceLabel(value: PreventiveAlertSourceType) {
-  if (value === "failed_goal") return "ظ‡ط¯ظپ ظ†ط§ظ…ظˆظپظ‚";
-  if (value === "worsening_trend") return "ط±ظˆظ†ط¯ ظ†ط²ظˆظ„غŒ";
-  if (value === "repeated_space_pressure") return "ظپط´ط§ط± ظپط¶ط§";
-  if (value === "repeated_focus_interruption") return "ط§ط®طھظ„ط§ظ„ طھظ…ط±ع©ط²";
-  if (value === "repeated_sales_coverage_gap") return "ظ¾ظˆط´ط´ ظپط±ظˆط´";
-  return "ط±غŒط³ع© طھع©ط±ط§ط±غŒ";
+  if (value === "failed_goal") return "هدف ناموفق";
+  if (value === "worsening_trend") return "روند نزولی";
+  if (value === "repeated_space_pressure") return "فشار فضا";
+  if (value === "repeated_focus_interruption") return "اختلال تمرکز";
+  if (value === "repeated_sales_coverage_gap") return "پوشش فروش";
+  return "ریسک تکراری";
 }
 
 function readinessStatusLabel(value: OperationalReadinessStatus) {
-  if (value === "ready") return "ط¢ظ…ط§ط¯ظ‡";
-  if (value === "almost_ready") return "طھظ‚ط±غŒط¨ط§ ط¢ظ…ط§ط¯ظ‡";
-  if (value === "needs_setup") return "ظ†غŒط§ط²ظ…ظ†ط¯ ط¢ظ…ط§ط¯ظ‡â€Œط³ط§ط²غŒ";
-  return "ظ¾ط±ط±غŒط³ع©";
+  if (value === "ready") return "آماده";
+  if (value === "almost_ready") return "تقریبا آماده";
+  if (value === "needs_setup") return "نیازمند آماده‌سازی";
+  return "پرریسک";
 }
 
 function readinessStatusTone(value: OperationalReadinessStatus): StatusTone {
@@ -1955,24 +1955,24 @@ function readinessStatusTone(value: OperationalReadinessStatus): StatusTone {
 
 function readinessCategoryLabel(value: ReadinessCheckCategory) {
   const labels: Record<ReadinessCheckCategory, string> = {
-    base_data: "ط¯ط§ط¯ظ‡ ظ¾ط§غŒظ‡",
-    schedule: "ط¨ط±ظ†ط§ظ…ظ‡",
-    rules: "ظ‚ظˆط§ظ†غŒظ†",
-    analysis: "طھط­ظ„غŒظ„",
-    backup: "ط¨ع©ط§ظ¾",
-    maintenance: "ظ†ع¯ظ‡ط¯ط§ط±غŒ",
-    reports: "ع¯ط²ط§ط±ط´â€Œظ‡ط§",
-    monthly_goals: "ط§ظ‡ط¯ط§ظپ ظ…ط§ظ‡ط§ظ†ظ‡",
-    preventive_alerts: "ظ‡ط´ط¯ط§ط± ظ¾غŒط´ع¯غŒط±ط§ظ†ظ‡",
-    ui_flow: "ط¬ط±غŒط§ظ† ع©ط§ط±غŒ",
+    base_data: "داده پایه",
+    schedule: "برنامه",
+    rules: "قوانین",
+    analysis: "تحلیل",
+    backup: "بکاپ",
+    maintenance: "نگهداری",
+    reports: "گزارش‌ها",
+    monthly_goals: "اهداف ماهانه",
+    preventive_alerts: "هشدار پیشگیرانه",
+    ui_flow: "جریان کاری",
   };
   return labels[value];
 }
 
 function launchStatusLabel(value: LaunchChecklistStatus) {
-  if (value === "completed") return "ط§ظ†ط¬ط§ظ…â€Œط´ط¯ظ‡";
-  if (value === "dismissed") return "ط±ط¯ط´ط¯ظ‡";
-  return "ط¨ط§ط²";
+  if (value === "completed") return "انجام‌شده";
+  if (value === "dismissed") return "ردشده";
+  return "باز";
 }
 
 function launchStatusTone(value: LaunchChecklistStatus): StatusTone {
@@ -1986,24 +1986,24 @@ function controlTypeLabel(value: OperationalControlType) {
     snapshot_due: "Snapshot",
     backup_due: "Backup",
     archive_due: "Archive",
-    maintenance_review: "ظ†ع¯ظ‡ط¯ط§ط±غŒ",
+    maintenance_review: "نگهداری",
     drift_review: "Drift",
-    resignoff_due: "ط¨ط§ط²طھط£غŒغŒط¯",
+    resignoff_due: "بازتأیید",
     readiness_review: "Readiness",
-    monthly_health_review: "ط³ظ„ط§ظ…طھ ظ…ط§ظ‡ط§ظ†ظ‡",
-    preventive_alert_review: "ظ‡ط´ط¯ط§ط± ظ¾غŒط´ع¯غŒط±ط§ظ†ظ‡",
-    launch_checklist_review: "ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ",
+    monthly_health_review: "سلامت ماهانه",
+    preventive_alert_review: "هشدار پیشگیرانه",
+    launch_checklist_review: "راه‌اندازی",
   };
   return labels[value];
 }
 
 function controlStatusLabel(value: OperationalControlStatus) {
-  const labels: Record<OperationalControlStatus, string> = { upcoming: "ط¢غŒظ†ط¯ظ‡", due_today: "ط§ظ…ط±ظˆط²", overdue: "ط¹ظ‚ط¨â€Œط§ظپطھط§ط¯ظ‡", completed: "ط§ظ†ط¬ط§ظ…â€Œط´ط¯ظ‡", snoozed: "طھط¹ظˆغŒظ‚", dismissed: "ط±ط¯ط´ط¯ظ‡" };
+  const labels: Record<OperationalControlStatus, string> = { upcoming: "آینده", due_today: "امروز", overdue: "عقب‌افتاده", completed: "انجام‌شده", snoozed: "تعویق", dismissed: "ردشده" };
   return labels[value];
 }
 
 function controlPriorityLabel(value: OperationalControlPriority) {
-  const labels: Record<OperationalControlPriority, string> = { low: "کم", medium: "متوسط", high: "بالا", urgent: "ظپظˆط±غŒ" };
+  const labels: Record<OperationalControlPriority, string> = { low: "کم", medium: "متوسط", high: "بالا", urgent: "فوری" };
   return labels[value];
 }
 
@@ -2026,16 +2026,16 @@ function OperationsControlSettingsPage({
   const [notificationPreference, setNotificationPreference] = useState<OperationalNotificationPreference>(() => operationsControlSettingsService.getNotificationPreferences());
   const [message, setMessage] = useState("");
   const intervalFields: Array<{ key: keyof OperationalControlSchedulePolicy; label: string }> = [
-    { key: "snapshotEveryDays", label: "ظپط§طµظ„ظ‡ Snapshot" },
-    { key: "backupEveryDays", label: "ظپط§طµظ„ظ‡ Backup" },
-    { key: "archiveEveryDays", label: "ظپط§طµظ„ظ‡ Archive" },
-    { key: "maintenanceReviewEveryDays", label: "ظ…ط±ظˆط± ظ†ع¯ظ‡ط¯ط§ط±غŒ" },
-    { key: "driftReviewEveryDays", label: "ظ…ط±ظˆط± Drift" },
-    { key: "resignoffExpiresAfterDays", label: "ظ…ظ‡ظ„طھ ط¨ط§ط²طھط£غŒغŒط¯" },
-    { key: "readinessReviewEveryDays", label: "ظ…ط±ظˆط± ط¢ظ…ط§ط¯ع¯غŒ" },
-    { key: "monthlyHealthReviewEveryDays", label: "ظ…ط±ظˆط± ط³ظ„ط§ظ…طھ ظ…ط§ظ‡ط§ظ†ظ‡" },
-    { key: "preventiveAlertReviewEveryDays", label: "ظ…ط±ظˆط± ظ‡ط´ط¯ط§ط± ظ¾غŒط´ع¯غŒط±ط§ظ†ظ‡" },
-    { key: "launchChecklistReviewEveryDays", label: "ظ…ط±ظˆط± ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ" },
+    { key: "snapshotEveryDays", label: "فاصله Snapshot" },
+    { key: "backupEveryDays", label: "فاصله Backup" },
+    { key: "archiveEveryDays", label: "فاصله Archive" },
+    { key: "maintenanceReviewEveryDays", label: "مرور نگهداری" },
+    { key: "driftReviewEveryDays", label: "مرور Drift" },
+    { key: "resignoffExpiresAfterDays", label: "مهلت بازتأیید" },
+    { key: "readinessReviewEveryDays", label: "مرور آمادگی" },
+    { key: "monthlyHealthReviewEveryDays", label: "مرور سلامت ماهانه" },
+    { key: "preventiveAlertReviewEveryDays", label: "مرور هشدار پیشگیرانه" },
+    { key: "launchChecklistReviewEveryDays", label: "مرور راه‌اندازی" },
   ];
   const setInterval = (key: keyof OperationalControlSchedulePolicy, value: string) => setPolicy((current) => ({ ...current, [key]: Number(value) }));
   const toggleControl = (type: OperationalControlType) => setPolicy((current) => ({ ...current, enabledControlTypes: current.enabledControlTypes.includes(type) ? current.enabledControlTypes.filter((item) => item !== type) : [...current.enabledControlTypes, type] }));
@@ -2045,24 +2045,24 @@ function OperationsControlSettingsPage({
     setPolicy(savedPolicy);
     setExportOptions(operationsControlSettingsService.updateExportOptions(exportOptions));
     setNotificationPreference(operationsControlSettingsService.updateNotificationPreferences(notificationPreference));
-    setMessage(validation.warnings.length ? validation.warnings.join(" | ") : "طھظ†ط¸غŒظ…ط§طھ ع©ظ†طھط±ظ„â€Œظ‡ط§غŒ ط¹ظ…ظ„غŒط§طھغŒ ط°ط®غŒط±ظ‡ ط´ط¯.");
+    setMessage(validation.warnings.length ? validation.warnings.join(" | ") : "تنظیمات کنترل‌های عملیاتی ذخیره شد.");
   };
-  const reset = () => { setPolicy(operationsControlSettingsService.resetSchedulePolicy()); setMessage("Policy ظ¾غŒط´â€Œظپط±ط¶ ط¨ط§ط²ع¯ط±ط¯ط§ظ†ط¯ظ‡ ط´ط¯ط› ط¨ط±ط§غŒ ط§ط¹ظ…ط§ظ„ ط±ظˆغŒ طھظ‚ظˆغŒظ…طŒ ط¨ط§ط²ط³ط§ط²غŒ ط±ط§ ط¨ط²ظ†غŒط¯."); };
+  const reset = () => { setPolicy(operationsControlSettingsService.resetSchedulePolicy()); setMessage("Policy پیش‌فرض بازگردانده شد؛ برای اعمال روی تقویم، بازسازی را بزنید."); };
   const rebuild = () => {
     const saved = operationsControlSettingsService.updateSchedulePolicy(policy);
     operationsCalendarService.rebuild(currentOperationsCalendarState({ spaces, employees, taskTypes, scheduleItems, rules, settings }), saved);
-    setPolicy(saved); setMessage("طھظ‚ظˆغŒظ… ط¨ط§ policy ط¬ط¯غŒط¯ ط¨ط§ط²ط³ط§ط²غŒ ط´ط¯.");
+    setPolicy(saved); setMessage("تقویم با policy جدید بازسازی شد.");
   };
 
   return (
     <div className="page-stack operations-control-settings-page">
-      <header className="page-header"><div><span className="eyebrow">P21 Control Policy</span><h1>طھظ†ط¸غŒظ… ط²ظ…ط§ظ†â€Œط¨ظ†ط¯غŒ ع©ظ†طھط±ظ„â€Œظ‡ط§</h1><p>ط¯ظˆط±ظ‡ ظ…ط±ظˆط±طŒ ط§ظˆظ„ظˆغŒطھ ظˆ ط®ط±ظˆط¬غŒ ع©ظ†طھط±ظ„â€Œظ‡ط§غŒ ظ…ط­ظ„غŒ ط±ط§ ط¨ط¯ظˆظ† طھط؛غŒغŒط± ع©ط¯ طھظ†ط¸غŒظ… ع©ظ†غŒط¯.</p></div><div className="hero-actions"><a className="ghost-button" href="/organization/workforce-dashboard/operations-calendar">طھظ‚ظˆغŒظ… ع©ظ†طھط±ظ„â€Œظ‡ط§</a><button className="ghost-button" type="button" onClick={reset}>ط¨ط§ط²ع¯ط´طھ ط¨ظ‡ ظ¾غŒط´â€Œظپط±ط¶</button><button className="primary-button" type="button" onClick={save}>ط°ط®غŒط±ظ‡ طھظ†ط¸غŒظ…ط§طھ</button><button className="primary-button" type="button" onClick={rebuild}>ط°ط®غŒط±ظ‡ ظˆ ط¨ط§ط²ط³ط§ط²غŒ طھظ‚ظˆغŒظ…</button></div></header>
+      <header className="page-header"><div><span className="eyebrow">P21 Control Policy</span><h1>تنظیم زمان‌بندی کنترل‌ها</h1><p>دوره مرور، اولویت و خروجی کنترل‌های محلی را بدون تغییر کد تنظیم کنید.</p></div><div className="hero-actions"><a className="ghost-button" href="/organization/workforce-dashboard/operations-calendar">تقویم کنترل‌ها</a><button className="ghost-button" type="button" onClick={reset}>بازگشت به پیش‌فرض</button><button className="primary-button" type="button" onClick={save}>ذخیره تنظیمات</button><button className="primary-button" type="button" onClick={rebuild}>ذخیره و بازسازی تقویم</button></div></header>
       {message && <div className="inline-notice">{message}</div>}
-      <section className="settings-band"><div className="section-head"><h2>ط¯ظˆط±ظ‡â€Œظ‡ط§غŒ ط²ظ…ط§ظ†غŒ</h2><span className="inline-note">ظˆط§ط­ط¯ ظ‡ظ…ظ‡ ظ…ظ‚ط§ط¯غŒط± ط±ظˆط² ط§ط³طھ</span></div><div className="policy-interval-grid">{intervalFields.map((field) => <label className="field" key={String(field.key)}><span>{field.label}</span><div className="number-with-unit"><input type="number" min="1" max="3650" value={String(policy[field.key])} onChange={(event) => setInterval(field.key, event.target.value)} /><small>ط±ظˆط²</small></div></label>)}</div></section>
-      <section className="settings-band"><div className="section-head"><h2>ع©ظ†طھط±ظ„â€Œظ‡ط§ ظˆ ط§ظˆظ„ظˆغŒطھ ظ¾غŒط´â€Œظپط±ط¶</h2><span className="inline-note">ط±غŒط³ع© ط¨ط­ط±ط§ظ†غŒ ظ…غŒâ€Œطھظˆط§ظ†ط¯ ط§ظˆظ„ظˆغŒطھ ط±ط§ بالاطھط± ط¨ط¨ط±ط¯</span></div><div className="control-policy-grid">{operationalControlTypes.map((type) => <article className="control-policy-row" key={type}><label className="risk-acceptance"><input type="checkbox" checked={policy.enabledControlTypes.includes(type)} onChange={() => toggleControl(type)} /><span>{controlTypeLabel(type)}</span></label><select aria-label={`ط§ظˆظ„ظˆغŒطھ ${controlTypeLabel(type)}`} value={policy.defaultPriorities[type]} onChange={(event) => setPolicy((current) => ({ ...current, defaultPriorities: { ...current.defaultPriorities, [type]: event.target.value as OperationalControlPriority } }))}>{(["low", "medium", "high", "urgent"] as OperationalControlPriority[]).map((priority) => <option key={priority} value={priority}>{controlPriorityLabel(priority)}</option>)}</select></article>)}</div></section>
+      <section className="settings-band"><div className="section-head"><h2>دوره‌های زمانی</h2><span className="inline-note">واحد همه مقادیر روز است</span></div><div className="policy-interval-grid">{intervalFields.map((field) => <label className="field" key={String(field.key)}><span>{field.label}</span><div className="number-with-unit"><input type="number" min="1" max="3650" value={String(policy[field.key])} onChange={(event) => setInterval(field.key, event.target.value)} /><small>روز</small></div></label>)}</div></section>
+      <section className="settings-band"><div className="section-head"><h2>کنترل‌ها و اولویت پیش‌فرض</h2><span className="inline-note">ریسک بحرانی می‌تواند اولویت را بالاتر ببرد</span></div><div className="control-policy-grid">{operationalControlTypes.map((type) => <article className="control-policy-row" key={type}><label className="risk-acceptance"><input type="checkbox" checked={policy.enabledControlTypes.includes(type)} onChange={() => toggleControl(type)} /><span>{controlTypeLabel(type)}</span></label><select aria-label={`اولویت ${controlTypeLabel(type)}`} value={policy.defaultPriorities[type]} onChange={(event) => setPolicy((current) => ({ ...current, defaultPriorities: { ...current.defaultPriorities, [type]: event.target.value as OperationalControlPriority } }))}>{(["low", "medium", "high", "urgent"] as OperationalControlPriority[]).map((priority) => <option key={priority} value={priority}>{controlPriorityLabel(priority)}</option>)}</select></article>)}</div></section>
       <section className="settings-split">
-        <section className="settings-band"><h2>ط®ط±ظˆط¬غŒ طھظ‚ظˆغŒظ…</h2><label className="risk-acceptance"><input type="checkbox" checked={exportOptions.includeCompleted} onChange={(event) => setExportOptions((current) => ({ ...current, includeCompleted: event.target.checked }))} /><span>ط´ط§ظ…ظ„ ط§ظ†ط¬ط§ظ…â€Œط´ط¯ظ‡â€Œظ‡ط§</span></label><label className="risk-acceptance"><input type="checkbox" checked={exportOptions.includeDismissed} onChange={(event) => setExportOptions((current) => ({ ...current, includeDismissed: event.target.checked }))} /><span>ط´ط§ظ…ظ„ ط±ط¯ط´ط¯ظ‡â€Œظ‡ط§</span></label><label className="risk-acceptance"><input type="checkbox" checked={exportOptions.includeManagerNote} onChange={(event) => setExportOptions((current) => ({ ...current, includeManagerNote: event.target.checked }))} /><span>غŒط§ط¯ط¯ط§ط´طھ ظ…ط¯غŒط± ط¯ط± ط®ط±ظˆط¬غŒ</span></label><label className="field"><span>ط±ظˆط²ظ‡ط§غŒ ط¢غŒظ†ط¯ظ‡</span><input type="number" min="0" value={exportOptions.includeUpcomingDays} onChange={(event) => setExportOptions((current) => ({ ...current, includeUpcomingDays: Number(event.target.value) }))} /></label></section>
-        <section className="settings-band"><h2>ط§ط¹ظ„ط§ظ† ظ…ط­ظ„غŒ</h2><p className="inline-note">ط§غŒظ† ط§ط¹ظ„ط§ظ† ظپظ‚ط· ط¯ط§ط®ظ„ ط¯ط§ط´ط¨ظˆط±ط¯ ط§ط³طھ ظˆ reminder ط³غŒط³طھظ…â€Œط¹ط§ظ…ظ„ ظ†غŒط³طھ.</p><label className="risk-acceptance"><input type="checkbox" checked={notificationPreference.enabled} onChange={(event) => setNotificationPreference((current) => ({ ...current, enabled: event.target.checked }))} /><span>ط§ط¹ظ„ط§ظ† ط¯ط§ط®ظ„ ط¯ط§ط´ط¨ظˆط±ط¯ ظپط¹ط§ظ„ ط¨ط§ط´ط¯</span></label><label className="field"><span>ط­ط¯ط§ظ‚ظ„ ط§ظˆظ„ظˆغŒطھ</span><select value={notificationPreference.minimumPriority} onChange={(event) => setNotificationPreference((current) => ({ ...current, minimumPriority: event.target.value as OperationalControlPriority }))}>{(["low", "medium", "high", "urgent"] as OperationalControlPriority[]).map((priority) => <option key={priority} value={priority}>{controlPriorityLabel(priority)}</option>)}</select></label><label className="field"><span>ع†ظ†ط¯ ط±ظˆط² ظ‚ط¨ظ„ ط§ط² ظ…ظˆط¹ط¯</span><input type="number" min="0" max="365" value={notificationPreference.daysBeforeDue} onChange={(event) => setNotificationPreference((current) => ({ ...current, daysBeforeDue: Number(event.target.value) }))} /></label></section>
+        <section className="settings-band"><h2>خروجی تقویم</h2><label className="risk-acceptance"><input type="checkbox" checked={exportOptions.includeCompleted} onChange={(event) => setExportOptions((current) => ({ ...current, includeCompleted: event.target.checked }))} /><span>شامل انجام‌شده‌ها</span></label><label className="risk-acceptance"><input type="checkbox" checked={exportOptions.includeDismissed} onChange={(event) => setExportOptions((current) => ({ ...current, includeDismissed: event.target.checked }))} /><span>شامل ردشده‌ها</span></label><label className="risk-acceptance"><input type="checkbox" checked={exportOptions.includeManagerNote} onChange={(event) => setExportOptions((current) => ({ ...current, includeManagerNote: event.target.checked }))} /><span>یادداشت مدیر در خروجی</span></label><label className="field"><span>روزهای آینده</span><input type="number" min="0" value={exportOptions.includeUpcomingDays} onChange={(event) => setExportOptions((current) => ({ ...current, includeUpcomingDays: Number(event.target.value) }))} /></label></section>
+        <section className="settings-band"><h2>اعلان محلی</h2><p className="inline-note">این اعلان فقط داخل داشبورد است و reminder سیستم‌عامل نیست.</p><label className="risk-acceptance"><input type="checkbox" checked={notificationPreference.enabled} onChange={(event) => setNotificationPreference((current) => ({ ...current, enabled: event.target.checked }))} /><span>اعلان داخل داشبورد فعال باشد</span></label><label className="field"><span>حداقل اولویت</span><select value={notificationPreference.minimumPriority} onChange={(event) => setNotificationPreference((current) => ({ ...current, minimumPriority: event.target.value as OperationalControlPriority }))}>{(["low", "medium", "high", "urgent"] as OperationalControlPriority[]).map((priority) => <option key={priority} value={priority}>{controlPriorityLabel(priority)}</option>)}</select></label><label className="field"><span>چند روز قبل از موعد</span><input type="number" min="0" max="365" value={notificationPreference.daysBeforeDue} onChange={(event) => setNotificationPreference((current) => ({ ...current, daysBeforeDue: Number(event.target.value) }))} /></label></section>
       </section>
     </div>
   );
@@ -2146,112 +2146,112 @@ function OperationsCalendarPage({
   const noteFor = (control: OperationalControlItem) => notes[control.id] ?? control.managerNote;
   const markCompleted = (control: OperationalControlItem) => {
     operationsCalendarService.markCompleted(control.id, noteFor(control));
-    refresh("ع©ظ†طھط±ظ„ ط§ظ†ط¬ط§ظ…â€Œط´ط¯ظ‡ ط«ط¨طھ ط´ط¯.");
+    refresh("کنترل انجام‌شده ثبت شد.");
   };
   const dismiss = (control: OperationalControlItem) => {
     const note = noteFor(control).trim();
-    if (!note) return refresh("ط¨ط±ط§غŒ ط±ط¯ ع©ظ†طھط±ظ„طŒ غŒط§ط¯ط¯ط§ط´طھ ظ…ط¯غŒط± ط§ظ„ط²ط§ظ…غŒ ط§ط³طھ.");
-    if (!window.confirm("ط§غŒظ† ع©ظ†طھط±ظ„ ط¨ط§ غŒط§ط¯ط¯ط§ط´طھ ظ…ط¯غŒط± ط±ط¯ ط´ظˆط¯طں")) return;
+    if (!note) return refresh("برای رد کنترل، یادداشت مدیر الزامی است.");
+    if (!window.confirm("این کنترل با یادداشت مدیر رد شود؟")) return;
     operationsCalendarService.dismiss(control.id, note);
-    refresh("ع©ظ†طھط±ظ„ ط±ط¯ ط´ط¯ ظˆ ط¯ظ„غŒظ„ ط¢ظ† ظ†ع¯ظ‡ط¯ط§ط±غŒ ظ…غŒâ€Œط´ظˆط¯.");
+    refresh("کنترل رد شد و دلیل آن نگهداری می‌شود.");
   };
   const snooze = (control: OperationalControlItem) => {
-    if (!snoozeDate) return refresh("طھط§ط±غŒط® طھط¹ظˆغŒظ‚ ط±ط§ ط§ظ†طھط®ط§ط¨ ع©ظ†غŒط¯.");
+    if (!snoozeDate) return refresh("تاریخ تعویق را انتخاب کنید.");
     const until = new Date(`${snoozeDate}T12:00:00`).toISOString();
-    if (!operationsCalendarService.snooze(control.id, until, noteFor(control))) return refresh("طھط§ط±غŒط® طھط¹ظˆغŒظ‚ ط¨ط§غŒط¯ ط¯ط± ط¢غŒظ†ط¯ظ‡ ط¨ط§ط´ط¯.");
+    if (!operationsCalendarService.snooze(control.id, until, noteFor(control))) return refresh("تاریخ تعویق باید در آینده باشد.");
     setSnoozeId("");
     setSnoozeDate("");
-    refresh("ع©ظ†طھط±ظ„ طھط§ طھط§ط±غŒط® ط§ظ†طھط®ط§ط¨â€Œط´ط¯ظ‡ ط¨ظ‡ طھط¹ظˆغŒظ‚ ط§ظپطھط§ط¯.");
+    refresh("کنترل تا تاریخ انتخاب‌شده به تعویق افتاد.");
   };
   const rebuild = () => {
     operationsCalendarService.rebuild(systemState, policy);
-    refresh("طھظ‚ظˆغŒظ… ط§ط² ظˆط¶ط¹غŒطھ ظپط¹ظ„غŒ ط³غŒط³طھظ… ط¨ط§ط²ط³ط§ط²غŒ ط´ط¯.");
+    refresh("تقویم از وضعیت فعلی سیستم بازسازی شد.");
   };
   const saveExportOptions = (next: OperationalControlExportOptions) => {
     setExportOptions(operationsControlSettingsService.updateExportOptions(next));
   };
   const refreshNotifications = () => {
     operationalNotificationService.refreshFromControls(report.controls, notificationPreference);
-    refresh("ط§ط¹ظ„ط§ظ†â€Œظ‡ط§غŒ ظ…ط­ظ„غŒ ط§ط² ع©ظ†طھط±ظ„â€Œظ‡ط§غŒ ظپط¹ظ„غŒ ط¨ظ‡â€Œط±ظˆط²ط±ط³ط§ظ†غŒ ط´ط¯ظ†ط¯.");
+    refresh("اعلان‌های محلی از کنترل‌های فعلی به‌روزرسانی شدند.");
   };
   const createCalendarSnapshot = () => {
-    const snapshot = workforceBackupService.createSnapshot("Snapshot طھظ‚ظˆغŒظ… ع©ظ†طھط±ظ„â€Œظ‡ط§", "operations_calendar_snapshot", "ط³ط§ط®طھظ‡â€Œط´ط¯ظ‡ ظ¾غŒط´ ط§ط² ط±ط³غŒط¯ع¯غŒ ط¨ظ‡ ع©ظ†طھط±ظ„â€Œظ‡ط§غŒ ط¹ظ…ظ„غŒط§طھغŒ", false);
+    const snapshot = workforceBackupService.createSnapshot("Snapshot تقویم کنترل‌ها", "operations_calendar_snapshot", "ساخته‌شده پیش از رسیدگی به کنترل‌های عملیاتی", false);
     operationalHistoryService.recordSnapshotEvent(snapshot.id, snapshot.title, snapshot.reason);
     operationsCalendarService.rebuild(currentOperationsCalendarState({ spaces, employees, taskTypes, scheduleItems, rules, settings }), policy);
-    refresh("Snapshot ط¹ظ…ظ„غŒط§طھغŒ ط³ط§ط®طھظ‡ ط´ط¯.");
+    refresh("Snapshot عملیاتی ساخته شد.");
   };
 
   return (
     <div className="page-stack operations-calendar-page">
       <header className="page-header">
-        <div><span className="eyebrow">P20 Operations Control</span><h1>طھظ‚ظˆغŒظ… ع©ظ†طھط±ظ„â€Œظ‡ط§غŒ ط¹ظ…ظ„غŒط§طھغŒ</h1><p>ظ…ظˆط¹ط¯ظ‡ط§غŒ ع©ظ†طھط±ظ„غŒ ط³غŒط³طھظ… ط±ط§ ط¯ط± غŒع© طµظپ ط±ظˆط²ط§ظ†ظ‡ ط¨ط¨غŒظ†غŒط¯ ظˆ ظ†طھغŒط¬ظ‡ ط±ط³غŒط¯ع¯غŒ ط±ط§ ظ…ط­ظ„غŒ ط«ط¨طھ ع©ظ†غŒط¯.</p></div>
+        <div><span className="eyebrow">P20 Operations Control</span><h1>تقویم کنترل‌های عملیاتی</h1><p>موعدهای کنترلی سیستم را در یک صف روزانه ببینید و نتیجه رسیدگی را محلی ثبت کنید.</p></div>
         <div className="hero-actions">
-          <a className="ghost-button" href="/organization/workforce-dashboard">ط§طھط§ظ‚ ظپط±ظ…ط§ظ†</a>
-          <a className="ghost-button" href="/organization/workforce-dashboard/data-center">ظ…ط±ع©ط² ط¯ط§ط¯ظ‡</a>
-          <a className="ghost-button" href="/organization/workforce-dashboard/operations-control-settings">طھظ†ط¸غŒظ… ط²ظ…ط§ظ†â€Œط¨ظ†ط¯غŒ</a>
-          <button className="ghost-button" type="button" onClick={() => downloadOperationsCalendarIcs(report.controls, exportOptions)}>ط®ط±ظˆط¬غŒ ICS</button>
-          <button className="ghost-button" type="button" onClick={() => downloadOperationsCalendarJson(report.controls, policy, exportOptions, report.summary)}>ط®ط±ظˆط¬غŒ JSON</button>
-          <button className="ghost-button" type="button" onClick={createCalendarSnapshot}><ShieldCheck size={17} /> ط³ط§ط®طھ Snapshot</button>
-          <button className="primary-button" type="button" onClick={rebuild}><RotateCcw size={17} /> ط¨ط§ط²ط³ط§ط²غŒ طھظ‚ظˆغŒظ…</button>
+          <a className="ghost-button" href="/organization/workforce-dashboard">اتاق فرمان</a>
+          <a className="ghost-button" href="/organization/workforce-dashboard/data-center">مرکز داده</a>
+          <a className="ghost-button" href="/organization/workforce-dashboard/operations-control-settings">تنظیم زمان‌بندی</a>
+          <button className="ghost-button" type="button" onClick={() => downloadOperationsCalendarIcs(report.controls, exportOptions)}>خروجی ICS</button>
+          <button className="ghost-button" type="button" onClick={() => downloadOperationsCalendarJson(report.controls, policy, exportOptions, report.summary)}>خروجی JSON</button>
+          <button className="ghost-button" type="button" onClick={createCalendarSnapshot}><ShieldCheck size={17} /> ساخت Snapshot</button>
+          <button className="primary-button" type="button" onClick={rebuild}><RotateCcw size={17} /> بازسازی تقویم</button>
         </div>
       </header>
       {message && <div className="inline-notice">{message}</div>}
 
       <section className="kpi-strip operations-calendar-kpis">
-        <article className="kpi-card tone-critical"><div><p>ط¹ظ‚ط¨â€Œط§ظپطھط§ط¯ظ‡</p><strong>{toPersianNumber(report.overdueCount)}</strong><span>ظ†غŒط§ط²ظ…ظ†ط¯ ط§ظ‚ط¯ط§ظ…</span></div></article>
-        <article className="kpi-card tone-warn"><div><p>ظ…ظˆط¹ط¯ ط§ظ…ط±ظˆط²</p><strong>{toPersianNumber(report.todayCount)}</strong><span>طھط§ ظ¾ط§غŒط§ظ† ط§ظ…ط±ظˆط²</span></div></article>
-        <article className="kpi-card tone-info"><div><p>ظ‡ظپطھ ط±ظˆط² ط¢غŒظ†ط¯ظ‡</p><strong>{toPersianNumber(nextSevenDaysCount)}</strong><span>ع©ظ†طھط±ظ„ ظ¾غŒط´â€Œط±ظˆ</span></div></article>
-        <article className="kpi-card tone-critical"><div><p>ط§ظˆظ„ظˆغŒطھ ظپظˆط±غŒ</p><strong>{toPersianNumber(report.urgentCount)}</strong><span>ط¨ط§ط² ظˆ ظپط¹ط§ظ„</span></div></article>
-        <article className="kpi-card tone-good"><div><p>ط§ظ†ط¬ط§ظ…â€Œط´ط¯ظ‡</p><strong>{toPersianNumber(report.completedCount)}</strong><span>ط«ط¨طھ ظ…ط­ظ„غŒ</span></div></article>
+        <article className="kpi-card tone-critical"><div><p>عقب‌افتاده</p><strong>{toPersianNumber(report.overdueCount)}</strong><span>نیازمند اقدام</span></div></article>
+        <article className="kpi-card tone-warn"><div><p>موعد امروز</p><strong>{toPersianNumber(report.todayCount)}</strong><span>تا پایان امروز</span></div></article>
+        <article className="kpi-card tone-info"><div><p>هفت روز آینده</p><strong>{toPersianNumber(nextSevenDaysCount)}</strong><span>کنترل پیش‌رو</span></div></article>
+        <article className="kpi-card tone-critical"><div><p>اولویت فوری</p><strong>{toPersianNumber(report.urgentCount)}</strong><span>باز و فعال</span></div></article>
+        <article className="kpi-card tone-good"><div><p>انجام‌شده</p><strong>{toPersianNumber(report.completedCount)}</strong><span>ثبت محلی</span></div></article>
       </section>
 
       <section className={`calendar-next-control tone-${report.nextBestControl ? controlTone(report.nextBestControl.priority) : "good"}`}>
-        <div><span className="eyebrow">ط§ظ‚ط¯ط§ظ… ط¨ط¹ط¯غŒ ظ¾غŒط´ظ†ظ‡ط§ط¯غŒ</span><h2>{report.nextBestControl?.title ?? "ع©ظ†طھط±ظ„ ط¨ط§ط²غŒ ط¨ط§ظ‚غŒ ظ†ظ…ط§ظ†ط¯ظ‡ ط§ط³طھ"}</h2><p>{report.nextBestControl?.description ?? "ظˆط¶ط¹غŒطھ ظپط¹ظ„غŒ ظ¾ط§غŒط¯ط§ط± ط§ط³طھط› طھظ‚ظˆغŒظ… ط±ط§ ط¯ط± ظ†ظˆط¨طھ ط¨ط¹ط¯غŒ ط¨ط§ط²ط³ط§ط²غŒ ع©ظ†غŒط¯."}</p></div>
-        {report.nextBestControl && <a className="primary-button" href={report.nextBestControl.relatedPath}>ط±ظپطھظ† ط¨ظ‡ ط¨ط®ط´ ظ…ط±طھط¨ط·</a>}
+        <div><span className="eyebrow">اقدام بعدی پیشنهادی</span><h2>{report.nextBestControl?.title ?? "کنترل بازی باقی نمانده است"}</h2><p>{report.nextBestControl?.description ?? "وضعیت فعلی پایدار است؛ تقویم را در نوبت بعدی بازسازی کنید."}</p></div>
+        {report.nextBestControl && <a className="primary-button" href={report.nextBestControl.relatedPath}>رفتن به بخش مرتبط</a>}
       </section>
 
       <section className="settings-split calendar-tools">
         <section className="settings-band">
-          <div className="section-head"><h2>ط®ط±ظˆط¬غŒ ط³ط±غŒط¹</h2><span className="inline-note">ICS ط¨ط§ ط²ظ…ط§ظ† UTC ط³ط§ط®طھظ‡ ظ…غŒâ€Œط´ظˆط¯</span></div>
-          <div className="quick-export-controls"><label className="risk-acceptance"><input type="checkbox" checked={exportOptions.includeCompleted} onChange={(event) => saveExportOptions({ ...exportOptions, includeCompleted: event.target.checked })} /><span>ط§ظ†ط¬ط§ظ…â€Œط´ط¯ظ‡â€Œظ‡ط§</span></label><label className="risk-acceptance"><input type="checkbox" checked={exportOptions.includeDismissed} onChange={(event) => saveExportOptions({ ...exportOptions, includeDismissed: event.target.checked })} /><span>ط±ط¯ط´ط¯ظ‡â€Œظ‡ط§</span></label><label className="risk-acceptance"><input type="checkbox" checked={exportOptions.includeManagerNote} onChange={(event) => saveExportOptions({ ...exportOptions, includeManagerNote: event.target.checked })} /><span>غŒط§ط¯ط¯ط§ط´طھ ظ…ط¯غŒط±</span></label><label className="field compact-field"><span>ط±ظˆط²ظ‡ط§غŒ ط¢غŒظ†ط¯ظ‡</span><input type="number" min="0" value={exportOptions.includeUpcomingDays} onChange={(event) => saveExportOptions({ ...exportOptions, includeUpcomingDays: Number(event.target.value) })} /></label></div>
+          <div className="section-head"><h2>خروجی سریع</h2><span className="inline-note">ICS با زمان UTC ساخته می‌شود</span></div>
+          <div className="quick-export-controls"><label className="risk-acceptance"><input type="checkbox" checked={exportOptions.includeCompleted} onChange={(event) => saveExportOptions({ ...exportOptions, includeCompleted: event.target.checked })} /><span>انجام‌شده‌ها</span></label><label className="risk-acceptance"><input type="checkbox" checked={exportOptions.includeDismissed} onChange={(event) => saveExportOptions({ ...exportOptions, includeDismissed: event.target.checked })} /><span>ردشده‌ها</span></label><label className="risk-acceptance"><input type="checkbox" checked={exportOptions.includeManagerNote} onChange={(event) => saveExportOptions({ ...exportOptions, includeManagerNote: event.target.checked })} /><span>یادداشت مدیر</span></label><label className="field compact-field"><span>روزهای آینده</span><input type="number" min="0" value={exportOptions.includeUpcomingDays} onChange={(event) => saveExportOptions({ ...exportOptions, includeUpcomingDays: Number(event.target.value) })} /></label></div>
         </section>
         <section className="settings-band">
-          <div className="section-head"><h2>ط§ط¹ظ„ط§ظ†â€Œظ‡ط§غŒ ظ…ط­ظ„غŒ</h2><div className="badge-row"><StatusBadge tone={notificationSummary.urgent ? "critical" : "info"}>{toPersianNumber(notificationSummary.unread)} ط®ظˆط§ظ†ط¯ظ‡â€Œظ†ط´ط¯ظ‡</StatusBadge><StatusBadge tone="warn">{toPersianNumber(notificationSummary.dueToday)} ط§ظ…ط±ظˆط²</StatusBadge></div></div>
-          <p className="inline-note">ط§غŒظ†â€Œظ‡ط§ ظپظ‚ط· ط¯ط§ط®ظ„ ط¯ط§ط´ط¨ظˆط±ط¯ ظ‡ط³طھظ†ط¯ ظˆ notification ظˆط§ظ‚ط¹غŒ ط¯ط³طھع¯ط§ظ‡ ظ†غŒط³طھظ†ط¯.</p>
-          <div className="row-actions"><button className="primary-button" type="button" onClick={refreshNotifications}>ط³ط§ط®طھ/ط¨ظ‡â€Œط±ظˆط²ط±ط³ط§ظ†غŒ ط§ط¹ظ„ط§ظ†â€Œظ‡ط§</button><button className="ghost-button" type="button" onClick={() => { operationalNotificationService.clearReadNotifications(); refresh("ط§ط¹ظ„ط§ظ†â€Œظ‡ط§غŒ ط®ظˆط§ظ†ط¯ظ‡â€Œط´ط¯ظ‡ ظ¾ط§ع© ط´ط¯ظ†ط¯."); }}>ظ¾ط§ع©â€Œط³ط§ط²غŒ ط®ظˆط§ظ†ط¯ظ‡â€Œط´ط¯ظ‡â€Œظ‡ط§</button></div>
-          <div className="notification-mini-list">{notifications.filter((item) => item.status !== "dismissed").slice(0, 4).map((item) => <article key={item.id}><div><strong>{item.title}</strong><small>{controlPriorityLabel(item.priority)} | {toPersianNumber(new Date(item.dueAt).toLocaleDateString("fa-IR"))}</small></div><div className="row-actions">{item.status === "unread" && <button className="ghost-button" type="button" onClick={() => { operationalNotificationService.markNotificationRead(item.id); refresh("ط§ط¹ظ„ط§ظ† ط®ظˆط§ظ†ط¯ظ‡ ط´ط¯."); }}>ط®ظˆط§ظ†ط¯ظ…</button>}<button className="ghost-button" type="button" onClick={() => { operationalNotificationService.dismissNotification(item.id); refresh("ط§ط¹ظ„ط§ظ† ط¨ط³طھظ‡ ط´ط¯."); }}>ط¨ط³طھظ†</button></div></article>)}{!notifications.filter((item) => item.status !== "dismissed").length && <p>ط§ط¹ظ„ط§ظ† ظ…ط­ظ„غŒ ظپط¹ط§ظ„غŒ ظˆط¬ظˆط¯ ظ†ط¯ط§ط±ط¯.</p>}</div>
+          <div className="section-head"><h2>اعلان‌های محلی</h2><div className="badge-row"><StatusBadge tone={notificationSummary.urgent ? "critical" : "info"}>{toPersianNumber(notificationSummary.unread)} خوانده‌نشده</StatusBadge><StatusBadge tone="warn">{toPersianNumber(notificationSummary.dueToday)} امروز</StatusBadge></div></div>
+          <p className="inline-note">این‌ها فقط داخل داشبورد هستند و notification واقعی دستگاه نیستند.</p>
+          <div className="row-actions"><button className="primary-button" type="button" onClick={refreshNotifications}>ساخت/به‌روزرسانی اعلان‌ها</button><button className="ghost-button" type="button" onClick={() => { operationalNotificationService.clearReadNotifications(); refresh("اعلان‌های خوانده‌شده پاک شدند."); }}>پاک‌سازی خوانده‌شده‌ها</button></div>
+          <div className="notification-mini-list">{notifications.filter((item) => item.status !== "dismissed").slice(0, 4).map((item) => <article key={item.id}><div><strong>{item.title}</strong><small>{controlPriorityLabel(item.priority)} | {toPersianNumber(new Date(item.dueAt).toLocaleDateString("fa-IR"))}</small></div><div className="row-actions">{item.status === "unread" && <button className="ghost-button" type="button" onClick={() => { operationalNotificationService.markNotificationRead(item.id); refresh("اعلان خوانده شد."); }}>خواندم</button>}<button className="ghost-button" type="button" onClick={() => { operationalNotificationService.dismissNotification(item.id); refresh("اعلان بسته شد."); }}>بستن</button></div></article>)}{!notifications.filter((item) => item.status !== "dismissed").length && <p>اعلان محلی فعالی وجود ندارد.</p>}</div>
         </section>
       </section>
 
       <section className="filter-bar operations-calendar-filters">
-        <select aria-label="ظپغŒظ„طھط± ظ†ظˆط¹ ع©ظ†طھط±ظ„" value={typeFilter} onChange={(event) => setTypeFilter(event.target.value as OperationalControlType | "all")}><option value="all">ظ‡ظ…ظ‡ ع©ظ†طھط±ظ„â€Œظ‡ط§</option>{(["snapshot_due", "backup_due", "archive_due", "maintenance_review", "drift_review", "resignoff_due", "readiness_review", "monthly_health_review", "preventive_alert_review", "launch_checklist_review"] as OperationalControlType[]).map((type) => <option key={type} value={type}>{controlTypeLabel(type)}</option>)}</select>
-        <select aria-label="ظپغŒظ„طھط± ظˆط¶ط¹غŒطھ" value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as OperationalControlStatus | "all")}><option value="all">ظ‡ظ…ظ‡ ظˆط¶ط¹غŒطھâ€Œظ‡ط§</option>{(["upcoming", "due_today", "overdue", "completed", "snoozed", "dismissed"] as OperationalControlStatus[]).map((status) => <option key={status} value={status}>{controlStatusLabel(status)}</option>)}</select>
-        <select aria-label="ظپغŒظ„طھط± ط§ظˆظ„ظˆغŒطھ" value={priorityFilter} onChange={(event) => setPriorityFilter(event.target.value as OperationalControlPriority | "all")}><option value="all">ظ‡ظ…ظ‡ ط§ظˆظ„ظˆغŒطھâ€Œظ‡ط§</option>{(["low", "medium", "high", "urgent"] as OperationalControlPriority[]).map((priority) => <option key={priority} value={priority}>{controlPriorityLabel(priority)}</option>)}</select>
-        <span className="inline-note">{toPersianNumber(filteredControls.length)} ظ†طھغŒط¬ظ‡</span>
+        <select aria-label="فیلتر نوع کنترل" value={typeFilter} onChange={(event) => setTypeFilter(event.target.value as OperationalControlType | "all")}><option value="all">همه کنترل‌ها</option>{(["snapshot_due", "backup_due", "archive_due", "maintenance_review", "drift_review", "resignoff_due", "readiness_review", "monthly_health_review", "preventive_alert_review", "launch_checklist_review"] as OperationalControlType[]).map((type) => <option key={type} value={type}>{controlTypeLabel(type)}</option>)}</select>
+        <select aria-label="فیلتر وضعیت" value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as OperationalControlStatus | "all")}><option value="all">همه وضعیت‌ها</option>{(["upcoming", "due_today", "overdue", "completed", "snoozed", "dismissed"] as OperationalControlStatus[]).map((status) => <option key={status} value={status}>{controlStatusLabel(status)}</option>)}</select>
+        <select aria-label="فیلتر اولویت" value={priorityFilter} onChange={(event) => setPriorityFilter(event.target.value as OperationalControlPriority | "all")}><option value="all">همه اولویت‌ها</option>{(["low", "medium", "high", "urgent"] as OperationalControlPriority[]).map((priority) => <option key={priority} value={priority}>{controlPriorityLabel(priority)}</option>)}</select>
+        <span className="inline-note">{toPersianNumber(filteredControls.length)} نتیجه</span>
       </section>
 
       <div className="calendar-date-groups">
         {groupedControls.map(([date, controls]) => (
           <section className="calendar-date-section" key={date}>
-            <div className="section-head"><h2>{toPersianNumber(new Date(`${date}T12:00:00`).toLocaleDateString("fa-IR", { weekday: "long", month: "long", day: "numeric" }))}</h2><span className="inline-note">{toPersianNumber(controls.length)} ع©ظ†طھط±ظ„</span></div>
+            <div className="section-head"><h2>{toPersianNumber(new Date(`${date}T12:00:00`).toLocaleDateString("fa-IR", { weekday: "long", month: "long", day: "numeric" }))}</h2><span className="inline-note">{toPersianNumber(controls.length)} کنترل</span></div>
             <div className="control-card-grid">
               {controls.map((control) => (
                 <article className={`control-card tone-${controlTone(control.status === "completed" || control.status === "dismissed" || control.status === "snoozed" ? control.status : control.priority)}`} key={control.id}>
                   <div className="section-head"><div className="badge-row"><StatusBadge tone={controlTone(control.status)}>{controlStatusLabel(control.status)}</StatusBadge><StatusBadge tone={controlTone(control.priority)}>{controlPriorityLabel(control.priority)}</StatusBadge></div><small>{controlTypeLabel(control.type)}</small></div>
                   <h3>{control.title}</h3><p>{control.description}</p>
-                  <div className="control-meta"><span>ط³ط±ط±ط³غŒط¯: {toPersianNumber(new Date(control.dueAt).toLocaleString("fa-IR"))}</span><span>ظ…ظ†ط¨ط¹: {control.source}</span>{control.snoozedUntil && <span>طھط¹ظˆغŒظ‚ طھط§: {toPersianNumber(new Date(control.snoozedUntil).toLocaleDateString("fa-IR"))}</span>}</div>
-                  <label className="field"><span>غŒط§ط¯ط¯ط§ط´طھ ظ…ط¯غŒط±</span><textarea rows={2} value={noteFor(control)} onChange={(event) => setNotes((current) => ({ ...current, [control.id]: event.target.value }))} placeholder="ظ†طھغŒط¬ظ‡ ط¨ط±ط±ط³غŒ غŒط§ ط¯ظ„غŒظ„ طھطµظ…غŒظ…" /></label>
-                  {snoozeId === control.id && <div className="snooze-panel"><input aria-label="طھط§ط±غŒط® طھط¹ظˆغŒظ‚" type="date" value={snoozeDate} onChange={(event) => setSnoozeDate(event.target.value)} /><button className="primary-button" type="button" onClick={() => snooze(control)}>ط«ط¨طھ طھط¹ظˆغŒظ‚</button></div>}
+                  <div className="control-meta"><span>سررسید: {toPersianNumber(new Date(control.dueAt).toLocaleString("fa-IR"))}</span><span>منبع: {control.source}</span>{control.snoozedUntil && <span>تعویق تا: {toPersianNumber(new Date(control.snoozedUntil).toLocaleDateString("fa-IR"))}</span>}</div>
+                  <label className="field"><span>یادداشت مدیر</span><textarea rows={2} value={noteFor(control)} onChange={(event) => setNotes((current) => ({ ...current, [control.id]: event.target.value }))} placeholder="نتیجه بررسی یا دلیل تصمیم" /></label>
+                  {snoozeId === control.id && <div className="snooze-panel"><input aria-label="تاریخ تعویق" type="date" value={snoozeDate} onChange={(event) => setSnoozeDate(event.target.value)} /><button className="primary-button" type="button" onClick={() => snooze(control)}>ثبت تعویق</button></div>}
                   <div className="row-actions">
-                    <a className="ghost-button" href={control.relatedPath}>ط¨ط®ط´ ظ…ط±طھط¨ط·</a>
-                    {(control.status === "completed" || control.status === "dismissed") ? <button className="ghost-button" type="button" onClick={() => { operationsCalendarService.reopen(control.id); refresh("ع©ظ†طھط±ظ„ ط¯ظˆط¨ط§ط±ظ‡ ط¨ط§ط² ط´ط¯."); }}>ط¨ط§ط²ع¯ط´ط§غŒغŒ</button> : <><button className="primary-button" type="button" onClick={() => markCompleted(control)}>ط§ظ†ط¬ط§ظ… ط´ط¯</button><button className="ghost-button" type="button" onClick={() => { setSnoozeId(control.id); setSnoozeDate(""); }}>طھط¹ظˆغŒظ‚</button><button className="danger-button" type="button" onClick={() => dismiss(control)}>ط±ط¯</button></>}
+                    <a className="ghost-button" href={control.relatedPath}>بخش مرتبط</a>
+                    {(control.status === "completed" || control.status === "dismissed") ? <button className="ghost-button" type="button" onClick={() => { operationsCalendarService.reopen(control.id); refresh("کنترل دوباره باز شد."); }}>بازگشایی</button> : <><button className="primary-button" type="button" onClick={() => markCompleted(control)}>انجام شد</button><button className="ghost-button" type="button" onClick={() => { setSnoozeId(control.id); setSnoozeDate(""); }}>تعویق</button><button className="danger-button" type="button" onClick={() => dismiss(control)}>رد</button></>}
                   </div>
                 </article>
               ))}
             </div>
           </section>
         ))}
-        {!groupedControls.length && <section className="panel"><p>ع©ظ†طھط±ظ„غŒ ط¨ط§ ظپغŒظ„طھط±ظ‡ط§غŒ ط§ظ†طھط®ط§ط¨â€Œط´ط¯ظ‡ ظ¾غŒط¯ط§ ظ†ط´ط¯.</p></section>}
+        {!groupedControls.length && <section className="panel"><p>کنترلی با فیلترهای انتخاب‌شده پیدا نشد.</p></section>}
       </div>
     </div>
   );
@@ -2289,7 +2289,7 @@ function DecisionReportPage() {
   };
 
   const archiveReport = (id: string) => {
-    const ok = window.confirm("ط§غŒظ† ع¯ط²ط§ط±ط´ ط§ط² ظ„غŒط³طھ ظپط¹ط§ظ„ ط¨ط§غŒع¯ط§ظ†غŒ ط´ظˆط¯طں");
+    const ok = window.confirm("این گزارش از لیست فعال بایگانی شود؟");
     if (!ok) return;
     decisionReportService.archive(id);
     refresh();
@@ -2300,37 +2300,37 @@ function DecisionReportPage() {
       <header className="page-header no-print">
         <div>
           <span className="eyebrow">P8 Decision Report</span>
-          <h1>ع¯ط²ط§ط±ط´ ظ…ط¯غŒط±غŒطھغŒ طھطµظ…غŒظ…â€Œظ‡ط§</h1>
-          <p>ط«ط¨طھطŒ ظ…ط±ظˆط± ظˆ ع†ط§ظ¾ ظ†طھغŒط¬ظ‡ طھطµظ…غŒظ…â€Œظ‡ط§غŒ ظ‚ط¨ظ„/ط¨ط¹ط¯ ط¨ط±ط§غŒ ط¬ظ„ط³ظ‡ ظ…ط¯غŒط±غŒطھغŒ.</p>
+          <h1>گزارش مدیریتی تصمیم‌ها</h1>
+          <p>ثبت، مرور و چاپ نتیجه تصمیم‌های قبل/بعد برای جلسه مدیریتی.</p>
         </div>
         <div className="hero-actions">
-          <a className="ghost-button" href="/organization/workforce-dashboard/decision-queue">طµظپ طھطµظ…غŒظ…</a>
-          <a className="ghost-button" href="/organization/workforce-dashboard/report-archive">ط±ظپطھظ† ط¨ظ‡ ط¢ط±ط´غŒظˆ ع¯ط²ط§ط±ط´â€Œظ‡ط§</a>
-          <button className="primary-button" type="button" onClick={() => window.print()}>ع†ط§ظ¾ ع¯ط²ط§ط±ط´</button>
+          <a className="ghost-button" href="/organization/workforce-dashboard/decision-queue">صف تصمیم</a>
+          <a className="ghost-button" href="/organization/workforce-dashboard/report-archive">رفتن به آرشیو گزارش‌ها</a>
+          <button className="primary-button" type="button" onClick={() => window.print()}>چاپ گزارش</button>
         </div>
       </header>
 
       <section className="panel report-list no-print">
         <div className="section-head">
-          <h2>ع¯ط²ط§ط±ط´â€Œظ‡ط§غŒ ظ‚ط¨ظ„غŒ</h2>
-          <span className="inline-note">{toPersianNumber(reports.length)} ع¯ط²ط§ط±ط´ ظپط¹ط§ظ„</span>
+          <h2>گزارش‌های قبلی</h2>
+          <span className="inline-note">{toPersianNumber(reports.length)} گزارش فعال</span>
         </div>
         <div className="entity-table">
           {reports.map((report) => (
             <article className={selectedReport?.id === report.id ? "highlight-row" : ""} key={report.id}>
               <div className="entity-main">
-                <div><small>ط¹ظ†ظˆط§ظ†</small><strong>{report.title}</strong></div>
-                <div><small>طھط§ط±غŒط®</small><strong>{toPersianNumber(new Date(report.generatedAt).toLocaleDateString("fa-IR"))}</strong></div>
-                <div><small>ع©ظ†طھط±ظ„</small><strong>{toPersianNumber(report.summary.controlScoreBefore)} / {toPersianNumber(report.summary.controlScoreAfter)}</strong></div>
+                <div><small>عنوان</small><strong>{report.title}</strong></div>
+                <div><small>تاریخ</small><strong>{toPersianNumber(new Date(report.generatedAt).toLocaleDateString("fa-IR"))}</strong></div>
+                <div><small>کنترل</small><strong>{toPersianNumber(report.summary.controlScoreBefore)} / {toPersianNumber(report.summary.controlScoreAfter)}</strong></div>
               </div>
               <div className="row-actions">
                 <StatusBadge tone={reportStatusTone(report.status)}>{reportStatusLabel(report.status)}</StatusBadge>
-                <button type="button" onClick={() => setSelectedId(report.id)}>ظ…ط´ط§ظ‡ط¯ظ‡</button>
-                <button className="danger-button" type="button" onClick={() => archiveReport(report.id)}>ط¨ط§غŒع¯ط§ظ†غŒ</button>
+                <button type="button" onClick={() => setSelectedId(report.id)}>مشاهده</button>
+                <button className="danger-button" type="button" onClick={() => archiveReport(report.id)}>بایگانی</button>
               </div>
             </article>
           ))}
-          {!reports.length && <p>ظ‡ظ†ظˆط² ع¯ط²ط§ط±ط´غŒ ط³ط§ط®طھظ‡ ظ†ط´ط¯ظ‡ ط§ط³طھ. ط§ط² طµظپ طھطµظ…غŒظ…â€Œع¯غŒط±غŒ غŒع© ع¯ط²ط§ط±ط´ ط¨ط³ط§ط².</p>}
+          {!reports.length && <p>هنوز گزارشی ساخته نشده است. از صف تصمیم‌گیری یک گزارش بساز.</p>}
         </div>
       </section>
 
@@ -2338,56 +2338,56 @@ function DecisionReportPage() {
         <section className="print-surface">
           <section className="report-title">
             <div>
-              <span className="eyebrow">ع¯ط²ط§ط±ط´ ظ‚ط§ط¨ظ„ ع†ط§ظ¾</span>
+              <span className="eyebrow">گزارش قابل چاپ</span>
               <h1>{selectedReport.title}</h1>
-              <p>{selectedReport.weekLabel} | طھظˆظ„غŒط¯ ط´ط¯ظ‡ ط¯ط± {toPersianNumber(new Date(selectedReport.generatedAt).toLocaleString("fa-IR"))}</p>
+              <p>{selectedReport.weekLabel} | تولید شده در {toPersianNumber(new Date(selectedReport.generatedAt).toLocaleString("fa-IR"))}</p>
             </div>
             <StatusBadge tone={reportStatusTone(selectedReport.status)}>{reportStatusLabel(selectedReport.status)}</StatusBadge>
           </section>
 
           <section className="kpi-strip">
-            <article className="kpi-card tone-info"><div><p>ظ‚ط¨ظ„</p><strong>{toPersianNumber(selectedReport.summary.controlScoreBefore)}</strong><span>ط±غŒط³ع© {toPersianNumber(selectedReport.summary.riskScoreBefore)}</span></div></article>
-            <article className="kpi-card tone-good"><div><p>ط¨ط¹ط¯</p><strong>{toPersianNumber(selectedReport.summary.controlScoreAfter)}</strong><span>ط±غŒط³ع© {toPersianNumber(selectedReport.summary.riskScoreAfter)}</span></div></article>
-            <article className={`kpi-card tone-${selectedReport.summary.controlScoreAfter >= selectedReport.summary.controlScoreBefore ? "good" : "critical"}`}><div><p>طھط؛غŒغŒط± ع©ظ†طھط±ظ„</p><strong>{toPersianNumber(selectedReport.summary.controlScoreAfter - selectedReport.summary.controlScoreBefore)}</strong><span>{verdictLabel(selectedReport.summary.verdict)}</span></div></article>
-            <article className="kpi-card tone-critical"><div><p>ط¨ط­ط±ط§ظ†غŒ</p><strong>{toPersianNumber(selectedReport.summary.criticalBefore)} / {toPersianNumber(selectedReport.summary.criticalAfter)}</strong><span>ظ‚ط¨ظ„ / ط¨ط¹ط¯</span></div></article>
-            <article className="kpi-card tone-warn"><div><p>ظ‡ط´ط¯ط§ط±</p><strong>{toPersianNumber(selectedReport.summary.warningBefore)} / {toPersianNumber(selectedReport.summary.warningAfter)}</strong><span>ظ‚ط¨ظ„ / ط¨ط¹ط¯</span></div></article>
+            <article className="kpi-card tone-info"><div><p>قبل</p><strong>{toPersianNumber(selectedReport.summary.controlScoreBefore)}</strong><span>ریسک {toPersianNumber(selectedReport.summary.riskScoreBefore)}</span></div></article>
+            <article className="kpi-card tone-good"><div><p>بعد</p><strong>{toPersianNumber(selectedReport.summary.controlScoreAfter)}</strong><span>ریسک {toPersianNumber(selectedReport.summary.riskScoreAfter)}</span></div></article>
+            <article className={`kpi-card tone-${selectedReport.summary.controlScoreAfter >= selectedReport.summary.controlScoreBefore ? "good" : "critical"}`}><div><p>تغییر کنترل</p><strong>{toPersianNumber(selectedReport.summary.controlScoreAfter - selectedReport.summary.controlScoreBefore)}</strong><span>{verdictLabel(selectedReport.summary.verdict)}</span></div></article>
+            <article className="kpi-card tone-critical"><div><p>بحرانی</p><strong>{toPersianNumber(selectedReport.summary.criticalBefore)} / {toPersianNumber(selectedReport.summary.criticalAfter)}</strong><span>قبل / بعد</span></div></article>
+            <article className="kpi-card tone-warn"><div><p>هشدار</p><strong>{toPersianNumber(selectedReport.summary.warningBefore)} / {toPersianNumber(selectedReport.summary.warningAfter)}</strong><span>قبل / بعد</span></div></article>
           </section>
 
           <section className="bottom-grid">
             {previousPoint && (
               <section className="panel">
-                <h2>ظ…ظ‚ط§غŒط³ظ‡ ط¨ط§ ع¯ط²ط§ط±ط´ ظ‚ط¨ظ„غŒ</h2>
+                <h2>مقایسه با گزارش قبلی</h2>
                 <div className="finding-meta">
-                  <span>طھط؛غŒغŒط± ع©ظ†طھط±ظ„: {toPersianNumber(selectedReport.summary.controlScoreAfter - previousPoint.controlScoreAfter)}</span>
-                  <span>طھط؛غŒغŒط± ط±غŒط³ع©: {toPersianNumber(selectedReport.summary.riskScoreAfter - previousPoint.riskScoreAfter)}</span>
+                  <span>تغییر کنترل: {toPersianNumber(selectedReport.summary.controlScoreAfter - previousPoint.controlScoreAfter)}</span>
+                  <span>تغییر ریسک: {toPersianNumber(selectedReport.summary.riskScoreAfter - previousPoint.riskScoreAfter)}</span>
                 </div>
-                <a className="ghost-button no-print" href={`/organization/workforce-dashboard/report-comparison?reportIds=${encodeURIComponent(`${previousPoint.reportId},${selectedReport.id}`)}`}>ظ…ظ‚ط§غŒط³ظ‡ ع©ط§ظ…ظ„</a>
+                <a className="ghost-button no-print" href={`/organization/workforce-dashboard/report-comparison?reportIds=${encodeURIComponent(`${previousPoint.reportId},${selectedReport.id}`)}`}>مقایسه کامل</a>
               </section>
             )}
             <section className="panel wide-panel">
-              <h2>طھطµظ…غŒظ…â€Œظ‡ط§غŒ ط§ط¹ظ…ط§ظ„â€Œط´ط¯ظ‡ غŒط§ ظ¾غŒط´ظ†ظ‡ط§ط¯غŒ</h2>
+              <h2>تصمیم‌های اعمال‌شده یا پیشنهادی</h2>
               <div className="report-table">
                 {selectedReport.decisionBatchResult.appliedChanges.map((change) => (
                   <article key={`${change.scheduleItemId}-${change.newSpaceId ?? ""}`}>
                     <strong>{change.scheduleItemId}</strong>
-                    <span>ظپط¶ط§: {change.newSpaceId ?? "ط¨ط¯ظˆظ† طھط؛غŒغŒط±"} | ط²ظ…ط§ظ†: {change.newStartTime ?? "-"} طھط§ {change.newEndTime ?? "-"}</span>
+                    <span>فضا: {change.newSpaceId ?? "بدون تغییر"} | زمان: {change.newStartTime ?? "-"} تا {change.newEndTime ?? "-"}</span>
                   </article>
                 ))}
-                {!selectedReport.decisionBatchResult.appliedChanges.length && <p>طھط؛غŒغŒط± ظ‚ط§ط¨ظ„ ط§ط¹ظ…ط§ظ„غŒ ط¯ط± ط§غŒظ† ع¯ط²ط§ط±ط´ ط«ط¨طھ ظ†ط´ط¯ظ‡ ط§ط³طھ.</p>}
+                {!selectedReport.decisionBatchResult.appliedChanges.length && <p>تغییر قابل اعمالی در این گزارش ثبت نشده است.</p>}
               </div>
             </section>
             <section className="panel">
-              <h2>ط®ظ„ط§طµظ‡ ظ…ط¯غŒط±غŒطھغŒ</h2>
+              <h2>خلاصه مدیریتی</h2>
               <div className="evidence-box">
                 <span>{selectedReport.summary.summary}</span>
-                <small>ط±غŒط³ع© ع©ظ„ ط§ط² {toPersianNumber(selectedReport.summary.riskScoreBefore)} ط¨ظ‡ {toPersianNumber(selectedReport.summary.riskScoreAfter)} طھط؛غŒغŒط± ع©ط±ط¯ظ‡ ط§ط³طھ.</small>
+                <small>ریسک کل از {toPersianNumber(selectedReport.summary.riskScoreBefore)} به {toPersianNumber(selectedReport.summary.riskScoreAfter)} تغییر کرده است.</small>
               </div>
             </section>
           </section>
 
           <section className="bottom-grid">
             <section className="panel">
-              <h2>ط±غŒط³ع©â€Œظ‡ط§غŒ ط¨ط§ظ‚غŒâ€Œظ…ط§ظ†ط¯ظ‡</h2>
+              <h2>ریسک‌های باقی‌مانده</h2>
               <div className="analysis-list">
                 {selectedReport.remainingRisks.slice(0, 6).map((risk) => (
                   <article className={`panel-row tone-${severityTone(risk.severity)}`} key={risk.id}>
@@ -2396,11 +2396,11 @@ function DecisionReportPage() {
                     <small>{risk.recommendation}</small>
                   </article>
                 ))}
-                {!selectedReport.remainingRisks.length && <p>ط±غŒط³ع© ظ…ظ‡ظ… ط¨ط§ظ‚غŒâ€Œظ…ط§ظ†ط¯ظ‡â€Œط§غŒ ط¯ط± ع¯ط²ط§ط±ط´ ط«ط¨طھ ظ†ط´ط¯ظ‡ ط§ط³طھ.</p>}
+                {!selectedReport.remainingRisks.length && <p>ریسک مهم باقی‌مانده‌ای در گزارش ثبت نشده است.</p>}
               </div>
             </section>
             <section className="panel">
-              <h2>ظ‡ط´ط¯ط§ط±ظ‡ط§غŒ ط¬ط¯غŒط¯ ط§ط­طھظ…ط§ظ„غŒ</h2>
+              <h2>هشدارهای جدید احتمالی</h2>
               <div className="analysis-list">
                 {selectedReport.decisionBatchResult.conflicts.map((conflict) => (
                   <article className="panel-row tone-critical" key={conflict.id}>
@@ -2409,42 +2409,42 @@ function DecisionReportPage() {
                     <small>{conflict.recommendation}</small>
                   </article>
                 ))}
-                {!selectedReport.decisionBatchResult.conflicts.length && <p>ظ‡ط´ط¯ط§ط± غŒط§ conflict طھط§ط²ظ‡â€Œط§غŒ ط¨ط±ط§غŒ ط§غŒظ† batch ط«ط¨طھ ظ†ط´ط¯ظ‡ ط§ط³طھ.</p>}
+                {!selectedReport.decisionBatchResult.conflicts.length && <p>هشدار یا conflict تازه‌ای برای این batch ثبت نشده است.</p>}
               </div>
             </section>
             <section className="panel">
-              <h2>طھط§غŒغŒط¯ ظ…ط¯غŒط±</h2>
+              <h2>تایید مدیر</h2>
               <div className="signature-box">
-                <span>طھط§غŒغŒط¯ع©ظ†ظ†ط¯ظ‡: {selectedReport.approvedBy || "ط«ط¨طھ ظ†ط´ط¯ظ‡"}</span>
-                <span>ظˆط¶ط¹غŒطھ: {reportStatusLabel(selectedReport.status)}</span>
-                <span>غŒط§ط¯ط¯ط§ط´طھ: {selectedReport.managerNote || "ط¨ط¯ظˆظ† غŒط§ط¯ط¯ط§ط´طھ"}</span>
+                <span>تاییدکننده: {selectedReport.approvedBy || "ثبت نشده"}</span>
+                <span>وضعیت: {reportStatusLabel(selectedReport.status)}</span>
+                <span>یادداشت: {selectedReport.managerNote || "بدون یادداشت"}</span>
               </div>
             </section>
           </section>
 
           <section className="panel no-print">
-            <h2>ظˆغŒط±ط§غŒط´ ظˆط¶ط¹غŒطھ ع¯ط²ط§ط±ط´</h2>
+            <h2>ویرایش وضعیت گزارش</h2>
             <div className="field-grid">
-              <TextField label="ظ†ط§ظ… طھط§غŒغŒط¯ع©ظ†ظ†ط¯ظ‡" value={approvedBy} onChange={setApprovedBy} />
-              <SelectField label="ظˆط¶ط¹غŒطھ طھط§غŒغŒط¯" value={selectedReport.status} options={[
-                { label: "ظ¾غŒط´â€Œظ†ظˆغŒط³", value: "draft" },
-                { label: "طھط§غŒغŒط¯ ط´ط¯ظ‡", value: "approved" },
-                { label: "ط§ط¹ظ…ط§ظ„ ط´ط¯ظ‡", value: "applied" },
-                { label: "ظ†غŒط§ط²ظ…ظ†ط¯ ط¨ط±ط±ط³غŒ", value: "needs_review" },
+              <TextField label="نام تاییدکننده" value={approvedBy} onChange={setApprovedBy} />
+              <SelectField label="وضعیت تایید" value={selectedReport.status} options={[
+                { label: "پیش‌نویس", value: "draft" },
+                { label: "تایید شده", value: "approved" },
+                { label: "اعمال شده", value: "applied" },
+                { label: "نیازمند بررسی", value: "needs_review" },
               ]} onChange={(status) => updateReport({ status: status as DecisionReportStatus })} />
-              <TextAreaField label="غŒط§ط¯ط¯ط§ط´طھ ظ…ط¯غŒط±" value={managerNote} onChange={setManagerNote} />
+              <TextAreaField label="یادداشت مدیر" value={managerNote} onChange={setManagerNote} />
             </div>
             <div className="form-actions">
-              <button className="primary-button" type="button" onClick={() => updateReport({ approvedBy, managerNote })}>ط°ط®غŒط±ظ‡ غŒط§ط¯ط¯ط§ط´طھ</button>
-              <button className="ghost-button" type="button" onClick={() => updateReport({ status: "approved", approvedBy, managerNote })}>طھط§غŒغŒط¯ ع¯ط²ط§ط±ط´</button>
-              <button className="ghost-button" type="button" onClick={() => updateReport({ status: "applied", approvedBy, managerNote })}>ط¹ظ„ط§ظ…طھâ€Œع¯ط°ط§ط±غŒ ط§ط¹ظ…ط§ظ„ ط´ط¯ظ‡</button>
+              <button className="primary-button" type="button" onClick={() => updateReport({ approvedBy, managerNote })}>ذخیره یادداشت</button>
+              <button className="ghost-button" type="button" onClick={() => updateReport({ status: "approved", approvedBy, managerNote })}>تایید گزارش</button>
+              <button className="ghost-button" type="button" onClick={() => updateReport({ status: "applied", approvedBy, managerNote })}>علامت‌گذاری اعمال شده</button>
             </div>
           </section>
         </section>
       ) : (
         <section className="panel">
-          <h2>ع¯ط²ط§ط±ط´غŒ ط¨ط±ط§غŒ ظ†ظ…ط§غŒط´ ظˆط¬ظˆط¯ ظ†ط¯ط§ط±ط¯</h2>
-          <p>ط§ط² طµظپط­ظ‡ طµظپ طھطµظ…غŒظ…â€Œع¯غŒط±غŒطŒ ظ¾ط³ ط§ط² طھط­ظ„غŒظ„ batchطŒ ع¯ط²ط§ط±ط´ طھطµظ…غŒظ… ط¨ط³ط§ط².</p>
+          <h2>گزارشی برای نمایش وجود ندارد</h2>
+          <p>از صفحه صف تصمیم‌گیری، پس از تحلیل batch، گزارش تصمیم بساز.</p>
         </section>
       )}
     </div>
@@ -2488,7 +2488,7 @@ function ReportArchivePage({ comparisonOnly = false }: { comparisonOnly?: boolea
   };
 
   const archiveReport = (id: string) => {
-    const ok = window.confirm("ط§غŒظ† ع¯ط²ط§ط±ط´ ط¨ط§غŒع¯ط§ظ†غŒ ط´ظˆط¯طں");
+    const ok = window.confirm("این گزارش بایگانی شود؟");
     if (!ok) return;
     decisionReportService.archive(id);
     const next = decisionReportService.list(true);
@@ -2501,47 +2501,47 @@ function ReportArchivePage({ comparisonOnly = false }: { comparisonOnly?: boolea
       <header className="page-header">
         <div>
           <span className="eyebrow">P9 Report Archive</span>
-          <h1>{comparisonOnly ? "ظ…ظ‚ط§غŒط³ظ‡ ع¯ط²ط§ط±ط´â€Œظ‡ط§" : "ط¢ط±ط´غŒظˆ ظˆ ظ…ظ‚ط§غŒط³ظ‡ ع¯ط²ط§ط±ط´â€Œظ‡ط§"}</h1>
-          <p>ط±ظˆظ†ط¯ طھطµظ…غŒظ…â€Œظ‡ط§غŒ ظ…ط¯غŒط±غŒطھغŒطŒ ط¨ظ‡طھط±غŒظ†/ط¨ط¯طھط±غŒظ† ظ‡ظپطھظ‡ ظˆ ط®ظ„ط§طµظ‡ ظ…ط§ظ‡ط§ظ†ظ‡ ط³ط¨ع© ط±ط§ ط¨ط¨غŒظ†.</p>
+          <h1>{comparisonOnly ? "مقایسه گزارش‌ها" : "آرشیو و مقایسه گزارش‌ها"}</h1>
+          <p>روند تصمیم‌های مدیریتی، بهترین/بدترین هفته و خلاصه ماهانه سبک را ببین.</p>
         </div>
         <div className="hero-actions">
-          <a className="ghost-button" href="/organization/workforce-dashboard/decision-report">ع¯ط²ط§ط±ط´ طھطµظ…غŒظ…</a>
-          <a className="ghost-button" href="/organization/workforce-dashboard/monthly-health">ط³ظ„ط§ظ…طھ ظ…ط§ظ‡ط§ظ†ظ‡</a>
-          <a className="primary-button" href="/organization/workforce-dashboard/report-comparison">ظ…ظ‚ط§غŒط³ظ‡ ع¯ط²ط§ط±ط´â€Œظ‡ط§</a>
+          <a className="ghost-button" href="/organization/workforce-dashboard/decision-report">گزارش تصمیم</a>
+          <a className="ghost-button" href="/organization/workforce-dashboard/monthly-health">سلامت ماهانه</a>
+          <a className="primary-button" href="/organization/workforce-dashboard/report-comparison">مقایسه گزارش‌ها</a>
         </div>
       </header>
 
       <section className="kpi-strip">
-        <article className="kpi-card tone-info"><div><p>ع¯ط²ط§ط±ط´â€Œظ‡ط§</p><strong>{toPersianNumber(visibleReports.length)}</strong><span>ظپط¹ط§ظ„ ط¯ط± ط¢ط±ط´غŒظˆ</span></div></article>
-        <article className="kpi-card tone-good"><div><p>ظ…غŒط§ظ†ع¯غŒظ† ع©ظ†طھط±ظ„</p><strong>{toPersianNumber(comparison.averageControlScore)}</strong><span>ع¯ط²ط§ط±ط´â€Œظ‡ط§غŒ ط§ظ†طھط®ط§ط¨â€Œط´ط¯ظ‡</span></div></article>
-        <article className="kpi-card tone-warn"><div><p>ظ…غŒط§ظ†ع¯غŒظ† ط±غŒط³ع©</p><strong>{toPersianNumber(comparison.averageRiskScore)}</strong><span>ط¨ط¹ط¯ ط§ط² طھطµظ…غŒظ…â€Œظ‡ط§</span></div></article>
-        <article className="kpi-card tone-focus"><div><p>طھطµظ…غŒظ…â€Œظ‡ط§غŒ ظ…ظˆط«ط±</p><strong>{toPersianNumber(comparison.totalAppliedDecisions)}</strong><span>ط¯ط± ع¯ط²ط§ط±ط´â€Œظ‡ط§غŒ ظ…ظ‚ط§غŒط³ظ‡</span></div></article>
-        <article className="kpi-card tone-critical"><div><p>ط±غŒط³ع© طھع©ط±ط§ط±غŒ</p><strong>{toPersianNumber(comparison.recurringRiskTitles.length)}</strong><span>ط¹ظ†ظˆط§ظ† ظ¾ط±طھع©ط±ط§ط±</span></div></article>
+        <article className="kpi-card tone-info"><div><p>گزارش‌ها</p><strong>{toPersianNumber(visibleReports.length)}</strong><span>فعال در آرشیو</span></div></article>
+        <article className="kpi-card tone-good"><div><p>میانگین کنترل</p><strong>{toPersianNumber(comparison.averageControlScore)}</strong><span>گزارش‌های انتخاب‌شده</span></div></article>
+        <article className="kpi-card tone-warn"><div><p>میانگین ریسک</p><strong>{toPersianNumber(comparison.averageRiskScore)}</strong><span>بعد از تصمیم‌ها</span></div></article>
+        <article className="kpi-card tone-focus"><div><p>تصمیم‌های موثر</p><strong>{toPersianNumber(comparison.totalAppliedDecisions)}</strong><span>در گزارش‌های مقایسه</span></div></article>
+        <article className="kpi-card tone-critical"><div><p>ریسک تکراری</p><strong>{toPersianNumber(comparison.recurringRiskTitles.length)}</strong><span>عنوان پرتکرار</span></div></article>
       </section>
 
       {!comparisonOnly && (
         <section className="filter-bar">
           <Filter size={16} />
           <select value={status} onChange={(event) => setStatus(event.target.value)}>
-            <option value="">ظ‡ظ…ظ‡ ظˆط¶ط¹غŒطھâ€Œظ‡ط§</option>
+            <option value="">همه وضعیت‌ها</option>
             <option value="draft">draft</option>
             <option value="approved">approved</option>
             <option value="applied">applied</option>
             <option value="needs_review">needs_review</option>
           </select>
           <select value={sortMode} onChange={(event) => setSortMode(event.target.value)}>
-            <option value="date">ظ…ط±طھط¨â€Œط³ط§ط²غŒ طھط§ط±غŒط®</option>
-            <option value="control">ط§ظ…طھغŒط§ط² ع©ظ†طھط±ظ„ ط¨ط¹ط¯</option>
-            <option value="improvement">ط¨غŒط´طھط±غŒظ† ط¨ظ‡ط¨ظˆط¯</option>
+            <option value="date">مرتب‌سازی تاریخ</option>
+            <option value="control">امتیاز کنترل بعد</option>
+            <option value="improvement">بیشترین بهبود</option>
           </select>
-          <input className="search-input" value={query} placeholder="ط¬ط³طھâ€Œظˆط¬ظˆ ط¯ط± ط¹ظ†ظˆط§ظ† غŒط§ ظ‡ظپطھظ‡" onChange={(event) => setQuery(event.target.value)} />
+          <input className="search-input" value={query} placeholder="جست‌وجو در عنوان یا هفته" onChange={(event) => setQuery(event.target.value)} />
         </section>
       )}
 
       <section className="archive-layout">
         {!comparisonOnly && (
           <section className="panel archive-list">
-            <h2>ع¯ط²ط§ط±ط´â€Œظ‡ط§غŒ ط°ط®غŒط±ظ‡â€Œط´ط¯ظ‡</h2>
+            <h2>گزارش‌های ذخیره‌شده</h2>
             {visibleReports.map((report) => {
               const improvement = report.summary.controlScoreAfter - report.summary.controlScoreBefore;
               const riskDelta = report.summary.riskScoreAfter - report.summary.riskScoreBefore;
@@ -2551,33 +2551,33 @@ function ReportArchivePage({ comparisonOnly = false }: { comparisonOnly?: boolea
                     <StatusBadge tone={reportStatusTone(report.status)}>{reportStatusLabel(report.status)}</StatusBadge>
                     <label className="compare-toggle">
                       <input type="checkbox" checked={selectedIds.includes(report.id)} onChange={() => toggleCompare(report.id)} />
-                      ظ…ظ‚ط§غŒط³ظ‡
+                      مقایسه
                     </label>
                   </div>
                   <h2>{report.title}</h2>
                   <p>{report.weekLabel} | {toPersianNumber(new Date(report.generatedAt).toLocaleDateString("fa-IR"))}</p>
                   <div className="finding-meta">
-                    <span>ع©ظ†طھط±ظ„: {toPersianNumber(report.summary.controlScoreBefore)} ط¨ظ‡ {toPersianNumber(report.summary.controlScoreAfter)}</span>
-                    <span>ط±غŒط³ع©: {toPersianNumber(riskDelta)}</span>
+                    <span>کنترل: {toPersianNumber(report.summary.controlScoreBefore)} به {toPersianNumber(report.summary.controlScoreAfter)}</span>
+                    <span>ریسک: {toPersianNumber(riskDelta)}</span>
                     <span>critical: {toPersianNumber(report.summary.criticalBefore)} / {toPersianNumber(report.summary.criticalAfter)}</span>
                     <span>warning: {toPersianNumber(report.summary.warningBefore)} / {toPersianNumber(report.summary.warningAfter)}</span>
                   </div>
                   <div className="mini-meter"><span style={{ width: miniBarWidth(report.summary.controlScoreAfter) }} /></div>
                   <div className="recommendation-row">
-                    <a className="primary-button" href={`/organization/workforce-dashboard/decision-report?reportId=${encodeURIComponent(report.id)}`}>ظ…ط´ط§ظ‡ط¯ظ‡ ع¯ط²ط§ط±ط´</a>
-                    <button className="ghost-button" type="button" onClick={() => toggleCompare(report.id)}>{selectedIds.includes(report.id) ? "ط­ط°ظپ ط§ط² ظ…ظ‚ط§غŒط³ظ‡" : "ظ…ظ‚ط§غŒط³ظ‡"}</button>
-                    <button className="danger-button" type="button" onClick={() => archiveReport(report.id)}>ط¨ط§غŒع¯ط§ظ†غŒ</button>
+                    <a className="primary-button" href={`/organization/workforce-dashboard/decision-report?reportId=${encodeURIComponent(report.id)}`}>مشاهده گزارش</a>
+                    <button className="ghost-button" type="button" onClick={() => toggleCompare(report.id)}>{selectedIds.includes(report.id) ? "حذف از مقایسه" : "مقایسه"}</button>
+                    <button className="danger-button" type="button" onClick={() => archiveReport(report.id)}>بایگانی</button>
                   </div>
-                  <small>ط¨ظ‡ط¨ظˆط¯ ع©ظ†طھط±ظ„: {toPersianNumber(improvement)}</small>
+                  <small>بهبود کنترل: {toPersianNumber(improvement)}</small>
                 </article>
               );
             })}
-            {!visibleReports.length && <p>ع¯ط²ط§ط±ط´غŒ ط¨ط±ط§غŒ ظ†ظ…ط§غŒط´ ظˆط¬ظˆط¯ ظ†ط¯ط§ط±ط¯.</p>}
+            {!visibleReports.length && <p>گزارشی برای نمایش وجود ندارد.</p>}
           </section>
         )}
 
         <section className="panel comparison-panel">
-          <h2>ط±ظˆظ†ط¯ ع¯ط²ط§ط±ط´â€Œظ‡ط§</h2>
+          <h2>روند گزارش‌ها</h2>
           <div className="trend-bars">
             {trend.map((point) => (
               <div className="trend-row" key={point.reportId}>
@@ -2586,13 +2586,13 @@ function ReportArchivePage({ comparisonOnly = false }: { comparisonOnly?: boolea
                 <strong>{toPersianNumber(point.controlScoreAfter)}</strong>
               </div>
             ))}
-            {!trend.length && <p>ط¨ط±ط§غŒ ظ†ظ…ط§غŒط´ ط±ظˆظ†ط¯ ط­ط¯ط§ظ‚ظ„ غŒع© ع¯ط²ط§ط±ط´ ظ„ط§ط²ظ… ط§ط³طھ.</p>}
+            {!trend.length && <p>برای نمایش روند حداقل یک گزارش لازم است.</p>}
           </div>
           <div className="bottom-grid compact-bottom">
-            <div className="heat-cell tone-good"><strong>{bestReport?.weekLabel ?? "ط«ط¨طھ ظ†ط´ط¯ظ‡"}</strong><span>ط¨ظ‡طھط±غŒظ† ظ‡ظپطھظ‡</span></div>
-            <div className="heat-cell tone-critical"><strong>{worstReport?.weekLabel ?? "ط«ط¨طھ ظ†ط´ط¯ظ‡"}</strong><span>ط¨ط¯طھط±غŒظ† ظ‡ظپطھظ‡</span></div>
-            <div className="heat-cell tone-info"><strong>{toPersianNumber(comparison.averageControlScore)}</strong><span>ظ…غŒط§ظ†ع¯غŒظ† ع©ظ†طھط±ظ„</span></div>
-            <div className="heat-cell tone-warn"><strong>{toPersianNumber(comparison.averageRiskScore)}</strong><span>ظ…غŒط§ظ†ع¯غŒظ† ط±غŒط³ع©</span></div>
+            <div className="heat-cell tone-good"><strong>{bestReport?.weekLabel ?? "ثبت نشده"}</strong><span>بهترین هفته</span></div>
+            <div className="heat-cell tone-critical"><strong>{worstReport?.weekLabel ?? "ثبت نشده"}</strong><span>بدترین هفته</span></div>
+            <div className="heat-cell tone-info"><strong>{toPersianNumber(comparison.averageControlScore)}</strong><span>میانگین کنترل</span></div>
+            <div className="heat-cell tone-warn"><strong>{toPersianNumber(comparison.averageRiskScore)}</strong><span>میانگین ریسک</span></div>
           </div>
           <div className="evidence-box">
             <span>{comparison.summary}</span>
@@ -2603,24 +2603,24 @@ function ReportArchivePage({ comparisonOnly = false }: { comparisonOnly?: boolea
 
       <section className="bottom-grid">
         <section className="panel">
-          <h2>ظ…ط´ع©ظ„ط§طھ طھع©ط±ط§ط±ط´ظˆظ†ط¯ظ‡</h2>
+          <h2>مشکلات تکرارشونده</h2>
           <div className="analysis-list">
             {comparison.recurringRiskTitles.slice(0, 6).map((title) => (
               <article className="panel-row tone-warn" key={title}>
-                <StatusBadge tone="warn">طھع©ط±ط§ط±غŒ</StatusBadge>
+                <StatusBadge tone="warn">تکراری</StatusBadge>
                 <p>{title}</p>
               </article>
             ))}
-            {!comparison.recurringRiskTitles.length && <p>ظ…ط´ع©ظ„ طھع©ط±ط§ط±ط´ظˆظ†ط¯ظ‡ ظ…ط¹ظ†ط§ط¯ط§ط±غŒ ظ¾غŒط¯ط§ ظ†ط´ط¯.</p>}
+            {!comparison.recurringRiskTitles.length && <p>مشکل تکرارشونده معناداری پیدا نشد.</p>}
           </div>
         </section>
         <section className="panel wide-panel">
-          <h2>ط®ظ„ط§طµظ‡ ظ…ط§ظ‡ط§ظ†ظ‡</h2>
+          <h2>خلاصه ماهانه</h2>
           <div className="finding-meta">
-            <span>ظ…غŒط§ظ†ع¯غŒظ† ع©ظ†طھط±ظ„: {toPersianNumber(monthlySummary.averageControlScore)}</span>
-            <span>ظ…غŒط§ظ†ع¯غŒظ† ط±غŒط³ع©: {toPersianNumber(monthlySummary.averageRiskScore)}</span>
-            <span>ط¨ظ‡طھط±غŒظ† ظ‡ظپطھظ‡: {monthlySummary.bestWeek}</span>
-            <span>ط¨ط¯طھط±غŒظ† ظ‡ظپطھظ‡: {monthlySummary.worstWeek}</span>
+            <span>میانگین کنترل: {toPersianNumber(monthlySummary.averageControlScore)}</span>
+            <span>میانگین ریسک: {toPersianNumber(monthlySummary.averageRiskScore)}</span>
+            <span>بهترین هفته: {monthlySummary.bestWeek}</span>
+            <span>بدترین هفته: {monthlySummary.worstWeek}</span>
           </div>
           <div className="evidence-box">
             <span>{monthlySummary.managerSummary}</span>
@@ -2674,7 +2674,7 @@ function MonthlyHealthPage() {
 
   const saveGoal = () => {
     if (!goalForm.title.trim()) {
-      setGoalError("ط¹ظ†ظˆط§ظ† ظ‡ط¯ظپ ط§ظ„ط²ط§ظ…غŒ ط§ط³طھ.");
+      setGoalError("عنوان هدف الزامی است.");
       return;
     }
     if (editingGoalId) {
@@ -2705,25 +2705,25 @@ function MonthlyHealthPage() {
       <header className="page-header no-print">
         <div>
           <span className="eyebrow">P10 Monthly Health</span>
-          <h1>ط¯ط§ط´ط¨ظˆط±ط¯ ط³ظ„ط§ظ…طھ ظ…ط¯غŒط±غŒطھغŒ ظ…ط§ظ‡ط§ظ†ظ‡</h1>
-          <p>ظˆط¶ط¹غŒطھ ظ…ط§ظ‡طŒ ط±ظˆظ†ط¯ ع©ظ†طھط±ظ„طŒ ط±غŒط³ع©â€Œظ‡ط§غŒ طھع©ط±ط§ط±ط´ظˆظ†ط¯ظ‡ ظˆ ظ‡ط¯ظپâ€Œظ‡ط§غŒ ظ…ط§ظ‡ ط¨ط¹ط¯ ط±ط§ غŒع©â€Œط¬ط§ ط¨ط¨غŒظ†.</p>
+          <h1>داشبورد سلامت مدیریتی ماهانه</h1>
+          <p>وضعیت ماه، روند کنترل، ریسک‌های تکرارشونده و هدف‌های ماه بعد را یک‌جا ببین.</p>
         </div>
         <div className="hero-actions">
-          <a className="ghost-button" href="/organization/workforce-dashboard/report-archive">ط¢ط±ط´غŒظˆ ع¯ط²ط§ط±ط´â€Œظ‡ط§</a>
-          <button className="primary-button" type="button" onClick={() => window.print()}>ع†ط§ظ¾ ع¯ط²ط§ط±ط´ ظ…ط§ظ‡ط§ظ†ظ‡</button>
+          <a className="ghost-button" href="/organization/workforce-dashboard/report-archive">آرشیو گزارش‌ها</a>
+          <button className="primary-button" type="button" onClick={() => window.print()}>چاپ گزارش ماهانه</button>
         </div>
       </header>
 
       <section className="filter-bar no-print">
         <Filter size={16} />
         <select value={monthLabel} onChange={(event) => setMonthLabel(event.target.value)}>
-          {monthOptions.map((option) => <option value={option} key={option}>{option === "all" ? "ظ‡ظ…ظ‡ ع¯ط²ط§ط±ط´â€Œظ‡ط§" : option}</option>)}
+          {monthOptions.map((option) => <option value={option} key={option}>{option === "all" ? "همه گزارش‌ها" : option}</option>)}
         </select>
       </section>
 
       <section className="report-title">
         <div>
-          <span className="eyebrow">ط®ظ„ط§طµظ‡ ط³ظ„ط§ظ…طھ ظ…ط§ظ‡</span>
+          <span className="eyebrow">خلاصه سلامت ماه</span>
           <h1>{dashboard.monthLabel}</h1>
           <p>{dashboard.managementSummary}</p>
         </div>
@@ -2731,29 +2731,29 @@ function MonthlyHealthPage() {
       </section>
 
       <section className="kpi-strip">
-        <article className="kpi-card tone-info"><div><p>ع¯ط²ط§ط±ط´â€Œظ‡ط§غŒ ظ…ط§ظ‡</p><strong>{toPersianNumber(dashboard.reportIds.length)}</strong><span>ظ…ظ†ط¨ط¹ طھط­ظ„غŒظ„</span></div></article>
-        <article className={`kpi-card tone-${healthTone(dashboard.healthLevel)}`}><div><p>ط³ظ„ط§ظ…طھ</p><strong>{healthLevelLabel(dashboard.healthLevel)}</strong><span>{trendStatusLabel(dashboard.trendStatus)}</span></div></article>
-        <article className="kpi-card tone-good"><div><p>ظ…غŒط§ظ†ع¯غŒظ† ع©ظ†طھط±ظ„</p><strong>{toPersianNumber(dashboard.averageControlScore)}</strong><span>ط¨ظ‡طھط±غŒظ†: {dashboard.bestWeekLabel}</span></div></article>
-        <article className="kpi-card tone-warn"><div><p>ظ…غŒط§ظ†ع¯غŒظ† ط±غŒط³ع©</p><strong>{toPersianNumber(dashboard.averageRiskScore)}</strong><span>ط¨ط¯طھط±غŒظ†: {dashboard.worstWeekLabel}</span></div></article>
-        <article className="kpi-card tone-critical"><div><p>ط±غŒط³ع© طھع©ط±ط§ط±غŒ</p><strong>{toPersianNumber(dashboard.repeatedRiskCount)}</strong><span>{dashboard.topRecurringRisks[0] ?? "ظ…ظˆط±ط¯ ظ…ظ‡ظ…غŒ ظ†غŒط³طھ"}</span></div></article>
+        <article className="kpi-card tone-info"><div><p>گزارش‌های ماه</p><strong>{toPersianNumber(dashboard.reportIds.length)}</strong><span>منبع تحلیل</span></div></article>
+        <article className={`kpi-card tone-${healthTone(dashboard.healthLevel)}`}><div><p>سلامت</p><strong>{healthLevelLabel(dashboard.healthLevel)}</strong><span>{trendStatusLabel(dashboard.trendStatus)}</span></div></article>
+        <article className="kpi-card tone-good"><div><p>میانگین کنترل</p><strong>{toPersianNumber(dashboard.averageControlScore)}</strong><span>بهترین: {dashboard.bestWeekLabel}</span></div></article>
+        <article className="kpi-card tone-warn"><div><p>میانگین ریسک</p><strong>{toPersianNumber(dashboard.averageRiskScore)}</strong><span>بدترین: {dashboard.worstWeekLabel}</span></div></article>
+        <article className="kpi-card tone-critical"><div><p>ریسک تکراری</p><strong>{toPersianNumber(dashboard.repeatedRiskCount)}</strong><span>{dashboard.topRecurringRisks[0] ?? "مورد مهمی نیست"}</span></div></article>
       </section>
 
       <section className="panel no-print">
         <div className="section-head">
-          <h2>ظ‡ط´ط¯ط§ط±ظ‡ط§غŒ ظ¾غŒط´ع¯غŒط±ط§ظ†ظ‡</h2>
-          <a className="ghost-button" href="/organization/workforce-dashboard/preventive-alerts">ظ…ط´ط§ظ‡ط¯ظ‡ ظ‡ط´ط¯ط§ط±ظ‡ط§</a>
+          <h2>هشدارهای پیشگیرانه</h2>
+          <a className="ghost-button" href="/organization/workforce-dashboard/preventive-alerts">مشاهده هشدارها</a>
         </div>
         <div className="finding-meta">
-          <span>ط¨ط§ط²: {toPersianNumber(openPreventiveAlerts.length)}</span>
-          <span>ظپظˆط±غŒ/بالا: {toPersianNumber(preventiveAlerts.filter((alert) => alert.priority === "urgent" || alert.priority === "high").length)}</span>
-          <span>ظ…ظ‡ظ…â€Œطھط±غŒظ†: {topPreventiveAlert?.title ?? "ط«ط¨طھ ظ†ط´ط¯ظ‡"}</span>
-          <span>ط§ظ‚ط¯ط§ظ…: {topPreventiveAlert?.recommendedAction ?? "ظپط¹ظ„ط§ظ‹ ط§ظ‚ط¯ط§ظ…غŒ ظ„ط§ط²ظ… ظ†غŒط³طھ"}</span>
+          <span>باز: {toPersianNumber(openPreventiveAlerts.length)}</span>
+          <span>فوری/بالا: {toPersianNumber(preventiveAlerts.filter((alert) => alert.priority === "urgent" || alert.priority === "high").length)}</span>
+          <span>مهم‌ترین: {topPreventiveAlert?.title ?? "ثبت نشده"}</span>
+          <span>اقدام: {topPreventiveAlert?.recommendedAction ?? "فعلاً اقدامی لازم نیست"}</span>
         </div>
       </section>
 
       <section className="archive-layout">
         <section className="panel comparison-panel">
-          <h2>ط±ظˆظ†ط¯ ع©ظ†طھط±ظ„ ظˆ ط±غŒط³ع©</h2>
+          <h2>روند کنترل و ریسک</h2>
           <div className="trend-bars">
             {trend.map((point) => (
               <div className="trend-row" key={point.reportId}>
@@ -2762,32 +2762,32 @@ function MonthlyHealthPage() {
                 <strong>{toPersianNumber(point.controlScoreAfter)}</strong>
               </div>
             ))}
-            {!trend.length && <p>ع¯ط²ط§ط±ط´غŒ ط¨ط±ط§غŒ ط§غŒظ† ظ…ط§ظ‡ ط«ط¨طھ ظ†ط´ط¯ظ‡ ط§ط³طھ.</p>}
+            {!trend.length && <p>گزارشی برای این ماه ثبت نشده است.</p>}
           </div>
           <div className="evidence-box">
             <span>{dashboard.nextMonthFocus}</span>
-            <small>ظ‚ظˆغŒâ€Œطھط±غŒظ† ط­ظˆط²ظ‡: {dashboard.strongestArea} | ط¶ط¹غŒظپâ€Œطھط±غŒظ† ط­ظˆط²ظ‡: {dashboard.weakestArea}</small>
+            <small>قوی‌ترین حوزه: {dashboard.strongestArea} | ضعیف‌ترین حوزه: {dashboard.weakestArea}</small>
           </div>
         </section>
 
         <section className="panel">
-          <h2>ظ‡ط´ط¯ط§ط± ط±غŒط³ع© طھع©ط±ط§ط±ط´ظˆظ†ط¯ظ‡</h2>
+          <h2>هشدار ریسک تکرارشونده</h2>
           <div className="analysis-list">
             {dashboard.topRecurringRisks.map((risk, index) => (
               <article className={`panel-row tone-${index >= 2 ? "critical" : "warn"}`} key={risk}>
                 <StatusBadge tone={index >= 2 ? "critical" : "warn"}>{index >= 2 ? "critical" : "warning"}</StatusBadge>
                 <p>{risk}</p>
-                <small>{index >= 2 ? "ط¯ط± ع†ظ†ط¯ ع¯ط²ط§ط±ط´ طھع©ط±ط§ط± ط´ط¯ظ‡ ظˆ ظ†غŒط§ط²ظ…ظ†ط¯ ط§ظ‚ط¯ط§ظ… ظپظˆط±غŒ ط§ط³طھ." : "ط¯ط± ط­ط¯ط§ظ‚ظ„ ط¯ظˆ ع¯ط²ط§ط±ط´ ط§ط®غŒط± ط¯غŒط¯ظ‡ ط´ط¯ظ‡ ط§ط³طھ."}</small>
+                <small>{index >= 2 ? "در چند گزارش تکرار شده و نیازمند اقدام فوری است." : "در حداقل دو گزارش اخیر دیده شده است."}</small>
               </article>
             ))}
-            {!dashboard.topRecurringRisks.length && <p>ط±غŒط³ع© طھع©ط±ط§ط±ط´ظˆظ†ط¯ظ‡ ظ…ظ‡ظ…غŒ ط¯غŒط¯ظ‡ ظ†ط´ط¯.</p>}
+            {!dashboard.topRecurringRisks.length && <p>ریسک تکرارشونده مهمی دیده نشد.</p>}
           </div>
         </section>
       </section>
 
       <section className="bottom-grid">
         <section className="panel wide-panel">
-          <h2>ظ‡ط¯ظپâ€Œظ‡ط§غŒ ظ…ط§ظ‡ ط¨ط¹ط¯</h2>
+          <h2>هدف‌های ماه بعد</h2>
           <div className="goal-list">
             {goals.map((goal) => (
               <article className="goal-card" key={goal.id}>
@@ -2799,46 +2799,46 @@ function MonthlyHealthPage() {
                 <div className="mini-meter"><span style={{ width: miniBarWidth(goal.currentValue, goal.targetValue) }} /></div>
                 <small>{goal.targetMetric}: {toPersianNumber(goal.currentValue)} / {toPersianNumber(goal.targetValue)}</small>
                 <div className="recommendation-row no-print">
-                  <button type="button" onClick={() => { setGoalForm(goal); setEditingGoalId(goal.id); }}>ظˆغŒط±ط§غŒط´</button>
+                  <button type="button" onClick={() => { setGoalForm(goal); setEditingGoalId(goal.id); }}>ویرایش</button>
                   <select value={goal.status} onChange={(event) => updateGoalStatus(goal, event.target.value as MonthlyGoalStatus)}>
-                    <option value="planned">ط¨ط±ظ†ط§ظ…ظ‡â€Œط±غŒط²غŒ</option>
-                    <option value="in_progress">ط¯ط± ط­ط§ظ„ ط§ط¬ط±ط§</option>
-                    <option value="achieved">ظ…ط­ظ‚ظ‚ ط´ط¯ظ‡</option>
-                    <option value="missed">ظ†ط§ظ…ظˆظپظ‚</option>
+                    <option value="planned">برنامه‌ریزی</option>
+                    <option value="in_progress">در حال اجرا</option>
+                    <option value="achieved">محقق شده</option>
+                    <option value="missed">ناموفق</option>
                   </select>
-                  <button className="danger-button" type="button" onClick={() => archiveGoal(goal.id)}>ط¨ط§غŒع¯ط§ظ†غŒ</button>
+                  <button className="danger-button" type="button" onClick={() => archiveGoal(goal.id)}>بایگانی</button>
                 </div>
               </article>
             ))}
-            {!goals.length && <p>ط¨ط±ط§غŒ ط§غŒظ† ظ…ط§ظ‡ ظ‡ظ†ظˆط² ظ‡ط¯ظپغŒ ط«ط¨طھ ظ†ط´ط¯ظ‡ ط§ط³طھ.</p>}
+            {!goals.length && <p>برای این ماه هنوز هدفی ثبت نشده است.</p>}
           </div>
         </section>
 
         <section className="panel no-print">
-          <h2>{editingGoalId ? "ظˆغŒط±ط§غŒط´ ظ‡ط¯ظپ ظ…ط§ظ‡ط§ظ†ظ‡" : "ط§ظپط²ظˆط¯ظ† ظ‡ط¯ظپ ظ…ط§ظ‡ط§ظ†ظ‡"}</h2>
+          <h2>{editingGoalId ? "ویرایش هدف ماهانه" : "افزودن هدف ماهانه"}</h2>
           {goalError && <p className="form-error">{goalError}</p>}
           <div className="field-grid">
-            <TextField label="ط¹ظ†ظˆط§ظ† ظ‡ط¯ظپ" value={goalForm.title} onChange={(title) => setGoalForm({ ...goalForm, title })} />
-            <TextField label="ط´ط§ط®طµ ظ‡ط¯ظپ" value={goalForm.targetMetric} onChange={(targetMetric) => setGoalForm({ ...goalForm, targetMetric })} />
-            <TextField label="ظ…ظ‚ط¯ط§ط± ظ‡ط¯ظپ" type="number" value={goalForm.targetValue} onChange={(targetValue) => setGoalForm({ ...goalForm, targetValue: Number(targetValue) })} />
-            <TextField label="ظ…ظ‚ط¯ط§ط± ظپط¹ظ„غŒ" type="number" value={goalForm.currentValue} onChange={(currentValue) => setGoalForm({ ...goalForm, currentValue: Number(currentValue) })} />
-            <SelectField label="ظˆط¶ط¹غŒطھ" value={goalForm.status} options={[
-              { label: "ط¨ط±ظ†ط§ظ…ظ‡â€Œط±غŒط²غŒ", value: "planned" },
-              { label: "ط¯ط± ط­ط§ظ„ ط§ط¬ط±ط§", value: "in_progress" },
-              { label: "ظ…ط­ظ‚ظ‚ ط´ط¯ظ‡", value: "achieved" },
-              { label: "ظ†ط§ظ…ظˆظپظ‚", value: "missed" },
+            <TextField label="عنوان هدف" value={goalForm.title} onChange={(title) => setGoalForm({ ...goalForm, title })} />
+            <TextField label="شاخص هدف" value={goalForm.targetMetric} onChange={(targetMetric) => setGoalForm({ ...goalForm, targetMetric })} />
+            <TextField label="مقدار هدف" type="number" value={goalForm.targetValue} onChange={(targetValue) => setGoalForm({ ...goalForm, targetValue: Number(targetValue) })} />
+            <TextField label="مقدار فعلی" type="number" value={goalForm.currentValue} onChange={(currentValue) => setGoalForm({ ...goalForm, currentValue: Number(currentValue) })} />
+            <SelectField label="وضعیت" value={goalForm.status} options={[
+              { label: "برنامه‌ریزی", value: "planned" },
+              { label: "در حال اجرا", value: "in_progress" },
+              { label: "محقق شده", value: "achieved" },
+              { label: "ناموفق", value: "missed" },
             ]} onChange={(status) => setGoalForm({ ...goalForm, status: status as MonthlyGoalStatus })} />
-            <TextAreaField label="طھظˆط¶غŒط­" value={goalForm.description} onChange={(description) => setGoalForm({ ...goalForm, description })} />
+            <TextAreaField label="توضیح" value={goalForm.description} onChange={(description) => setGoalForm({ ...goalForm, description })} />
           </div>
           <div className="form-actions">
-            <button className="primary-button" type="button" onClick={saveGoal}>ط°ط®غŒط±ظ‡ ظ‡ط¯ظپ</button>
-            <button className="ghost-button" type="button" onClick={() => { setGoalForm(blankMonthlyGoal(monthLabel)); setEditingGoalId(null); }}>ط§ظ†طµط±ط§ظپ</button>
+            <button className="primary-button" type="button" onClick={saveGoal}>ذخیره هدف</button>
+            <button className="ghost-button" type="button" onClick={() => { setGoalForm(blankMonthlyGoal(monthLabel)); setEditingGoalId(null); }}>انصراف</button>
           </div>
         </section>
       </section>
 
       <section className="panel">
-        <h2>ط¬ظ…ط¹â€Œط¨ظ†ط¯غŒ ظ…ط¯غŒط±غŒطھغŒ</h2>
+        <h2>جمع‌بندی مدیریتی</h2>
         <div className="evidence-box">
           <span>{dashboard.managementSummary}</span>
           <small>{dashboard.nextMonthFocus}</small>
@@ -2877,12 +2877,12 @@ function PreventiveAlertsPage() {
   };
 
   const createGoalFromAlert = (alert: PreventiveAlert) => {
-    const ok = window.confirm("ط¨ط±ط§غŒ ط§غŒظ† ظ‡ط´ط¯ط§ط±طŒ ظ‡ط¯ظپ ظ¾غŒط´ظ†ظ‡ط§ط¯غŒ ظ…ط§ظ‡ ط¨ط¹ط¯ ط³ط§ط®طھظ‡ ط´ظˆط¯طں");
+    const ok = window.confirm("برای این هشدار، هدف پیشنهادی ماه بعد ساخته شود؟");
     if (!ok) return;
     monthlyGoalService.create({
       monthLabel: nextMonthLabel(),
-      title: alert.sourceType === "failed_goal" ? `ط¨ط§ط²ط·ط±ط§ط­غŒ ظ‡ط¯ظپ: ${alert.affectedArea}` : `ع©ط§ظ‡ط´ ط±غŒط³ع© طھع©ط±ط§ط±غŒ: ${alert.affectedArea}`,
-      description: "ط§غŒظ† ظ‡ط¯ظپ ط§ط² ظ‡ط´ط¯ط§ط± ظ¾غŒط´ع¯غŒط±ط§ظ†ظ‡ ط³ط§ط®طھظ‡ ط´ط¯ظ‡ ط§ط³طھ.",
+      title: alert.sourceType === "failed_goal" ? `بازطراحی هدف: ${alert.affectedArea}` : `کاهش ریسک تکراری: ${alert.affectedArea}`,
+      description: "این هدف از هشدار پیشگیرانه ساخته شده است.",
       targetMetric: alert.sourceType === "failed_goal" ? "monthly_goal_success" : "recurring_risk_count",
       targetValue: Math.max(0, alert.repeatedCount - 1),
       currentValue: alert.repeatedCount,
@@ -2896,46 +2896,46 @@ function PreventiveAlertsPage() {
       <header className="page-header">
         <div>
           <span className="eyebrow">P11 Preventive Alerts</span>
-          <h1>ظ‡ط´ط¯ط§ط±ظ‡ط§غŒ ظ¾غŒط´ع¯غŒط±ط§ظ†ظ‡ ظ…ط§ظ‡ط§ظ†ظ‡</h1>
-          <p>ط±غŒط³ع©â€Œظ‡ط§غŒ طھع©ط±ط§ط±غŒطŒ ظ‡ط¯ظپâ€Œظ‡ط§غŒ ظ†ط§ظ…ظˆظپظ‚ ظˆ ط±ظˆظ†ط¯ظ‡ط§غŒ ظ†ط²ظˆظ„غŒ ط±ط§ ظ‚ط¨ظ„ ط§ط² ط¨ط­ط±ط§ظ†غŒ ط´ط¯ظ† ط¨ط¨غŒظ†.</p>
+          <h1>هشدارهای پیشگیرانه ماهانه</h1>
+          <p>ریسک‌های تکراری، هدف‌های ناموفق و روندهای نزولی را قبل از بحرانی شدن ببین.</p>
         </div>
         <div className="hero-actions">
-          <a className="ghost-button" href="/organization/workforce-dashboard/monthly-health">ط³ظ„ط§ظ…طھ ظ…ط§ظ‡ط§ظ†ظ‡</a>
-          <a className="ghost-button" href="/organization/workforce-dashboard/report-archive">ط¢ط±ط´غŒظˆ ع¯ط²ط§ط±ط´â€Œظ‡ط§</a>
+          <a className="ghost-button" href="/organization/workforce-dashboard/monthly-health">سلامت ماهانه</a>
+          <a className="ghost-button" href="/organization/workforce-dashboard/report-archive">آرشیو گزارش‌ها</a>
         </div>
       </header>
 
       <section className="kpi-strip">
-        <article className="kpi-card tone-info"><div><p>ع©ظ„ ظ‡ط´ط¯ط§ط±ظ‡ط§</p><strong>{toPersianNumber(alerts.length)}</strong><span>ظ…ط­ط§ط³ط¨ظ‡â€Œط´ط¯ظ‡ ط§ط² ع¯ط²ط§ط±ط´â€Œظ‡ط§</span></div></article>
-        <article className="kpi-card tone-critical"><div><p>ط¨ط­ط±ط§ظ†غŒ</p><strong>{toPersianNumber(alerts.filter((alert) => alert.severity === "critical").length)}</strong><span>ظ†غŒط§ط²ظ…ظ†ط¯ ط§ظ‚ط¯ط§ظ… ظپظˆط±غŒ</span></div></article>
-        <article className="kpi-card tone-warn"><div><p>ط§ظˆظ„ظˆغŒطھ بالا</p><strong>{toPersianNumber(alerts.filter((alert) => alert.priority === "urgent" || alert.priority === "high").length)}</strong><span>urgent/high</span></div></article>
-        <article className="kpi-card tone-good"><div><p>ط¨ط§ط²</p><strong>{toPersianNumber(alerts.filter((alert) => alert.status === "open").length)}</strong><span>ظ‡ظ†ظˆط² طھطµظ…غŒظ… ظ†ع¯ط±ظپطھظ‡</span></div></article>
-        <article className="kpi-card tone-focus"><div><p>ظ‡ط¯ظپ ظ†ط§ظ…ظˆظپظ‚</p><strong>{toPersianNumber(alerts.filter((alert) => alert.sourceType === "failed_goal").length)}</strong><span>ظ‚ط§ط¨ظ„ طھط¨ط¯غŒظ„ ط¨ظ‡ ظ‡ط¯ظپ</span></div></article>
+        <article className="kpi-card tone-info"><div><p>کل هشدارها</p><strong>{toPersianNumber(alerts.length)}</strong><span>محاسبه‌شده از گزارش‌ها</span></div></article>
+        <article className="kpi-card tone-critical"><div><p>بحرانی</p><strong>{toPersianNumber(alerts.filter((alert) => alert.severity === "critical").length)}</strong><span>نیازمند اقدام فوری</span></div></article>
+        <article className="kpi-card tone-warn"><div><p>اولویت بالا</p><strong>{toPersianNumber(alerts.filter((alert) => alert.priority === "urgent" || alert.priority === "high").length)}</strong><span>urgent/high</span></div></article>
+        <article className="kpi-card tone-good"><div><p>باز</p><strong>{toPersianNumber(alerts.filter((alert) => alert.status === "open").length)}</strong><span>هنوز تصمیم نگرفته</span></div></article>
+        <article className="kpi-card tone-focus"><div><p>هدف ناموفق</p><strong>{toPersianNumber(alerts.filter((alert) => alert.sourceType === "failed_goal").length)}</strong><span>قابل تبدیل به هدف</span></div></article>
       </section>
 
       <section className="filter-bar">
         <Filter size={16} />
         <select value={severity} onChange={(event) => setSeverity(event.target.value)}>
-          <option value="">ظ‡ظ…ظ‡ ط´ط¯طھâ€Œظ‡ط§</option>
+          <option value="">همه شدت‌ها</option>
           <option value="info">info</option>
           <option value="warning">warning</option>
           <option value="critical">critical</option>
         </select>
         <select value={priority} onChange={(event) => setPriority(event.target.value)}>
-          <option value="">ظ‡ظ…ظ‡ ط§ظˆظ„ظˆغŒطھâ€Œظ‡ط§</option>
+          <option value="">همه اولویت‌ها</option>
           <option value="low">low</option>
           <option value="medium">medium</option>
           <option value="high">high</option>
           <option value="urgent">urgent</option>
         </select>
         <select value={sourceType} onChange={(event) => setSourceType(event.target.value)}>
-          <option value="">ظ‡ظ…ظ‡ ظ…ظ†ط§ط¨ط¹</option>
+          <option value="">همه منابع</option>
           {(["recurring_risk", "failed_goal", "worsening_trend", "repeated_space_pressure", "repeated_focus_interruption", "repeated_sales_coverage_gap"] as PreventiveAlertSourceType[]).map((item) => (
             <option value={item} key={item}>{preventiveSourceLabel(item)}</option>
           ))}
         </select>
         <select value={status} onChange={(event) => setStatus(event.target.value)}>
-          <option value="">ظ‡ظ…ظ‡ ظˆط¶ط¹غŒطھâ€Œظ‡ط§</option>
+          <option value="">همه وضعیت‌ها</option>
           {(["open", "acknowledged", "planned", "resolved", "dismissed"] as PreventiveAlertStatus[]).map((item) => (
             <option value={item} key={item}>{preventiveStatusLabel(item)}</option>
           ))}
@@ -2954,27 +2954,27 @@ function PreventiveAlertsPage() {
             <h2>{alert.title}</h2>
             <p>{alert.description}</p>
             <div className="finding-meta">
-              <span>طھع©ط±ط§ط±: {toPersianNumber(alert.repeatedCount)}</span>
-              <span>ط§ظˆظ„غŒظ† ظ…ط´ط§ظ‡ط¯ظ‡: {alert.firstSeenLabel}</span>
-              <span>ط¢ط®ط±غŒظ† ظ…ط´ط§ظ‡ط¯ظ‡: {alert.lastSeenLabel}</span>
-              <span>ط­ظˆط²ظ‡: {alert.affectedArea}</span>
+              <span>تکرار: {toPersianNumber(alert.repeatedCount)}</span>
+              <span>اولین مشاهده: {alert.firstSeenLabel}</span>
+              <span>آخرین مشاهده: {alert.lastSeenLabel}</span>
+              <span>حوزه: {alert.affectedArea}</span>
             </div>
             <div className="evidence-box">
               <span>{alert.recommendedAction}</span>
-              <small>{alert.relatedRiskTitles.join("طŒ ") || "ط¨ط¯ظˆظ† risk title ظ…ط³طھظ‚غŒظ…"}</small>
+              <small>{alert.relatedRiskTitles.join("، ") || "بدون risk title مستقیم"}</small>
             </div>
             <div className="recommendation-row">
-              <button className="ghost-button" type="button" onClick={() => updateAlertStatus(alert, "acknowledged")}>طھط§غŒغŒط¯ ط´ط¯</button>
-              <button className="ghost-button" type="button" onClick={() => updateAlertStatus(alert, "planned")}>ط¨ط±ظ†ط§ظ…ظ‡â€Œط±غŒط²غŒ ط´ط¯</button>
-              <button className="ghost-button" type="button" onClick={() => updateAlertStatus(alert, "resolved")}>ط­ظ„ ط´ط¯</button>
-              <button className="danger-button" type="button" onClick={() => updateAlertStatus(alert, "dismissed")}>ط±ط¯ ط´ط¯</button>
+              <button className="ghost-button" type="button" onClick={() => updateAlertStatus(alert, "acknowledged")}>تایید شد</button>
+              <button className="ghost-button" type="button" onClick={() => updateAlertStatus(alert, "planned")}>برنامه‌ریزی شد</button>
+              <button className="ghost-button" type="button" onClick={() => updateAlertStatus(alert, "resolved")}>حل شد</button>
+              <button className="danger-button" type="button" onClick={() => updateAlertStatus(alert, "dismissed")}>رد شد</button>
               {(alert.sourceType === "failed_goal" || alert.sourceType === "recurring_risk" || alert.sourceType.startsWith("repeated_")) && (
-                <button className="primary-button" type="button" onClick={() => createGoalFromAlert(alert)}>ط³ط§ط®طھ ظ‡ط¯ظپ ظ¾غŒط´ظ†ظ‡ط§ط¯غŒ</button>
+                <button className="primary-button" type="button" onClick={() => createGoalFromAlert(alert)}>ساخت هدف پیشنهادی</button>
               )}
             </div>
           </article>
         ))}
-        {!filteredAlerts.length && <section className="panel"><h2>ظ‡ط´ط¯ط§ط±غŒ ظ¾غŒط¯ط§ ظ†ط´ط¯</h2><p>ظپغŒظ„طھط±ظ‡ط§ ط±ط§ طھط؛غŒغŒط± ط¨ط¯ظ‡ غŒط§ ع¯ط²ط§ط±ط´â€Œظ‡ط§غŒ ط¨غŒط´طھط±غŒ ط¨ط³ط§ط².</p></section>}
+        {!filteredAlerts.length && <section className="panel"><h2>هشداری پیدا نشد</h2><p>فیلترها را تغییر بده یا گزارش‌های بیشتری بساز.</p></section>}
       </section>
     </div>
   );
@@ -3021,7 +3021,7 @@ function ReadinessPage({
   const categories = Array.from(new Set(readiness.checks.map((item) => item.category)));
 
   const createStartSnapshot = () => {
-    workforceBackupService.createSnapshot("Snapshot ط´ط±ظˆط¹ ط¢ظ…ط§ط¯ع¯غŒ ط¹ظ…ظ„غŒط§طھغŒ", "operational_readiness_start", "ظ‚ط¨ظ„ ط§ط² ط´ط±ظˆط¹ ط§ط³طھظپط§ط¯ظ‡ ط¹ظ…ظ„غŒط§طھغŒ ظ…ط§عکظˆظ„ ط³ط§ط®طھظ‡ ط´ط¯.", false);
+    workforceBackupService.createSnapshot("Snapshot شروع آمادگی عملیاتی", "operational_readiness_start", "قبل از شروع استفاده عملیاتی ماژول ساخته شد.", false);
     setRefreshToken((value) => value + 1);
   };
 
@@ -3039,56 +3039,56 @@ function ReadinessPage({
       <header className="page-header">
         <div>
           <span className="eyebrow">P14 Operational Readiness</span>
-          <h1>ع†ع©â€Œظ„غŒط³طھ ط¢ظ…ط§ط¯ع¯غŒ ط¹ظ…ظ„غŒط§طھغŒ</h1>
-          <p>غŒع© ظ†ظ…ط§غŒ ط§ط¬ط±ط§غŒغŒ ط¨ط±ط§غŒ ط§غŒظ†ع©ظ‡ ظ‚ط¨ظ„ ط§ط² ط§ط³طھظپط§ط¯ظ‡ ط¬ط¯غŒطŒ ط¯ط§ط¯ظ‡â€Œظ‡ط§طŒ ظ‚ظˆط§ظ†غŒظ†طŒ ط¨ع©ط§ظ¾طŒ ظ†ع¯ظ‡ط¯ط§ط±غŒ ظˆ ط¬ط±غŒط§ظ† طھطµظ…غŒظ…â€Œع¯غŒط±غŒ ط¢ظ…ط§ط¯ظ‡ ط¨ط§ط´ظ†ط¯.</p>
+          <h1>چک‌لیست آمادگی عملیاتی</h1>
+          <p>یک نمای اجرایی برای اینکه قبل از استفاده جدی، داده‌ها، قوانین، بکاپ، نگهداری و جریان تصمیم‌گیری آماده باشند.</p>
         </div>
         <div className="hero-actions">
-          <a className="ghost-button" href="/organization/workforce-dashboard">ط§طھط§ظ‚ ظپط±ظ…ط§ظ†</a>
-          <a className="ghost-button" href="/organization/workforce-dashboard/data-center">ظ…ط±ع©ط² ط¯ط§ط¯ظ‡</a>
-          <a className="ghost-button" href="/organization/workforce-dashboard/maintenance">ظ†ع¯ظ‡ط¯ط§ط±غŒ</a>
-          {existingChecklistCount > 0 && <a className="ghost-button" href="/organization/workforce-dashboard/launch-checklist">ط§ط¯ط§ظ…ظ‡ ع†ع©â€Œظ„غŒط³طھ ط§ط¬ط±ط§غŒغŒ</a>}
-          <a className={readiness.score >= 70 ? "primary-button" : "ghost-button tone-warn"} href="/organization/workforce-dashboard/launch-signoff">ط±ظپطھظ† ط¨ظ‡ طھط£غŒغŒط¯ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ</a>
-          <button className="primary-button" type="button" onClick={buildLaunchChecklist}>ط³ط§ط®طھ ع†ع©â€Œظ„غŒط³طھ ط§ط¬ط±ط§غŒغŒ</button>
-          <button className="primary-button" type="button" onClick={createStartSnapshot}>ط³ط§ط®طھ snapshot ط´ط±ظˆط¹</button>
+          <a className="ghost-button" href="/organization/workforce-dashboard">اتاق فرمان</a>
+          <a className="ghost-button" href="/organization/workforce-dashboard/data-center">مرکز داده</a>
+          <a className="ghost-button" href="/organization/workforce-dashboard/maintenance">نگهداری</a>
+          {existingChecklistCount > 0 && <a className="ghost-button" href="/organization/workforce-dashboard/launch-checklist">ادامه چک‌لیست اجرایی</a>}
+          <a className={readiness.score >= 70 ? "primary-button" : "ghost-button tone-warn"} href="/organization/workforce-dashboard/launch-signoff">رفتن به تأیید راه‌اندازی</a>
+          <button className="primary-button" type="button" onClick={buildLaunchChecklist}>ساخت چک‌لیست اجرایی</button>
+          <button className="primary-button" type="button" onClick={createStartSnapshot}>ساخت snapshot شروع</button>
         </div>
       </header>
 
       <section className="kpi-strip">
         <article className={`kpi-card tone-${readinessStatusTone(readiness.status)}`}>
-          <div><p>ط§ظ…طھغŒط§ط² ط¢ظ…ط§ط¯ع¯غŒ</p><strong>{toPersianNumber(readiness.score)}</strong><span>{readinessStatusLabel(readiness.status)}</span></div>
+          <div><p>امتیاز آمادگی</p><strong>{toPersianNumber(readiness.score)}</strong><span>{readinessStatusLabel(readiness.status)}</span></div>
         </article>
         <article className="kpi-card tone-good">
-          <div><p>ع†ع©â€Œظ‡ط§غŒ ظ¾ط§ط³â€Œط´ط¯ظ‡</p><strong>{toPersianNumber(readiness.passedCount)}</strong><span>ط§ط² {toPersianNumber(readiness.checks.length)} ع†ع©</span></div>
+          <div><p>چک‌های پاس‌شده</p><strong>{toPersianNumber(readiness.passedCount)}</strong><span>از {toPersianNumber(readiness.checks.length)} چک</span></div>
         </article>
         <article className="kpi-card tone-critical">
-          <div><p>ط¨ط­ط±ط§ظ†غŒ</p><strong>{toPersianNumber(readiness.criticalCount)}</strong><span>ظ…ط§ظ†ط¹ ط´ط±ظˆط¹ ط§ظ…ظ†</span></div>
+          <div><p>بحرانی</p><strong>{toPersianNumber(readiness.criticalCount)}</strong><span>مانع شروع امن</span></div>
         </article>
         <article className="kpi-card tone-warn">
-          <div><p>ظ‡ط´ط¯ط§ط±</p><strong>{toPersianNumber(readiness.warningCount)}</strong><span>ظ†غŒط§ط²ظ…ظ†ط¯ ظ¾غŒع¯غŒط±غŒ</span></div>
+          <div><p>هشدار</p><strong>{toPersianNumber(readiness.warningCount)}</strong><span>نیازمند پیگیری</span></div>
         </article>
         <article className="kpi-card tone-focus">
-          <div><p>Snapshotظ‡ط§</p><strong>{toPersianNumber(snapshots.length)}</strong><span>ط¨ط±ط§غŒ ط¨ط§ط²ع¯ط´طھ ط³ط±غŒط¹</span></div>
+          <div><p>Snapshotها</p><strong>{toPersianNumber(snapshots.length)}</strong><span>برای بازگشت سریع</span></div>
         </article>
       </section>
 
       <section className="bottom-grid">
         <section className="panel wide-panel">
           <div className="section-head">
-            <h2>ظˆط¶ط¹غŒطھ ع©ظ„غŒ</h2>
+            <h2>وضعیت کلی</h2>
             <StatusBadge tone={readinessStatusTone(readiness.status)}>{readinessStatusLabel(readiness.status)}</StatusBadge>
           </div>
           <p>{readiness.summary}</p>
-          {readiness.score < 85 && <p className="inline-notice">ط¨ط±ط§غŒ طھط¨ط¯غŒظ„ ظ…ظˆط§ط±ط¯ ط¨ط§ط² ط¨ظ‡ ظ‚ط¯ظ…â€Œظ‡ط§غŒ ع©ظˆطھط§ظ‡ ظˆ ظ‚ط§ط¨ظ„ ظ¾غŒع¯غŒط±غŒطŒ ط§ط² ع†ع©â€Œظ„غŒط³طھ ط§ط¬ط±ط§غŒغŒ ط§ط³طھظپط§ط¯ظ‡ ع©ظ†غŒط¯.</p>}
+          {readiness.score < 85 && <p className="inline-notice">برای تبدیل موارد باز به قدم‌های کوتاه و قابل پیگیری، از چک‌لیست اجرایی استفاده کنید.</p>}
           <div className="mini-meter readiness-meter"><span style={{ width: `${readiness.score}%` }} /></div>
           <div className="finding-meta">
-            <span>ط¢ط®ط±غŒظ† ظ…ط­ط§ط³ط¨ظ‡: {toPersianNumber(new Date(readiness.generatedAt).toLocaleString("fa-IR"))}</span>
-            <span>ط§ظ‚ط¯ط§ظ…â€Œظ‡ط§غŒ ط¨ط§ط²: {toPersianNumber(failedChecks.length)}</span>
-            <span>ط³ظ„ط§ظ…طھ ط¯ط§ط¯ظ‡: {maintenanceHealthLabel(maintenanceReport.healthStatus)}</span>
+            <span>آخرین محاسبه: {toPersianNumber(new Date(readiness.generatedAt).toLocaleString("fa-IR"))}</span>
+            <span>اقدام‌های باز: {toPersianNumber(failedChecks.length)}</span>
+            <span>سلامت داده: {maintenanceHealthLabel(maintenanceReport.healthStatus)}</span>
           </div>
         </section>
 
         <section className="panel">
-          <h2>ط§ظ‚ط¯ط§ظ…â€Œظ‡ط§غŒ ط§ظˆظ„ظˆغŒطھâ€Œط¯ط§ط±</h2>
+          <h2>اقدام‌های اولویت‌دار</h2>
           <div className="analysis-list">
             {readiness.topActions.map((item) => (
               <article className={`panel-row tone-${checkTone(item)}`} key={item.id}>
@@ -3097,7 +3097,7 @@ function ReadinessPage({
                 <a className="ghost-button" href={item.actionPath}>{item.actionLabel}</a>
               </article>
             ))}
-            {!readiness.topActions.length && <p>ط§ظ‚ط¯ط§ظ… ظپظˆط±غŒ ط¨ط§ظ‚غŒ ظ†ظ…ط§ظ†ط¯ظ‡ ط§ط³طھ.</p>}
+            {!readiness.topActions.length && <p>اقدام فوری باقی نمانده است.</p>}
           </div>
         </section>
       </section>
@@ -3111,13 +3111,13 @@ function ReadinessPage({
             <section className="panel" key={category}>
               <div className="section-head">
                 <h2>{readinessCategoryLabel(category)}</h2>
-                <StatusBadge tone={categoryScore === 100 ? "good" : categoryScore >= 60 ? "warn" : "critical"}>{toPersianNumber(categoryScore)}ظھ</StatusBadge>
+                <StatusBadge tone={categoryScore === 100 ? "good" : categoryScore >= 60 ? "warn" : "critical"}>{toPersianNumber(categoryScore)}٪</StatusBadge>
               </div>
               <div className="mini-meter readiness-meter"><span style={{ width: `${categoryScore}%` }} /></div>
               <div className="analysis-list">
                 {categoryChecks.map((item) => (
                   <article className={`panel-row tone-${checkTone(item)}`} key={item.id}>
-                    <StatusBadge tone={checkTone(item)}>{item.passed ? "ط¢ظ…ط§ط¯ظ‡" : item.severity}</StatusBadge>
+                    <StatusBadge tone={checkTone(item)}>{item.passed ? "آماده" : item.severity}</StatusBadge>
                     <p>{item.title}</p>
                     <small>{item.evidence}</small>
                     {!item.passed && <a className="ghost-button" href={item.actionPath}>{item.actionLabel}</a>}
@@ -3187,38 +3187,38 @@ function LaunchChecklistPage({
 
   const rebuild = (reset = false) => {
     launchChecklistService.rebuild(readiness, reset);
-    refresh(reset ? "ع†ع©â€Œظ„غŒط³طھ ط¨ط§ ظˆط¶ط¹غŒطھ طھط§ط²ظ‡ ط¨ط§ط²ط³ط§ط²غŒ ط´ط¯." : "ع†ع©â€Œظ„غŒط³طھ ط¨ظ‡â€Œط±ظˆط² ط´ط¯ ظˆ ظˆط¶ط¹غŒطھâ€Œظ‡ط§غŒ ظ‚ط§ط¨ظ„ ط­ظپط¸ ط¨ط§ظ‚غŒ ظ…ط§ظ†ط¯ظ†ط¯.");
+    refresh(reset ? "چک‌لیست با وضعیت تازه بازسازی شد." : "چک‌لیست به‌روز شد و وضعیت‌های قابل حفظ باقی ماندند.");
   };
 
   const completeItem = (id: string) => {
     launchChecklistService.complete(id);
-    refresh("ط§ظ‚ط¯ط§ظ… ط§ظ†ط¬ط§ظ…â€Œط´ط¯ظ‡ ط«ط¨طھ ط´ط¯.");
+    refresh("اقدام انجام‌شده ثبت شد.");
   };
 
   const dismissItem = (id: string) => {
     if (!managerNote.trim()) {
-      setMessage("ط¨ط±ط§غŒ ط±ط¯ ط§ظ‚ط¯ط§ظ…طŒ ط¯ظ„غŒظ„ ع©ظˆطھط§ظ‡غŒ ط«ط¨طھ ع©ظ†غŒط¯.");
+      setMessage("برای رد اقدام، دلیل کوتاهی ثبت کنید.");
       return;
     }
     launchChecklistService.dismiss(id, managerNote);
     setDismissingId(undefined);
     setManagerNote("");
-    refresh("ط§ظ‚ط¯ط§ظ… ط¨ط§ غŒط§ط¯ط¯ط§ط´طھ ظ…ط¯غŒط± ط±ط¯ ط´ط¯.");
+    refresh("اقدام با یادداشت مدیر رد شد.");
   };
 
   const reopenItem = (id: string) => {
     launchChecklistService.reopen(id);
-    refresh("ط§ظ‚ط¯ط§ظ… ط¯ظˆط¨ط§ط±ظ‡ ط¨ظ‡ ظپظ‡ط±ط³طھ ط¨ط§ط² ط¨ط±ع¯ط´طھ.");
+    refresh("اقدام دوباره به فهرست باز برگشت.");
   };
 
   const createLaunchSnapshot = () => {
     workforceBackupService.createSnapshot(
-      "Snapshot ظ¾غŒط´ ط§ط² ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ",
+      "Snapshot پیش از راه‌اندازی",
       "launch_checklist_snapshot",
-      "ظˆط¶ط¹غŒطھ ط¯ط§ط¯ظ‡â€Œظ‡ط§ ظˆ ع†ع©â€Œظ„غŒط³طھ ظ‚ط¨ظ„ ط§ط² ط´ط±ظˆط¹ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ ط°ط®غŒط±ظ‡ ط´ط¯.",
+      "وضعیت داده‌ها و چک‌لیست قبل از شروع راه‌اندازی ذخیره شد.",
       false,
     );
-    refresh("Snapshot ظ¾غŒط´ ط§ط² ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ ط³ط§ط®طھظ‡ ط´ط¯.");
+    refresh("Snapshot پیش از راه‌اندازی ساخته شد.");
   };
 
   const itemCard = (item: LaunchChecklistItem) => (
@@ -3232,28 +3232,28 @@ function LaunchChecklistPage({
       </div>
       <h3>{item.title}</h3>
       <p>{item.description}</p>
-      {item.managerNote && <div className="manager-note">غŒط§ط¯ط¯ط§ط´طھ ظ…ط¯غŒط±: {item.managerNote}</div>}
+      {item.managerNote && <div className="manager-note">یادداشت مدیر: {item.managerNote}</div>}
       {dismissingId === item.id && (
         <div className="dismiss-panel">
           <input
             className="search-input"
             value={managerNote}
             onChange={(event) => setManagerNote(event.target.value)}
-            placeholder="ط¯ظ„غŒظ„ ع©ظˆطھط§ظ‡ ط±ط¯ ط§ظ‚ط¯ط§ظ…"
+            placeholder="دلیل کوتاه رد اقدام"
             maxLength={180}
           />
-          <button className="ghost-button tone-critical" type="button" onClick={() => dismissItem(item.id)}>ط«ط¨طھ ط±ط¯</button>
+          <button className="ghost-button tone-critical" type="button" onClick={() => dismissItem(item.id)}>ثبت رد</button>
         </div>
       )}
       <div className="row-actions">
-        <a className="ghost-button" href={item.actionPath}>{item.actionLabel || "ط±ظپطھظ† ط¨ظ‡ طµظپط­ظ‡ ط§ظ‚ط¯ط§ظ…"}</a>
+        <a className="ghost-button" href={item.actionPath}>{item.actionLabel || "رفتن به صفحه اقدام"}</a>
         {item.status === "open" && (
           <>
-            <button className="primary-button" type="button" onClick={() => completeItem(item.id)}><CheckCircle2 size={16} /> ط§ظ†ط¬ط§ظ… ط´ط¯</button>
-            <button className="ghost-button" type="button" onClick={() => { setDismissingId(item.id); setManagerNote(""); }}><XCircle size={16} /> ط±ط¯ ط´ط¯</button>
+            <button className="primary-button" type="button" onClick={() => completeItem(item.id)}><CheckCircle2 size={16} /> انجام شد</button>
+            <button className="ghost-button" type="button" onClick={() => { setDismissingId(item.id); setManagerNote(""); }}><XCircle size={16} /> رد شد</button>
           </>
         )}
-        {item.status !== "open" && <button className="ghost-button" type="button" onClick={() => reopenItem(item.id)}><RotateCcw size={16} /> ط¨ط§ط² ع©ط±ط¯ظ† ط¯ظˆط¨ط§ط±ظ‡</button>}
+        {item.status !== "open" && <button className="ghost-button" type="button" onClick={() => reopenItem(item.id)}><RotateCcw size={16} /> باز کردن دوباره</button>}
       </div>
     </article>
   );
@@ -3263,52 +3263,52 @@ function LaunchChecklistPage({
       <header className="page-header">
         <div>
           <span className="eyebrow">P15 Launch Checklist</span>
-          <h1>ع†ع©â€Œظ„غŒط³طھ ط§ط¬ط±ط§غŒغŒ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ</h1>
-          <p>ظ‚ط¯ظ… ط¨ط¹ط¯غŒ ظ…ط´ط®طµ ط§ط³طھط› ظ‡ط± ط§ظ‚ط¯ط§ظ… ط±ط§ ط§ظ†ط¬ط§ظ… ط¯ظ‡غŒط¯طŒ ط±ط¯ ع©ظ†غŒط¯ غŒط§ ظ…ط³طھظ‚غŒظ… ط¨ظ‡ طµظپط­ظ‡ ظ…ط±ط¨ظˆط· ط¨ط±ظˆغŒط¯.</p>
+          <h1>چک‌لیست اجرایی راه‌اندازی</h1>
+          <p>قدم بعدی مشخص است؛ هر اقدام را انجام دهید، رد کنید یا مستقیم به صفحه مربوط بروید.</p>
         </div>
         <div className="hero-actions">
-          <a className="ghost-button" href="/organization/workforce-dashboard/readiness">ط±ظپطھظ† ط¨ظ‡ ط¢ظ…ط§ط¯ع¯غŒ ط¹ظ…ظ„غŒط§طھغŒ</a>
-          <a className={report.openCount ? "ghost-button tone-warn" : "primary-button"} href="/organization/workforce-dashboard/launch-signoff">طھط£غŒغŒط¯ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ</a>
-          <button className="ghost-button" type="button" onClick={createLaunchSnapshot}>ط³ط§ط®طھ snapshot ظ¾غŒط´ ط§ط² ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ</button>
-          <button className="primary-button" type="button" onClick={() => rebuild(false)}><RotateCcw size={17} /> ط¨ط§ط²ط³ط§ط²غŒ ط§ط² ظˆط¶ط¹غŒطھ ظپط¹ظ„غŒ</button>
-          <button className="ghost-button" type="button" onClick={() => rebuild(true)}>ط¨ط§ط²ط³ط§ط²غŒ ع©ط§ظ…ظ„</button>
+          <a className="ghost-button" href="/organization/workforce-dashboard/readiness">رفتن به آمادگی عملیاتی</a>
+          <a className={report.openCount ? "ghost-button tone-warn" : "primary-button"} href="/organization/workforce-dashboard/launch-signoff">تأیید راه‌اندازی</a>
+          <button className="ghost-button" type="button" onClick={createLaunchSnapshot}>ساخت snapshot پیش از راه‌اندازی</button>
+          <button className="primary-button" type="button" onClick={() => rebuild(false)}><RotateCcw size={17} /> بازسازی از وضعیت فعلی</button>
+          <button className="ghost-button" type="button" onClick={() => rebuild(true)}>بازسازی کامل</button>
         </div>
       </header>
 
       {message && <div className="inline-notice">{message}</div>}
-      {report.openCount > 0 && <div className="inline-notice tone-warn">ظ‡ظ†ظˆط² {toPersianNumber(report.openCount)} ط§ظ‚ط¯ط§ظ… ط¨ط§ط² ط§ط³طھط› ط¯ط± ع¯ط²ط§ط±ط´ طھط£غŒغŒط¯ ظ¾ظ†ظ‡ط§ظ† ظ†ط®ظˆط§ظ‡ط¯ ط´ط¯.</div>}
+      {report.openCount > 0 && <div className="inline-notice tone-warn">هنوز {toPersianNumber(report.openCount)} اقدام باز است؛ در گزارش تأیید پنهان نخواهد شد.</div>}
 
       <section className="kpi-strip">
-        <article className="kpi-card tone-focus"><div><p>ظ¾غŒط´ط±ظپطھ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ</p><strong>{toPersianNumber(report.progressPercent)}ظھ</strong><span>ط¨ط± ظ¾ط§غŒظ‡ ط§ظ‚ط¯ط§ظ…â€Œظ‡ط§غŒ طھکمغŒظ„â€Œط´ط¯ظ‡</span></div></article>
-        <article className="kpi-card tone-warn"><div><p>ط§ظ‚ط¯ط§ظ… ط¨ط§ط²</p><strong>{toPersianNumber(report.openCount)}</strong><span>ظ…ظ†طھط¸ط± ط§ظ‚ط¯ط§ظ… ظ…ط¯غŒط±</span></div></article>
-        <article className="kpi-card tone-good"><div><p>طھکمغŒظ„â€Œط´ط¯ظ‡</p><strong>{toPersianNumber(report.completedCount)}</strong><span>ط«ط¨طھâ€Œط´ط¯ظ‡ ط¯ط± ظ‡ظ…غŒظ† ظ…ط±ظˆط±ع¯ط±</span></div></article>
-        <article className="kpi-card tone-empty"><div><p>ط±ط¯ط´ط¯ظ‡</p><strong>{toPersianNumber(report.dismissedCount)}</strong><span>ط¯ط§ط±ط§غŒ طھطµظ…غŒظ… ظ…ط¯غŒط±غŒطھغŒ</span></div></article>
-        <article className="kpi-card tone-critical"><div><p>ط¨ط­ط±ط§ظ†غŒ ط¨ط§ط²</p><strong>{toPersianNumber(report.criticalOpenCount)}</strong><span>ط§ظˆظ„ظˆغŒطھ ط´ط±ظˆط¹ ط§ظ…ظ†</span></div></article>
+        <article className="kpi-card tone-focus"><div><p>پیشرفت راه‌اندازی</p><strong>{toPersianNumber(report.progressPercent)}٪</strong><span>بر پایه اقدام‌های تکمیل‌شده</span></div></article>
+        <article className="kpi-card tone-warn"><div><p>اقدام باز</p><strong>{toPersianNumber(report.openCount)}</strong><span>منتظر اقدام مدیر</span></div></article>
+        <article className="kpi-card tone-good"><div><p>تکمیل‌شده</p><strong>{toPersianNumber(report.completedCount)}</strong><span>ثبت‌شده در همین مرورگر</span></div></article>
+        <article className="kpi-card tone-empty"><div><p>ردشده</p><strong>{toPersianNumber(report.dismissedCount)}</strong><span>دارای تصمیم مدیریتی</span></div></article>
+        <article className="kpi-card tone-critical"><div><p>بحرانی باز</p><strong>{toPersianNumber(report.criticalOpenCount)}</strong><span>اولویت شروع امن</span></div></article>
       </section>
 
       <section className="launch-overview">
         <section className="panel launch-progress-card">
-          <div className="section-head"><h2>ظ…ط³غŒط± ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ</h2><StatusBadge tone={report.criticalOpenCount ? "critical" : report.openCount ? "warn" : "good"}>{toPersianNumber(report.progressPercent)}ظھ</StatusBadge></div>
+          <div className="section-head"><h2>مسیر راه‌اندازی</h2><StatusBadge tone={report.criticalOpenCount ? "critical" : report.openCount ? "warn" : "good"}>{toPersianNumber(report.progressPercent)}٪</StatusBadge></div>
           <div className="mini-meter readiness-meter"><span style={{ width: `${report.progressPercent}%` }} /></div>
           <p>{report.summary}</p>
         </section>
         <section className={`panel next-step-card tone-${report.nextBestStep ? severityTone(report.nextBestStep.severity) : "good"}`}>
-          <span className="eyebrow">ظ‚ط¯ظ… ط¨ط¹ط¯غŒ ظ¾غŒط´ظ†ظ‡ط§ط¯غŒ</span>
-          <h2>{report.nextBestStep?.title ?? "ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ ط¢ظ…ط§ط¯ظ‡ ط§ط³طھ"}</h2>
-          <p>{report.nextBestStep?.description ?? "ط§ظ‚ط¯ط§ظ… ط¨ط§ط²غŒ ط¨ط§ظ‚غŒ ظ†ظ…ط§ظ†ط¯ظ‡ ط§ط³طھط› ظˆط¶ط¹غŒطھ readiness ط±ط§ غŒع©â€Œط¨ط§ط± ط¯غŒع¯ط± ط¨ط±ط±ط³غŒ ع©ظ†غŒط¯."}</p>
+          <span className="eyebrow">قدم بعدی پیشنهادی</span>
+          <h2>{report.nextBestStep?.title ?? "راه‌اندازی آماده است"}</h2>
+          <p>{report.nextBestStep?.description ?? "اقدام بازی باقی نمانده است؛ وضعیت readiness را یک‌بار دیگر بررسی کنید."}</p>
           {report.nextBestStep && <a className="primary-button" href={report.nextBestStep.actionPath}>{report.nextBestStep.actionLabel}</a>}
         </section>
       </section>
 
       <div className="filter-bar">
-        <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as LaunchChecklistStatus | "all")} aria-label="ظپغŒظ„طھط± ظˆط¶ط¹غŒطھ">
-          <option value="all">ظ‡ظ…ظ‡ ظˆط¶ط¹غŒطھâ€Œظ‡ط§</option>
-          <option value="open">ط¨ط§ط²</option>
-          <option value="completed">ط§ظ†ط¬ط§ظ…â€Œط´ط¯ظ‡</option>
-          <option value="dismissed">ط±ط¯ط´ط¯ظ‡</option>
+        <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as LaunchChecklistStatus | "all")} aria-label="فیلتر وضعیت">
+          <option value="all">همه وضعیت‌ها</option>
+          <option value="open">باز</option>
+          <option value="completed">انجام‌شده</option>
+          <option value="dismissed">ردشده</option>
         </select>
-        <select value={categoryFilter} onChange={(event) => setCategoryFilter(event.target.value as ReadinessCheckCategory | "all")} aria-label="ظپغŒظ„طھط± ط¯ط³طھظ‡">
-          <option value="all">ظ‡ظ…ظ‡ ط¯ط³طھظ‡â€Œظ‡ط§</option>
+        <select value={categoryFilter} onChange={(event) => setCategoryFilter(event.target.value as ReadinessCheckCategory | "all")} aria-label="فیلتر دسته">
+          <option value="all">همه دسته‌ها</option>
           {categories.map((category) => <option key={category} value={category}>{readinessCategoryLabel(category)}</option>)}
         </select>
       </div>
@@ -3316,9 +3316,9 @@ function LaunchChecklistPage({
       {!report.items.length && (
         <section className="panel empty-launch-state">
           <ClipboardCheck size={32} />
-          <h2>ع†ع©â€Œظ„غŒط³طھ ظ‡ظ†ظˆط² ط³ط§ط®طھظ‡ ظ†ط´ط¯ظ‡ ط§ط³طھ</h2>
-          <p>ظˆط¶ط¹غŒطھ ظپط¹ظ„غŒ readiness ط±ط§ ط¨ظ‡ ظ‚ط¯ظ…â€Œظ‡ط§غŒ ط§ط¬ط±ط§غŒغŒ طھط¨ط¯غŒظ„ ع©ظ†غŒط¯.</p>
-          <button className="primary-button" type="button" onClick={() => rebuild(false)}>ط³ط§ط®طھ ع†ع©â€Œظ„غŒط³طھ ط§ط¬ط±ط§غŒغŒ</button>
+          <h2>چک‌لیست هنوز ساخته نشده است</h2>
+          <p>وضعیت فعلی readiness را به قدم‌های اجرایی تبدیل کنید.</p>
+          <button className="primary-button" type="button" onClick={() => rebuild(false)}>ساخت چک‌لیست اجرایی</button>
         </section>
       )}
 
@@ -3327,12 +3327,12 @@ function LaunchChecklistPage({
           <section className="panel" key={category}>
             <div className="section-head">
               <h2>{readinessCategoryLabel(category as ReadinessCheckCategory)}</h2>
-              <StatusBadge tone="info">{toPersianNumber(items.length)} ط§ظ‚ط¯ط§ظ…</StatusBadge>
+              <StatusBadge tone="info">{toPersianNumber(items.length)} اقدام</StatusBadge>
             </div>
             <div className="launch-items-grid">{items.map(itemCard)}</div>
           </section>
         ))}
-        {report.items.length > 0 && !filteredItems.length && <section className="panel"><h2>ظ…ظˆط±ط¯غŒ ظ¾غŒط¯ط§ ظ†ط´ط¯</h2><p>ظپغŒظ„طھط± ظˆط¶ط¹غŒطھ غŒط§ ط¯ط³طھظ‡ ط±ط§ طھط؛غŒغŒط± ط¯ظ‡غŒط¯.</p></section>}
+        {report.items.length > 0 && !filteredItems.length && <section className="panel"><h2>موردی پیدا نشد</h2><p>فیلتر وضعیت یا دسته را تغییر دهید.</p></section>}
       </section>
     </div>
   );
@@ -3365,28 +3365,28 @@ function BaselineDriftPage() {
   }, [drift.baselineChecksum, drift.currentChecksum]);
 
   const makePreResignoffSnapshot = () => {
-    workforceBackupService.createSnapshot("Snapshot ظ¾غŒط´ ط§ط² ط¨ط§ط²طھط£غŒغŒط¯", "before_operational_resignoff", "ظ‚ط¨ظ„ ط§ط² ط¨ط±ط±ط³غŒ ط¨ط§ط²طھط£غŒغŒط¯ ط¹ظ…ظ„غŒط§طھغŒ ط³ط§ط®طھظ‡ ط´ط¯.", false);
+    workforceBackupService.createSnapshot("Snapshot پیش از بازتأیید", "before_operational_resignoff", "قبل از بررسی بازتأیید عملیاتی ساخته شد.", false);
     setRefreshToken((value) => value + 1);
-    setMessage("Snapshot ظ¾غŒط´ ط§ط² ط¨ط§ط²طھط£غŒغŒط¯ ط³ط§ط®طھظ‡ ط´ط¯.");
+    setMessage("Snapshot پیش از بازتأیید ساخته شد.");
   };
 
   const signResignoff = () => {
     if (!signedBy.trim() || !managerNote.trim()) {
-      setMessage("ظ†ط§ظ… طھط£غŒغŒط¯ع©ظ†ظ†ط¯ظ‡ ظˆ غŒط§ط¯ط¯ط§ط´طھ ظ…ط¯غŒط± ط§ظ„ط²ط§ظ…غŒ ط§ط³طھ.");
+      setMessage("نام تأییدکننده و یادداشت مدیر الزامی است.");
       return;
     }
     if (!drift.baselineSignoffId) {
-      setMessage("ط§ط¨طھط¯ط§ launch signoff ظˆ baseline ط§ظˆظ„غŒظ‡ ط±ط§ ط«ط¨طھ ع©ظ†غŒط¯.");
+      setMessage("ابتدا launch signoff و baseline اولیه را ثبت کنید.");
       return;
     }
-    if (!window.confirm(`ط¨ط§ط²طھط£غŒغŒط¯ ط¹ظ…ظ„غŒط§طھغŒ ط¨ط§ ظ¾ط°غŒط±ط´ ${drift.totalChanges} طھط؛غŒغŒط± ط«ط¨طھ ظˆ baseline ط¬ط¯غŒط¯ ط³ط§ط®طھظ‡ ط´ظˆط¯طں`)) return;
+    if (!window.confirm(`بازتأیید عملیاتی با پذیرش ${drift.totalChanges} تغییر ثبت و baseline جدید ساخته شود؟`)) return;
     try {
       setLastReviewedDrift(drift);
       operationalResignoffService.sign(drift, signedBy, managerNote);
-      setMessage("ط¨ط§ط²طھط£غŒغŒط¯ ط«ط¨طھ ط´ط¯ ظˆ baseline ط¬ط¯غŒط¯ ط§ط² ظˆط¶ط¹غŒطھ ظپط¹ظ„غŒ ط³ط§ط®طھظ‡ ط´ط¯.");
+      setMessage("بازتأیید ثبت شد و baseline جدید از وضعیت فعلی ساخته شد.");
       setRefreshToken((value) => value + 1);
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "ط«ط¨طھ ط¨ط§ط²طھط£غŒغŒط¯ ط§ظ†ط¬ط§ظ… ظ†ط´ط¯.");
+      setMessage(error instanceof Error ? error.message : "ثبت بازتأیید انجام نشد.");
     }
   };
 
@@ -3395,14 +3395,14 @@ function BaselineDriftPage() {
       <div className="section-head">
         <div className="badge-row">
           <StatusBadge tone={driftTone(change.severity)}>{change.severity}</StatusBadge>
-          {change.requiresResignoff && <StatusBadge tone="critical">ط¨ط§ط²طھط£غŒغŒط¯</StatusBadge>}
-          {!change.requiresResignoff && change.requiresReview && <StatusBadge tone="warn">ط¨ط§ط²ط¨غŒظ†غŒ</StatusBadge>}
+          {change.requiresResignoff && <StatusBadge tone="critical">بازتأیید</StatusBadge>}
+          {!change.requiresResignoff && change.requiresReview && <StatusBadge tone="warn">بازبینی</StatusBadge>}
         </div>
         <small>{change.entityType}</small>
       </div>
       <h3>{change.title}</h3>
       <p>{change.description}</p>
-      <div className="drift-before-after"><span>ظ‚ط¨ظ„: {change.beforeSummary}</span><span>ط§ع©ظ†ظˆظ†: {change.afterSummary}</span></div>
+      <div className="drift-before-after"><span>قبل: {change.beforeSummary}</span><span>اکنون: {change.afterSummary}</span></div>
     </article>
   );
 
@@ -3411,85 +3411,85 @@ function BaselineDriftPage() {
       <header className="page-header no-print">
         <div>
           <span className="eyebrow">P17 Baseline Drift</span>
-          <h1>ظ¾ط§غŒط´ Drift ط¨ط¹ط¯ ط§ط² Baseline</h1>
-          <p>طھط؛غŒغŒط±ط§طھ ط¨ط¹ط¯ ط§ط² طھط£غŒغŒط¯ ط¹ظ…ظ„غŒط§طھغŒ ط±ط§ ط¨ط¨غŒظ†غŒط¯ ظˆ ظپظ‚ط· ظˆظ‚طھغŒ ظ„ط§ط²ظ… ط§ط³طھ baseline ط±ط§ ط¨ط§ط²طھط£غŒغŒط¯ ع©ظ†غŒط¯.</p>
+          <h1>پایش Drift بعد از Baseline</h1>
+          <p>تغییرات بعد از تأیید عملیاتی را ببینید و فقط وقتی لازم است baseline را بازتأیید کنید.</p>
         </div>
         <div className="hero-actions">
-          <a className="ghost-button" href="/organization/workforce-dashboard/operations-calendar">طھظ‚ظˆغŒظ… ع©ظ†طھط±ظ„â€Œظ‡ط§</a>
-          <a className="ghost-button" href="/organization/workforce-dashboard/launch-signoff">ط±ظپطھظ† ط¨ظ‡ launch signoff</a>
-          <a className="ghost-button" href="/organization/workforce-dashboard/operational-history">ظ…ط´ط§ظ‡ط¯ظ‡ طھط§ط±غŒط®ع†ظ‡ drift</a>
-          <button className="ghost-button" type="button" onClick={makePreResignoffSnapshot}>ط³ط§ط®طھ snapshot ظ‚ط¨ظ„ ط§ط² ط¨ط§ط²طھط£غŒغŒط¯</button>
-          <button className="ghost-button" type="button" onClick={() => window.print()}><Printer size={17} /> ع†ط§ظ¾ ع¯ط²ط§ط±ط´ drift</button>
+          <a className="ghost-button" href="/organization/workforce-dashboard/operations-calendar">تقویم کنترل‌ها</a>
+          <a className="ghost-button" href="/organization/workforce-dashboard/launch-signoff">رفتن به launch signoff</a>
+          <a className="ghost-button" href="/organization/workforce-dashboard/operational-history">مشاهده تاریخچه drift</a>
+          <button className="ghost-button" type="button" onClick={makePreResignoffSnapshot}>ساخت snapshot قبل از بازتأیید</button>
+          <button className="ghost-button" type="button" onClick={() => window.print()}><Printer size={17} /> چاپ گزارش drift</button>
         </div>
       </header>
 
       {drift.baselineSignoffId && <BaselineCompatibilityNotice report={drift} />}
       {message && <div className="inline-notice no-print">{message}</div>}
-      {(retentionReport.staleDriftCount > 0 || retentionReport.expiredResignoffCount > 0) && <div className="inline-notice tone-critical no-print">Drift ظ‚ط¯غŒظ…غŒ غŒط§ ط¨ط§ط²طھط£غŒغŒط¯ ظ†غŒط§ط²ظ…ظ†ط¯ ظ…ط±ظˆط± ط§ط³طھ. <a href="/organization/workforce-dashboard/history-retention">ط¨ط±ط±ط³غŒ ط³غŒط§ط³طھ ظ†ع¯ظ‡ط¯ط§ط±غŒ</a></div>}
-      {!drift.baselineSignoffId && <div className="inline-notice tone-critical no-print">Baseline ط§ظ…ط¶ط§ط´ط¯ظ‡â€Œط§غŒ ظˆط¬ظˆط¯ ظ†ط¯ط§ط±ط¯ط› ط§ط¨طھط¯ط§ طھط£غŒغŒط¯ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ ط±ط§ ط«ط¨طھ ع©ظ†غŒط¯.</div>}
+      {(retentionReport.staleDriftCount > 0 || retentionReport.expiredResignoffCount > 0) && <div className="inline-notice tone-critical no-print">Drift قدیمی یا بازتأیید نیازمند مرور است. <a href="/organization/workforce-dashboard/history-retention">بررسی سیاست نگهداری</a></div>}
+      {!drift.baselineSignoffId && <div className="inline-notice tone-critical no-print">Baseline امضاشده‌ای وجود ندارد؛ ابتدا تأیید راه‌اندازی را ثبت کنید.</div>}
 
       <section className="kpi-strip no-print">
-        <article className="kpi-card tone-focus"><div><p>Baseline</p><strong>{drift.baselineSignoffId ? "ظپط¹ط§ظ„" : "ظ†ط¯ط§ط±ط¯"}</strong><span>{drift.baselineChecksum || "ط§ط¨طھط¯ط§ signoff"}</span></div></article>
-        <article className={`kpi-card tone-${driftTone(drift.driftLevel)}`}><div><p>ط§ظ…طھغŒط§ط² Drift</p><strong>{toPersianNumber(drift.driftScore)}</strong><span>ط§ط² غ±غ°غ°</span></div></article>
-        <article className={`kpi-card tone-${driftTone(drift.driftLevel)}`}><div><p>ط³ط·ط­ Drift</p><strong>{driftLevelLabel(drift.driftLevel)}</strong><span>{toPersianNumber(drift.totalChanges)} طھط؛غŒغŒط±</span></div></article>
-        <article className="kpi-card tone-warn"><div><p>ظ†غŒط§ط²ظ…ظ†ط¯ ط¨ط§ط²ط¨غŒظ†غŒ</p><strong>{toPersianNumber(drift.reviewCount)}</strong><span>طھط؛غŒغŒط± ظ…ظ‡ظ…</span></div></article>
-        <article className={`kpi-card tone-${drift.requiresResignoff ? "critical" : "good"}`}><div><p>ط¨ط§ط²طھط£غŒغŒط¯</p><strong>{drift.requiresResignoff ? "ظ„ط§ط²ظ… ط§ط³طھ" : "ظ„ط§ط²ظ… ظ†غŒط³طھ"}</strong><span>{toPersianNumber(drift.resignoffCount)} طھط؛غŒغŒط± ظ…ط³طھظ‚غŒظ…</span></div></article>
+        <article className="kpi-card tone-focus"><div><p>Baseline</p><strong>{drift.baselineSignoffId ? "فعال" : "ندارد"}</strong><span>{drift.baselineChecksum || "ابتدا signoff"}</span></div></article>
+        <article className={`kpi-card tone-${driftTone(drift.driftLevel)}`}><div><p>امتیاز Drift</p><strong>{toPersianNumber(drift.driftScore)}</strong><span>از ۱۰۰</span></div></article>
+        <article className={`kpi-card tone-${driftTone(drift.driftLevel)}`}><div><p>سطح Drift</p><strong>{driftLevelLabel(drift.driftLevel)}</strong><span>{toPersianNumber(drift.totalChanges)} تغییر</span></div></article>
+        <article className="kpi-card tone-warn"><div><p>نیازمند بازبینی</p><strong>{toPersianNumber(drift.reviewCount)}</strong><span>تغییر مهم</span></div></article>
+        <article className={`kpi-card tone-${drift.requiresResignoff ? "critical" : "good"}`}><div><p>بازتأیید</p><strong>{drift.requiresResignoff ? "لازم است" : "لازم نیست"}</strong><span>{toPersianNumber(drift.resignoffCount)} تغییر مستقیم</span></div></article>
       </section>
 
       <section className="drift-checksum-strip no-print">
-        <div><small>Checksum baseline</small><code>{drift.baselineChecksum || "ط«ط¨طھ ظ†ط´ط¯ظ‡"}</code></div>
-        <div><small>Checksum ظپط¹ظ„غŒ</small><code>{drift.currentChecksum}</code></div>
+        <div><small>Checksum baseline</small><code>{drift.baselineChecksum || "ثبت نشده"}</code></div>
+        <div><small>Checksum فعلی</small><code>{drift.currentChecksum}</code></div>
       </section>
 
       <section className={`panel drift-decision tone-${driftTone(drift.driftLevel)} no-print`}>
-        <div className="section-head"><h2>طھطµظ…غŒظ… ظ¾غŒط´ظ†ظ‡ط§ط¯غŒ</h2><StatusBadge tone={driftTone(drift.driftLevel)}>{driftLevelLabel(drift.driftLevel)}</StatusBadge></div>
+        <div className="section-head"><h2>تصمیم پیشنهادی</h2><StatusBadge tone={driftTone(drift.driftLevel)}>{driftLevelLabel(drift.driftLevel)}</StatusBadge></div>
         <p>{drift.summary}</p><strong>{drift.recommendedAction}</strong>
       </section>
 
       <div className="filter-bar no-print">
-        <select value={severityFilter} onChange={(event) => setSeverityFilter(event.target.value as BaselineDriftSeverity | "all")} aria-label="ظپغŒظ„طھط± ط´ط¯طھ drift">
-          <option value="all">ظ‡ظ…ظ‡ ط´ط¯طھâ€Œظ‡ط§</option><option value="critical">ط¨ط­ط±ط§ظ†غŒ</option><option value="high">زیاد</option><option value="medium">متوسط</option><option value="low">کم</option><option value="info">ط§ط·ظ„ط§ط¹</option>
+        <select value={severityFilter} onChange={(event) => setSeverityFilter(event.target.value as BaselineDriftSeverity | "all")} aria-label="فیلتر شدت drift">
+          <option value="all">همه شدت‌ها</option><option value="critical">بحرانی</option><option value="high">زیاد</option><option value="medium">متوسط</option><option value="low">کم</option><option value="info">اطلاع</option>
         </select>
-        <select value={resignoffFilter} onChange={(event) => setResignoffFilter(event.target.value as "all" | "yes" | "no")} aria-label="ظپغŒظ„طھط± ط¨ط§ط²طھط£غŒغŒط¯">
-          <option value="all">ظ‡ظ…ظ‡ طھط؛غŒغŒط±ط§طھ</option><option value="yes">ظ†غŒط§ط²ظ…ظ†ط¯ ط¨ط§ط²طھط£غŒغŒط¯</option><option value="no">ط¨ط¯ظˆظ† ظ†غŒط§ط² ط¨ظ‡ ط¨ط§ط²طھط£غŒغŒط¯</option>
+        <select value={resignoffFilter} onChange={(event) => setResignoffFilter(event.target.value as "all" | "yes" | "no")} aria-label="فیلتر بازتأیید">
+          <option value="all">همه تغییرات</option><option value="yes">نیازمند بازتأیید</option><option value="no">بدون نیاز به بازتأیید</option>
         </select>
       </div>
 
       <section className="drift-groups no-print">
         {Object.entries(groupedChanges).map(([storageKey, changes]) => (
           <section className="panel" key={storageKey}>
-            <div className="section-head"><h2>{storageKey}</h2><StatusBadge tone="info">{toPersianNumber(changes.length)} طھط؛غŒغŒط±</StatusBadge></div>
+            <div className="section-head"><h2>{storageKey}</h2><StatusBadge tone="info">{toPersianNumber(changes.length)} تغییر</StatusBadge></div>
             <div className="drift-change-grid">{changes.map(changeCard)}</div>
           </section>
         ))}
-        {drift.baselineSignoffId && !filteredChanges.length && <section className="panel empty-launch-state"><CheckCircle2 className="tone-good" size={32} /><h2>طھط؛غŒغŒط±غŒ ط¯ط± ط§غŒظ† ظپغŒظ„طھط± ظˆط¬ظˆط¯ ظ†ط¯ط§ط±ط¯</h2><p>{drift.driftLevel === "none" ? "ظˆط¶ط¹غŒطھ ظپط¹ظ„غŒ ط¨ط§ baseline غŒع©ط³ط§ظ† ط§ط³طھ." : "ظپغŒظ„طھط±ظ‡ط§ ط±ط§ طھط؛غŒغŒط± ط¯ظ‡غŒط¯."}</p></section>}
+        {drift.baselineSignoffId && !filteredChanges.length && <section className="panel empty-launch-state"><CheckCircle2 className="tone-good" size={32} /><h2>تغییری در این فیلتر وجود ندارد</h2><p>{drift.driftLevel === "none" ? "وضعیت فعلی با baseline یکسان است." : "فیلترها را تغییر دهید."}</p></section>}
       </section>
 
       {drift.baselineSignoffId && drift.totalChanges > 0 && (
         <section className="panel resignoff-form no-print">
-          <div className="section-head"><h2>ط«ط¨طھ ط¨ط§ط²طھط£غŒغŒط¯ ط¹ظ…ظ„غŒط§طھغŒ</h2><StatusBadge tone={drift.requiresResignoff ? "critical" : "warn"}>{drift.requiresResignoff ? "ط¶ط±ظˆط±غŒ" : "ط§ط®طھغŒط§ط±غŒ"}</StatusBadge></div>
+          <div className="section-head"><h2>ثبت بازتأیید عملیاتی</h2><StatusBadge tone={drift.requiresResignoff ? "critical" : "warn"}>{drift.requiresResignoff ? "ضروری" : "اختیاری"}</StatusBadge></div>
           <div className="field-grid">
-            <label className="field"><span>ظ†ط§ظ… طھط£غŒغŒط¯ع©ظ†ظ†ط¯ظ‡</span><input value={signedBy} onChange={(event) => setSignedBy(event.target.value)} placeholder="ظ†ط§ظ… ظˆ ط³ظ…طھ" /></label>
-            <label className="field field-textarea"><span>غŒط§ط¯ط¯ط§ط´طھ طھط؛غŒغŒط±ط§طھ ظ¾ط°غŒط±ظپطھظ‡â€Œط´ط¯ظ‡</span><textarea value={managerNote} onChange={(event) => setManagerNote(event.target.value)} placeholder="ط¯ظ„غŒظ„ ظ¾ط°غŒط±ط´ ظˆ ظ†طھغŒط¬ظ‡ ط¨ط§ط²ط¨غŒظ†غŒ" /></label>
+            <label className="field"><span>نام تأییدکننده</span><input value={signedBy} onChange={(event) => setSignedBy(event.target.value)} placeholder="نام و سمت" /></label>
+            <label className="field field-textarea"><span>یادداشت تغییرات پذیرفته‌شده</span><textarea value={managerNote} onChange={(event) => setManagerNote(event.target.value)} placeholder="دلیل پذیرش و نتیجه بازبینی" /></label>
           </div>
-          <button className={drift.requiresResignoff ? "danger-button" : "primary-button"} type="button" onClick={signResignoff}>ط«ط¨طھ ط¨ط§ط²طھط£غŒغŒط¯ ط¹ظ…ظ„غŒط§طھغŒ</button>
+          <button className={drift.requiresResignoff ? "danger-button" : "primary-button"} type="button" onClick={signResignoff}>ثبت بازتأیید عملیاتی</button>
         </section>
       )}
 
       <section className="print-surface drift-print">
-        <div className="report-title"><span className="eyebrow">ع¯ط²ط§ط±ط´ ظ¾ط§غŒط´ ظ¾ط³ ط§ط² ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ</span><h1>ع¯ط²ط§ط±ط´ Drift ظ†ط³ط¨طھ ط¨ظ‡ Baseline</h1><StatusBadge tone={driftTone(printableDrift.driftLevel)}>{driftLevelLabel(printableDrift.driftLevel)}</StatusBadge></div>
+        <div className="report-title"><span className="eyebrow">گزارش پایش پس از راه‌اندازی</span><h1>گزارش Drift نسبت به Baseline</h1><StatusBadge tone={driftTone(printableDrift.driftLevel)}>{driftLevelLabel(printableDrift.driftLevel)}</StatusBadge></div>
         <div className="signoff-facts">
-          <div><small>ط²ظ…ط§ظ† ع¯ط²ط§ط±ط´</small><strong>{toPersianNumber(new Date(printableDrift.generatedAt).toLocaleString("fa-IR"))}</strong></div>
-          <div><small>ط§ظ…طھغŒط§ط² drift</small><strong>{toPersianNumber(printableDrift.driftScore)}</strong></div>
-          <div><small>طھط؛غŒغŒط±ط§طھ</small><strong>{toPersianNumber(printableDrift.totalChanges)}</strong></div>
-          <div><small>Baseline checksum</small><code>{printableDrift.baselineChecksum || "ظ†ط¯ط§ط±ط¯"}</code></div>
+          <div><small>زمان گزارش</small><strong>{toPersianNumber(new Date(printableDrift.generatedAt).toLocaleString("fa-IR"))}</strong></div>
+          <div><small>امتیاز drift</small><strong>{toPersianNumber(printableDrift.driftScore)}</strong></div>
+          <div><small>تغییرات</small><strong>{toPersianNumber(printableDrift.totalChanges)}</strong></div>
+          <div><small>Baseline checksum</small><code>{printableDrift.baselineChecksum || "ندارد"}</code></div>
           <div><small>Current checksum</small><code>{printableDrift.currentChecksum}</code></div>
-          <div><small>ظ†غŒط§ط² ط¨ظ‡ ط¨ط§ط²طھط£غŒغŒط¯</small><strong>{printableDrift.requiresResignoff ? "ط¨ظ„ظ‡" : "ط®غŒط±"}</strong></div>
+          <div><small>نیاز به بازتأیید</small><strong>{printableDrift.requiresResignoff ? "بله" : "خیر"}</strong></div>
         </div>
-        <section className="report-section"><h2>طھط؛غŒغŒط±ط§طھ ظ…ظ‡ظ…</h2>{printableDrift.changes.filter((item) => item.requiresReview).length ? <ul>{printableDrift.changes.filter((item) => item.requiresReview).map((item) => <li key={item.id}>{item.title}: {item.beforeSummary} â†گ {item.afterSummary}</li>)}</ul> : <p>طھط؛غŒغŒط± ظ…ظ‡ظ…غŒ ط«ط¨طھ ظ†ط´ط¯ظ‡ ط§ط³طھ.</p>}</section>
-        <section className="report-section"><h2>طھط؛غŒغŒط±ط§طھ ظ†غŒط§ط²ظ…ظ†ط¯ ط¨ط§ط²طھط£غŒغŒط¯</h2>{printableDrift.changes.filter((item) => item.requiresResignoff).length ? <ul>{printableDrift.changes.filter((item) => item.requiresResignoff).map((item) => <li key={item.id}>{item.title}</li>)}</ul> : <p>ظ…ظˆط±ط¯غŒ ط«ط¨طھ ظ†ط´ط¯ظ‡ ط§ط³طھ.</p>}</section>
-        <section className="report-section"><h2>غŒط§ط¯ط¯ط§ط´طھ ظ…ط¯غŒط±</h2><p>{latestResignoff?.managerNote || managerNote || "ط«ط¨طھ ظ†ط´ط¯ظ‡"}</p></section>
-        <div className="signature-box"><span>ظ†ط§ظ… ظˆ ط§ظ…ط¶ط§غŒ ط¨ط§ط²طھط£غŒغŒط¯ع©ظ†ظ†ط¯ظ‡</span><strong>{latestResignoff?.signedBy || signedBy || "................................"}</strong><span>طھط§ط±غŒط®: {latestResignoff?.signedAt ? toPersianNumber(new Date(latestResignoff.signedAt).toLocaleDateString("fa-IR")) : "................"}</span></div>
+        <section className="report-section"><h2>تغییرات مهم</h2>{printableDrift.changes.filter((item) => item.requiresReview).length ? <ul>{printableDrift.changes.filter((item) => item.requiresReview).map((item) => <li key={item.id}>{item.title}: {item.beforeSummary} ← {item.afterSummary}</li>)}</ul> : <p>تغییر مهمی ثبت نشده است.</p>}</section>
+        <section className="report-section"><h2>تغییرات نیازمند بازتأیید</h2>{printableDrift.changes.filter((item) => item.requiresResignoff).length ? <ul>{printableDrift.changes.filter((item) => item.requiresResignoff).map((item) => <li key={item.id}>{item.title}</li>)}</ul> : <p>موردی ثبت نشده است.</p>}</section>
+        <section className="report-section"><h2>یادداشت مدیر</h2><p>{latestResignoff?.managerNote || managerNote || "ثبت نشده"}</p></section>
+        <div className="signature-box"><span>نام و امضای بازتأییدکننده</span><strong>{latestResignoff?.signedBy || signedBy || "................................"}</strong><span>تاریخ: {latestResignoff?.signedAt ? toPersianNumber(new Date(latestResignoff.signedAt).toLocaleDateString("fa-IR")) : "................"}</span></div>
       </section>
     </div>
   );
@@ -3569,36 +3569,36 @@ function LaunchSignoffPage({
   const baselineDrift = currentBaselineDriftReport();
   const printableReport = latestSignoff?.status === "signed" || latestSignoff?.status === "revoked" ? latestSignoff : draft;
   const approvalChecks = [
-    { label: "ط¯ط§ط¯ظ‡â€Œظ‡ط§غŒ ظ¾ط§غŒظ‡ ع©ط§ظ…ظ„", passed: baselineSummary.spacesCount > 0 && baselineSummary.employeesCount > 0 && baselineSummary.taskTypesCount > 0 },
-    { label: "Snapshot ظ‚ط§ط¨ظ„ ط¨ط§ط²ع¯ط´طھ", passed: baselineSummary.snapshotsCount > 0 },
-    { label: "ط¨ط¯ظˆظ† ط§ظ‚ط¯ط§ظ… ط¨ط­ط±ط§ظ†غŒ ط¯ط± ع†ع©â€Œظ„غŒط³طھ", passed: checklist.criticalOpenCount === 0 },
-    { label: "ط³ظ„ط§ظ…طھ ظ†ع¯ظ‡ط¯ط§ط±غŒ ظ‚ط§ط¨ظ„ ظ‚ط¨ظˆظ„", passed: maintenance.healthStatus !== "risky" && maintenance.healthStatus !== "critical" },
-    { label: "ط¢ظ…ط§ط¯ع¯غŒ ط¹ظ…ظ„غŒط§طھغŒ ط؛غŒط±ظ¾ط±ط±غŒط³ع©", passed: readiness.status !== "risky" },
+    { label: "داده‌های پایه کامل", passed: baselineSummary.spacesCount > 0 && baselineSummary.employeesCount > 0 && baselineSummary.taskTypesCount > 0 },
+    { label: "Snapshot قابل بازگشت", passed: baselineSummary.snapshotsCount > 0 },
+    { label: "بدون اقدام بحرانی در چک‌لیست", passed: checklist.criticalOpenCount === 0 },
+    { label: "سلامت نگهداری قابل قبول", passed: maintenance.healthStatus !== "risky" && maintenance.healthStatus !== "critical" },
+    { label: "آمادگی عملیاتی غیرپرریسک", passed: readiness.status !== "risky" },
   ];
 
   const saveDraft = () => {
     const report = launchSignoffService.createDraft(signoffContext);
     if (managerNote.trim()) launchSignoffService.updateManagerNote(report.id, managerNote);
     setLatestSignoff(launchSignoffService.latest());
-    setMessage("ظ¾غŒط´â€Œظ†ظˆغŒط³ ع¯ط²ط§ط±ط´ ط°ط®غŒط±ظ‡ ط´ط¯.");
+    setMessage("پیش‌نویس گزارش ذخیره شد.");
   };
 
   const signLaunch = () => {
     if (!signedBy.trim()) {
-      setMessage("ظ†ط§ظ… طھط£غŒغŒط¯ع©ظ†ظ†ط¯ظ‡ ط§ظ„ط²ط§ظ…غŒ ط§ط³طھ.");
+      setMessage("نام تأییدکننده الزامی است.");
       return;
     }
     if (!approvalDate) {
-      setMessage("طھط§ط±غŒط® طھط£غŒغŒط¯ ط§ظ„ط²ط§ظ…غŒ ط§ط³طھ.");
+      setMessage("تاریخ تأیید الزامی است.");
       return;
     }
     if (draft.blockers.length && (!acceptRisk || !managerNote.trim())) {
-      setMessage("ط¨ط±ط§غŒ طھط£غŒغŒط¯ ط¨ط§ ط±غŒط³ع©طŒ ظ¾ط°غŒط±ط´ ط±غŒط³ع© ظˆ غŒط§ط¯ط¯ط§ط´طھ ظ…ط¯غŒط± ط§ظ„ط²ط§ظ…غŒ ط§ط³طھ.");
+      setMessage("برای تأیید با ریسک، پذیرش ریسک و یادداشت مدیر الزامی است.");
       return;
     }
     const confirmation = draft.blockers.length
-      ? `ط§غŒظ† ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ ${draft.blockers.length} ظ…ط§ظ†ط¹ ظپط¹ط§ظ„ ط¯ط§ط±ط¯. ط¨ط§ ط«ط¨طھ baselineطŒ ط±غŒط³ع©â€Œظ‡ط§غŒ ظ†ظ…ط§غŒط´â€Œط¯ط§ط¯ظ‡â€Œط´ط¯ظ‡ ط±ط§ ط¢ع¯ط§ظ‡ط§ظ†ظ‡ ظ…غŒâ€Œظ¾ط°غŒط±غŒط¯. ط§ط¯ط§ظ…ظ‡ ظ…غŒâ€Œط¯ظ‡غŒط¯طں`
-      : "Baseline ط¹ظ…ظ„غŒط§طھغŒ ط³ط§ط®طھظ‡ ظˆ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ ظ†ظ‡ط§غŒغŒ طھط£غŒغŒط¯ ط´ظˆط¯طں";
+      ? `این راه‌اندازی ${draft.blockers.length} مانع فعال دارد. با ثبت baseline، ریسک‌های نمایش‌داده‌شده را آگاهانه می‌پذیرید. ادامه می‌دهید؟`
+      : "Baseline عملیاتی ساخته و راه‌اندازی نهایی تأیید شود؟";
     if (!window.confirm(confirmation)) return;
     try {
       const report = launchSignoffService.sign(signoffContext, {
@@ -3608,24 +3608,24 @@ function LaunchSignoffPage({
         acceptRisk,
       });
       setLatestSignoff(report);
-      setMessage("Baseline ط³ط§ط®طھظ‡ ط´ط¯ ظˆ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ طھط£غŒغŒط¯ ط´ط¯.");
+      setMessage("Baseline ساخته شد و راه‌اندازی تأیید شد.");
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "طھط£غŒغŒط¯ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ ط§ظ†ط¬ط§ظ… ظ†ط´ط¯.");
+      setMessage(error instanceof Error ? error.message : "تأیید راه‌اندازی انجام نشد.");
     }
   };
 
   const revokeSignoff = () => {
     if (!latestSignoff || !revokeNote.trim()) {
-      setMessage("ط¨ط±ط§غŒ ظ„ط؛ظˆ طھط£غŒغŒط¯طŒ ط¯ظ„غŒظ„ ع©ظˆطھط§ظ‡غŒ ط«ط¨طھ ع©ظ†غŒط¯.");
+      setMessage("برای لغو تأیید، دلیل کوتاهی ثبت کنید.");
       return;
     }
-    if (!window.confirm("طھط£غŒغŒط¯ ط¹ظ…ظ„غŒط§طھغŒ ط§غŒظ† baseline ظ„ط؛ظˆ ط´ظˆط¯طں ط¯ط§ط¯ظ‡â€Œظ‡ط§غŒ baseline ط­ط°ظپ ظ†ظ…غŒâ€Œط´ظˆظ†ط¯.")) return;
+    if (!window.confirm("تأیید عملیاتی این baseline لغو شود؟ داده‌های baseline حذف نمی‌شوند.")) return;
     try {
       const report = launchSignoffService.revoke(latestSignoff.id, revokeNote);
       setLatestSignoff(report);
-      setMessage("طھط£غŒغŒط¯ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ ظ„ط؛ظˆ ط´ط¯ط› baseline ط¨ط±ط§غŒ ط¨ط§غŒع¯ط§ظ†غŒ ط¨ط§ظ‚غŒ ظ…ط§ظ†ط¯.");
+      setMessage("تأیید راه‌اندازی لغو شد؛ baseline برای بایگانی باقی ماند.");
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "ظ„ط؛ظˆ طھط£غŒغŒط¯ ط§ظ†ط¬ط§ظ… ظ†ط´ط¯.");
+      setMessage(error instanceof Error ? error.message : "لغو تأیید انجام نشد.");
     }
   };
 
@@ -3636,117 +3636,117 @@ function LaunchSignoffPage({
       <header className="page-header no-print">
         <div>
           <span className="eyebrow">P16 Launch Signoff</span>
-          <h1>طھط£غŒغŒط¯ ظ†ظ‡ط§غŒغŒ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ</h1>
-          <p>ع©ظ†طھط±ظ„ ظ†ظ‡ط§غŒغŒطŒ ط«ط¨طھ ظ…ط³ط¦ظˆظ„ طھط£غŒغŒط¯ ظˆ ط³ط§ط®طھ baseline ظ‚ط§ط¨ظ„ ط¨ط§ط²ع¯ط´طھ ط¨ط±ط§غŒ ط´ط±ظˆط¹ ط§ط³طھظپط§ط¯ظ‡ ظˆط§ظ‚ط¹غŒ.</p>
+          <h1>تأیید نهایی راه‌اندازی</h1>
+          <p>کنترل نهایی، ثبت مسئول تأیید و ساخت baseline قابل بازگشت برای شروع استفاده واقعی.</p>
         </div>
         <div className="hero-actions">
-          <a className="ghost-button" href="/organization/workforce-dashboard">ط±ظپطھظ† ط¨ظ‡ ط¯ط§ط´ط¨ظˆط±ط¯ ط§طµظ„غŒ</a>
-          <a className="ghost-button" href="/organization/workforce-dashboard/launch-checklist">ع†ع©â€Œظ„غŒط³طھ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ</a>
-          {latestSignoff?.status === "signed" && <a className="ghost-button" href="/organization/workforce-dashboard/baseline-drift">ظ¾ط§غŒط´ Drift baseline</a>}
-          <button className="ghost-button" type="button" onClick={() => window.print()}><Printer size={17} /> ع†ط§ظ¾ ع¯ط²ط§ط±ط´</button>
+          <a className="ghost-button" href="/organization/workforce-dashboard">رفتن به داشبورد اصلی</a>
+          <a className="ghost-button" href="/organization/workforce-dashboard/launch-checklist">چک‌لیست راه‌اندازی</a>
+          {latestSignoff?.status === "signed" && <a className="ghost-button" href="/organization/workforce-dashboard/baseline-drift">پایش Drift baseline</a>}
+          <button className="ghost-button" type="button" onClick={() => window.print()}><Printer size={17} /> چاپ گزارش</button>
         </div>
       </header>
 
       {message && <div className="inline-notice no-print">{message}</div>}
        {latestSignoff?.status === "signed" && <BaselineCompatibilityNotice report={baselineDrift} />}
      {latestSignoff?.status === "signed" && (baselineDrift.driftLevel === "high" || baselineDrift.driftLevel === "critical") && (
-        <div className="inline-notice tone-critical no-print">Baseline ظپط¹ظ„غŒ drift {driftLevelLabel(baselineDrift.driftLevel)} ط¯ط§ط±ط¯ ظˆ ط¨ط§غŒط¯ ط¨ط§ط²طھط£غŒغŒط¯ ط´ظˆط¯.</div>
+        <div className="inline-notice tone-critical no-print">Baseline فعلی drift {driftLevelLabel(baselineDrift.driftLevel)} دارد و باید بازتأیید شود.</div>
       )}
 
       <section className="kpi-strip no-print">
-        <article className={`kpi-card tone-${readinessStatusTone(readiness.status)}`}><div><p>ط¢ظ…ط§ط¯ع¯غŒ</p><strong>{toPersianNumber(readiness.score)}</strong><span>{readinessStatusLabel(readiness.status)}</span></div></article>
-        <article className="kpi-card tone-focus"><div><p>ظ¾غŒط´ط±ظپطھ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ</p><strong>{toPersianNumber(checklist.progressPercent)}ظھ</strong><span>{toPersianNumber(checklist.openCount)} ط§ظ‚ط¯ط§ظ… ط¨ط§ط²</span></div></article>
-        <article className={`kpi-card tone-${maintenanceHealthTone(maintenance.healthStatus)}`}><div><p>ظ†ع¯ظ‡ط¯ط§ط±غŒ</p><strong>{maintenanceHealthLabel(maintenance.healthStatus)}</strong><span>{toPersianNumber(maintenance.totalIssues)} ظ…ط³ط¦ظ„ظ‡</span></div></article>
-        <article className="kpi-card tone-info"><div><p>Snapshot</p><strong>{toPersianNumber(snapshots.length)}</strong><span>{snapshots[0]?.title ?? "ط«ط¨طھ ظ†ط´ط¯ظ‡"}</span></div></article>
-        <article className={`kpi-card tone-${statusTone}`}><div><p>ط§ط¬ط§ط²ظ‡ طھط£غŒغŒط¯</p><strong>{draft.blockers.length ? "ظ…ط³ط¯ظˆط¯" : "ط¢ظ…ط§ط¯ظ‡"}</strong><span>{toPersianNumber(draft.blockers.length)} ظ…ط§ظ†ط¹</span></div></article>
+        <article className={`kpi-card tone-${readinessStatusTone(readiness.status)}`}><div><p>آمادگی</p><strong>{toPersianNumber(readiness.score)}</strong><span>{readinessStatusLabel(readiness.status)}</span></div></article>
+        <article className="kpi-card tone-focus"><div><p>پیشرفت راه‌اندازی</p><strong>{toPersianNumber(checklist.progressPercent)}٪</strong><span>{toPersianNumber(checklist.openCount)} اقدام باز</span></div></article>
+        <article className={`kpi-card tone-${maintenanceHealthTone(maintenance.healthStatus)}`}><div><p>نگهداری</p><strong>{maintenanceHealthLabel(maintenance.healthStatus)}</strong><span>{toPersianNumber(maintenance.totalIssues)} مسئله</span></div></article>
+        <article className="kpi-card tone-info"><div><p>Snapshot</p><strong>{toPersianNumber(snapshots.length)}</strong><span>{snapshots[0]?.title ?? "ثبت نشده"}</span></div></article>
+        <article className={`kpi-card tone-${statusTone}`}><div><p>اجازه تأیید</p><strong>{draft.blockers.length ? "مسدود" : "آماده"}</strong><span>{toPersianNumber(draft.blockers.length)} مانع</span></div></article>
       </section>
 
       {draft.blockers.length > 0 && (
         <section className="panel signoff-blockers no-print">
-          <div className="section-head"><h2>ظ…ظˆط§ظ†ط¹ طھط£غŒغŒط¯ ط¹ط§ط¯غŒ</h2><StatusBadge tone="critical">ط±غŒط³ع© ط¢ط´ع©ط§ط±</StatusBadge></div>
+          <div className="section-head"><h2>موانع تأیید عادی</h2><StatusBadge tone="critical">ریسک آشکار</StatusBadge></div>
           <div className="analysis-list">{draft.blockers.map((item) => <div className="panel-row tone-critical" key={item}>{item}</div>)}</div>
         </section>
       )}
 
       <section className="signoff-layout no-print">
         <section className="panel">
-          <h2>ع©ظ†طھط±ظ„â€Œظ‡ط§غŒ ظ¾غŒط´ ط§ط² طھط£غŒغŒط¯</h2>
+          <h2>کنترل‌های پیش از تأیید</h2>
           <div className="approval-checks">
             {approvalChecks.map((item) => (
               <div className="approval-check" key={item.label}>
                 {item.passed ? <CheckCircle2 className="tone-good" size={19} /> : <AlertTriangle className="tone-critical" size={19} />}
                 <span>{item.label}</span>
-                <StatusBadge tone={item.passed ? "good" : "critical"}>{item.passed ? "ظ¾ط§ط³" : "ط¨ط§ط²"}</StatusBadge>
+                <StatusBadge tone={item.passed ? "good" : "critical"}>{item.passed ? "پاس" : "باز"}</StatusBadge>
               </div>
             ))}
           </div>
         </section>
 
         <section className="panel signoff-form">
-          <h2>ط«ط¨طھ طھط£غŒغŒط¯ ظ…ط¯غŒط±</h2>
+          <h2>ثبت تأیید مدیر</h2>
           <div className="field-grid">
-            <label className="field"><span>ظ†ط§ظ… طھط£غŒغŒط¯ع©ظ†ظ†ط¯ظ‡</span><input value={signedBy} onChange={(event) => setSignedBy(event.target.value)} placeholder="ظ†ط§ظ… ظˆ ط³ظ…طھ" /></label>
-            <label className="field"><span>طھط§ط±غŒط® طھط£غŒغŒط¯</span><input type="date" value={approvalDate} onChange={(event) => setApprovalDate(event.target.value)} /></label>
-            <label className="field field-textarea"><span>غŒط§ط¯ط¯ط§ط´طھ ظ…ط¯غŒط±</span><textarea value={managerNote} onChange={(event) => setManagerNote(event.target.value)} placeholder={draft.blockers.length ? "ط¨ط±ط§غŒ ظ¾ط°غŒط±ط´ ط±غŒط³ع© ط§ط¬ط¨ط§ط±غŒ ط§ط³طھ" : "غŒط§ط¯ط¯ط§ط´طھ ط§ط®طھغŒط§ط±غŒ ط¨ط±ط§غŒ ط¨ط§غŒع¯ط§ظ†غŒ"} /></label>
+            <label className="field"><span>نام تأییدکننده</span><input value={signedBy} onChange={(event) => setSignedBy(event.target.value)} placeholder="نام و سمت" /></label>
+            <label className="field"><span>تاریخ تأیید</span><input type="date" value={approvalDate} onChange={(event) => setApprovalDate(event.target.value)} /></label>
+            <label className="field field-textarea"><span>یادداشت مدیر</span><textarea value={managerNote} onChange={(event) => setManagerNote(event.target.value)} placeholder={draft.blockers.length ? "برای پذیرش ریسک اجباری است" : "یادداشت اختیاری برای بایگانی"} /></label>
           </div>
           {draft.blockers.length > 0 && (
             <label className="risk-acceptance">
               <input type="checkbox" checked={acceptRisk} onChange={(event) => setAcceptRisk(event.target.checked)} />
-              <span>ط±غŒط³ع©â€Œظ‡ط§غŒ ط¨ط§ط² ط±ط§ ط¯غŒط¯ظ‡â€Œط§ظ… ظˆ ظ…ط³ط¦ظˆظ„غŒطھ ط´ط±ظˆط¹ ط¹ظ…ظ„غŒط§طھغŒ ط¨ط§ ط§غŒظ† ظˆط¶ط¹غŒطھ ط±ط§ ظ…غŒâ€Œظ¾ط°غŒط±ظ….</span>
+              <span>ریسک‌های باز را دیده‌ام و مسئولیت شروع عملیاتی با این وضعیت را می‌پذیرم.</span>
             </label>
           )}
           <div className="form-actions">
-            <button className="ghost-button" type="button" onClick={saveDraft}>ط°ط®غŒط±ظ‡ ظ¾غŒط´â€Œظ†ظˆغŒط³</button>
-            <button className={draft.blockers.length ? "danger-button" : "primary-button"} type="button" onClick={signLaunch}><FileCheck2 size={17} /> ط³ط§ط®طھ baseline ظˆ طھط£غŒغŒط¯ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ</button>
+            <button className="ghost-button" type="button" onClick={saveDraft}>ذخیره پیش‌نویس</button>
+            <button className={draft.blockers.length ? "danger-button" : "primary-button"} type="button" onClick={signLaunch}><FileCheck2 size={17} /> ساخت baseline و تأیید راه‌اندازی</button>
           </div>
         </section>
       </section>
 
       <section className="print-surface launch-signoff-print">
         <div className="report-title">
-          <span className="eyebrow">ع¯ط²ط§ط±ط´ ظ‚ط§ط¨ظ„ ط¨ط§غŒع¯ط§ظ†غŒ</span>
+          <span className="eyebrow">گزارش قابل بایگانی</span>
           <h1>{printableReport.title}</h1>
           <StatusBadge tone={printableReport.status === "signed" ? "good" : printableReport.status === "revoked" ? "critical" : statusTone}>
-            {printableReport.status === "signed" ? "طھط£غŒغŒط¯ط´ط¯ظ‡" : printableReport.status === "revoked" ? "ظ„ط؛ظˆط´ط¯ظ‡" : "ظ¾غŒط´â€Œظ†ظˆغŒط³"}
+            {printableReport.status === "signed" ? "تأییدشده" : printableReport.status === "revoked" ? "لغوشده" : "پیش‌نویس"}
           </StatusBadge>
         </div>
 
         <div className="signoff-facts">
-          <div><small>طھط§ط±غŒط® ع¯ط²ط§ط±ط´</small><strong>{toPersianNumber(new Date(printableReport.signedAt ?? printableReport.generatedAt).toLocaleString("fa-IR"))}</strong></div>
-          <div><small>طھط£غŒغŒط¯ع©ظ†ظ†ط¯ظ‡</small><strong>{printableReport.signedBy || signedBy || "ط«ط¨طھ ظ†ط´ط¯ظ‡"}</strong></div>
-          <div><small>ط§ظ…طھغŒط§ط² ط¢ظ…ط§ط¯ع¯غŒ</small><strong>{toPersianNumber(printableReport.readinessScore)}</strong></div>
-          <div><small>ظ¾غŒط´ط±ظپطھ ط±ط§ظ‡â€Œط§ظ†ط¯ط§ط²غŒ</small><strong>{toPersianNumber(printableReport.launchProgressPercent)}ظھ</strong></div>
-          <div><small>ط³ظ„ط§ظ…طھ ظ†ع¯ظ‡ط¯ط§ط±غŒ</small><strong>{maintenanceHealthLabel(printableReport.maintenanceHealthStatus)}</strong></div>
-          <div><small>Checksum baseline</small><code>{printableReport.baselineChecksum || "ظ¾ط³ ط§ط² طھط£غŒغŒط¯ ط³ط§ط®طھظ‡ ظ…غŒâ€Œط´ظˆط¯"}</code></div>
+          <div><small>تاریخ گزارش</small><strong>{toPersianNumber(new Date(printableReport.signedAt ?? printableReport.generatedAt).toLocaleString("fa-IR"))}</strong></div>
+          <div><small>تأییدکننده</small><strong>{printableReport.signedBy || signedBy || "ثبت نشده"}</strong></div>
+          <div><small>امتیاز آمادگی</small><strong>{toPersianNumber(printableReport.readinessScore)}</strong></div>
+          <div><small>پیشرفت راه‌اندازی</small><strong>{toPersianNumber(printableReport.launchProgressPercent)}٪</strong></div>
+          <div><small>سلامت نگهداری</small><strong>{maintenanceHealthLabel(printableReport.maintenanceHealthStatus)}</strong></div>
+          <div><small>Checksum baseline</small><code>{printableReport.baselineChecksum || "پس از تأیید ساخته می‌شود"}</code></div>
         </div>
 
         <section className="report-section">
-          <h2>ط®ظ„ط§طµظ‡ baseline</h2>
+          <h2>خلاصه baseline</h2>
           <div className="baseline-summary-grid">
             {Object.entries(printableReport.baselineSummary).map(([key, value]) => <div key={key}><small>{baselineSummaryLabel(key as keyof typeof printableReport.baselineSummary)}</small><strong>{toPersianNumber(value)}</strong></div>)}
           </div>
         </section>
 
         <section className="signoff-risk-grid">
-          <div className="report-section"><h2>ط±غŒط³ع©â€Œظ‡ط§غŒ ط¨ط§ط² غŒط§ ظ¾ط°غŒط±ظپطھظ‡â€Œط´ط¯ظ‡</h2>{printableReport.unresolvedRisks.length ? <ul>{printableReport.unresolvedRisks.map((item) => <li key={item}>{item}</li>)}</ul> : <p>ط±غŒط³ع© ط¨ط§ط²غŒ ط«ط¨طھ ظ†ط´ط¯ظ‡ ط§ط³طھ.</p>}</div>
-          <div className="report-section"><h2>ط¢غŒطھظ…â€Œظ‡ط§غŒ ط¨ط§ط² ع†ع©â€Œظ„غŒط³طھ</h2>{printableReport.unresolvedChecklistItems.length ? <ul>{printableReport.unresolvedChecklistItems.map((item) => <li key={item}>{item}</li>)}</ul> : <p>ط¢غŒطھظ… ط¨ط§ط²غŒ ط¨ط§ظ‚غŒ ظ†ظ…ط§ظ†ط¯ظ‡ ط§ط³طھ.</p>}</div>
+          <div className="report-section"><h2>ریسک‌های باز یا پذیرفته‌شده</h2>{printableReport.unresolvedRisks.length ? <ul>{printableReport.unresolvedRisks.map((item) => <li key={item}>{item}</li>)}</ul> : <p>ریسک بازی ثبت نشده است.</p>}</div>
+          <div className="report-section"><h2>آیتم‌های باز چک‌لیست</h2>{printableReport.unresolvedChecklistItems.length ? <ul>{printableReport.unresolvedChecklistItems.map((item) => <li key={item}>{item}</li>)}</ul> : <p>آیتم بازی باقی نمانده است.</p>}</div>
         </section>
 
-        <section className="report-section"><h2>غŒط§ط¯ط¯ط§ط´طھ ظ…ط¯غŒط±</h2><p>{printableReport.managerNote || managerNote || "غŒط§ط¯ط¯ط§ط´طھغŒ ط«ط¨طھ ظ†ط´ط¯ظ‡ ط§ط³طھ."}</p></section>
-        <div className="signature-box"><span>ظ†ط§ظ… ظˆ ط§ظ…ط¶ط§غŒ طھط£غŒغŒط¯ع©ظ†ظ†ط¯ظ‡</span><strong>{printableReport.signedBy || signedBy || "................................"}</strong><span>طھط§ط±غŒط®: {toPersianNumber(printableReport.signedAt ? new Date(printableReport.signedAt).toLocaleDateString("fa-IR") : approvalDate)}</span></div>
+        <section className="report-section"><h2>یادداشت مدیر</h2><p>{printableReport.managerNote || managerNote || "یادداشتی ثبت نشده است."}</p></section>
+        <div className="signature-box"><span>نام و امضای تأییدکننده</span><strong>{printableReport.signedBy || signedBy || "................................"}</strong><span>تاریخ: {toPersianNumber(printableReport.signedAt ? new Date(printableReport.signedAt).toLocaleDateString("fa-IR") : approvalDate)}</span></div>
 
         {latestSignoff?.baselineBundle && (
           <div className="row-actions no-print">
-            <button className="primary-button" type="button" onClick={() => launchSignoffService.downloadBaseline(latestSignoff.id)}>ط¯ط§ظ†ظ„ظˆط¯ backup baseline</button>
+            <button className="primary-button" type="button" onClick={() => launchSignoffService.downloadBaseline(latestSignoff.id)}>دانلود backup baseline</button>
           </div>
         )}
       </section>
 
       {latestSignoff?.status === "signed" && (
         <section className="panel no-print revoke-panel">
-          <h2>ظ„ط؛ظˆ طھط£غŒغŒط¯ ط¹ظ…ظ„غŒط§طھغŒ</h2>
-          <p>Baseline ظˆ ع¯ط²ط§ط±ط´ ط­ط°ظپ ظ†ظ…غŒâ€Œط´ظˆظ†ط¯ط› ظپظ‚ط· ط§ط¹طھط¨ط§ط± ط¹ظ…ظ„غŒط§طھغŒ ط¢ظ† ظ„ط؛ظˆ ظ…غŒâ€Œط´ظˆط¯.</p>
-          <div className="dismiss-panel"><input className="search-input" value={revokeNote} onChange={(event) => setRevokeNote(event.target.value)} placeholder="ط¯ظ„غŒظ„ ظ„ط؛ظˆ طھط£غŒغŒط¯" /><button className="danger-button" type="button" onClick={revokeSignoff}>ظ„ط؛ظˆ طھط£غŒغŒط¯</button></div>
+          <h2>لغو تأیید عملیاتی</h2>
+          <p>Baseline و گزارش حذف نمی‌شوند؛ فقط اعتبار عملیاتی آن لغو می‌شود.</p>
+          <div className="dismiss-panel"><input className="search-input" value={revokeNote} onChange={(event) => setRevokeNote(event.target.value)} placeholder="دلیل لغو تأیید" /><button className="danger-button" type="button" onClick={revokeSignoff}>لغو تأیید</button></div>
         </section>
       )}
     </div>
@@ -3755,16 +3755,16 @@ function LaunchSignoffPage({
 
 function baselineSummaryLabel(key: keyof ReturnType<typeof buildLaunchBaselineSummary>) {
   const labels: Partial<Record<keyof ReturnType<typeof buildLaunchBaselineSummary>, string>> = {
-    spacesCount: "ظپط¶ط§ظ‡ط§",
-    employeesCount: "ع©ط§ط±ظ…ظ†ط¯ط§ظ†",
-    taskTypesCount: "ظ†ظˆط¹ ع©ط§ط±ظ‡ط§",
-    scheduleItemsCount: "ط¢غŒطھظ…â€Œظ‡ط§غŒ ط¨ط±ظ†ط§ظ…ظ‡",
-    rulesCount: "ظ‚ظˆط§ظ†غŒظ†",
-    reportsCount: "ع¯ط²ط§ط±ط´â€Œظ‡ط§",
-    goalsCount: "ظ‡ط¯ظپâ€Œظ‡ط§",
-    preventiveAlertsCount: "ظ‡ط´ط¯ط§ط±ظ‡ط§غŒ ظ¾غŒط´ع¯غŒط±ط§ظ†ظ‡",
-    snapshotsCount: "Snapshotظ‡ط§",
-    maintenanceIssuesCount: "ظ…ط³ط§ط¦ظ„ ظ†ع¯ظ‡ط¯ط§ط±غŒ",
+    spacesCount: "فضاها",
+    employeesCount: "کارمندان",
+    taskTypesCount: "نوع کارها",
+    scheduleItemsCount: "آیتم‌های برنامه",
+    rulesCount: "قوانین",
+    reportsCount: "گزارش‌ها",
+    goalsCount: "هدف‌ها",
+    preventiveAlertsCount: "هشدارهای پیشگیرانه",
+    snapshotsCount: "Snapshotها",
+    maintenanceIssuesCount: "مسائل نگهداری",
   };
   return labels[key] ?? String(key);
 }
@@ -3788,15 +3788,15 @@ function SettingsPage({
 
   const submit = () => {
     if (form.storeWorkingHours.startTime >= form.storeWorkingHours.endTime) {
-      setError("ط³ط§ط¹طھ ظ¾ط§غŒط§ظ† ظپط±ظˆط´ع¯ط§ظ‡ ط¨ط§غŒط¯ ط¨ط¹ط¯ ط§ط² ط³ط§ط¹طھ ط´ط±ظˆط¹ ط¨ط§ط´ط¯.");
+      setError("ساعت پایان فروشگاه باید بعد از ساعت شروع باشد.");
       return;
     }
     if (form.workloadCriticalHours <= form.workloadWarningHours) {
-      setError("ط¢ط³طھط§ظ†ظ‡ ط¨ط­ط±ط§ظ†غŒ ط¨ط§غŒط¯ ط¨غŒط´طھط± ط§ط² ط¢ط³طھط§ظ†ظ‡ ظ‡ط´ط¯ط§ط± ط¨ط§ط´ط¯.");
+      setError("آستانه بحرانی باید بیشتر از آستانه هشدار باشد.");
       return;
     }
     if (form.riskImpact.critical <= form.riskImpact.warning || form.riskImpact.warning <= form.riskImpact.info) {
-      setError("ط§ظ…طھغŒط§ط² ط±غŒط³ع© ط¨ط§غŒط¯ ط¨ظ‡ طھط±طھغŒط¨ criticalطŒ warning ظˆ info ظ†ط²ظˆظ„غŒ ط¨ط§ط´ط¯.");
+      setError("امتیاز ریسک باید به ترتیب critical، warning و info نزولی باشد.");
       return;
     }
     saveSettings(form);
@@ -3808,42 +3808,42 @@ function SettingsPage({
     <div className="page-stack">
       <header className="page-header">
         <div>
-          <span className="eyebrow">طھظ†ط¸غŒظ…ط§طھ طھط­ظ„غŒظ„</span>
-          <h1>ط¢ط³طھط§ظ†ظ‡â€Œظ‡ط§غŒ ظ…ط؛ط² ط³غŒط³طھظ…</h1>
-          <p>ط§غŒظ† ظ…ظ‚ط§ط¯غŒط± ط¯ط± ظ…ط±ظˆط±ع¯ط± ط°ط®غŒط±ظ‡ ظ…غŒâ€Œط´ظˆظ†ط¯ ظˆ ظ…ط­ط§ط³ط¨ظ‡ ط¯ط§ط´ط¨ظˆط±ط¯ ظˆ ط¬ط²ط¦غŒط§طھ طھط­ظ„غŒظ„ ط±ط§ طھط؛غŒغŒط± ظ…غŒâ€Œط¯ظ‡ظ†ط¯.</p>
+          <span className="eyebrow">تنظیمات تحلیل</span>
+          <h1>آستانه‌های مغز سیستم</h1>
+          <p>این مقادیر در مرورگر ذخیره می‌شوند و محاسبه داشبورد و جزئیات تحلیل را تغییر می‌دهند.</p>
         </div>
       </header>
 
       <section className="management-layout">
         <section className="config-card">
-          <h2>طھظ†ط¸غŒظ…ط§طھ ظ‚ط§ط¨ظ„ ظˆغŒط±ط§غŒط´</h2>
+          <h2>تنظیمات قابل ویرایش</h2>
           {error && <p className="form-error">{error}</p>}
-          {saved && !error && <p className="success-note">طھظ†ط¸غŒظ…ط§طھ ط°ط®غŒط±ظ‡ ط´ط¯.</p>}
+          {saved && !error && <p className="success-note">تنظیمات ذخیره شد.</p>}
           <div className="field-grid">
-            <TextField label="ط´ط±ظˆط¹ ظپط¹ط§ظ„غŒطھ ظپط±ظˆط´ع¯ط§ظ‡" type="time" value={form.storeWorkingHours.startTime} onChange={(startTime) => setForm({ ...form, storeWorkingHours: { ...form.storeWorkingHours, startTime } })} />
-            <TextField label="ظ¾ط§غŒط§ظ† ظپط¹ط§ظ„غŒطھ ظپط±ظˆط´ع¯ط§ظ‡" type="time" value={form.storeWorkingHours.endTime} onChange={(endTime) => setForm({ ...form, storeWorkingHours: { ...form.storeWorkingHours, endTime } })} />
-            <TextField label="ط¢ط³طھط§ظ†ظ‡ ظپط´ط§ط± ع©ط§ط±غŒ ظ‡ط´ط¯ط§ط±" type="number" value={form.workloadWarningHours} onChange={(value) => setForm({ ...form, workloadWarningHours: Number(value) })} />
-            <TextField label="ط¢ط³طھط§ظ†ظ‡ ظپط´ط§ط± ع©ط§ط±غŒ ط¨ط­ط±ط§ظ†غŒ" type="number" value={form.workloadCriticalHours} onChange={(value) => setForm({ ...form, workloadCriticalHours: Number(value) })} />
-            <TextField label="ط§ظ…طھغŒط§ط² ط±غŒط³ع© critical" type="number" value={form.riskImpact.critical} onChange={(value) => setForm({ ...form, riskImpact: { ...form.riskImpact, critical: Number(value) } })} />
-            <TextField label="ط§ظ…طھغŒط§ط² ط±غŒط³ع© warning" type="number" value={form.riskImpact.warning} onChange={(value) => setForm({ ...form, riskImpact: { ...form.riskImpact, warning: Number(value) } })} />
-            <TextField label="ط§ظ…طھغŒط§ط² ط±غŒط³ع© info" type="number" value={form.riskImpact.info} onChange={(value) => setForm({ ...form, riskImpact: { ...form.riskImpact, info: Number(value) } })} />
-            <TextField label="طھط¹ط¯ط§ط¯ ط¢غŒطھظ…â€Œظ‡ط§غŒ ظ…ظ‡ظ… ط¯ط§ط´ط¨ظˆط±ط¯" type="number" value={form.dashboardImportantItemCount} onChange={(value) => setForm({ ...form, dashboardImportantItemCount: Math.max(1, Number(value)) })} />
+            <TextField label="شروع فعالیت فروشگاه" type="time" value={form.storeWorkingHours.startTime} onChange={(startTime) => setForm({ ...form, storeWorkingHours: { ...form.storeWorkingHours, startTime } })} />
+            <TextField label="پایان فعالیت فروشگاه" type="time" value={form.storeWorkingHours.endTime} onChange={(endTime) => setForm({ ...form, storeWorkingHours: { ...form.storeWorkingHours, endTime } })} />
+            <TextField label="آستانه فشار کاری هشدار" type="number" value={form.workloadWarningHours} onChange={(value) => setForm({ ...form, workloadWarningHours: Number(value) })} />
+            <TextField label="آستانه فشار کاری بحرانی" type="number" value={form.workloadCriticalHours} onChange={(value) => setForm({ ...form, workloadCriticalHours: Number(value) })} />
+            <TextField label="امتیاز ریسک critical" type="number" value={form.riskImpact.critical} onChange={(value) => setForm({ ...form, riskImpact: { ...form.riskImpact, critical: Number(value) } })} />
+            <TextField label="امتیاز ریسک warning" type="number" value={form.riskImpact.warning} onChange={(value) => setForm({ ...form, riskImpact: { ...form.riskImpact, warning: Number(value) } })} />
+            <TextField label="امتیاز ریسک info" type="number" value={form.riskImpact.info} onChange={(value) => setForm({ ...form, riskImpact: { ...form.riskImpact, info: Number(value) } })} />
+            <TextField label="تعداد آیتم‌های مهم داشبورد" type="number" value={form.dashboardImportantItemCount} onChange={(value) => setForm({ ...form, dashboardImportantItemCount: Math.max(1, Number(value)) })} />
           </div>
           <div className="form-actions">
-            <button className="primary-button" type="button" onClick={submit}>ط°ط®غŒط±ظ‡ طھظ†ط¸غŒظ…ط§طھ</button>
+            <button className="primary-button" type="button" onClick={submit}>ذخیره تنظیمات</button>
             <button className="ghost-button" type="button" onClick={() => {
               resetSettings();
               setSaved(false);
               setError("");
-            }}>ط¨ط§ط²ع¯ط´طھ ط¨ظ‡ ظ¾غŒط´â€Œظپط±ط¶</button>
+            }}>بازگشت به پیش‌فرض</button>
           </div>
         </section>
         <InfoPanel
-          title="ط§ط«ط± طھظ†ط¸غŒظ…ط§طھ"
+          title="اثر تنظیمات"
           items={[
-            { title: "ظپط±ظˆط´ع¯ط§ظ‡", caption: "ظ‚ط§ظ†ظˆظ† ظ¾ظˆط´ط´ ظپط±ظˆط´ع¯ط§ظ‡ ط§ط² ط³ط§ط¹طھ ط´ط±ظˆط¹ ظˆ ظ¾ط§غŒط§ظ† ط§ط³طھظپط§ط¯ظ‡ ظ…غŒâ€Œع©ظ†ط¯.", tone: "sales" },
-            { title: "ظپط´ط§ط± ع©ط§ط±غŒ", caption: "ظ‚ط§ظ†ظˆظ† ظپط´ط§ط± ع©ط§ط±غŒ ط§ط² ط¢ط³طھط§ظ†ظ‡â€Œظ‡ط§غŒ ظ‡ط´ط¯ط§ط± ظˆ ط¨ط­ط±ط§ظ†غŒ ظ…غŒâ€Œط®ظˆط§ظ†ط¯.", tone: "warn" },
-            { title: "ط§ظ…طھغŒط§ط² ع©ظ†طھط±ظ„", caption: "totalRiskScore ظˆ controlScore ط§ط² ط§ظ…طھغŒط§ط²ظ‡ط§غŒ ط±غŒط³ع© طھظ†ط¸غŒظ…â€Œط´ط¯ظ‡ ط³ط§ط®طھظ‡ ظ…غŒâ€Œط´ظˆظ†ط¯.", tone: "info" },
+            { title: "فروشگاه", caption: "قانون پوشش فروشگاه از ساعت شروع و پایان استفاده می‌کند.", tone: "sales" },
+            { title: "فشار کاری", caption: "قانون فشار کاری از آستانه‌های هشدار و بحرانی می‌خواند.", tone: "warn" },
+            { title: "امتیاز کنترل", caption: "totalRiskScore و controlScore از امتیازهای ریسک تنظیم‌شده ساخته می‌شوند.", tone: "info" },
           ]}
         />
       </section>
@@ -3852,10 +3852,10 @@ function SettingsPage({
 }
 
 function compatibilityLabel(value: WorkCompatibility) {
-  if (value === "preferred") return "طھط±ط¬غŒط­غŒ";
-  if (value === "allowed") return "ظ…ط¬ط§ط²";
-  if (value === "warning") return "ظ‡ط´ط¯ط§ط±";
-  return "ظ…ط³ط¯ظˆط¯";
+  if (value === "preferred") return "ترجیحی";
+  if (value === "allowed") return "مجاز";
+  if (value === "warning") return "هشدار";
+  return "مسدود";
 }
 
 function compatibilityTone(value: WorkCompatibility): StatusTone {
@@ -3891,32 +3891,32 @@ function CompatibilityPage({
     <div className="page-stack">
       <header className="page-header">
         <div>
-          <span className="eyebrow">ط³ط§ط²ع¯ط§ط±غŒ P4</span>
-          <h1>ظ…ط§طھط±غŒط³ ظپط¶ط§ ظˆ ظ†ظˆط¹ ع©ط§ط±</h1>
-          <p>ط§غŒظ† ظˆط¶ط¹غŒطھâ€Œظ‡ط§ ط¨ظ‡ ظ‚ط§ظ†ظˆظ† ط³ط§ط²ع¯ط§ط±غŒ analyzer ظˆطµظ„ ظ‡ط³طھظ†ط¯ ظˆ ط±ظˆغŒ findings ط§ط«ط± ظ…غŒâ€Œع¯ط°ط§ط±ظ†ط¯.</p>
+          <span className="eyebrow">سازگاری P4</span>
+          <h1>ماتریس فضا و نوع کار</h1>
+          <p>این وضعیت‌ها به قانون سازگاری analyzer وصل هستند و روی findings اثر می‌گذارند.</p>
         </div>
         <div className="hero-actions">
           <button className="ghost-button" type="button" onClick={() => { resetCompatibility(); setSaved(false); }}>
             <RotateCcw size={17} /> reset demo
           </button>
-          <button className="primary-button" type="button" onClick={() => setSaved(true)}>ط°ط®غŒط±ظ‡ طھط؛غŒغŒط±ط§طھ</button>
+          <button className="primary-button" type="button" onClick={() => setSaved(true)}>ذخیره تغییرات</button>
         </div>
       </header>
 
       <section className="filter-bar">
         <Filter size={16} />
         <select value={taskFilter} onChange={(event) => setTaskFilter(event.target.value)}>
-          {optionList(taskTypes, "ظ‡ظ…ظ‡ ظ†ظˆط¹ ع©ط§ط±ظ‡ط§").map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
+          {optionList(taskTypes, "همه نوع کارها").map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
         </select>
         <select value={spaceFilter} onChange={(event) => setSpaceFilter(event.target.value)}>
-          {optionList(spaces, "ظ‡ظ…ظ‡ ظپط¶ط§ظ‡ط§").map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
+          {optionList(spaces, "همه فضاها").map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}
         </select>
-        {saved && <span className="inline-note">طھط؛غŒغŒط±ط§طھ ط¯ط± localStorage ط°ط®غŒط±ظ‡ ط´ط¯ظ‡â€Œط§ظ†ط¯.</span>}
+        {saved && <span className="inline-note">تغییرات در localStorage ذخیره شده‌اند.</span>}
       </section>
 
       <section className="compatibility-shell">
         <div className="compatibility-grid" style={{ gridTemplateColumns: `12rem repeat(${activeSpaces.length}, minmax(12rem, 1fr))` }}>
-          <div className="compatibility-head">ظ†ظˆط¹ ع©ط§ط± / ظپط¶ط§</div>
+          <div className="compatibility-head">نوع کار / فضا</div>
           {activeSpaces.map((space) => <div className="compatibility-head" key={space.id}>{space.name}</div>)}
           {activeTasks.map((task) => (
             <div className="compatibility-row" key={task.id}>
@@ -3934,14 +3934,14 @@ function CompatibilityPage({
                         setSaved(false);
                       }}
                     >
-                      <option value="preferred">طھط±ط¬غŒط­غŒ</option>
-                      <option value="allowed">ظ…ط¬ط§ط²</option>
-                      <option value="warning">ظ‡ط´ط¯ط§ط±</option>
-                      <option value="blocked">ظ…ط³ط¯ظˆط¯</option>
+                      <option value="preferred">ترجیحی</option>
+                      <option value="allowed">مجاز</option>
+                      <option value="warning">هشدار</option>
+                      <option value="blocked">مسدود</option>
                     </select>
                     <textarea
                       value={rule?.reason ?? ""}
-                      placeholder="ط¯ظ„غŒظ„ ع©ظˆطھط§ظ‡"
+                      placeholder="دلیل کوتاه"
                       onChange={(event) => {
                         updateCompatibility(task.id, space.id, { reason: event.target.value, compatibility: value, isActive: true });
                         setSaved(false);
@@ -3959,9 +3959,9 @@ function CompatibilityPage({
 }
 
 function verdictLabel(verdict: string) {
-  if (verdict === "improved") return "ط¨ظ‡طھط± ط´ط¯";
-  if (verdict === "worsened") return "ط¨ط¯طھط± ط´ط¯";
-  return "طھظ‚ط±غŒط¨ط§ ط¨ط¯ظˆظ† طھط؛غŒغŒط±";
+  if (verdict === "improved") return "بهتر شد";
+  if (verdict === "worsened") return "بدتر شد";
+  return "تقریبا بدون تغییر";
 }
 
 function verdictTone(verdict: string): StatusTone {
@@ -4035,7 +4035,7 @@ function SimulatorPage({
 
   const applyChange = () => {
     if (!selectedItem) return;
-    const ok = window.confirm("ط§غŒظ† طھط؛غŒغŒط± ط±ظˆغŒ ط¨ط±ظ†ط§ظ…ظ‡ ط§طµظ„غŒ ط§ط¹ظ…ط§ظ„ ط´ظˆط¯طں ظپظ‚ط· ظ‡ظ…غŒظ† ط¢غŒطھظ… ظˆغŒط±ط§غŒط´ ظ…غŒâ€Œط´ظˆط¯.");
+    const ok = window.confirm("این تغییر روی برنامه اصلی اعمال شود؟ فقط همین آیتم ویرایش می‌شود.");
     if (!ok) return;
     updateScheduleItem(selectedItem.id, {
       day: simulatedChange.newDayOfWeek,
@@ -4049,9 +4049,9 @@ function SimulatorPage({
   };
 
   const itemLabel = (item: WeeklyScheduleItem) => {
-    const employee = employees.find((row) => row.id === item.employeeId)?.name ?? "ع©ط§ط±ظ…ظ†ط¯";
-    const space = spaces.find((row) => row.id === item.spaceId)?.name ?? "ظپط¶ط§";
-    const task = taskTypes.find((row) => row.id === item.taskTypeId)?.name ?? "ظ†ظˆط¹ ع©ط§ط±";
+    const employee = employees.find((row) => row.id === item.employeeId)?.name ?? "کارمند";
+    const space = spaces.find((row) => row.id === item.spaceId)?.name ?? "فضا";
+    const task = taskTypes.find((row) => row.id === item.taskTypeId)?.name ?? "نوع کار";
     return `${item.day} ${toPersianNumber(item.startTime)}-${toPersianNumber(item.endTime)} | ${employee} | ${space} | ${task}`;
   };
 
@@ -4059,16 +4059,16 @@ function SimulatorPage({
     <div className="page-stack">
       <header className="page-header">
         <div>
-          <span className="eyebrow">ط´ط¨غŒظ‡â€Œط³ط§ط² P5</span>
-          <h1>طھط³طھ ط¬ط§ط¨ظ‡â€Œط¬ط§غŒغŒ ط¨ط±ظ†ط§ظ…ظ‡</h1>
-          <p>ط³ظ†ط§ط±غŒظˆ ط±ظˆغŒ ع©ظ¾غŒ ظ…ظˆظ‚طھ ط¨ط±ظ†ط§ظ…ظ‡ طھط­ظ„غŒظ„ ظ…غŒâ€Œط´ظˆط¯ ظˆ ط¯ط§ط¯ظ‡ ط§طµظ„غŒ طھط؛غŒغŒط± ظ†ظ…غŒâ€Œع©ظ†ط¯.</p>
+          <span className="eyebrow">شبیه‌ساز P5</span>
+          <h1>تست جابه‌جایی برنامه</h1>
+          <p>سناریو روی کپی موقت برنامه تحلیل می‌شود و داده اصلی تغییر نمی‌کند.</p>
         </div>
-        <a className="ghost-button" href="/organization/workforce-dashboard/analysis">ط¨ط§ط²ع¯ط´طھ ط¨ظ‡ طھط­ظ„غŒظ„</a>
+        <a className="ghost-button" href="/organization/workforce-dashboard/analysis">بازگشت به تحلیل</a>
       </header>
 
       {finding && (
         <section className="panel">
-          <h2>غŒط§ظپطھظ‡ ظ…ط¨ظ†ط§</h2>
+          <h2>یافته مبنا</h2>
           <div className="panel-row tone-warn">
             <StatusBadge tone={severityTone(finding.severity)}>{severityLabel(finding.severity)}</StatusBadge>
             <p>{finding.title} | {finding.recommendation}</p>
@@ -4078,9 +4078,9 @@ function SimulatorPage({
 
       <section className="management-layout">
         <section className="config-card">
-          <h2>ط³ظ†ط§ط±غŒظˆغŒ ظپط±ط¶غŒ</h2>
+          <h2>سناریوی فرضی</h2>
           <div className="field-grid">
-            <SelectField label="ط¢غŒطھظ… ط¨ط±ظ†ط§ظ…ظ‡" value={change.scheduleItemId} options={scheduleItems.filter((item) => item.isActive).map((item) => ({ label: itemLabel(item), value: item.id }))} onChange={(scheduleItemId) => {
+            <SelectField label="آیتم برنامه" value={change.scheduleItemId} options={scheduleItems.filter((item) => item.isActive).map((item) => ({ label: itemLabel(item), value: item.id }))} onChange={(scheduleItemId) => {
               const item = scheduleItems.find((row) => row.id === scheduleItemId);
               setChange({
                 scheduleItemId,
@@ -4093,43 +4093,43 @@ function SimulatorPage({
               });
               setResult(null);
             }} />
-            <SelectField label="ط±ظˆط² ط¬ط¯غŒط¯" value={simulatedChange.newDayOfWeek ?? ""} options={weekDays.map((day) => ({ label: day, value: day }))} onChange={(newDayOfWeek) => setChange({ ...change, newDayOfWeek: newDayOfWeek as WorkDay })} />
-            <TextField label="ط´ط±ظˆط¹ ط¬ط¯غŒط¯" type="time" value={simulatedChange.newStartTime ?? ""} onChange={(newStartTime) => setChange({ ...change, newStartTime })} />
-            <TextField label="ظ¾ط§غŒط§ظ† ط¬ط¯غŒط¯" type="time" value={simulatedChange.newEndTime ?? ""} onChange={(newEndTime) => setChange({ ...change, newEndTime })} />
-            <SelectField label="ظپط¶ط§غŒ ط¬ط¯غŒط¯" value={simulatedChange.newSpaceId ?? ""} options={optionList(spaces)} onChange={(newSpaceId) => setChange({ ...change, newSpaceId })} />
-            <SelectField label="ع©ط§ط±ظ…ظ†ط¯ ط¬ط¯غŒط¯" value={simulatedChange.newEmployeeId ?? ""} options={optionList(employees)} onChange={(newEmployeeId) => setChange({ ...change, newEmployeeId })} />
-            <SelectField label="ظ†ظˆط¹ ع©ط§ط± ط¬ط¯غŒط¯" value={simulatedChange.newTaskTypeId ?? ""} options={optionList(taskTypes)} onChange={(newTaskTypeId) => setChange({ ...change, newTaskTypeId })} />
+            <SelectField label="روز جدید" value={simulatedChange.newDayOfWeek ?? ""} options={weekDays.map((day) => ({ label: day, value: day }))} onChange={(newDayOfWeek) => setChange({ ...change, newDayOfWeek: newDayOfWeek as WorkDay })} />
+            <TextField label="شروع جدید" type="time" value={simulatedChange.newStartTime ?? ""} onChange={(newStartTime) => setChange({ ...change, newStartTime })} />
+            <TextField label="پایان جدید" type="time" value={simulatedChange.newEndTime ?? ""} onChange={(newEndTime) => setChange({ ...change, newEndTime })} />
+            <SelectField label="فضای جدید" value={simulatedChange.newSpaceId ?? ""} options={optionList(spaces)} onChange={(newSpaceId) => setChange({ ...change, newSpaceId })} />
+            <SelectField label="کارمند جدید" value={simulatedChange.newEmployeeId ?? ""} options={optionList(employees)} onChange={(newEmployeeId) => setChange({ ...change, newEmployeeId })} />
+            <SelectField label="نوع کار جدید" value={simulatedChange.newTaskTypeId ?? ""} options={optionList(taskTypes)} onChange={(newTaskTypeId) => setChange({ ...change, newTaskTypeId })} />
           </div>
           <div className="form-actions">
-            <button className="primary-button" type="button" onClick={runSimulation}>طھط­ظ„غŒظ„ ط³ظ†ط§ط±غŒظˆ</button>
-            <button className="ghost-button" type="button" onClick={() => { setChange(initialChange ?? fallbackChange); setResult(null); }}>ط¨ط§ط²ع¯ط´طھ ط¨ظ‡ ط­ط§ظ„طھ ط§ظˆظ„غŒظ‡</button>
-            <button className="danger-button" type="button" onClick={applyChange} disabled={!result}>ط§ط¹ظ…ط§ظ„ طھط؛غŒغŒط± ط¨ظ‡ ط¨ط±ظ†ط§ظ…ظ‡ ط§طµظ„غŒ</button>
+            <button className="primary-button" type="button" onClick={runSimulation}>تحلیل سناریو</button>
+            <button className="ghost-button" type="button" onClick={() => { setChange(initialChange ?? fallbackChange); setResult(null); }}>بازگشت به حالت اولیه</button>
+            <button className="danger-button" type="button" onClick={applyChange} disabled={!result}>اعمال تغییر به برنامه اصلی</button>
           </div>
         </section>
 
         <section className="config-card">
-          <h2>ظˆط¶ط¹غŒطھ ظپط¹ظ„غŒ ط¢غŒطھظ…</h2>
+          <h2>وضعیت فعلی آیتم</h2>
           {selectedItem ? (
             <div className="panel-row">
               <StatusBadge tone="info">{selectedItem.day}</StatusBadge>
               <p>{itemLabel(selectedItem)}</p>
             </div>
-          ) : <p>ط¢غŒطھظ…غŒ ط¨ط±ط§غŒ ط´ط¨غŒظ‡â€Œط³ط§ط²غŒ ظˆط¬ظˆط¯ ظ†ط¯ط§ط±ط¯.</p>}
+          ) : <p>آیتمی برای شبیه‌سازی وجود ندارد.</p>}
         </section>
       </section>
 
       {result && (
         <section className="page-stack">
           <section className="simulation-compare">
-            <article className="kpi-card tone-info"><div><p>ظ‚ط¨ظ„</p><strong>{toPersianNumber(result.originalAnalysis.controlScore)}</strong><span>ع©ظ†طھط±ظ„ | ط±غŒط³ع© {toPersianNumber(result.originalAnalysis.totalRiskScore)}</span></div></article>
-            <article className="kpi-card tone-focus"><div><p>ط¨ط¹ط¯</p><strong>{toPersianNumber(result.simulatedAnalysis.controlScore)}</strong><span>ع©ظ†طھط±ظ„ | ط±غŒط³ع© {toPersianNumber(result.simulatedAnalysis.totalRiskScore)}</span></div></article>
-            <article className={`kpi-card tone-${verdictTone(result.verdict)}`}><div><p>طھط؛غŒغŒط±</p><strong>{toPersianNumber(result.controlScoreDelta)}</strong><span>ط±غŒط³ع© {toPersianNumber(result.riskScoreDelta)}</span></div></article>
-            <article className={`kpi-card tone-${verdictTone(result.verdict)}`}><div><p>ظ†طھغŒط¬ظ‡</p><strong>{verdictLabel(result.verdict)}</strong><span>{result.summary}</span></div></article>
+            <article className="kpi-card tone-info"><div><p>قبل</p><strong>{toPersianNumber(result.originalAnalysis.controlScore)}</strong><span>کنترل | ریسک {toPersianNumber(result.originalAnalysis.totalRiskScore)}</span></div></article>
+            <article className="kpi-card tone-focus"><div><p>بعد</p><strong>{toPersianNumber(result.simulatedAnalysis.controlScore)}</strong><span>کنترل | ریسک {toPersianNumber(result.simulatedAnalysis.totalRiskScore)}</span></div></article>
+            <article className={`kpi-card tone-${verdictTone(result.verdict)}`}><div><p>تغییر</p><strong>{toPersianNumber(result.controlScoreDelta)}</strong><span>ریسک {toPersianNumber(result.riskScoreDelta)}</span></div></article>
+            <article className={`kpi-card tone-${verdictTone(result.verdict)}`}><div><p>نتیجه</p><strong>{verdictLabel(result.verdict)}</strong><span>{result.summary}</span></div></article>
           </section>
           <section className="bottom-grid">
-            <InfoPanel title="ظ‡ط´ط¯ط§ط±ظ‡ط§غŒ ط­ظ„â€Œط´ط¯ظ‡" items={result.resolvedFindings.slice(0, 4).map((item) => ({ title: item.title, caption: item.recommendation, tone: severityTone(item.severity) }))} />
-            <InfoPanel title="ظ‡ط´ط¯ط§ط±ظ‡ط§غŒ ط¬ط¯غŒط¯" items={result.newFindings.slice(0, 4).map((item) => ({ title: item.title, caption: item.recommendation, tone: severityTone(item.severity) }))} />
-            <InfoPanel title="ط¨ط¯طھط± ط´ط¯ظ‡â€Œظ‡ط§" items={result.worsenedFindings.slice(0, 4).map((item) => ({ title: item.title, caption: item.recommendation, tone: severityTone(item.severity) }))} />
+            <InfoPanel title="هشدارهای حل‌شده" items={result.resolvedFindings.slice(0, 4).map((item) => ({ title: item.title, caption: item.recommendation, tone: severityTone(item.severity) }))} />
+            <InfoPanel title="هشدارهای جدید" items={result.newFindings.slice(0, 4).map((item) => ({ title: item.title, caption: item.recommendation, tone: severityTone(item.severity) }))} />
+            <InfoPanel title="بدتر شده‌ها" items={result.worsenedFindings.slice(0, 4).map((item) => ({ title: item.title, caption: item.recommendation, tone: severityTone(item.severity) }))} />
           </section>
         </section>
       )}

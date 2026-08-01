@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { mock } from "node:test";
 import {
   applyScenarioBatchToSchedule,
   detectScenarioConflicts,
@@ -122,8 +123,34 @@ import {
   workforceRouteManifest,
 } from "../src/routes/workforceRouteManifest.ts";
 import { workforceStorageKeyRegistry, type WorkforceStorageKeyRegistryItem } from "../src/registry/workforceStorageKeys.ts";
+import { historyTrendDisplayLabel, historyTrendLabel } from "../src/pages/workforce/workforcePageUtils.ts";
 
 const timestamp = "2026-01-01T00:00:00.000Z";
+
+{
+  const point = (driftScore: number, index: number) => ({
+    id: `trend-${index}`,
+    generatedAt: `2026-01-0${index + 1}T00:00:00.000Z`,
+    driftScore,
+    driftLevel: "none" as const,
+    requiresResignoff: false,
+    baselineChecksum: "baseline",
+    currentChecksum: `current-${index}`,
+  });
+  const cases = [
+    { trend: [], machine: "ط¯ط§ط¯ظ‡ ط±ظˆظ†ط¯ ع©ط§ظپغŒ ظ†غŒط³طھ", display: "داده روند کافی نیست" },
+    { trend: [point(10, 0), point(20, 1)], machine: "ط±ظˆ ط¨ظ‡ ط¨ط¯طھط±ط´ط¯ظ†", display: "رو به بدترشدن" },
+    { trend: [point(20, 0), point(10, 1)], machine: "ط±ظˆ ط¨ظ‡ ط¨ظ‡ط¨ظˆط¯", display: "رو به بهبود" },
+    { trend: [point(10, 0), point(10, 1)], machine: "ظ¾ط§غŒط¯ط§ط±", display: "پایدار" },
+  ];
+
+  for (const item of cases) {
+    const machineValue = historyTrendLabel(item.trend);
+    assert.equal(machineValue, item.machine);
+    assert.equal(historyTrendDisplayLabel(machineValue), item.display);
+  }
+  assert.equal(historyTrendDisplayLabel("unknown-trend"), "unknown-trend");
+}
 
 {
   const paths = workforceRouteManifest.map((route) => route.path);
@@ -137,6 +164,7 @@ const timestamp = "2026-01-01T00:00:00.000Z";
     "/organization/workforce-dashboard/simulator",
     "/organization/workforce-dashboard/data-center",
     "/organization/workforce-dashboard/baseline-drift",
+    "/organization/workforce-dashboard/operational-history",
     "/organization/workforce-dashboard/operations-calendar",
     "/organization/workforce-dashboard/operations-control-settings",
   ];
@@ -171,7 +199,7 @@ const timestamp = "2026-01-01T00:00:00.000Z";
   const p29ExtractedPages = [
     "src/pages/workforce/system/MaintenancePage.tsx",
     "src/pages/workforce/operations/HistoryRetentionPage.tsx",
-    "src/pages/workforce/system/OperationalHistoryPage.tsx",
+    "src/pages/workforce/operations/OperationalHistoryPage.tsx",
     "src/pages/workforce/system/DataCenterPage.tsx",
   ];
 
@@ -182,6 +210,24 @@ const timestamp = "2026-01-01T00:00:00.000Z";
     assert.equal(source.includes("createWorkforcePage"), false);
     assert.equal(source.includes("export default function"), true);
   });
+}
+
+{
+  const workforcePagesSource = readFileSync("src/WorkforcePages.tsx", "utf8");
+  const routeSource = readFileSync("src/routes/workforceRoutes.tsx", "utf8");
+  const operationalHistoryPath = "/organization/workforce-dashboard/operational-history";
+
+  assert.equal(workforcePagesSource.includes("function OperationalHistoryPage"), false);
+  assert.equal(workforcePagesSource.includes("export function OperationalHistoryPage"), false);
+  assert.equal(workforcePagesSource.match(/<OperationalHistoryPage \/>/g)?.length, 1);
+  assert.equal(
+    routeSource.includes('import("../pages/workforce/operations/OperationalHistoryPage")'),
+    true,
+  );
+  assert.equal(
+    workforceRouteManifest.find((route) => route.path === operationalHistoryPath)?.componentKey,
+    "operationalHistory",
+  );
 }
 
 const activeRules: AnalysisRule[] = [
@@ -300,19 +346,24 @@ assert.equal(overlaps(item("a", "e1", "s1", "09:00", "10:00"), item("b", "e2", "
   assert.equal(buildOperationsCalendarReport(controls).overdueCount > 0, true);
   assert.equal(JSON.stringify(systemState), before);
 
-  operationsCalendarService.__memory.clear();
-  const initial = operationsCalendarService.rebuild(systemState);
-  const completedId = initial.controls.find((item) => item.type === "maintenance_review")?.id;
-  const snoozedId = initial.controls.find((item) => item.type === "archive_due")?.id;
-  assert.ok(completedId);
-  assert.ok(snoozedId);
-  operationsCalendarService.markCompleted(completedId, "reviewed");
-  operationsCalendarService.snooze(snoozedId, "2026-07-15T12:00:00.000Z", "next review");
-  const rebuilt = operationsCalendarService.rebuild(systemState);
-  assert.equal(rebuilt.controls.find((item) => item.id === completedId)?.status, "completed");
-  assert.equal(rebuilt.controls.find((item) => item.id === completedId)?.managerNote, "reviewed");
-  assert.equal(rebuilt.controls.find((item) => item.id === snoozedId)?.status, "snoozed");
-  assert.equal(rebuilt.controls.find((item) => item.id === snoozedId)?.snoozedUntil, "2026-07-15T12:00:00.000Z");
+  mock.timers.enable({ apis: ["Date"], now: new Date(now) });
+  try {
+    operationsCalendarService.__memory.clear();
+    const initial = operationsCalendarService.rebuild(systemState);
+    const completedId = initial.controls.find((item) => item.type === "maintenance_review")?.id;
+    const snoozedId = initial.controls.find((item) => item.type === "archive_due")?.id;
+    assert.ok(completedId);
+    assert.ok(snoozedId);
+    operationsCalendarService.markCompleted(completedId, "reviewed");
+    operationsCalendarService.snooze(snoozedId, "2026-07-15T12:00:00.000Z", "next review");
+    const rebuilt = operationsCalendarService.rebuild(systemState);
+    assert.equal(rebuilt.controls.find((item) => item.id === completedId)?.status, "completed");
+    assert.equal(rebuilt.controls.find((item) => item.id === completedId)?.managerNote, "reviewed");
+    assert.equal(rebuilt.controls.find((item) => item.id === snoozedId)?.status, "snoozed");
+    assert.equal(rebuilt.controls.find((item) => item.id === snoozedId)?.snoozedUntil, "2026-07-15T12:00:00.000Z");
+  } finally {
+    mock.timers.reset();
+  }
 }
 
 {

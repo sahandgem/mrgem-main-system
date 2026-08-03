@@ -1,4 +1,4 @@
-﻿# Current State
+# Current State
 
 ## Canonical Current Snapshot
 
@@ -59,6 +59,14 @@
 | Audit test/build gate | PASS؛ test با warning قدیمی loader و build با ۱۷۵۱ module و بدون build warning |
 | Main/origin during audit | local `main=e42b320` و observed `origin/main=b16b1a0`؛ بدون push یا remote update |
 | Recommended next gate after audit | `CORE-HARDEN-ROUTE-P02 — Workforce Critical Routes Mobile Overflow Repair` فقط با مجوز مستقل Project Core |
+| CORE-HARDEN-ROUTE-P02 branch | `hardening/master-gem-v1-mobile-overflow-repair-p02`؛ repair محدود و CSS-only از `ed69832` |
+| Mobile overflow repair scope | `CSS_ONLY_SINGLE_FILE`؛ فقط `src/styles.css` و بدون تغییر logic، JSX، route، text، storage یا package |
+| Mobile overflow repair test/build | PASS؛ test با warning قدیمی loader و build با ۱۷۵۱ module و بدون build warning |
+| Mobile overflow browser rerun | `PASS` with native Chrome 150/CDP: 30 route/viewport cases plus a fresh-profile 13-case repeatability run |
+| Mobile overflow repair verdict | `MOBILE_OVERFLOW_REPAIR_VERIFIED`; maximum document/body overflow 0px, no clipping, RTL/navigation/mojibake/runtime gates passed |
+| Console classification | Duplicate React keys are `NON_BLOCKING_WARNING`; intermittent Unsplash failure is `BENIGN_BROWSER_NOISE`; no serious or unknown application error |
+| Main/origin during repair | local `main=e42b320` and observed `origin/main=b16b1a0`; no push or remote update |
+| Required next gate | `CORE-HARDEN-P02 — Storage Backup and Restore Verification Baseline` only with separate Project Core authorization |
 
 ## Historical Record
 

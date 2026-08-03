@@ -1,4 +1,4 @@
-﻿# چک‌لیست ثابت QA پایان هر P
+# چک‌لیست ثابت QA پایان هر P
 
 ## 1. محدوده و رفتار
 
@@ -136,3 +136,16 @@
 - [x] test و build PASS؛ ۱۷۵۱ module و فقط warning قدیمی test loader.
 - [x] verdict برابر `MOBILE_OVERFLOW_ROOT_CAUSE_CONFIRMED` و repair scope برابر `SHARED_PLUS_ROUTE_LOCAL_FIX` است.
 - [x] هیچ source، UI، CSS، test، package، route یا storage contract تغییر نکرد.
+
+### CORE-HARDEN-ROUTE-P02 Verified Repair Result
+
+- [x] CSS repair remained limited to `src/styles.css`; no JSX, route, storage, logic, test, package or lock change.
+- [x] Full native Chrome/CDP matrix covered 5 routes x 6 viewports (30 cases).
+- [x] Document and body overflow are 0px in every case; no unintended page-level horizontal scrollbar remains.
+- [x] Dashboard WeeklyGrid and Operational History chart remain contained and locally reachable/readable.
+- [x] Data Center passes at 320/360/390/430/1280 without primary-content clipping.
+- [x] RTL, navigation, final URL, TemplateHead/visible Persian text, and runtime-crash gates pass.
+- [x] Dashboard console events were classified: duplicate React keys as `NON_BLOCKING_WARNING`; Unsplash network failure as `BENIGN_BROWSER_NOISE`; no serious/unknown application error.
+- [x] Final test/build PASS with 1,751 modules and only the existing Node loader warning.
+- [x] Fresh-profile repeatability rerun covered 13 required cases and PASSed.
+- [x] Verdict is `MOBILE_OVERFLOW_REPAIR_VERIFIED`; next gate is storage backup/restore verification under separate authorization.

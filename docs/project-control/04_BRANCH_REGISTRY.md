@@ -1,5 +1,10 @@
 ﻿# Branch Registry
 
+## CORE-HARDEN-P03
+
+- `docs/master-gem-v1-release-rollback-discipline-p03`: docs-only release/rollback discipline baseline, created from verified P02 head; no merge or push.
+- `backup/main-before-master-gem-core-v1-merge-b16b1a0`: verified local rollback reference; do not delete or mutate without Project Core approval.
+
 آخرین به‌روزرسانی: 2026-08-02
 
 ## کد شاخه‌ها

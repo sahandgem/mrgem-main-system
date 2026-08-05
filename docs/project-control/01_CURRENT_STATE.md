@@ -1,5 +1,13 @@
 # Current State
 
+## CORE-HARDEN-P03 Release and Rollback Discipline
+
+- Canonical local main remains `e42b32027cf642a1d1dc369786490a7427d16034`; `origin/main` remains `b16b1a020168516b2f8ad3e0bcd41e1193c8a824`.
+- Current V1 classification is `LOCALLY_VERIFIED`; remote promotion is not authorized or performed.
+- Rollback reference `backup/main-before-master-gem-core-v1-merge-b16b1a0` is verified.
+- Verdict: `RELEASE_ROLLBACK_BASELINE_READY_WITH_GAPS`; the storage transactional rollback gap remains accepted debt and P56 remains frozen.
+- Next phase: `CORE-HARDEN-P04 - Runtime Regression and Warning Triage Baseline`.
+
 ## Canonical Current Snapshot
 
 تاریخ snapshot رسمی: 2026-08-02

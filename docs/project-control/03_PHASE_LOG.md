@@ -1,5 +1,9 @@
 ﻿# Phase Log
 
+## CORE-HARDEN-P03
+
+Docs-only release and rollback discipline baseline completed. Local V1 is `LOCALLY_VERIFIED`, origin/main remains unchanged, and remote promotion requires separate authorization. Verdict: `RELEASE_ROLLBACK_BASELINE_READY_WITH_GAPS`.
+
 آخرین به‌روزرسانی: 2026-06-30
 
 ## جدول فازهای WF

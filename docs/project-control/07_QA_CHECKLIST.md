@@ -1,5 +1,10 @@
 # چک‌لیست ثابت QA پایان هر P
 
+## Release and Rollback Gate
+
+- [ ] Before remote promotion, verify local/remote ancestry, clean tree, current test/build/browser/mobile evidence, rollback reference, accepted debt, and explicit Project Core push authorization.
+- [ ] A storage restore failure stops writes and preserves the pre-operation snapshot; no automatic transactional rollback may be claimed without separately approved failure-injection evidence.
+
 ## 1. محدوده و رفتار
 
 - [ ] فقط محدوده همان P تغییر کرده است.

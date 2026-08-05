@@ -1,5 +1,10 @@
 ﻿# Backlog
 
+## CORE-HARDEN-P03 Follow-up
+
+- `CORE-HARDEN-P04 - Runtime Regression and Warning Triage Baseline`: selected next hardening track.
+- `CORE-HARDEN-STORAGE-P03 - Failure Injection and Transactional Rollback Contract`: future docs/test-design phase only; implementation is not approved.
+
 آخرین به‌روزرسانی: 2026-08-02
 
 ## الان

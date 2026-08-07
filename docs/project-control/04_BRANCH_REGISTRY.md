@@ -1,5 +1,10 @@
 ﻿# Branch Registry
 
+## CORE-HARDEN-P08
+
+- `docs/master-gem-v1-post-integration-lock-p08`: docs-only post-integration lock and remote-readiness review from local main `e3cd9f6`; no main change, merge or push.
+- `main`: P08-locked local baseline remains `e3cd9f6` until a separately authorized P09.
+
 ## CORE-HARDEN-P07
 
 - `main`: local verified hardening integration merge `56413ed`; no push.

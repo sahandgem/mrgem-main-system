@@ -1,5 +1,10 @@
 ﻿# Backlog
 
+## CORE-HARDEN-P08 Follow-up
+
+- `CORE-HARDEN-P09 - V1 Remote Promotion Execution`: ready only as a gated protocol. DO NOT RUN until explicit Project Core push authorization.
+- P09 must stop on remote divergence and may use one normal non-force push only after fresh preflight and authorization evidence.
+
 ## CORE-HARDEN-P07 Follow-up
 
 - `CORE-HARDEN-P08 - V1 Post-Integration Lock and Remote Promotion Readiness Gate`: selected next phase; lock/re-audit local main and prepare checklist only, with no push unless separately authorized.

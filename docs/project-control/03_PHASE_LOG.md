@@ -1,5 +1,9 @@
 ﻿# Phase Log
 
+## CORE-HARDEN-P08
+
+Post-integration lock and remote-promotion readiness audit completed on a docs branch. Local main `e3cd9f6`, merge `56413ed`, rollback `e42b320` and local origin ref `b16b1a0` are locked; divergence is 51 ahead and 0 behind. Evidence is `POST_INTEGRATION_EVIDENCE_CURRENT`. D15 is process/authorization only. Verdict: `REMOTE_PROMOTION_READY_PENDING_AUTHORIZATION`; no push or remote mutation occurred. P09 is prohibited until explicit Project Core push authorization.
+
 ## CORE-HARDEN-P07
 
 The complete 10-commit hardening line was integrated into local `main` with one no-ff merge `56413ed`, protected first by rollback branch `backup/main-before-master-gem-v1-hardening-integration-e42b320` at `e42b320`. Post-merge test/build and a fresh 17-case Chrome/CDP route matrix PASS. Verdict: `HARDENING_LOCAL_INTEGRATION_VERIFIED`; no push occurred and remote promotion remains separately blocked. Next: `CORE-HARDEN-P08 - V1 Post-Integration Lock and Remote Promotion Readiness Gate`.

@@ -1,5 +1,13 @@
 # چک‌لیست ثابت QA پایان هر P
 
+## CORE-HARDEN-P08 Remote Readiness Check
+
+- [x] P07 topology, post-integration rollback and local/remote divergence are recorded.
+- [x] Evidence is current: no source/test/package change followed P07 verification.
+- [x] All technical/policy readiness gates pass except explicit push authorization, which is intentionally NOT_AUTHORIZED.
+- [x] D15 is documented as a process gate rather than a technical defect.
+- [ ] P09 may begin only with explicit Project Core authorization; it must re-run remote-safety preflight and never force-push.
+
 ## CORE-HARDEN-P07 Local Integration Check
 
 - [x] Rollback branch was created before local main changed and resolves to `e42b320`.

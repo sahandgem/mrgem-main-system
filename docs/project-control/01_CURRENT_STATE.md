@@ -1,5 +1,14 @@
 # Current State
 
+## CORE-HARDEN-P08 Post-Integration Lock and Remote Readiness
+
+- P08 branch: `docs/master-gem-v1-post-integration-lock-p08`; docs-only. Local `main` remains locked at `e3cd9f6476387809fb3353cf94ee939a5d42414b` during this phase.
+- Integration topology and rollback are verified: merge `56413ed`, reviewed tip `fd722ce`, rollback `backup/main-before-master-gem-v1-hardening-integration-e42b320` at `e42b320`.
+- Observed local divergence is 51 commits ahead and 0 behind `origin/main` `b16b1a020168516b2f8ad3e0bcd41e1193c8a824`; no fetch, pull, push or remote update occurred.
+- Evidence status: `POST_INTEGRATION_EVIDENCE_CURRENT`; P07 test/build/browser/storage evidence remains current because final P07 commit was docs-only.
+- D15 is a process/authorization gate, not a technical defect. Verdict: `REMOTE_PROMOTION_READY_PENDING_AUTHORIZATION`.
+- Explicit push authorization: NO. P09 is gated and must not run until Project Core explicitly authorizes remote promotion. Frozen scope remains unchanged.
+
 ## CORE-HARDEN-P07 Local Main Integration
 
 - Local `main` integrated the verified hardening line by no-ff merge `56413eddcefde9007a0de15281d58429e2e42792`; first parent is `e42b320`, second parent is reviewed tip `fd722ce`.

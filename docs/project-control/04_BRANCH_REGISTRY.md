@@ -1,4 +1,10 @@
 ﻿# Branch Registry
+## CORE-V2 Planning
+
+- `docs/master-gem-v2-roadmap-p00`: docs-only roadmap branch created from exact stable V1 baseline `7d39d79c2e6de73581d51f7cdb3c7aebe0f194d4`; no merge or push is authorized in P00.
+- `main` and `origin/main`: protected V1 references remain at `7d39d79` during this planning phase.
+- Existing V1 rollback branches remain retained and must not be deleted or repointed without Project Core approval.
+- Future V2 branches must be phase-scoped and created only after the corresponding V2-A, V2-B, V2-C, or V2-D gate.
 
 ## CORE-HARDEN-P09 Remote Promotion
 

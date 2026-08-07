@@ -1,4 +1,15 @@
 # چک‌لیست ثابت QA پایان هر P
+## CORE-V2 Planning and Gate QA
+
+- [x] Stable V1 baseline `7d39d79` verified before roadmap work.
+- [x] Roadmap work is docs-only and isolated on a dedicated branch.
+- [x] V2.1 through V2.4 sequence, deliverables, acceptance criteria, rollback boundaries, and non-goals are explicit.
+- [x] Gates V2-A through V2-D are recorded with a safe default of no action.
+- [x] Product/Mahak and Finance/Audit candidates are both analyzed and neither is selected automatically.
+- [x] P56 freeze, subproject isolation, rollback references, and premature backend/database/auth/API/storage prohibitions are retained.
+- [ ] Before each future implementation phase: verify clean tree, approved gate, exact baseline, bounded file scope, rollback point, test/build/manual evidence plan, and closure report.
+- [ ] Before any pilot: verify exactly one selected subproject, synthetic/non-production data, source ownership, compatibility behavior, and adapter disable path.
+- [ ] Before any intelligence/automation: verify a closed pilot, confidence evidence, human review boundary, audit trail, and separate approval for every high-impact action.
 
 ## CORE-HARDEN-P09 Remote Promotion Closure
 

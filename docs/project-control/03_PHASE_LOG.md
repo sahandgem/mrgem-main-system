@@ -1,4 +1,7 @@
 ﻿# Phase Log
+## CORE-V2-PLAN-P00
+
+The official Master Gem V2 roadmap was defined as documentation-only work from stable V1 baseline `7d39d79`. The sequence is V2.1 Integration Backbone, V2.2 Command Center, V2.3 exactly one Project Core-selected pilot, and V2.4 approval-gated intelligence/automation. Gates V2-A through V2-D, rollback boundaries, non-goals, candidate Product/Mahak and Finance/Audit assessments, and the P01-P09+ phase map are recorded. No pilot, implementation, merge, push, backend/database/auth/API/storage change, P56 resume, or subproject integration occurred.
 
 ## CORE-HARDEN-P09 / P09D
 

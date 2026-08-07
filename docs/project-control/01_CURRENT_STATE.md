@@ -1,4 +1,12 @@
 # Current State
+## CORE-V2-PLAN-P00 Roadmap State
+
+- Master Gem V1 is closed and stable at baseline `7d39d79c2e6de73581d51f7cdb3c7aebe0f194d4`.
+- V2 planning has started on `docs/master-gem-v2-roadmap-p00`; runtime implementation has not started.
+- Official order: Integration Backbone, Command Center, one explicitly selected real subproject pilot, then Intelligence and Automation.
+- Product/Mahak and Finance/Audit are analyzed candidates but remain isolated; no pilot is selected automatically.
+- P56 remains frozen. Storage replacement, large backend, database migration, auth/API architecture, prototype merge, and full redesign remain prohibited without explicit approval.
+- Active decision: Project Core review of report 176 and Gate V2-A. Next phase is not authorized by this record.
 
 ## CORE-HARDEN-P09 Remote Promotion Closure
 

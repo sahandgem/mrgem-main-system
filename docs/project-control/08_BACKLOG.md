@@ -1,4 +1,32 @@
 ﻿# Backlog
+## Master Gem V2 - Gated Roadmap
+
+### Now
+
+- Review `176_MASTER_GEM_V2_ROADMAP_AND_PHASE_DEFINITION.md`.
+- Decide Gate V2-A: authorize or defer `CORE-V2-P01 - Integration Backbone Discovery & Contract Design`.
+- Keep V1 baseline `7d39d79`, rollback refs, P56 freeze, and subproject isolation intact.
+
+### After V2-A
+
+- `CORE-V2-P01 - Integration Backbone Discovery & Contract Design`
+- `CORE-V2-P02 - Integration Registry / Adapter Baseline`
+- Gate V2-B and `CORE-V2-P03 - Command Center Data Consumption Design`
+- `CORE-V2-P04 - Command Center Implementation`
+- Gate V2-C: select Product/Mahak, Finance/Audit, or defer
+- `CORE-V2-P06 - First Real Subproject Adapter / Integration`
+- `CORE-V2-P07 - First Integration Verification & Closure`
+- Gate V2-D and `CORE-V2-P08 - Intelligence Layer Discovery`
+- `CORE-V2-P09+` only after explicit approval
+
+### Frozen / Not Authorized
+
+- P56
+- Simultaneous Product/Mahak and Finance/Audit pilots
+- Direct subproject merge
+- Storage replacement, large backend, database migration, auth/API redesign
+- Prototype merge or full UI redesign
+- Intelligence/automation implementation before a verified pilot
 
 ## CORE-HARDEN-P09 Closure
 

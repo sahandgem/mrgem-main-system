@@ -1,3 +1,11 @@
+## CORE-V2-P03 Design Branch
+
+- Branch: `architecture/master-gem-v2-command-center-consumption-p03`
+- Parent: `feature/master-gem-v2-integration-backbone-p02`
+- Parent commit: `7ec283150e9e78696ef2b736d8be6ccebb03b957`
+- Scope: docs-only Command Center data-consumption design.
+- Merge/push: not authorized in P03.
+
 ﻿# Branch Registry
 ## CORE-V2-P02 Integration Backbone Baseline
 

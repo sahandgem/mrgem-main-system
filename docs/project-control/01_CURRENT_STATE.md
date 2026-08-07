@@ -1,3 +1,13 @@
+## CORE-V2-P03 Command Center Consumption Design
+
+- Phase status: design complete; implementation not authorized.
+- Branch: `architecture/master-gem-v2-command-center-consumption-p03`.
+- Parent baseline: `7ec283150e9e78696ef2b736d8be6ccebb03b957`.
+- Report: `179_MASTER_GEM_V2_COMMAND_CENTER_DATA_CONSUMPTION_DESIGN.md`.
+- Recommended host: one bounded read-only section in the existing `/organization/workforce-dashboard` surface.
+- Gate V2-B: `PENDING_OPERATOR_DECISION`; P04 is blocked until explicit Option A or B approval.
+- P56 remains frozen and all external subprojects remain isolated.
+
 # Current State
 ## CORE-V2-P02 Integration Backbone Baseline
 

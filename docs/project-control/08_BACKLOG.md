@@ -1,3 +1,23 @@
+## CORE-V2 Command Center Gate
+
+### Now - Decision Required
+
+- Review Report 179 and choose Gate V2-B Option A, B, or C.
+- Confirm the existing workforce dashboard as the bounded P04 target surface.
+- Confirm deterministic attention tiers, top-eight limit, and noncritical per-module soft cap.
+
+### Blocked Until Gate V2-B Approval
+
+- CORE-V2-P04: implement the minimum mock-only Command Center consumption slice.
+- Add pure view-model derivation, deterministic ranking, one isolated dashboard component, focused tests, and RTL browser checks.
+
+### Still Frozen
+
+- Real Product, Mahak, Finance, or Audit integration.
+- AI/automation, command execution, write-back, backend/database/auth/migration work.
+- P56 and Task/Decision runtime expansion.
+
+
 ﻿# Backlog
 ## CORE-V2-P02 Baseline Review Queue
 

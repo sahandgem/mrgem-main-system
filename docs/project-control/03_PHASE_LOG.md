@@ -1,3 +1,10 @@
+## CORE-V2-P03 - Command Center Data Consumption Design
+
+- Designed a read-only Command Center consumer over normalized P02 aggregation results.
+- Defined module summaries, attention items, KPI highlights, management summaries, reliability rules, deterministic priority, drill-down boundaries, refresh baseline, failure states, and P04 test/browser scope.
+- Recommended a bounded insertion into the existing workforce dashboard; no runtime or UI change was made.
+- Gate V2-B remains `PENDING_OPERATOR_DECISION`; no automatic approval was granted.
+
 ﻿# Phase Log
 ## CORE-V2-P02
 

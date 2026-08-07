@@ -1,3 +1,17 @@
+## CORE-V2-P03 Command Center Consumption Gate
+
+- [x] UI contract consumes only normalized `ModuleAggregationResult` / `CoreModuleResult` data.
+- [x] Raw adapter payloads and arbitrary adapter routes are excluded from the UI contract.
+- [x] View-model derivation is deterministic, pure, and non-mutating by design.
+- [x] Disabled, no-data, stale, unavailable, invalid, unsupported, partial, and empty states are specified.
+- [x] Priority tiers and tie-break rules are explicit and testable.
+- [x] Missing values are not zero; stale values require labels and timestamps.
+- [x] No alert or KPI automatically creates a task, decision, or command.
+- [x] Drill-down references require a Core-owned allowlist.
+- [x] Desktop, 390 px, 320 px, RTL, encoding, keyboard, and overflow checks are required for P04.
+- [x] No real adapter, subproject, fetch, storage, backend, database, auth, migration, or write-back is authorized.
+- [ ] Gate V2-B requires explicit operator Option A or B approval before P04 begins.
+
 # چک‌لیست ثابت QA پایان هر P
 ## CORE-V2-P02 Baseline QA
 

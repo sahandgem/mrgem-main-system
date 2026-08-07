@@ -1,4 +1,15 @@
 # چک‌لیست ثابت QA پایان هر P
+## CORE-V2-P02 Baseline QA
+
+- [x] Gate V2-A approval, P01 branch/commit, clean tree, and Report 177 verified.
+- [x] Contract, static registry, adapter interface, one mock adapter, validator, and read-only aggregator implemented.
+- [x] Healthy, degraded, unavailable, stale, unknown, duplicate, unsupported, optional, partial, malformed, empty, no-data, cached-stale, and disabled cases covered.
+- [x] Failure isolation, determinism, no mutation, no write method, and no auto-discovery verified.
+- [x] `npm.cmd test` PASS; known loader warning unchanged.
+- [x] `npm.cmd run build` PASS; 1751 modules transformed.
+- [x] No user-visible change, so browser verification was not required.
+- [x] No route/storage/package/subproject/prototype/database/backend/auth/API/command/write-back change.
+- [ ] Do not start V2.2 until Project Core explicitly accepts the V2.1 baseline.
 ## CORE-V2-P01 Contract Design QA
 
 - [x] P00 branch, commit, roadmap 176, clean tree, and V1 main baseline verified.

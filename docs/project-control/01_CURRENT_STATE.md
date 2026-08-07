@@ -1,4 +1,13 @@
 # Current State
+## CORE-V2-P02 Integration Backbone Baseline
+
+- Gate V2-A was approved as designed and the minimal baseline was implemented on `feature/master-gem-v2-integration-backbone-p02`.
+- The implementation is additive, read-only, synthetic, and isolated under `src/integration`.
+- Static registry, versioned contract, validation/normalization, one mock adapter, failure-isolated aggregation, and the approved test matrix are implemented.
+- `npm.cmd test` and `npm.cmd run build` pass; build transformed 1751 modules.
+- No UI/route, package/lock, storage key, database/backend/auth/API, real subproject, source write, or command execution was added.
+- P56 remains frozen; subprojects remain isolated; no pilot is selected.
+- V2.2 must not start automatically. Project Core acceptance of the V2.1 baseline is the next decision.
 ## CORE-V2-P01 Integration Backbone Contract Design
 
 - CORE-V2-P01 completed discovery and contract design on `architecture/master-gem-v2-integration-backbone-p01`.

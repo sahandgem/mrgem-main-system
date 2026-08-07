@@ -1,4 +1,10 @@
 ﻿# Branch Registry
+## CORE-V2-P02 Integration Backbone Baseline
+
+- `feature/master-gem-v2-integration-backbone-p02`: additive implementation branch from P01 commit `e22fa035cb0f8d8bb1121b7ebd19ed1857be9348`.
+- Purpose: mock-only contract, static registry, validator, adapter boundary, aggregation, tests, and Report 178.
+- Rollback point: `e22fa035cb0f8d8bb1121b7ebd19ed1857be9348`.
+- No merge or push is authorized by P02; `main` remains V1 baseline `7d39d79`.
 ## CORE-V2-P01 Integration Backbone Design
 
 - `architecture/master-gem-v2-integration-backbone-p01`: docs-only discovery/contract branch from P00 commit `596ad8d7897c510eafeea674843f8cfd7509d21d`.

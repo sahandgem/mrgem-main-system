@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import "./integrationBackbone.test.ts";
 import { readFileSync } from "node:fs";
 import { mock } from "node:test";
 import {

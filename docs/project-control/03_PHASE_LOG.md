@@ -1,4 +1,7 @@
 ﻿# Phase Log
+## CORE-V2-P02
+
+Gate V2-A was approved as designed. The Integration Backbone baseline was implemented as an additive read-only proof: versioned contracts, a static Core registry, one deterministic mock adapter, independent validation/normalization, freshness/effective-state evaluation, in-memory last-known-good handling, and failure-isolated aggregation. The 14-case matrix plus determinism, no-mutation, invalid-payload, and failure-isolation assertions pass. Build passes with 1751 transformed modules. No UI, route, storage, package, backend/database/auth/API, command path, write-back, real subproject, pilot, merge, or push was introduced. Verdict: `INTEGRATION_BACKBONE_BASELINE_VERIFIED`.
 ## CORE-V2-P01
 
 Evidence-based Integration Backbone discovery and contract design completed as docs-only work. Report 177 records existing V1 seams and forbidden coupling, a small versioned observation contract, orthogonal health/freshness semantics, generic KPI/alert/capability models, static Core-owned registry, source-specific adapter boundary, four read-path options, and the recommended in-process mock/static P02 proof. The acceptance matrix, rollback and non-auth security boundary are defined. Gate V2-A remains pending; no source/runtime change, adapter implementation, real integration, pilot selection, merge, or push occurred.

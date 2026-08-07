@@ -1,4 +1,26 @@
 ﻿# Backlog
+## CORE-V2-P02 Baseline Review Queue
+
+### Now
+
+- Review `178_MASTER_GEM_V2_INTEGRATION_BACKBONE_BASELINE_IMPLEMENTATION.md`.
+- Decide whether the V2.1 baseline is accepted.
+- Keep V2.2 Command Center consumption planning blocked until that decision is explicit.
+
+### If V2.1 Baseline Is Accepted
+
+- Authorize a separate `CORE-V2-P03 - Command Center Data Consumption Design` phase.
+- Consume only normalized Integration Backbone results.
+- Preserve read-only, source-owned business truth and adapter isolation.
+
+### Still Not Authorized
+
+- Real Product/Mahak or Finance/Audit adapter
+- Pilot selection
+- Command execution or source write-back
+- External network/backend/database/auth/API/storage migration
+- New route or Command Center implementation
+- P56, prototype merge, or full UI redesign
 ## CORE-V2-P01 Gate V2-A Queue
 
 ### Now

@@ -1,4 +1,38 @@
-﻿# Current State
+# Current State
+
+## CORE-HARDEN-P06 Integration Readiness
+
+- P06 review branch: `review/master-gem-v1-hardening-integration-readiness-p06`; docs-only audit.
+- Ancestry is clean and linear: local `main` `e42b320` is the merge base/ancestor, with 9 hardening commits ahead and 0 behind.
+- Exact non-doc integration delta: `src/styles.css` verified mobile-overflow repair and `tests/analysis.test.ts` verified storage coverage; no package, prototype, subproject, route, registry, backend, database, auth or API delta.
+- Current quality: test PASS with only `--experimental-loader`; build PASS with 1,751 modules and no build warning; browser evidence is `CURRENT_AND_SUFFICIENT`.
+- D15 (`Remote promotion has not been performed`) is the sole pre-remote-fix debt. Local integration is allowed; remote promotion remains NOT authorized.
+- Strategy: `SINGLE_NO_FF_MERGE_OF_HARDENING_LINE`, including P06 docs. Next: `CORE-HARDEN-P07 - V1 Hardening Local Main Integration`; no push.
+
+## CORE-HARDEN-P05 Technical Debt and Closure
+
+- P05 branch: `docs/master-gem-v1-hardening-closure-p05`; docs-only closure baseline.
+- Verdict: `HARDENING_CLOSURE_READY_WITH_ACCEPTED_DEBT`.
+- H1-H4: `PASS_WITH_ACCEPTED_DEBT`; H5: `PASS`. There are no critical open debts, release blockers, or unknown runtime signals.
+- Local `main` remains `e42b32027cf642a1d1dc369786490a7427d16034`; observed `origin/main` remains `b16b1a020168516b2f8ad3e0bcd41e1193c8a824`; no push or remote promotion occurred.
+- Frozen scope remains P56, Cockpit runtime, Task/Decision runtime, subproject integration, backend/database/auth/API, storage migration and machine-constant migration.
+- Next selected phase: `CORE-HARDEN-P06 - V1 Hardening Integration Readiness Review`; no merge or push is authorized.
+
+## CORE-HARDEN-P04 Runtime Warning Triage
+
+- P04 branch: `hardening/master-gem-v1-runtime-regression-warning-triage-p04`.
+- Runtime verdict: `RUNTIME_BASELINE_VERIFIED_WITH_ACCEPTED_WARNINGS`.
+- Matrix: 31 completed Chrome 150/CDP route-viewport records; critical routes PASS; no crash, uncaught exception, mojibake, clipping, or horizontal overflow.
+- Signals: React duplicate-key warnings 0 in fresh P04 captures (2 historical title-key causes retained as post-V1 debt); Unsplash external-image failures 8 formal occurrences; favicon 404 1; loader warning 1 test-only.
+- Release blockers: none. Main/origin unchanged; no push. Next: `CORE-HARDEN-P05 - V1 Technical Debt Register and Hardening Closure Baseline`.
+
+## CORE-HARDEN-P03 Release and Rollback Discipline
+
+- Canonical local main remains `e42b32027cf642a1d1dc369786490a7427d16034`; `origin/main` remains `b16b1a020168516b2f8ad3e0bcd41e1193c8a824`.
+- Current V1 classification is `LOCALLY_VERIFIED`; remote promotion is not authorized or performed.
+- Rollback reference `backup/main-before-master-gem-core-v1-merge-b16b1a0` is verified.
+- Verdict: `RELEASE_ROLLBACK_BASELINE_READY_WITH_GAPS`; the storage transactional rollback gap remains accepted debt and P56 remains frozen.
+- Next phase: `CORE-HARDEN-P04 - Runtime Regression and Warning Triage Baseline`.
 
 ## Canonical Current Snapshot
 
@@ -9,6 +43,9 @@
 | مورد | وضعیت رسمی |
 |---|---|
 | Stable main baseline | `main` شامل Master Gem Core V1؛ runtime merge در `23c5e29573615d8dd729494cf22b60ac060df9bd` و final HEAD برابر commit docs-only مربوط به CORE-MERGE-P01 |
+| Canonical local main HEAD | `e42b32027cf642a1d1dc369786490a7427d16034`؛ در CORE-POST-MERGE-P01 قفل شد |
+| Post-merge lock branch | `docs/master-gem-core-v1-post-merge-lock`؛ ساخته‌شده مستقیم از `e42b320` و فقط docs-only |
+| CORE-P13 docs branch | `docs/master-gem-v1-operational-hardening-core-p13`؛ ساخته‌شده مستقیم از `a145606` |
 | Integration candidate branch | `integration/master-gem-core-v1-candidate`؛ در merge تاییدشده مصرف شد و اکنون مرجع تاریخی است |
 | Candidate reviewed commit | `d97703739a33496127ca406b44dba9f37d439f78` |
 | Final review branch | `review/master-gem-core-v1-final-gate`؛ در `23c5e29` به‌صورت محلی در main merge شد |
@@ -39,7 +76,31 @@
 | Route/storage post-merge | ۲۸ route یکتا، ۲۴ storage key یکتا، صفر duplicate و صفر storage literal خارج registry |
 | Runtime boundary post-merge | P56 اجرا نشده؛ cockpitها frozen؛ Task/Decision runtime و subproject source وارد `main` نشده‌اند |
 | Remote state | push/fetch/pull انجام نشده؛ نتیجه merge فقط local است |
-| Recommended next gate | `CORE-POST-MERGE-P01 — Lock Main Baseline and Define Next Core Track` فقط با دستور صریح Project Core |
+| Frozen work | P56، Cockpit runtime، Task/Decision runtime، subproject integration، backend/database/auth/API، storage migration، machine constant migration و remote push |
+| Selected next track | گزینه E: `V1 Operational Hardening`؛ فقط توصیه شده و هنوز شروع نشده |
+| Hardening verdict | `HARDENING_PLAN_READY_WITH_GAPS`؛ H1-H5 تعریف شدند و هیچ implementation شروع نشد |
+| Selected first hardening phase | `CORE-HARDEN-P01 — Critical Route Browser Smoke Baseline`؛ فقط پیشنهاد، نیازمند مجوز مستقل |
+| CORE-HARDEN-P01 branch | `hardening/master-gem-v1-critical-route-browser-smoke-p01`؛ recorder-only و بدون browser test/package جدید |
+| Browser tooling | `RECORDER_ONLY_AVAILABLE`؛ Playwright/Cypress/Puppeteer/WebDriver داخل repo وجود ندارد |
+| Browser smoke verdict | `BROWSER_SMOKE_BASELINE_PARTIAL`؛ desktop هفت مسیر PASS، mobile Employees PASS |
+| Mobile route findings | Dashboard در 390px به 1112px و Operational History به 729px overflow می‌کنند؛ code/CSS اصلاح نشد |
+| Test/build hardening gate | قبل و بعد PASS؛ ۱۷۵۱ module؛ فقط هشدار قدیمی `--experimental-loader` |
+| Recommended next gate | `CORE-HARDEN-ROUTE-P01 — Workforce Critical Routes Mobile Overflow Stabilization Audit` فقط با دستور صریح Project Core |
+| CORE-HARDEN-ROUTE-P01 branch | `hardening/master-gem-v1-mobile-overflow-audit-p01`؛ audit-only و docs-only از `b7d89a1` |
+| Mobile overflow audit | `MOBILE_OVERFLOW_ROOT_CAUSE_CONFIRMED`؛ Dashboard و Operational History در عرض‌های 320/360/390/430 بازتولید شدند |
+| Exact overflow causes | Dashboard: نشت min-content جدول هفتگی 68rem؛ Operational History: placeholder چاپی 96 نقطه‌ای؛ shared 320px: `body min-width` با scrollbar |
+| Repair scope decision | `SHARED_PLUS_ROUTE_LOCAL_FIX`؛ بدون redesign، route، storage یا business logic change؛ فایل پیشنهادی 1 و حداکثر 2 |
+| Audit test/build gate | PASS؛ test با warning قدیمی loader و build با ۱۷۵۱ module و بدون build warning |
+| Main/origin during audit | local `main=e42b320` و observed `origin/main=b16b1a0`؛ بدون push یا remote update |
+| Recommended next gate after audit | `CORE-HARDEN-ROUTE-P02 — Workforce Critical Routes Mobile Overflow Repair` فقط با مجوز مستقل Project Core |
+| CORE-HARDEN-ROUTE-P02 branch | `hardening/master-gem-v1-mobile-overflow-repair-p02`؛ repair محدود و CSS-only از `ed69832` |
+| Mobile overflow repair scope | `CSS_ONLY_SINGLE_FILE`؛ فقط `src/styles.css` و بدون تغییر logic، JSX، route، text، storage یا package |
+| Mobile overflow repair test/build | PASS؛ test با warning قدیمی loader و build با ۱۷۵۱ module و بدون build warning |
+| Mobile overflow browser rerun | `PASS` with native Chrome 150/CDP: 30 route/viewport cases plus a fresh-profile 13-case repeatability run |
+| Mobile overflow repair verdict | `MOBILE_OVERFLOW_REPAIR_VERIFIED`; maximum document/body overflow 0px, no clipping, RTL/navigation/mojibake/runtime gates passed |
+| Console classification | Duplicate React keys are `NON_BLOCKING_WARNING`; intermittent Unsplash failure is `BENIGN_BROWSER_NOISE`; no serious or unknown application error |
+| Main/origin during repair | local `main=e42b320` and observed `origin/main=b16b1a0`; no push or remote update |
+| Required next gate | `CORE-HARDEN-P02 — Storage Backup and Restore Verification Baseline` only with separate Project Core authorization |
 
 ## Historical Record
 

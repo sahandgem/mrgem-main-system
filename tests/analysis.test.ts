@@ -1211,6 +1211,64 @@ assert.equal(overlaps(item("a", "e1", "s1", "09:00", "10:00"), item("b", "e2", "
 }
 
 {
+  // P02 storage baseline: exercise every registry entry using isolated memory storage.
+  workforceBackupService.__memory.clear();
+  const excludedKey = "komak.workforce.snapshots.v1";
+  const syntheticValues = Object.fromEntries(workforceStorageKeyRegistry.map((entry, index) => {
+    const value = index % 5 === 0
+      ? []
+      : index % 5 === 1
+        ? [{ id: `synthetic-${index}`, title: "Persian sample", machineValue: `MACHINE_${index}_V1` }]
+        : index % 5 === 2
+          ? { id: `synthetic-${index}`, nested: { enabled: true, count: index }, tags: ["sample", "nested"] }
+          : index % 5 === 3
+            ? true
+            : null;
+    return [entry.key, value];
+  }));
+
+  for (const [key, value] of Object.entries(syntheticValues)) workforceBackupService.__memory.set(key, value);
+  const original = workforceBackupService.createBackupBundle("P02 synthetic coverage", "test");
+  assert.equal(Object.keys(original.data).length, workforceBackupKeys.length);
+  assert.equal(Object.prototype.hasOwnProperty.call(original.data, excludedKey), false);
+  const snapshotsBeforeImport = workforceBackupService.__memory.get(excludedKey);
+
+  for (const key of workforceBackupKeys) workforceBackupService.__memory.set(key, { changed: key });
+  const restoreResult = workforceBackupService.importBackupBundle(original);
+  assert.equal(restoreResult.imported, true);
+  for (const key of workforceBackupKeys) assert.deepEqual(workforceBackupService.__memory.get(key), original.data[key]);
+  const snapshotsAfterImport = workforceBackupService.__memory.get(excludedKey) as unknown[];
+  assert.equal(Array.isArray(snapshotsAfterImport), true);
+  assert.deepEqual(snapshotsAfterImport.slice(1), snapshotsBeforeImport);
+
+  const partialData = { ...original.data };
+  delete partialData["komak.workforce.monthlyGoals.v1"];
+  const partialBundle = { ...original, data: partialData, checksum: workforceBackupService.calculateBackupChecksum(partialData) };
+  workforceBackupService.__memory.set("komak.workforce.monthlyGoals.v1", { preserved: true });
+  assert.equal(workforceBackupService.importBackupBundle(partialBundle).imported, true);
+  assert.deepEqual(workforceBackupService.__memory.get("komak.workforce.monthlyGoals.v1"), { preserved: true });
+
+  const withUnknownData = { ...original.data, "komak.workforce.unknownFutureKey.v1": { ignored: true } };
+  const withUnknown = { ...original, data: withUnknownData, checksum: workforceBackupService.calculateBackupChecksum(withUnknownData) };
+  assert.equal(workforceBackupService.importBackupBundle(withUnknown).imported, true);
+  assert.equal(workforceBackupService.__memory.get("komak.workforce.unknownFutureKey.v1"), null);
+
+  const beforeInvalid = workforceBackupService.createBackupBundle("before-invalid", "test").data;
+  const invalidChecksum = { ...original, checksum: "00000000" };
+  assert.equal(workforceBackupService.importBackupBundle(invalidChecksum).imported, false);
+  assert.equal(workforceBackupService.validateBackupBundle("not-json-object").canImport, false);
+  assert.equal(workforceBackupService.validateBackupBundle({ appName: "komak-workforce-dashboard", data: [] }).canImport, false);
+  assert.deepEqual(workforceBackupService.createBackupBundle("after-invalid", "test").data, beforeInvalid);
+
+  const legacyBundle = { ...original, metadata: { ...original.metadata, coverageVersion: undefined } };
+  assert.equal(isLegacyBackupCoverageBaseline(legacyBundle), true);
+  assert.equal(workforceBackupService.validateBackupBundle({ ...original, version: "0.9.0" }).canImport, true);
+
+  const roundTrip = workforceBackupService.createBackupBundle("round-trip", "test");
+  assert.equal(workforceBackupService.calculateBackupChecksum(original.data), workforceBackupService.calculateBackupChecksum(roundTrip.data));
+}
+
+{
   const valid = {
     "komak.workforce.spaces.v1": JSON.stringify([space("s1", 1, 2)]),
     "komak.workforce.employees.v1": JSON.stringify([employee("e1")]),

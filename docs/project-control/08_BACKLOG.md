@@ -1,12 +1,42 @@
 ﻿# Backlog
 
+## CORE-HARDEN-P06 Follow-up
+
+- `CORE-HARDEN-P07 - V1 Hardening Local Main Integration`: selected next phase; create the rollback branch, perform only the reviewed local no-ff merge, rerun gates, and do not push.
+- D15 remains a later, separately authorized remote-promotion gate after local integration; it is not selected implementation work now.
+
+## CORE-HARDEN-P05 Follow-up
+
+- `CORE-HARDEN-P06 - V1 Hardening Integration Readiness Review`: selected next phase; audit only, with no merge or push.
+- Deferred bounded tracks: transactional rollback contract, React duplicate-key cleanup, formal browser automation, external-image cleanup, Workforce monolith decomposition and storage architecture evolution.
+- Remote promotion remains a separate gate after an approved P06 integration plan; it is not selected work for P05.
+
+## CORE-HARDEN-P04 Follow-up
+
+- `CORE-HARDEN-P05 - V1 Technical Debt Register and Hardening Closure Baseline`: selected next phase.
+- `CORE-HARDEN-WARN-P01 - React Duplicate Key Stabilization`: post-V1 source remediation candidate for shared `InfoPanel` title keys, only with separate approval.
+- External image dependency review and test-loader modernization remain separate non-blocking hardening work.
+
+## CORE-HARDEN-P03 Follow-up
+
+- `CORE-HARDEN-P04 - Runtime Regression and Warning Triage Baseline`: selected next hardening track.
+- `CORE-HARDEN-STORAGE-P03 - Failure Injection and Transactional Rollback Contract`: future docs/test-design phase only; implementation is not approved.
+
 آخرین به‌روزرسانی: 2026-08-02
 
 ## الان
 
 | اولویت | شاخه | کار | توضیح |
 |---|---|---|---|
-| بالا | WF | extraction کنترل‌شده adapterهای کم‌ریسک باقی‌مانده | فقط فازهای کوچک، بدون تغییر route/storage/model/behavior |
+| frozen | WF | extraction کنترل‌شده adapterهای کم‌ریسک باقی‌مانده | بدون approval مستقل Project Core اجرا نشود؛ P56 همچنان ممنوع است |
+| انجام‌شده، docs-only | CORE | CORE-P13 — Master Gem V1 Operational Hardening Readiness Plan | posture ممیزی و H1-H5 تعریف شدند؛ verdict برابر `HARDENING_PLAN_READY_WITH_GAPS`؛ implementation انجام نشد |
+| انجام‌شده با verdict جزئی | CORE/HARDEN | CORE-HARDEN-P01 — Critical Route Browser Smoke Baseline | desktop 7/7 PASS؛ mobile Employees PASS؛ Dashboard و Operational History overflow؛ `BROWSER_SMOKE_BASELINE_PARTIAL` |
+| انجام‌شده، docs-only | CORE/HARDEN | CORE-HARDEN-ROUTE-P01 — Workforce Critical Routes Mobile Overflow Stabilization Audit | root causeهای Dashboard، Operational History و edge case عرض 320 تایید شدند؛ verdict `MOBILE_OVERFLOW_ROOT_CAUSE_CONFIRMED`؛ بدون source/UI/CSS fix |
+| P0 پیشنهادی، شروع‌نشده | CORE/HARDEN | CORE-HARDEN-ROUTE-P02 — Workforce Critical Routes Mobile Overflow Repair | scope برابر `SHARED_PLUS_ROUTE_LOCAL_FIX`، حداکثر 1 تا 2 فایل source، بدون redesign/route/storage/business logic change؛ نیازمند مجوز مستقل |
+| deferred تا تصمیم route gate | CORE/HARDEN | CORE-HARDEN-P02 — Disposable Storage Backup Restore Drill | H2؛ فقط fixture مصنوعی و storage disposable؛ بعد از رفع یا پذیرش صریح finding موبایل |
+| P1 بعدی | CORE/HARDEN | CORE-HARDEN-P04 — V1 Runtime Regression Evidence Gate | H4؛ RTL، encoding، labels، console و isolation بر پایه خروجی H1 |
+| P1 بعدی | CORE/HARDEN | CORE-HARDEN-P03 — V1 Release Evidence And Rollback Gate | H3؛ پس از H1/H2، بدون push یا release خودکار |
+| P2 بعدی | CORE/HARDEN | CORE-HARDEN-P05 — V1 Technical Debt Ownership Review | H5؛ فقط ownership و gate بدهی‌ها، بدون اجرای P56/migration/refactor |
 | paused | WF | WF-P56 ادامه تثبیت هسته Workforce | فقط با دستور مستقل و approval صریح Project Core در branch اختصاصی |
 | انجام‌شده | CORE | CORE-P02 طراحی Master Gem Central Data Model Contract | docs-only؛ ثبت‌شده در سند 147، بدون implementation یا merge |
 | انجام‌شده | CORE | CORE-P03 طراحی Task and Decision Core Contract | docs-only؛ ثبت‌شده در سند 148، بدون implementation یا merge |

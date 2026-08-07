@@ -1,4 +1,33 @@
-﻿# چک‌لیست ثابت QA پایان هر P
+# چک‌لیست ثابت QA پایان هر P
+
+## CORE-HARDEN-P06 Integration Readiness Check
+
+- [x] Ancestry is linear from local `main` `e42b320`; all intended hardening commits are present.
+- [x] Non-doc delta is bounded to verified `src/styles.css` and `tests/analysis.test.ts` changes.
+- [x] Package/lock, prototypes, subprojects, route/storage-registry, backend/database/auth/API contracts are unchanged.
+- [x] `npm.cmd test` and `npm.cmd run build` PASS; browser evidence is current after the final source repair.
+- [x] D15 is identified as remote-promotion-only debt; it does not block local integration.
+- [ ] P07 must recreate preflight, create the defined rollback branch, merge locally with `--no-ff`, and rerun verification without push.
+
+## CORE-HARDEN-P05 Closure Check
+
+- [x] H1-H4 evidence is referenced from reports 165-170 without changing historical verdicts.
+- [x] D1-D15 have a category, severity, owner, impact, status and reopen trigger.
+- [x] No CRITICAL open debt, `BLOCKS_RELEASE` debt or unknown runtime signal is recorded.
+- [x] Local main/origin references and no-push status are documented.
+- [x] P56 and all frozen runtime/subproject scopes remain outside the closure.
+- [ ] `CORE-HARDEN-P06` must review hardening ancestry and integration options before any merge or remote-promotion decision.
+
+## Runtime Warning Triage Gate
+
+- [ ] Capture console, exceptions, failed requests, 4xx/5xx, route identity, RTL, mojibake, overflow, clipping, and redirect state across required desktop/mobile routes.
+- [ ] Repeat the primary route matrix with a fresh browser profile; classify every unique signal and retain occurrence counts.
+- [ ] Do not promote remotely while an unclassified serious application error, crash, data-integrity risk, or unstable warning category exists.
+
+## Release and Rollback Gate
+
+- [ ] Before remote promotion, verify local/remote ancestry, clean tree, current test/build/browser/mobile evidence, rollback reference, accepted debt, and explicit Project Core push authorization.
+- [ ] A storage restore failure stops writes and preserves the pre-operation snapshot; no automatic transactional rollback may be claimed without separately approved failure-injection evidence.
 
 ## 1. محدوده و رفتار
 
@@ -96,3 +125,56 @@
 - [ ] route registry برای page منتقل‌شده همان URL قبلی را نگه می‌دارد.
 - [ ] بعد از استخراج، `WorkforcePages.tsx` هم build می‌شود و fallback/compat pageهای باقی‌مانده سالم‌اند.
 - [ ] اگر helper مشترک ساخته شد، service/analyzer/model را معکوس import نمی‌کند.
+
+## V1 Operational Hardening Gate
+
+- [ ] commit و branch baseline دقیق و working tree تمیز ثبت شده‌اند.
+- [ ] critical route inventory نسخه‌دار است و direct URL هر route بررسی شده است.
+- [ ] lazy-load completion، `dir=rtl`، `lang=fa` و critical Persian labels ثبت شده‌اند.
+- [ ] console error/warning برای هر route و viewport ثبت شده است.
+- [ ] desktop و mobile viewport matrix دارای نتیجه و evidence است.
+- [ ] `OperationalHistoryPage` همچنان مستقل از `WorkforcePages` و adapter است.
+- [ ] prototype و subproject isolation scan پاس شده است.
+- [ ] storage registry برابر ۲۴، backup set برابر ۲۳ و excluded snapshot container برابر یک است.
+- [ ] backup/import/restore فقط روی fixture مصنوعی و محیط disposable اجرا شده است.
+- [ ] malformed JSON، missing critical key، checksum mismatch و unknown key رفتار ثبت‌شده دارند.
+- [ ] rollback reference، dry-run procedure، actor و approval boundary ثبت شده‌اند.
+- [ ] test، build، smoke، storage، secret scan و rollback evidence به یک release pack متصل‌اند.
+- [ ] local/remote hash و وضعیت push صریح ثبت شده است.
+- [ ] P56، runtimeهای frozen، migrationها و feature work ناخواسته شروع نشده‌اند.
+- [ ] هر failure از hardening stop rule عبور نکرده و به‌صورت blocker گزارش شده است.
+
+### CORE-HARDEN-P01 Baseline Result
+
+- [x] test و build قبل و بعد PASS؛ ۱۷۵۱ module و فقط warning قدیمی loader.
+- [x] هفت route بحرانی desktop مستقیم load شدند؛ console error، redirect و visible mojibake نداشتند.
+- [x] `OperationalHistoryPage` مستقل و trend label فارسی `پایدار` ثبت شد.
+- [x] mobile Employees در viewport 390 x 844 بدون overflow پاس شد.
+- [ ] mobile Dashboard: overflow فعال؛ document width برابر 1112px.
+- [ ] mobile Operational History: overflow فعال؛ document width برابر 729px.
+- [x] stop rule رعایت شد و هیچ source/UI/CSS fix داخل smoke phase انجام نشد.
+
+### CORE-HARDEN-ROUTE-P01 Mobile Overflow Audit Result
+
+- [x] Dashboard، Operational History و Employees در viewportهای 320/360/390/430 و مرجع desktop برابر 1280 اندازه‌گیری شدند.
+- [x] Dashboard: `.weekly-grid` با `min-width:68rem` و زنجیره grid min-content به عنوان علت اصلی trace شد.
+- [x] Operational History: placeholder چاپی 96 نقطه‌ای با min-content حدود 681px به عنوان علت اصلی trace شد.
+- [x] Employees control: overflow مشترک 15px در عرض 320 به `body { min-width:320px }` و scrollbar trace شد؛ عرض‌های 360/390/430/1280 PASS هستند.
+- [x] classification، source trace، propagation chain و repair option برای هر finding ثبت شد.
+- [x] regression matrix آینده شامل Dashboard، Operational History، Employees، Analysis و Data Center ثبت شد.
+- [x] test و build PASS؛ ۱۷۵۱ module و فقط warning قدیمی test loader.
+- [x] verdict برابر `MOBILE_OVERFLOW_ROOT_CAUSE_CONFIRMED` و repair scope برابر `SHARED_PLUS_ROUTE_LOCAL_FIX` است.
+- [x] هیچ source، UI، CSS، test، package، route یا storage contract تغییر نکرد.
+
+### CORE-HARDEN-ROUTE-P02 Verified Repair Result
+
+- [x] CSS repair remained limited to `src/styles.css`; no JSX, route, storage, logic, test, package or lock change.
+- [x] Full native Chrome/CDP matrix covered 5 routes x 6 viewports (30 cases).
+- [x] Document and body overflow are 0px in every case; no unintended page-level horizontal scrollbar remains.
+- [x] Dashboard WeeklyGrid and Operational History chart remain contained and locally reachable/readable.
+- [x] Data Center passes at 320/360/390/430/1280 without primary-content clipping.
+- [x] RTL, navigation, final URL, TemplateHead/visible Persian text, and runtime-crash gates pass.
+- [x] Dashboard console events were classified: duplicate React keys as `NON_BLOCKING_WARNING`; Unsplash network failure as `BENIGN_BROWSER_NOISE`; no serious/unknown application error.
+- [x] Final test/build PASS with 1,751 modules and only the existing Node loader warning.
+- [x] Fresh-profile repeatability rerun covered 13 required cases and PASSed.
+- [x] Verdict is `MOBILE_OVERFLOW_REPAIR_VERIFIED`; next gate is storage backup/restore verification under separate authorization.

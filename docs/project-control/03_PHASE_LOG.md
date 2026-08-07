@@ -1,5 +1,21 @@
 ﻿# Phase Log
 
+## CORE-HARDEN-P06
+
+Hardening integration readiness review completed as docs-only work. The 9-commit line from `e42b320` is linear and complete; only the verified `src/styles.css` repair and `tests/analysis.test.ts` coverage differ from local main. Test/build PASS and browser evidence is current. Verdict: `HARDENING_INTEGRATION_READY_REMOTE_PROMOTION_BLOCKED`; D15 blocks remote promotion only. Next: `CORE-HARDEN-P07 - V1 Hardening Local Main Integration` with no push.
+
+## CORE-HARDEN-P05
+
+Canonical V1 technical debt register and hardening closure baseline completed as docs-only work. D1-D15 are owned and bounded; H1-H4 are `PASS_WITH_ACCEPTED_DEBT`, H5 is `PASS`, and the verdict is `HARDENING_CLOSURE_READY_WITH_ACCEPTED_DEBT`. No source change, merge, or push occurred. Next: `CORE-HARDEN-P06 - V1 Hardening Integration Readiness Review`.
+
+## CORE-HARDEN-P04
+
+Runtime regression and warning triage baseline completed with Chrome 150/CDP fresh-profile repeatability. Test/build and all required route/layout checks PASS. Verdict: `RUNTIME_BASELINE_VERIFIED_WITH_ACCEPTED_WARNINGS`; no runtime fix or promotion occurred.
+
+## CORE-HARDEN-P03
+
+Docs-only release and rollback discipline baseline completed. Local V1 is `LOCALLY_VERIFIED`, origin/main remains unchanged, and remote promotion requires separate authorization. Verdict: `RELEASE_ROLLBACK_BASELINE_READY_WITH_GAPS`.
+
 آخرین به‌روزرسانی: 2026-06-30
 
 ## جدول فازهای WF
@@ -107,6 +123,11 @@
 | فاز | وضعیت | خلاصه خروجی |
 |---|---|---|
 | CORE-P01 | انجام شده | ساخت `146_MASTER_GEM_UNIFIED_PUZZLE_ARCHITECTURE.md` و قفل معماری مادر مستر جم به عنوان پازل/هواپیمای یکپارچه؛ Workforce P0-P22 به عنوان `Workforce Operations Engine` ثبت شد؛ cockpit فقط قطعه visual/executive است؛ docs-only و بدون تغییر کد. |
+| CORE-MERGE-P01 | انجام و verify شد | Master Gem Core V1 با merge محلی `--no-ff` وارد `main` شد؛ merge commit برابر `23c5e29`، final local main برابر `e42b320`، test/build/preview پاس و push انجام نشد. |
+| CORE-POST-MERGE-P01 | انجام شده، docs-only | baseline محلی V1 روی `e42b320` قفل شد؛ بدهی‌ها و کارهای frozen ثبت شدند؛ گزینه E یعنی V1 Operational Hardening به عنوان track بعدی پیشنهاد شد ولی شروع نشد. |
+| CORE-P13 | انجام شده، docs-only | posture عملیاتی V1 ممیزی و H1-H5 با gate کامل تعریف شد؛ verdict برابر `HARDENING_PLAN_READY_WITH_GAPS` و فاز پیشنهادی بعدی `CORE-HARDEN-P01` است؛ هیچ hardening implementation شروع نشد. |
+| CORE-HARDEN-P01 | baseline اجرا و جزئی ثبت شد | tooling برابر `RECORDER_ONLY_AVAILABLE`؛ test/build قبل و بعد PASS؛ desktop هفت مسیر PASS و mobile Employees PASS؛ Dashboard و Operational History در 390px overflow دارند؛ verdict برابر `BROWSER_SMOKE_BASELINE_PARTIAL` و هیچ source/UI/CSS اصلاح نشد. |
+| CORE-HARDEN-ROUTE-P01 | audit انجام شد، docs-only | ماتریس 320/360/390/430/1280 برای Dashboard، Operational History و Employees ثبت شد؛ سه علت دقیق شامل `body min-width:320px`، نشت min-content جدول هفتگی و placeholder چاپی بدون شکست تایید شدند؛ verdict برابر `MOBILE_OVERFLOW_ROOT_CAUSE_CONFIRMED` و scope آینده `SHARED_PLUS_ROUTE_LOCAL_FIX` است؛ test/build PASS و هیچ source/UI/CSS تغییر نکرد. |
 
 ## P فعلی قطعی
 

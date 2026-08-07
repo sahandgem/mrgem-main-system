@@ -13,7 +13,7 @@
 
 body {
   margin: 0;
-  min-width: 320px;
+  min-width: min(320px, 100%);
   min-height: 100vh;
   background:
     radial-gradient(circle at 18% 12%, rgba(20, 184, 166, 0.14), transparent 28rem),
@@ -25,6 +25,7 @@ button,
 input,
 select,
 textarea {
+  max-width: 100%;
   font: inherit;
 }
 
@@ -117,9 +118,14 @@ main {
   padding: 1.4rem;
 }
 
-.page-stack {
+.page-stack,
+.side-column .panel-list,
+.side-column .panel-row {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .hero-header,
@@ -234,14 +240,19 @@ p {
 
 .cockpit-grid {
   display: grid;
-  grid-template-columns: minmax(14rem, 0.8fr) minmax(32rem, 2.4fr) minmax(14rem, 0.8fr);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 2.4fr) minmax(0, 0.8fr);
   gap: 0.9rem;
   align-items: start;
+  min-width: 0;
+  overflow-x: clip;
 }
 
-.side-column {
+.side-column,
+.center-column {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.9rem;
+  min-width: 0;
 }
 
 .panel {
@@ -294,20 +305,28 @@ p {
 }
 
 .weekly-grid-shell {
-  overflow: auto;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  contain: inline-size layout paint;
+  overflow: visible;
   border: 1px solid rgba(148, 163, 184, 0.15);
   border-radius: 0.5rem;
   background: rgba(9, 14, 22, 0.84);
 }
 
 .weekly-grid {
+  direction: rtl;
   display: grid;
   grid-template-columns: 4.6rem repeat(7, minmax(8.8rem, 1fr));
-  min-width: 68rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
 }
 
 .compact .weekly-grid {
-  min-width: 64rem;
+  grid-template-columns: 4.6rem repeat(7, minmax(8.2rem, 1fr));
 }
 
 .grid-row {
@@ -694,6 +713,10 @@ p {
   margin: 0;
 }
 
+.operational-history-page .report-section p {
+  overflow-wrap: anywhere;
+}
+
 .report-section ul {
   margin: 0;
   padding-right: 1.1rem;
@@ -810,7 +833,34 @@ p {
   font-size: 0.92rem;
 }
 
+.operational-history-page,
+.operational-history-page .history-timeline,
+.operational-history-page .history-print {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.operational-history-page > *,
+.operational-history-page .history-timeline > *,
+.operational-history-page .history-print > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.operational-history-page .report-title {
+  flex-wrap: wrap;
+}
+
+.operational-history-page .drift-trend-panel {
+  width: 100%;
+  overflow: hidden;
+}
+
 .drift-mini-chart {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  contain: inline-size layout paint;
+  direction: ltr;
   display: grid;
   grid-template-columns: repeat(12, minmax(2.5rem, 1fr));
   align-items: end;
@@ -820,6 +870,7 @@ p {
 }
 
 .drift-bar-column {
+  direction: rtl;
   display: grid;
   grid-template-rows: 7rem auto auto;
   align-items: end;
@@ -1779,7 +1830,11 @@ p {
   .decision-layout,
   .archive-layout,
   .rules-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cockpit-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .operations-calendar-kpis,

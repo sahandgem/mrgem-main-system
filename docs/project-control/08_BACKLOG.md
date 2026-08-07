@@ -1,5 +1,11 @@
 ﻿# Backlog
 
+## CORE-HARDEN-P09 Closure
+
+- V1 hardening and remote promotion are complete; D15 is closed.
+- Immediate manual action: push only the P09D docs-only closure commit normally, then verify local/remote equality.
+- No next implementation phase is selected. P56, debt remediation, subproject integration and architecture changes require a new explicit Project Core decision.
+
 ## CORE-HARDEN-P08 Follow-up
 
 - `CORE-HARDEN-P09 - V1 Remote Promotion Execution`: ready only as a gated protocol. DO NOT RUN until explicit Project Core push authorization.

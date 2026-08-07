@@ -1,5 +1,14 @@
 # چک‌لیست ثابت QA پایان هر P
 
+## CORE-HARDEN-P09 Remote Promotion Closure
+
+- [x] Explicit push authorization was recorded and limited to a normal `main` push.
+- [x] Promotion range `b16b1a0..b1623f4` completed without force, tags or other branch pushes.
+- [x] Local main and origin/main were verified equal at `b1623f4` with ahead/behind `0 / 0`.
+- [x] Test/build/browser/storage release evidence remained current and rollback refs were retained.
+- [x] D15 is closed; D1-D14, P56 freeze and subproject isolation remain visible.
+- [ ] Push this P09D docs-only closure commit manually, then re-verify `main == origin/main` and `0 / 0`.
+
 ## CORE-HARDEN-P08 Remote Readiness Check
 
 - [x] P07 topology, post-integration rollback and local/remote divergence are recorded.

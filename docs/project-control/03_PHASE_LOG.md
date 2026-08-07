@@ -1,5 +1,9 @@
 ﻿# Phase Log
 
+## CORE-HARDEN-P09 / P09D
+
+Master Gem V1 remote promotion completed with a normal non-force push over range `b16b1a0..b1623f4`; local and verified remote refs reached `b1623f4` at `0 / 0`. Intermittent GitHub HTTPS transport failures in P09/P09A were environmental and resolved through a controlled manual retry. P09D records closure only: verdict `MASTER_GEM_V1_REMOTE_PROMOTION_COMPLETE`, D15 closed, D1-D14 retained, P56 frozen, subprojects isolated, and no Codex push.
+
 ## CORE-HARDEN-P08
 
 Post-integration lock and remote-promotion readiness audit completed on a docs branch. Local main `e3cd9f6`, merge `56413ed`, rollback `e42b320` and local origin ref `b16b1a0` are locked; divergence is 51 ahead and 0 behind. Evidence is `POST_INTEGRATION_EVIDENCE_CURRENT`. D15 is process/authorization only. Verdict: `REMOTE_PROMOTION_READY_PENDING_AUTHORIZATION`; no push or remote mutation occurred. P09 is prohibited until explicit Project Core push authorization.

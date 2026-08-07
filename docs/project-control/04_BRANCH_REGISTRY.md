@@ -1,5 +1,12 @@
 ﻿# Branch Registry
 
+## CORE-HARDEN-P09 Remote Promotion
+
+- `main`: remotely promoted and verified at `b1623f4` before the P09D docs-only closure commit.
+- `origin/main`: manually verified at `b1623f4` with ahead/behind `0 / 0` before P09D.
+- `backup/main-before-master-gem-v1-remote-promotion-e3cd9f6`: retained at `e3cd9f6`.
+- `backup/main-before-master-gem-v1-hardening-integration-e42b320`: retained at `e42b320`.
+
 ## CORE-HARDEN-P08
 
 - `docs/master-gem-v1-post-integration-lock-p08`: docs-only post-integration lock and remote-readiness review from local main `e3cd9f6`; no main change, merge or push.

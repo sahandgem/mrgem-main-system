@@ -1,5 +1,14 @@
 # Current State
 
+## CORE-HARDEN-P09 Remote Promotion Closure
+
+- Master Gem V1 was remotely promoted with a normal non-force `main` push; verified promotion range: `b16b1a0..b1623f4`.
+- Before this docs-only closure commit, local `main` and verified `origin/main` both resolved to `b1623f4c3bf2b4a91df7a8239f0f919091711f3e` with ahead/behind `0 / 0`.
+- Verdict: `MASTER_GEM_V1_REMOTE_PROMOTION_COMPLETE`; V1 hardening track is closed and D15 is `RESOLVED/CLOSED`.
+- P07 test/build/browser/storage evidence remains current; rollback refs at `e3cd9f6` and `e42b320` are retained.
+- D1-D14 remain classified; P56 remains frozen; subprojects remain isolated; no backend/database/auth/API/storage approval is implied.
+- Next work requires a separate explicit Project Core decision. Codex P09D performs no push.
+
 ## CORE-HARDEN-P08 Post-Integration Lock and Remote Readiness
 
 - P08 branch: `docs/master-gem-v1-post-integration-lock-p08`; docs-only. Local `main` remains locked at `e3cd9f6476387809fb3353cf94ee939a5d42414b` during this phase.

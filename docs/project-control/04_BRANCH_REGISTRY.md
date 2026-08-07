@@ -1,4 +1,10 @@
 ﻿# Branch Registry
+## CORE-V2-P01 Integration Backbone Design
+
+- `architecture/master-gem-v2-integration-backbone-p01`: docs-only discovery/contract branch from P00 commit `596ad8d7897c510eafeea674843f8cfd7509d21d`.
+- Purpose: produce Report 177 for Gate V2-A operator review.
+- No merge or push is authorized by P01.
+- `main` remains the stable V1 baseline `7d39d79`.
 ## CORE-V2 Planning
 
 - `docs/master-gem-v2-roadmap-p00`: docs-only roadmap branch created from exact stable V1 baseline `7d39d79c2e6de73581d51f7cdb3c7aebe0f194d4`; no merge or push is authorized in P00.

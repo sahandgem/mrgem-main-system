@@ -1,4 +1,25 @@
 ﻿# Backlog
+## CORE-V2-P01 Gate V2-A Queue
+
+### Now
+
+- Review `177_MASTER_GEM_V2_INTEGRATION_BACKBONE_DISCOVERY_AND_CONTRACT.md`.
+- Operator chooses Gate V2-A option A, B with exact changes, or C hold/redesign.
+- Keep P02 blocked until option A or B is explicit.
+
+### After Explicit V2-A Approval Only
+
+- `CORE-V2-P02 - Integration Registry / Adapter Baseline`
+- Implement only the approved contract, static registry, mock adapter, validation, aggregation, diagnostics, and tests.
+- Keep the proof read-only, synthetic, additive, and reversible.
+
+### Still Frozen
+
+- Real Product/Mahak or Finance/Audit adapter
+- Pilot selection and Command Center implementation
+- Commands or source mutation
+- New route/storage key/backend/database/auth/API/migration
+- P56, cockpit runtime, and Task/Decision runtime
 ## Master Gem V2 - Gated Roadmap
 
 ### Now

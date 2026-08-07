@@ -1,4 +1,14 @@
 # چک‌لیست ثابت QA پایان هر P
+## CORE-V2-P01 Contract Design QA
+
+- [x] P00 branch, commit, roadmap 176, clean tree, and V1 main baseline verified.
+- [x] Source inspection was read-only and covered storage, registry, route, service, backup, history, decision, and technical-debt boundaries.
+- [x] Identity, observation, health, freshness, KPI, alert, capability, ownership, compatibility, error, registry, and adapter contracts are documented.
+- [x] Read-path options A-D are compared; P02 recommendation is in-process mock/static and read-only.
+- [x] P02 minimum slice, untouched areas, acceptance matrix, rollback, and security/non-auth boundary are explicit.
+- [x] Gate V2-A is pending and was not auto-approved.
+- [x] No runtime, test, package, lockfile, prototype, database, backend, auth, API, storage, route, or subproject file changed.
+- [ ] P02 may start only after operator explicitly selects Gate V2-A option A or B.
 ## CORE-V2 Planning and Gate QA
 
 - [x] Stable V1 baseline `7d39d79` verified before roadmap work.

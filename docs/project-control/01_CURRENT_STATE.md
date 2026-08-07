@@ -1,4 +1,12 @@
 # Current State
+## CORE-V2-P01 Integration Backbone Contract Design
+
+- CORE-V2-P01 completed discovery and contract design on `architecture/master-gem-v2-integration-backbone-p01`.
+- Report 177 defines module identity, observation, health/freshness, KPI, alert, capability, ownership, compatibility, registry, adapter, diagnostics, P02 proof, tests, and rollback.
+- `GATE V2-A = PENDING_OPERATOR_DECISION`; no P02 implementation is authorized.
+- Runtime/source implementation has not started; no real adapter or subproject connection exists.
+- `main` remains the stable V1 baseline at `7d39d79`; P56 remains frozen.
+- Product/Mahak and Finance/Audit remain isolated, and no pilot is selected.
 ## CORE-V2-PLAN-P00 Roadmap State
 
 - Master Gem V1 is closed and stable at baseline `7d39d79c2e6de73581d51f7cdb3c7aebe0f194d4`.

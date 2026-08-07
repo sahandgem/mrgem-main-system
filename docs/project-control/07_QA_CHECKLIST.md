@@ -1,5 +1,14 @@
 # چک‌لیست ثابت QA پایان هر P
 
+## CORE-HARDEN-P05 Closure Check
+
+- [x] H1-H4 evidence is referenced from reports 165-170 without changing historical verdicts.
+- [x] D1-D15 have a category, severity, owner, impact, status and reopen trigger.
+- [x] No CRITICAL open debt, `BLOCKS_RELEASE` debt or unknown runtime signal is recorded.
+- [x] Local main/origin references and no-push status are documented.
+- [x] P56 and all frozen runtime/subproject scopes remain outside the closure.
+- [ ] `CORE-HARDEN-P06` must review hardening ancestry and integration options before any merge or remote-promotion decision.
+
 ## Runtime Warning Triage Gate
 
 - [ ] Capture console, exceptions, failed requests, 4xx/5xx, route identity, RTL, mojibake, overflow, clipping, and redirect state across required desktop/mobile routes.

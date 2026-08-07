@@ -1,5 +1,9 @@
 ﻿# Phase Log
 
+## CORE-HARDEN-P05
+
+Canonical V1 technical debt register and hardening closure baseline completed as docs-only work. D1-D15 are owned and bounded; H1-H4 are `PASS_WITH_ACCEPTED_DEBT`, H5 is `PASS`, and the verdict is `HARDENING_CLOSURE_READY_WITH_ACCEPTED_DEBT`. No source change, merge, or push occurred. Next: `CORE-HARDEN-P06 - V1 Hardening Integration Readiness Review`.
+
 ## CORE-HARDEN-P04
 
 Runtime regression and warning triage baseline completed with Chrome 150/CDP fresh-profile repeatability. Test/build and all required route/layout checks PASS. Verdict: `RUNTIME_BASELINE_VERIFIED_WITH_ACCEPTED_WARNINGS`; no runtime fix or promotion occurred.

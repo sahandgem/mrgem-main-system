@@ -1,5 +1,14 @@
 # Current State
 
+## CORE-HARDEN-P05 Technical Debt and Closure
+
+- P05 branch: `docs/master-gem-v1-hardening-closure-p05`; docs-only closure baseline.
+- Verdict: `HARDENING_CLOSURE_READY_WITH_ACCEPTED_DEBT`.
+- H1-H4: `PASS_WITH_ACCEPTED_DEBT`; H5: `PASS`. There are no critical open debts, release blockers, or unknown runtime signals.
+- Local `main` remains `e42b32027cf642a1d1dc369786490a7427d16034`; observed `origin/main` remains `b16b1a020168516b2f8ad3e0bcd41e1193c8a824`; no push or remote promotion occurred.
+- Frozen scope remains P56, Cockpit runtime, Task/Decision runtime, subproject integration, backend/database/auth/API, storage migration and machine-constant migration.
+- Next selected phase: `CORE-HARDEN-P06 - V1 Hardening Integration Readiness Review`; no merge or push is authorized.
+
 ## CORE-HARDEN-P04 Runtime Warning Triage
 
 - P04 branch: `hardening/master-gem-v1-runtime-regression-warning-triage-p04`.

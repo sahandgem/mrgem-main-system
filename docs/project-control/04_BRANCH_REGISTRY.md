@@ -1,5 +1,9 @@
 ﻿# Branch Registry
 
+## CORE-HARDEN-P05
+
+- `docs/master-gem-v1-hardening-closure-p05`: docs-only canonical debt register and closure baseline, created from P04 head `c7180b6`; no merge or push.
+
 ## CORE-HARDEN-P03
 
 - `docs/master-gem-v1-release-rollback-discipline-p03`: docs-only release/rollback discipline baseline, created from verified P02 head; no merge or push.

@@ -1,5 +1,11 @@
 ﻿# Backlog
 
+## CORE-HARDEN-P05 Follow-up
+
+- `CORE-HARDEN-P06 - V1 Hardening Integration Readiness Review`: selected next phase; audit only, with no merge or push.
+- Deferred bounded tracks: transactional rollback contract, React duplicate-key cleanup, formal browser automation, external-image cleanup, Workforce monolith decomposition and storage architecture evolution.
+- Remote promotion remains a separate gate after an approved P06 integration plan; it is not selected work for P05.
+
 ## CORE-HARDEN-P04 Follow-up
 
 - `CORE-HARDEN-P05 - V1 Technical Debt Register and Hardening Closure Baseline`: selected next phase.

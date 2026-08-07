@@ -1,5 +1,14 @@
 # چک‌لیست ثابت QA پایان هر P
 
+## CORE-HARDEN-P06 Integration Readiness Check
+
+- [x] Ancestry is linear from local `main` `e42b320`; all intended hardening commits are present.
+- [x] Non-doc delta is bounded to verified `src/styles.css` and `tests/analysis.test.ts` changes.
+- [x] Package/lock, prototypes, subprojects, route/storage-registry, backend/database/auth/API contracts are unchanged.
+- [x] `npm.cmd test` and `npm.cmd run build` PASS; browser evidence is current after the final source repair.
+- [x] D15 is identified as remote-promotion-only debt; it does not block local integration.
+- [ ] P07 must recreate preflight, create the defined rollback branch, merge locally with `--no-ff`, and rerun verification without push.
+
 ## CORE-HARDEN-P05 Closure Check
 
 - [x] H1-H4 evidence is referenced from reports 165-170 without changing historical verdicts.

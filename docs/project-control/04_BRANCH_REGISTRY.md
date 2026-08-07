@@ -1,5 +1,10 @@
 ﻿# Branch Registry
 
+## CORE-HARDEN-P06
+
+- `review/master-gem-v1-hardening-integration-readiness-p06`: docs-only ancestry, delta and quality review; eligible future source for one local no-ff merge only after separate P07 approval. No merge or push occurred.
+- Future rollback branch, not created by P06: `backup/main-before-master-gem-v1-hardening-integration-e42b320`.
+
 ## CORE-HARDEN-P05
 
 - `docs/master-gem-v1-hardening-closure-p05`: docs-only canonical debt register and closure baseline, created from P04 head `c7180b6`; no merge or push.

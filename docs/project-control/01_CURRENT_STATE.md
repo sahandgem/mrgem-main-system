@@ -1,5 +1,14 @@
 # Current State
 
+## CORE-HARDEN-P06 Integration Readiness
+
+- P06 review branch: `review/master-gem-v1-hardening-integration-readiness-p06`; docs-only audit.
+- Ancestry is clean and linear: local `main` `e42b320` is the merge base/ancestor, with 9 hardening commits ahead and 0 behind.
+- Exact non-doc integration delta: `src/styles.css` verified mobile-overflow repair and `tests/analysis.test.ts` verified storage coverage; no package, prototype, subproject, route, registry, backend, database, auth or API delta.
+- Current quality: test PASS with only `--experimental-loader`; build PASS with 1,751 modules and no build warning; browser evidence is `CURRENT_AND_SUFFICIENT`.
+- D15 (`Remote promotion has not been performed`) is the sole pre-remote-fix debt. Local integration is allowed; remote promotion remains NOT authorized.
+- Strategy: `SINGLE_NO_FF_MERGE_OF_HARDENING_LINE`, including P06 docs. Next: `CORE-HARDEN-P07 - V1 Hardening Local Main Integration`; no push.
+
 ## CORE-HARDEN-P05 Technical Debt and Closure
 
 - P05 branch: `docs/master-gem-v1-hardening-closure-p05`; docs-only closure baseline.

@@ -1,5 +1,10 @@
 ﻿# Backlog
 
+## CORE-HARDEN-P06 Follow-up
+
+- `CORE-HARDEN-P07 - V1 Hardening Local Main Integration`: selected next phase; create the rollback branch, perform only the reviewed local no-ff merge, rerun gates, and do not push.
+- D15 remains a later, separately authorized remote-promotion gate after local integration; it is not selected implementation work now.
+
 ## CORE-HARDEN-P05 Follow-up
 
 - `CORE-HARDEN-P06 - V1 Hardening Integration Readiness Review`: selected next phase; audit only, with no merge or push.

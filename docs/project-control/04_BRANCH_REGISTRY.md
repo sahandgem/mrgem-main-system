@@ -1,5 +1,11 @@
 ﻿# Branch Registry
 
+## CORE-HARDEN-P07
+
+- `main`: local verified hardening integration merge `56413ed`; no push.
+- `backup/main-before-master-gem-v1-hardening-integration-e42b320`: retained P07 rollback reference at exact pre-merge main `e42b320`; do not delete or repoint without Project Core approval.
+- `review/master-gem-v1-hardening-integration-readiness-p06`: consumed as second parent `fd722ce` of the verified local merge; retained as review evidence.
+
 ## CORE-HARDEN-P06
 
 - `review/master-gem-v1-hardening-integration-readiness-p06`: docs-only ancestry, delta and quality review; eligible future source for one local no-ff merge only after separate P07 approval. No merge or push occurred.

@@ -1,5 +1,15 @@
 # Current State
 
+## CORE-HARDEN-P07 Local Main Integration
+
+- Local `main` integrated the verified hardening line by no-ff merge `56413eddcefde9007a0de15281d58429e2e42792`; first parent is `e42b320`, second parent is reviewed tip `fd722ce`.
+- Rollback branch: `backup/main-before-master-gem-v1-hardening-integration-e42b320` at `e42b32027cf642a1d1dc369786490a7427d16034`.
+- Post-merge test PASS with only known `--experimental-loader`; build PASS with 1,751 modules and no build warning.
+- Fresh native Chrome 150/CDP verification PASS: 17 critical route/viewport records, RTL/mojibake/overflow/clipping/runtime gates clean; one accepted Unsplash decorative network failure.
+- Storage baseline remains preserved: 24 registered keys, 23 backup keys, snapshot excluded and normal suite PASS.
+- Verdict: `HARDENING_LOCAL_INTEGRATION_VERIFIED`. `origin/main` remains `b16b1a020168516b2f8ad3e0bcd41e1193c8a824`; no push and remote promotion remains blocked pending explicit authorization.
+- Next: `CORE-HARDEN-P08 - V1 Post-Integration Lock and Remote Promotion Readiness Gate`.
+
 ## CORE-HARDEN-P06 Integration Readiness
 
 - P06 review branch: `review/master-gem-v1-hardening-integration-readiness-p06`; docs-only audit.

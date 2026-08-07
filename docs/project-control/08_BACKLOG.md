@@ -1,5 +1,10 @@
 ﻿# Backlog
 
+## CORE-HARDEN-P07 Follow-up
+
+- `CORE-HARDEN-P08 - V1 Post-Integration Lock and Remote Promotion Readiness Gate`: selected next phase; lock/re-audit local main and prepare checklist only, with no push unless separately authorized.
+- Remote promotion remains blocked by D15 pending a separate Project Core decision; the current local integration does not authorize it.
+
 ## CORE-HARDEN-P06 Follow-up
 
 - `CORE-HARDEN-P07 - V1 Hardening Local Main Integration`: selected next phase; create the rollback branch, perform only the reviewed local no-ff merge, rerun gates, and do not push.

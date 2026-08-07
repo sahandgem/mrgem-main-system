@@ -1,5 +1,15 @@
 # چک‌لیست ثابت QA پایان هر P
 
+## CORE-HARDEN-P07 Local Integration Check
+
+- [x] Rollback branch was created before local main changed and resolves to `e42b320`.
+- [x] One no-ff merge used reviewed tip `fd722ce` with first parent `e42b320`; no conflict occurred.
+- [x] Post-merge delta remains limited to verified CSS/test hardening and control documentation.
+- [x] Post-merge test/build PASS; build transformed 1,751 modules with no build warning.
+- [x] Fresh Chrome 150/CDP matrix PASS for 17 required route/viewport records; accepted Unsplash network signal only.
+- [x] No push, remote update, tag, P56 or subproject integration occurred.
+- [ ] P08 must lock the post-integration baseline and assess remote-promotion readiness without pushing.
+
 ## CORE-HARDEN-P06 Integration Readiness Check
 
 - [x] Ancestry is linear from local `main` `e42b320`; all intended hardening commits are present.

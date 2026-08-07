@@ -1,5 +1,9 @@
 ﻿# Phase Log
 
+## CORE-HARDEN-P07
+
+The complete 10-commit hardening line was integrated into local `main` with one no-ff merge `56413ed`, protected first by rollback branch `backup/main-before-master-gem-v1-hardening-integration-e42b320` at `e42b320`. Post-merge test/build and a fresh 17-case Chrome/CDP route matrix PASS. Verdict: `HARDENING_LOCAL_INTEGRATION_VERIFIED`; no push occurred and remote promotion remains separately blocked. Next: `CORE-HARDEN-P08 - V1 Post-Integration Lock and Remote Promotion Readiness Gate`.
+
 ## CORE-HARDEN-P06
 
 Hardening integration readiness review completed as docs-only work. The 9-commit line from `e42b320` is linear and complete; only the verified `src/styles.css` repair and `tests/analysis.test.ts` coverage differ from local main. Test/build PASS and browser evidence is current. Verdict: `HARDENING_INTEGRATION_READY_REMOTE_PROMOTION_BLOCKED`; D15 blocks remote promotion only. Next: `CORE-HARDEN-P07 - V1 Hardening Local Main Integration` with no push.

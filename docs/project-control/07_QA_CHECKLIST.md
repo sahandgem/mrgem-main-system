@@ -1,5 +1,11 @@
 # چک‌لیست ثابت QA پایان هر P
 
+## Runtime Warning Triage Gate
+
+- [ ] Capture console, exceptions, failed requests, 4xx/5xx, route identity, RTL, mojibake, overflow, clipping, and redirect state across required desktop/mobile routes.
+- [ ] Repeat the primary route matrix with a fresh browser profile; classify every unique signal and retain occurrence counts.
+- [ ] Do not promote remotely while an unclassified serious application error, crash, data-integrity risk, or unstable warning category exists.
+
 ## Release and Rollback Gate
 
 - [ ] Before remote promotion, verify local/remote ancestry, clean tree, current test/build/browser/mobile evidence, rollback reference, accepted debt, and explicit Project Core push authorization.

@@ -1,5 +1,9 @@
 ﻿# Phase Log
 
+## CORE-HARDEN-P04
+
+Runtime regression and warning triage baseline completed with Chrome 150/CDP fresh-profile repeatability. Test/build and all required route/layout checks PASS. Verdict: `RUNTIME_BASELINE_VERIFIED_WITH_ACCEPTED_WARNINGS`; no runtime fix or promotion occurred.
+
 ## CORE-HARDEN-P03
 
 Docs-only release and rollback discipline baseline completed. Local V1 is `LOCALLY_VERIFIED`, origin/main remains unchanged, and remote promotion requires separate authorization. Verdict: `RELEASE_ROLLBACK_BASELINE_READY_WITH_GAPS`.

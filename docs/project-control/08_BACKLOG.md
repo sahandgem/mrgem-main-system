@@ -1,5 +1,11 @@
 ﻿# Backlog
 
+## CORE-HARDEN-P04 Follow-up
+
+- `CORE-HARDEN-P05 - V1 Technical Debt Register and Hardening Closure Baseline`: selected next phase.
+- `CORE-HARDEN-WARN-P01 - React Duplicate Key Stabilization`: post-V1 source remediation candidate for shared `InfoPanel` title keys, only with separate approval.
+- External image dependency review and test-loader modernization remain separate non-blocking hardening work.
+
 ## CORE-HARDEN-P03 Follow-up
 
 - `CORE-HARDEN-P04 - Runtime Regression and Warning Triage Baseline`: selected next hardening track.

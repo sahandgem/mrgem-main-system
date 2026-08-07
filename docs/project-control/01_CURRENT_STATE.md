@@ -1,5 +1,13 @@
 # Current State
 
+## CORE-HARDEN-P04 Runtime Warning Triage
+
+- P04 branch: `hardening/master-gem-v1-runtime-regression-warning-triage-p04`.
+- Runtime verdict: `RUNTIME_BASELINE_VERIFIED_WITH_ACCEPTED_WARNINGS`.
+- Matrix: 31 completed Chrome 150/CDP route-viewport records; critical routes PASS; no crash, uncaught exception, mojibake, clipping, or horizontal overflow.
+- Signals: React duplicate-key warnings 0 in fresh P04 captures (2 historical title-key causes retained as post-V1 debt); Unsplash external-image failures 8 formal occurrences; favicon 404 1; loader warning 1 test-only.
+- Release blockers: none. Main/origin unchanged; no push. Next: `CORE-HARDEN-P05 - V1 Technical Debt Register and Hardening Closure Baseline`.
+
 ## CORE-HARDEN-P03 Release and Rollback Discipline
 
 - Canonical local main remains `e42b32027cf642a1d1dc369786490a7427d16034`; `origin/main` remains `b16b1a020168516b2f8ad3e0bcd41e1193c8a824`.

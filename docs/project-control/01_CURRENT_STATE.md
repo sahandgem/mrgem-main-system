@@ -1,3 +1,15 @@
+## CORE-V2-P04 Command Center Baseline
+
+- Gate V2-B was approved as designed and P04 implemented the bounded mock-backed Command Center baseline.
+- Target remains the existing `/organization/workforce-dashboard` route; no route or broad redesign was added.
+- View-model derivation, deterministic priority tiers, trust semantics, manual refresh, failure isolation, and DEMO/MOCK labeling are implemented.
+- `npm.cmd test` PASS; `npm.cmd run build` PASS with 1758 transformed modules.
+- Browser/RTL checks at 1280, 390, and 320 PASS with no overflow, clipping, crash, or mojibake.
+- Verdict: `COMMAND_CENTER_BASELINE_VERIFIED_WITH_GAPS` because the host dashboard retains pre-existing duplicate-key console errors and an external Unsplash network signal.
+- No real integration, AI/automation, command/write-back, backend/database/auth/API/storage change, pilot, P56 work, or subproject merge exists.
+- Report: `180_MASTER_GEM_V2_COMMAND_CENTER_BASELINE_IMPLEMENTATION.md`.
+- P05 must not start automatically; Project Core review is required first.
+
 ## CORE-V2-P03 Command Center Consumption Design
 
 - Phase status: design complete; implementation not authorized.

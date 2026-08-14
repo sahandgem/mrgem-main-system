@@ -1,3 +1,24 @@
+## CORE-V2-P04 Review Gate
+
+### Now - Project Core Decision
+
+- Review `180_MASTER_GEM_V2_COMMAND_CENTER_BASELINE_IMPLEMENTATION.md`.
+- Accept P04, accept with gaps, or hold for correction.
+- Decide whether to separately schedule cleanup for existing dashboard duplicate keys and external Unsplash dependency.
+
+### If P04 Is Accepted
+
+- Open the V2.3 pilot-selection gate.
+- Choose exactly one real subproject pilot or explicitly defer all pilots.
+- Define a separate adapter contract and approval boundary before any real connection.
+
+### Still Blocked
+
+- P05 automatic start.
+- Real Product/Mahak/Finance/Audit/Production/Mobile adapter or merge.
+- AI/automation, command execution, source write-back, and automatic task/decision creation.
+- Backend/database/auth/API/storage migration, new route, broad redesign, prototype merge, and P56.
+
 ## CORE-V2 Command Center Gate
 
 ### Now - Decision Required

@@ -1,3 +1,11 @@
+## CORE-V2-P04 - Command Center Implementation
+
+Gate V2-B was approved as designed. A pure read-only view model now consumes only normalized P02 mock aggregation, applies deterministic tier/rank attention, and renders one bounded DEMO/MOCK section on the existing workforce dashboard. Page-load and manual refresh, last-success retention, explicit trust states, failure/empty states, 20 focused tests, full test/build, and 1280/390/320 browser checks pass. No real adapter, route, package, storage, command, AI, backend/database/auth/API, P56, prototype, pilot, or subproject integration was added. Verdict: `COMMAND_CENTER_BASELINE_VERIFIED_WITH_GAPS`; the gaps are pre-existing host duplicate-key and external-image console signals.
+
+Commit is local to `feature/master-gem-v2-command-center-p04`; no merge or push is authorized by P04.
+
+P05 remains blocked pending Project Core review of Report 180. If P04 is accepted, the next decision is the V2.3 gate to select exactly one pilot or explicitly defer.
+
 ## CORE-V2-P03 - Command Center Data Consumption Design
 
 - Designed a read-only Command Center consumer over normalized P02 aggregation results.

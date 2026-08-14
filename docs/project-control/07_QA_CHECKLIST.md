@@ -1,3 +1,22 @@
+## CORE-V2-P04 Command Center Baseline QA
+
+- [x] Gate V2-B approval and exact P03 parent verified.
+- [x] UI consumes normalized P02 aggregation through a dedicated pure view model.
+- [x] Deterministic tiers, stable tie-breaks, no mutation, and no AI score tested.
+- [x] Fresh, degraded, stale LKG, unavailable, invalid, unsupported, no-data, disabled, and unknown remain distinct.
+- [x] Alert/KPI promotion and non-promotion rules tested.
+- [x] Page-load and manual refresh implemented; no interval/background refresh.
+- [x] Last successful view survives refresh failure by design.
+- [x] No task/decision creation, command execution, or source write-back.
+- [x] `npm.cmd test` PASS, including P02 regression and 20 P04 cases.
+- [x] `npm.cmd run build` PASS; 1758 modules transformed.
+- [x] Browser 1280/390/320 PASS: RTL, no overflow/clipping/crash/mojibake, manual refresh works.
+- [x] New Command Center code emits no console/page error.
+- [ ] Existing host duplicate-key React errors remain tracked as a gap.
+- [ ] Existing external Unsplash network signal remains tracked as a gap.
+- [x] No route/package/storage/backend/database/auth/API/P56/prototype/subproject change.
+- [ ] Do not start P05 until Project Core reviews Report 180.
+
 ## CORE-V2-P03 Command Center Consumption Gate
 
 - [x] UI contract consumes only normalized `ModuleAggregationResult` / `CoreModuleResult` data.

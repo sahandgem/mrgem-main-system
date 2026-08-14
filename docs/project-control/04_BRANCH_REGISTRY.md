@@ -1,3 +1,13 @@
+## CORE-V2-P04 Implementation Branch
+
+- Branch: `feature/master-gem-v2-command-center-p04`
+- Parent: `architecture/master-gem-v2-command-center-consumption-p03`
+- Parent commit: `9b0a9494a911c56c78e07b55108cb3183ee7666a`
+- Scope: bounded mock-only Command Center view model, UI section, tests, browser verification, and Report 180.
+- Rollback point: `9b0a9494a911c56c78e07b55108cb3183ee7666a`.
+- Merge/push: not authorized in P04.
+- Real integrations and pilot selection: not present.
+
 ## CORE-V2-P03 Design Branch
 
 - Branch: `architecture/master-gem-v2-command-center-consumption-p03`

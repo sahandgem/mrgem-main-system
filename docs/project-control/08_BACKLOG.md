@@ -1,3 +1,27 @@
+## CORE-V2-P05 Gate V2-C Decision Queue
+
+### Now - Operator Decision
+
+- Review `181_MASTER_GEM_V2_FIRST_REAL_PILOT_SELECTION_GATE.md`.
+- Choose exactly one: A Product Entry / Mahak, B Finance / Audit, or C defer real integration.
+- Treat `PRODUCT ENTRY / MAHAK` as a technical recommendation only, not an automatic selection.
+
+### If Product Entry / Mahak Is Selected
+
+- Start a separate docs/discovery readiness phase first.
+- Pin one authoritative source instance and define a versioned, atomic, read-only export contract.
+- Require sanitized fixtures, stable identity, freshness ownership, failure semantics, and adapter rollback before implementation approval.
+
+### If Finance / Audit Is Selected
+
+- Start a separate source/readiness and adapter-boundary phase first.
+- Verify source location and ownership, currency/period aggregation, redaction, read-only transport, fixtures, reconciliation, and rollback.
+
+### Still Blocked
+
+- Real adapter or subproject merge before Gate V2-C and a separate implementation gate.
+- Direct database sharing, shared localStorage, source-internal imports, UI scraping, and write-back.
+- AI/automation, command execution, approval action, backend/database/auth/API/storage migration, new route, broad redesign, prototype merge, and P56.
 ## CORE-V2-P04 Review Gate
 
 ### Now - Project Core Decision

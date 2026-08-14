@@ -1,3 +1,16 @@
+## CORE-V2-P05 Pilot Selection Gate QA
+
+- [x] P04 acceptance with documented gaps and exact P04 baseline verified.
+- [x] Review branch created from `d096359968f099e17dc362d3f31dbe58f7db195a` with a clean tree.
+- [x] Exactly Product Entry / Mahak and Finance / Audit compared against 20 criteria.
+- [x] Ratings use only `STRONG`, `ACCEPTABLE`, `WEAK`, and `UNKNOWN`.
+- [x] Missing source evidence is marked `UNKNOWN / NEEDS READINESS CHECK` rather than invented.
+- [x] Command Center fit, source-of-truth, read-only feasibility, testability, risk, and rollback compared.
+- [x] Technical recommendation is separated from operator selection.
+- [x] `GATE V2-C = PENDING_OPERATOR_DECISION`; no pilot or P06 was auto-started.
+- [x] P56 remains frozen; subprojects remain isolated; AI/automation and write-back remain unauthorized.
+- [x] No runtime/source/test/UI/CSS/package/lock/prototype/subproject change.
+- [ ] Operator must explicitly choose Gate V2-C option A, B, or C before any next pilot phase.
 ## CORE-V2-P04 Command Center Baseline QA
 
 - [x] Gate V2-B approval and exact P03 parent verified.
@@ -15,7 +28,7 @@
 - [ ] Existing host duplicate-key React errors remain tracked as a gap.
 - [ ] Existing external Unsplash network signal remains tracked as a gap.
 - [x] No route/package/storage/backend/database/auth/API/P56/prototype/subproject change.
-- [ ] Do not start P05 until Project Core reviews Report 180.
+- [x] Project Core accepted P04 with documented gaps and opened P05 as a docs-only selection gate.
 
 ## CORE-V2-P03 Command Center Consumption Gate
 

@@ -1,3 +1,12 @@
+## CORE-V2-P05 Pilot Selection Review Branch
+
+- Branch: `review/master-gem-v2-pilot-selection-p05`
+- Parent branch: `feature/master-gem-v2-command-center-p04`
+- Parent commit: `d096359968f099e17dc362d3f31dbe58f7db195a`
+- Scope: docs-only comparison of Product Entry / Mahak and Finance / Audit plus Report 181.
+- Gate: `V2-C = PENDING_OPERATOR_DECISION`; no pilot is selected.
+- Merge/push: not authorized in P05.
+- Subprojects remain isolated; P56 and AI/automation remain frozen.
 ## CORE-V2-P04 Implementation Branch
 
 - Branch: `feature/master-gem-v2-command-center-p04`

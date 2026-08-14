@@ -1,3 +1,13 @@
+## CORE-V2-P05 First Real Pilot Selection Gate
+
+- P04 is accepted with its documented pre-existing duplicate-key and Unsplash gaps.
+- P05 completed a docs-only comparison of Product Entry / Mahak and Finance / Audit on `review/master-gem-v2-pilot-selection-p05`.
+- Technical recommendation: `PRODUCT ENTRY / MAHAK`; this is not an operator selection or implementation approval.
+- Product Entry / Mahak readiness: `NEEDS SMALL PREP`; Finance / Audit readiness: `UNKNOWN` pending source evidence.
+- `GATE V2-C = PENDING_OPERATOR_DECISION`; no pilot is selected and P06 has not started.
+- No real integration, adapter, source change, UI change, backend/database/auth/API/storage change, AI/automation, or write-back exists.
+- P56 remains frozen and Product/Mahak and Finance/Audit remain isolated.
+- Report: `181_MASTER_GEM_V2_FIRST_REAL_PILOT_SELECTION_GATE.md`.
 ## CORE-V2-P04 Command Center Baseline
 
 - Gate V2-B was approved as designed and P04 implemented the bounded mock-backed Command Center baseline.

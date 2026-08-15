@@ -1,3 +1,9 @@
+## CORE-V2-WEEKLY-P00 - Weekly Dashboard Recovery and Scope Audit
+
+P05 remains complete with Gate V2-C pending. A docs-only repository audit confirmed that `/organization/workforce-dashboard` and `/organization/workforce-dashboard/schedule` are Core-owned Workforce surfaces backed by local persisted data, real analyzer/recommendation logic, and shared `WeeklyGrid`. P04 sits beside the existing weekly dashboard as a bounded mock-only Command Center section; it did not replace it.
+
+The weekly capability is classified `USABLE BUT ARCHITECTURALLY INCOMPLETE`. P56 is extraction/refactor work and is not required for the Weekly-Gate decision or a future bounded product contract. Technical recommendation is Option C, but `WEEKLY-GATE = PENDING_OPERATOR_DECISION`; P56 remains frozen, Gate V2-C remains pending, and Mahak P06 remains paused. No runtime/source/UI/CSS/route/test/package/storage change, merge, or push occurred.
+
 ## CORE-V2-P05 - First Real Pilot Selection Gate
 
 P04 was accepted with documented gaps. P05 compared exactly Product Entry / Mahak and Finance / Audit against 20 evidence-based criteria without integrating either source. Product/Mahak has stronger local/runtime and documentation evidence and is technically recommended, but still needs an authoritative-source and versioned read-only export readiness phase. Finance/Audit management value is strong, while its executable source, ownership, freshness, fixture, and transport evidence remain `UNKNOWN / NEEDS READINESS CHECK`.

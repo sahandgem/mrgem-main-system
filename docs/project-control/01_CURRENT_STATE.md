@@ -1,3 +1,14 @@
+## CORE-V2-WEEKLY-P00 Weekly Dashboard Recovery Audit
+
+- P05 is complete; `GATE V2-C = PENDING_OPERATOR_DECISION` remains unchanged.
+- Weekly Dashboard and the separate Weekly Schedule route are confirmed as Core-owned Workforce surfaces.
+- The current capability is `USABLE BUT ARCHITECTURALLY INCOMPLETE`: local CRUD/persistence, real analysis, recommendations, decisions, backup coverage, RTL, and responsive containment exist; dated-week semantics and focused Schedule/component tests do not.
+- P04 extends the existing dashboard with one bounded mock-only Command Center section; it does not replace the weekly schedule or Workforce analyzer.
+- Generic KPI/alert/attention concepts overlap. Technical recommendation is Weekly-Gate Option C, but no operator option is selected automatically.
+- `WEEKLY-GATE = PENDING_OPERATOR_DECISION`.
+- No runtime/source/UI/CSS/route/test/package/storage change occurred. P56 remains frozen and Mahak P06 remains paused until Weekly-Gate review.
+- Report: `182_MASTER_GEM_V2_WEEKLY_DASHBOARD_RECOVERY_AND_SCOPE_AUDIT.md`.
+
 ## CORE-V2-P05 First Real Pilot Selection Gate
 
 - P04 is accepted with its documented pre-existing duplicate-key and Unsplash gaps.

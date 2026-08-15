@@ -1,3 +1,13 @@
+## CORE-V2-WEEKLY-P00 Recovery Audit Branch
+
+- Branch: `review/master-gem-v2-weekly-dashboard-recovery-p00`.
+- Parent branch: `review/master-gem-v2-pilot-selection-p05`.
+- Parent/rollback commit: `7250e777efd6d2e9e6f56d1ce289c6c257a24937`.
+- Scope: docs-only audit of Weekly Dashboard, Weekly Schedule, WeeklyGrid, data/storage/test maturity, P56 relationship, and P04 overlap.
+- Gates: `WEEKLY-GATE = PENDING_OPERATOR_DECISION`; `GATE V2-C = PENDING_OPERATOR_DECISION`.
+- P56 remains frozen; Mahak P06 remains paused.
+- Merge/push: not authorized in this phase.
+
 ## CORE-V2-P05 Pilot Selection Review Branch
 
 - Branch: `review/master-gem-v2-pilot-selection-p05`

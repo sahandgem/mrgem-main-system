@@ -1,3 +1,16 @@
+## CORE-V2-WEEKLY-P00 Recovery Audit QA
+
+- [x] Exact P05 branch/HEAD, clean tree, Report 181, Gate V2-C, and P56 freeze verified before branch creation.
+- [x] Dashboard and Schedule routes, adapter entries, active dispatch, `WeeklyGrid`, models, services, analyzer, storage registry, backup, tests, and historical reports inspected.
+- [x] Workforce Core data is explicitly separated from P04 mock Integration Backbone data.
+- [x] Feature inventory and product/architecture/data/test/UX gap analysis completed.
+- [x] P56 classified as frozen extraction/refactor work, not a Weekly product prerequisite.
+- [x] P04 relationship classified as bounded coexistence with KPI/alert/attention overlap.
+- [x] Options A/B/C and a nonbinding technical recommendation are documented.
+- [x] No runtime/source/UI/CSS/route/test/package/lock/storage/prototype/subproject change.
+- [x] P56 remains frozen, Gate V2-C remains pending, and Mahak P06 remains paused.
+- [ ] Operator must explicitly choose Weekly-Gate A, B, or C before Mahak P06 is reconsidered.
+
 ## CORE-V2-P05 Pilot Selection Gate QA
 
 - [x] P04 acceptance with documented gaps and exact P04 baseline verified.

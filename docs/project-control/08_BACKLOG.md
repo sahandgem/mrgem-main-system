@@ -1,3 +1,17 @@
+## CORE-V2-WEEKLY-P00 Weekly-Gate Decision Queue
+
+### Now - Operator Decision
+
+- Review `182_MASTER_GEM_V2_WEEKLY_DASHBOARD_RECOVERY_AND_SCOPE_AUDIT.md`.
+- Choose exactly one Weekly-Gate option: A complete as distinct Core module, B absorb duplicated management parts into Command Center, or C freeze/retire duplicated dashboard parts while keeping unique weekly schedule functionality.
+- Treat Option C as a technical recommendation only, not an automatic selection.
+
+### Still Blocked
+
+- Mahak P06 until the Weekly-Gate review is recorded and Gate V2-C is separately resolved.
+- P56 or any new `WorkforcePages.tsx` extraction without `CORE-RESUME-P56`.
+- Removal of dashboard sections, real Workforce adapter work, Command Center write-back, route/storage/model changes, and subproject merge.
+
 ## CORE-V2-P05 Gate V2-C Decision Queue
 
 ### Now - Operator Decision

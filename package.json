@@ -1,14 +1,25 @@
 {
-  "name": "komak-khalaban-workforce-dashboard",
+  "name": "master-gem-workspace",
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "workspaces": ["apps/*", "packages/*"],
+  "engines": { "node": ">=22.18.0" },
   "scripts": {
-    "dev": "vite --host 127.0.0.1 --configLoader native",
-    "build": "tsc -b && vite build --configLoader native",
-    "preview": "vite preview --host 127.0.0.1 --configLoader native",
+    "dev": "npm run dev:workforce",
+    "dev:core": "npm run dev --workspace @master-gem/core",
+    "dev:workforce": "npm run dev --workspace @master-gem/workforce",
+    "build": "npm run build --workspaces --if-present",
+    "build:core": "npm run build --workspace @master-gem/core",
+    "build:workforce": "npm run build --workspace @master-gem/workforce",
+    "preview": "npm run preview:workforce",
+    "preview:core": "npm run preview --workspace @master-gem/core",
+    "preview:workforce": "npm run preview --workspace @master-gem/workforce",
     "serve": "node scripts/preview-server.mjs",
-    "test": "node --loader ./scripts/ts-extension-loader.mjs tests/analysis.test.ts"
+    "test": "node scripts/run-tests.mjs",
+    "test:boundaries": "node --test tests/workspaceBoundary.test.mjs",
+    "test:core": "node scripts/run-tests.mjs core",
+    "test:workforce": "node scripts/run-tests.mjs workforce"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.4",

@@ -12,7 +12,7 @@ export function App() {
   return (
     <div className="app-shell" dir="rtl">
       <aside className="sidebar">
-        <div className="brand"><span className="brand-mark"><Activity size={22} /></span><div><strong>تحلیل‌گر هفته</strong><small>ماژول سازمان</small></div></div>
+        <div className="brand"><span className="brand-mark"><Activity size={22} /></span><div><strong>تحلیل‌گر هفته</strong><small>مدیریت کارکنان مستر جم</small></div></div>
         <nav>
           {workforceNavigationRoutes.map((item) => {
             const Icon = item.icon;

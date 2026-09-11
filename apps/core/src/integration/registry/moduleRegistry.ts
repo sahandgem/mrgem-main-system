@@ -1,4 +1,4 @@
-import type { ModuleDiagnostic, ModuleRegistryEntry } from "../contracts/moduleContract";
+import type { ModuleDiagnostic, ModuleRegistryEntry } from "@master-gem/module-contracts";
 
 export const integrationModuleRegistry: readonly ModuleRegistryEntry[] = [
   {

@@ -1,6 +1,6 @@
 import { AlertTriangle, BarChart3, RefreshCw, ServerCog, ShieldCheck } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { StatusTone } from "../models/workforce";
+import type { StatusTone } from "./StatusBadge";
 import { CommandCenterMockDataSource } from "../integration/commandCenter/commandCenterMockDataSource";
 import {
   commandCenterReliabilityLabel,

@@ -64,7 +64,6 @@ import {
 } from "./components/EntityPanel";
 import { CapacityPanel, InfoPanel } from "./components/InfoPanel";
 import { StatusBadge } from "./components/StatusBadge";
-import { CommandCenterModuleOverview } from "./components/CommandCenterModuleOverview";
 import { BaselineCompatibilityNotice } from "./components/workforce/BaselineCompatibilityNotice";
 import HistoryRetentionPage from "./pages/workforce/operations/HistoryRetentionPage";
 import MaintenancePage from "./pages/workforce/system/MaintenancePage";
@@ -1150,7 +1149,6 @@ function DashboardPageV2({
         })}
       </section>
 
-      <CommandCenterModuleOverview />
 
       <section className="cockpit-grid">
         <div className="side-column">

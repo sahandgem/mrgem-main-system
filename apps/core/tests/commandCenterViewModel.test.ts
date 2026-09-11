@@ -6,7 +6,7 @@ import type {
   ModuleAlert,
   ModuleKpi,
   ModuleResultStatus,
-} from "../src/integration/contracts/moduleContract.ts";
+} from "@master-gem/module-contracts";
 import {
   buildCommandCenterViewModel,
   rankCommandCenterAttention,

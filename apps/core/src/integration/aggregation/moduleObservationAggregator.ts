@@ -6,7 +6,7 @@ import type {
   ModuleObservationV1,
   ModuleRegistryEntry,
   ModuleResultStatus,
-} from "../contracts/moduleContract";
+} from "@master-gem/module-contracts";
 import type { ModuleReadAdapter } from "../adapters/moduleAdapter";
 import { validateModuleRegistry } from "../registry/moduleRegistry";
 import { evaluateFreshness, validateAndNormalizeObservation } from "../validation/moduleObservationValidator";

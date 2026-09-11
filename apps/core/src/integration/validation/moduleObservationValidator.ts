@@ -15,7 +15,7 @@ import type {
   SourceHealth,
   SourceHealthState,
   SourceOwnership,
-} from "../contracts/moduleContract";
+} from "@master-gem/module-contracts";
 
 const moduleTypes = new Set<ModuleType>([
   "workforce", "product", "finance", "production", "inventory", "mobile", "core", "other",

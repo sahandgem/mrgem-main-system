@@ -3,7 +3,7 @@ import type {
   ModuleAggregationResult,
   ModuleKpi,
   ModuleResultStatus,
-} from "../contracts/moduleContract";
+} from "@master-gem/module-contracts";
 
 export type CommandCenterSeverity = "critical" | "warning" | "info";
 export type CommandCenterConfidence = "high" | "medium" | "low" | "unknown";

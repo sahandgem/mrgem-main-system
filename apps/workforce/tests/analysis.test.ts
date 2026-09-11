@@ -1,6 +1,4 @@
 import assert from "node:assert/strict";
-import "./integrationBackbone.test.ts";
-import "./commandCenterViewModel.test.ts";
 import { readFileSync } from "node:fs";
 import { mock } from "node:test";
 import {
@@ -1844,17 +1842,23 @@ assert.equal(overlaps(item("a", "e1", "s1", "09:00", "10:00"), item("b", "e2", "
   workforceBackupService.__memory.set("komak.workforce.spaces.v1", [space("retention-space", 1, 2)]);
   operationalHistoryService.addEvent(oldLow);
   operationalHistoryService.addEvent(event("recent-event", "2026-06-26T00:00:00.000Z", "low"));
-  const archive = historyRetentionService.createHistoryArchive("periodic archive");
-  assert.ok(archive);
-  assert.equal(archive.eventCount, 1);
-  assert.ok(archive.checksum);
-  assert.equal(archive.summary.includes("۱"), true);
-  const archiveExport = historyRetentionService.exportArchiveJson(archive.id);
-  assert.ok(archiveExport);
-  assert.equal(JSON.parse(archiveExport.content).version, "1.0.0");
-  const cleanupResult = historyRetentionService.cleanupArchivedEvents(archive.id);
-  assert.equal(cleanupResult.removedCount, 1);
-  assert.equal(operationalHistoryService.listEvents().some((item) => item.id === "old-low"), false);
-  assert.equal(operationalHistoryService.listEvents().some((item) => item.id === "recent-event"), true);
-  assert.equal((workforceBackupService.__memory.get("komak.workforce.spaces.v1") as Space[])[0].id, "retention-space");
+  // Service timestamps must use the same clock as the retention fixtures above.
+  mock.timers.enable({ apis: ["Date"], now: new Date(now) });
+  try {
+    const archive = historyRetentionService.createHistoryArchive("periodic archive");
+    assert.ok(archive);
+    assert.equal(archive.eventCount, 1);
+    assert.ok(archive.checksum);
+    assert.equal(archive.summary.includes("۱"), true);
+    const archiveExport = historyRetentionService.exportArchiveJson(archive.id);
+    assert.ok(archiveExport);
+    assert.equal(JSON.parse(archiveExport.content).version, "1.0.0");
+    const cleanupResult = historyRetentionService.cleanupArchivedEvents(archive.id);
+    assert.equal(cleanupResult.removedCount, 1);
+    assert.equal(operationalHistoryService.listEvents().some((item) => item.id === "old-low"), false);
+    assert.equal(operationalHistoryService.listEvents().some((item) => item.id === "recent-event"), true);
+    assert.equal((workforceBackupService.__memory.get("komak.workforce.spaces.v1") as Space[])[0].id, "retention-space");
+  } finally {
+    mock.timers.reset();
+  }
 }

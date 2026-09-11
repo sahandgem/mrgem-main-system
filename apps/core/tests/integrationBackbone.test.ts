@@ -4,7 +4,7 @@ import {
   buildMockObservation,
   MockModuleAdapter,
 } from "../src/integration/adapters/mockModuleAdapter.ts";
-import type { ModuleRegistryEntry } from "../src/integration/contracts/moduleContract.ts";
+import type { ModuleRegistryEntry } from "@master-gem/module-contracts";
 import {
   findModuleRegistryEntry,
   integrationModuleRegistry,

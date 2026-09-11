@@ -1,4 +1,4 @@
-import type { ModuleObservationV1 } from "../contracts/moduleContract";
+import type { ModuleObservationV1 } from "@master-gem/module-contracts";
 import type { AdapterReadResult, ModuleReadAdapter } from "./moduleAdapter";
 
 export type MockModuleScenario =

@@ -1,3 +1,11 @@
+## CORE-V2-P06 - Mahak Integration Readiness and Adapter Boundary
+
+Gate V2-C is now operator-selected as Product Entry / Mahak and Weekly-Gate is recorded as Option C. Weekly Schedule is retained, duplicated Weekly management scope is frozen/retired for controlled cleanup, and P56 remains frozen.
+
+Read-only inspection pinned the strongest observed operational candidate, mapped SQLite/localStorage/JS/XLS authority conflicts, verified SQLite integrity and current governed UID coverage, compared six boundary choices, and designed an aggregate-only P07 slice. The durable identity verdict is `EXISTING_DURABLE_MAHAK_SOURCE_IDENTITY_PROVEN; CORE_CANONICAL_PRODUCT_MAPPING_NOT YET PROVEN`. The preferred boundary is an atomic versioned JSON module-observation snapshot; a dedicated authenticated versioned read-only HTTP module endpoint is the fallback.
+
+P06 is docs-only. `MAHAK-GATE = PENDING_OPERATOR_DECISION` with technical recommendation Option B (approve with required prep). No real adapter, Core/Mahak runtime or source change, database migration, write-back, AI/automation, P56 work, merge, or push occurred.
+
 ## CORE-V2-WEEKLY-P00 - Weekly Dashboard Recovery and Scope Audit
 
 P05 remains complete with Gate V2-C pending. A docs-only repository audit confirmed that `/organization/workforce-dashboard` and `/organization/workforce-dashboard/schedule` are Core-owned Workforce surfaces backed by local persisted data, real analyzer/recommendation logic, and shared `WeeklyGrid`. P04 sits beside the existing weekly dashboard as a bounded mock-only Command Center section; it did not replace it.

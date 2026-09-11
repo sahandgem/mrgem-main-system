@@ -1,3 +1,13 @@
+## CORE-V2-P06 Mahak Readiness Design Branch
+
+- Branch: `architecture/master-gem-v2-mahak-integration-readiness-p06`.
+- Parent branch: `review/master-gem-v2-weekly-dashboard-recovery-p00`.
+- Parent / rollback commit: `4561ca121ef6e78fee5a903e2634eb88799ba340`.
+- Scope: docs-only Mahak evidence, source-of-truth/identity analysis, adapter boundary, normalized contract, P07 minimum slice, and Report 183.
+- Decisions carried in: `GATE V2-C = PRODUCT ENTRY / MAHAK`; `WEEKLY-GATE = OPTION C`; Weekly Schedule retained; duplicate Weekly management scope frozen/retired for controlled cleanup; P56 frozen.
+- Gate: `MAHAK-GATE = PENDING_OPERATOR_DECISION`; technical recommendation Option B.
+- Merge/push: not authorized. No Core or Mahak runtime/source integration is present.
+
 ## CORE-V2-WEEKLY-P00 Recovery Audit Branch
 
 - Branch: `review/master-gem-v2-weekly-dashboard-recovery-p00`.

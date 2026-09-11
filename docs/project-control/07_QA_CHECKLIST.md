@@ -1,3 +1,17 @@
+## CORE-V2-P06 Mahak Readiness QA
+
+- [x] New-Windows local V2 commit objects, expected Weekly branch/HEAD, clean start, and Reports 181/182 verified before branch creation.
+- [x] Operator decisions recorded: Gate V2-C is Mahak; Weekly-Gate is Option C; Weekly Schedule retained; duplicate Weekly management scope frozen/retired for controlled cleanup; P56 frozen.
+- [x] Mahak runtime locations, Git/source provenance, SQLite, localStorage, JS/XLS masters, requested tables, APIs, health, import/export, AI-ready export, backup/restore, sales/import, and identity evidence inspected read-only.
+- [x] Live SQLite integrity checked read-only with no WAL/SHM creation; no record values, credentials, or source identifiers copied.
+- [x] Source-of-truth matrix and all requested product-identity candidates analyzed.
+- [x] Durable Mahak source identity is distinguished from unresolved Core canonical product mapping.
+- [x] Six adapter choices compared; direct DB, localStorage, UI scraping, arbitrary files, generic API coupling, and write-back rejected.
+- [x] Preferred/fallback boundaries, normalized contract, KPIs, alerts, health, freshness, validation, security, failure states, P07 scope, acceptance, tests, browser plan, rollback, blockers, and open questions defined.
+- [x] Only `docs/project-control/` files changed; no Core/Mahak runtime, test, package, lock, storage, API, database, or UI file changed.
+- [x] No real adapter, source mutation, Mahak write-back, AI/automation, P56 work, merge, or push.
+- [ ] Operator must choose MAHAK-GATE A, B, or C before P07; technical recommendation is B with required prep.
+
 ## CORE-V2-WEEKLY-P00 Recovery Audit QA
 
 - [x] Exact P05 branch/HEAD, clean tree, Report 181, Gate V2-C, and P56 freeze verified before branch creation.

@@ -1,3 +1,14 @@
+## CORE-V2-P06 Mahak Integration Readiness and Adapter Boundary
+
+- Operator decisions are recorded: `GATE V2-C = PRODUCT ENTRY / MAHAK` and `WEEKLY-GATE = OPTION C`.
+- Weekly Schedule is retained; duplicated Weekly management scope is frozen/retired for later controlled cleanup. P56 remains frozen.
+- P06 completed read-only evidence discovery and docs-only boundary design on `architecture/master-gem-v2-mahak-integration-readiness-p06`.
+- The observed operational Mahak database is healthy and has governed source identity coverage for all 16 current products; a Core canonical product mapping is not yet proved.
+- Preferred boundary: atomic versioned JSON module-observation snapshot. Fallback: dedicated authenticated versioned read-only HTTP module endpoint.
+- Technical recommendation: MAHAK-GATE Option B, approve with required prep. `MAHAK-GATE = PENDING_OPERATOR_DECISION`; P07 must not start automatically.
+- No real adapter, Mahak/Core runtime or source change, write-back, AI/automation, P56 work, merge, or push occurred.
+- Report: `183_MASTER_GEM_V2_MAHAK_INTEGRATION_READINESS_AND_ADAPTER_BOUNDARY.md`.
+
 ## CORE-V2-WEEKLY-P00 Weekly Dashboard Recovery Audit
 
 - P05 is complete; `GATE V2-C = PENDING_OPERATOR_DECISION` remains unchanged.

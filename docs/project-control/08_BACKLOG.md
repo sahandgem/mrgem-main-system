@@ -1,3 +1,30 @@
+## CORE-V2-P06 MAHAK-GATE Decision Queue
+
+### Now - Operator Decision
+
+- Review `183_MASTER_GEM_V2_MAHAK_INTEGRATION_READINESS_AND_ADAPTER_BOUNDARY.md`.
+- Choose exactly one: A approve aggregate read-only P07, B approve with required prep, or C hold/block.
+- Technical recommendation is Option B; it is not an automatic approval.
+
+### Required Prep Before Recommended P07
+
+- Confirm the observed operational Mahak instance, owner, clean release/hash, database authority, and approved launch procedure.
+- Freeze an atomic versioned aggregate JSON snapshot, exact path, checksum/size, sanitized fixtures, KPI/alert formulas, producer cadence, and Core freshness policy.
+- Produce current complete backup/restore evidence and UTF-8/Persian encoding fixtures.
+- Keep P07 aggregate-only. Reconcile/finalize source identity and approve canonical mapping separately before any product drill-down.
+
+### Recorded Scope Decisions
+
+- Gate V2-C is Product Entry / Mahak.
+- Weekly-Gate is Option C: Weekly Schedule retained; duplicated Weekly management scope frozen/retired for controlled cleanup.
+- P56 remains frozen.
+
+### Still Blocked
+
+- P07 until MAHAK-GATE is explicitly selected and its required prerequisites are evidenced.
+- Any direct SQLite, localStorage, JS/XLS, generic Mahak API, UI-scraping, or per-product detail integration.
+- Mahak write-back, imports/restores, database migration, commands, AI/automation, backend/auth/storage expansion, P56, Weekly cleanup, subproject merge, and push.
+
 ## CORE-V2-WEEKLY-P00 Weekly-Gate Decision Queue
 
 ### Now - Operator Decision

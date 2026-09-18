@@ -1,5 +1,7 @@
-import { ArrowLeft, Clock3, MapPin, ShieldCheck, Sparkles } from "lucide-react";
-import type { CommandCenterViewModel } from "../../integration/commandCenter/commandCenterViewModel";
+import type {
+  CommandCenterAttentionItem,
+  CommandCenterViewModel,
+} from "../../integration/commandCenter/commandCenterViewModel";
 import { StatusBadge } from "../StatusBadge";
 import {
   attentionPriorityLabel,
@@ -10,61 +12,50 @@ import {
   toneForReliability,
 } from "./presentation";
 
-export function CommandCenterAttentionQueue({ viewModel }: { viewModel: CommandCenterViewModel }) {
+export function CommandCenterAttentionQueue({
+  onOpen,
+  viewModel,
+}: {
+  onOpen: (item: CommandCenterAttentionItem, trigger: HTMLButtonElement) => void;
+  viewModel: CommandCenterViewModel;
+}) {
+  const visibleItems = viewModel.topAttention.slice(0, 5);
+
   return (
     <section className="attention-section" aria-labelledby="attention-title">
-      <div className="section-heading section-heading--attention">
+      <div className="attention-heading">
         <div>
-          <span className="section-kicker"><Sparkles aria-hidden="true" size={17} />اولویت تصمیم مدیر</span>
+          <span className="section-label">BUSINESS ATTENTION</span>
           <h3 id="attention-title">صف توجه</h3>
-          <p>موضوع‌ها براساس اثر احتمالی بر کسب‌وکار مرتب شده‌اند؛ نه صرفاً شدت فنی.</p>
+          <p>مرتب‌شده براساس اثر احتمالی بر کسب‌وکار، نه شدت فنی.</p>
         </div>
         <span className="section-count">{toPersianNumber(viewModel.topAttention.length)} مورد</span>
       </div>
 
-      {viewModel.topAttention.length ? (
+      {visibleItems.length ? (
         <div className="attention-list">
-          {viewModel.topAttention.map((item, index) => {
+          {visibleItems.map((item, index) => {
             const tone = toneForAttention(item);
             return (
               <article className={`attention-item tone-${tone}`} key={item.attentionId}>
                 <div className="attention-item__rank" aria-hidden="true">{toPersianNumber(index + 1)}</div>
                 <div className="attention-item__content">
-                  <div className="attention-item__title-row">
-                    <div>
-                      <span className="attention-item__module">{item.moduleName}</span>
-                      <h4>{item.title}</h4>
-                    </div>
-                    <div className="attention-item__badges">
-                      {item.isExperimental && <StatusBadge tone="focus">آزمایشی</StatusBadge>}
-                      <StatusBadge tone={tone}>{attentionPriorityLabel(item.priorityTier)}</StatusBadge>
-                    </div>
+                  <div className="attention-item__primary">
+                    <span className="attention-item__module">{item.moduleName}</span>
+                    <h4>{item.title}</h4>
+                    <p>{item.businessImpact}</p>
                   </div>
-                  <p className="attention-item__summary">{item.summary}</p>
-                  <dl className="attention-item__facts">
-                    <div>
-                      <dt>اثر احتمالی</dt>
-                      <dd>{item.businessImpact}</dd>
-                    </div>
-                    <div>
-                      <dt><Clock3 aria-hidden="true" size={14} />زمان مرتبط</dt>
-                      <dd>{item.timeContext} · ثبت {formatDateTime(item.detectedAt)}</dd>
-                    </div>
-                    <div>
-                      <dt><ShieldCheck aria-hidden="true" size={14} />اعتبار داده</dt>
-                      <dd>
-                        <StatusBadge tone={toneForReliability(item.reliability)}>{item.reliability === "fresh" ? "تازه" : item.reliability === "stale_last_known_good" ? "آخرین داده سالم" : "نیازمند احتیاط"}</StatusBadge>
-                        <span>{confidenceLabel(item.confidence)}</span>
-                      </dd>
-                    </div>
-                  </dl>
-                  <div className="attention-item__footer">
-                    <span><MapPin aria-hidden="true" size={15} />مقصد بررسی: {item.destinationLabel}</span>
-                    {item.drillDownRef ? (
-                      <a className="text-link" href={item.drillDownRef}>رفتن به خلاصه ماژول <ArrowLeft aria-hidden="true" size={15} /></a>
-                    ) : (
-                      <span className="muted-action">مسیر جزئیات هنوز تعریف نشده است</span>
-                    )}
+                  <div className="attention-item__context">
+                    <span>{item.timeContext} · {formatDateTime(item.detectedAt)}</span>
+                    <span><StatusBadge tone={toneForReliability(item.reliability)}>{item.reliability === "fresh" ? "تازه" : item.reliability === "stale_last_known_good" ? "آخرین داده سالم" : "با احتیاط"}</StatusBadge> {confidenceLabel(item.confidence)}</span>
+                  </div>
+                  <div className="attention-item__action">
+                    <span>{item.destinationLabel}</span>
+                    <button onClick={(event) => onOpen(item, event.currentTarget)} type="button">بررسی</button>
+                  </div>
+                  <div className="attention-item__badges">
+                    {item.isExperimental && <StatusBadge tone="focus">آزمایشی</StatusBadge>}
+                    <StatusBadge tone={tone}>{attentionPriorityLabel(item.priorityTier)}</StatusBadge>
                   </div>
                 </div>
               </article>
@@ -73,7 +64,6 @@ export function CommandCenterAttentionQueue({ viewModel }: { viewModel: CommandC
         </div>
       ) : (
         <div className="empty-state tone-good">
-          <ShieldCheck aria-hidden="true" size={20} />
           <div><strong>صف توجه خالی است</strong><span>در داده موجود، موضوع نیازمند اقدام مدیر دیده نشده است.</span></div>
         </div>
       )}

@@ -2,6 +2,7 @@ import type { ModuleObservationV1 } from "@master-gem/module-contracts";
 import type { AdapterReadResult, ModuleReadAdapter } from "./moduleAdapter";
 
 export type MockModuleScenario =
+  | "normal_day"
   | "healthy"
   | "degraded"
   | "stale"
@@ -177,6 +178,20 @@ export class MockModuleAdapter implements ModuleReadAdapter {
       this.generatedAt
         ?? (this.scenario === "stale" ? "2026-08-06T00:00:00.000Z" : "2026-08-07T09:00:00.000Z"),
     );
+    if (this.scenario === "normal_day") {
+      observation.summary.status = observation.module.moduleType === "production" ? "experimental" : "healthy";
+      observation.summary.text = observation.module.moduleType === "production"
+        ? "نمای آزمایشی تولید برای ارزیابی پوسته Cockpit؛ اتصال واقعی فعال نیست."
+        : "داده برنامه معتبر و تازه است و موضوعی برای اقدام مدیر دیده نشده است.";
+      observation.kpis = (observation.kpis ?? []).map((kpi) => ({
+        ...kpi,
+        status: "normal",
+      }));
+      observation.alerts = (observation.alerts ?? []).map((alert) => ({
+        ...alert,
+        status: "resolved",
+      }));
+    }
     if (this.scenario === "stale") {
       observation.summary.text = "آخرین داده معتبر موجود است، اما از بازه تازگی عبور کرده است.";
     }

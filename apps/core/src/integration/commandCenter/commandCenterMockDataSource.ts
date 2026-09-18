@@ -4,7 +4,7 @@ import { ModuleObservationAggregator } from "../aggregation/moduleObservationAgg
 import { integrationModuleRegistry } from "../registry/moduleRegistry";
 import { buildCommandCenterViewModel, type CommandCenterViewModel } from "./commandCenterViewModel";
 
-export type CommandCenterMockScenario = "healthy" | "stale" | "partial" | "error";
+export type CommandCenterMockScenario = "normal" | "healthy" | "stale" | "partial" | "error";
 
 const moduleDetailRoutes = Object.fromEntries(
   integrationModuleRegistry.flatMap((entry) => entry.detailRouteRef ? [[entry.moduleId, entry.detailRouteRef]] : []),
@@ -44,7 +44,13 @@ export class CommandCenterMockDataSource implements CommandCenterDataSource {
         : now;
       adapter.setGeneratedAt(observedAt);
       adapter.setScenario(
-        scenario === "partial" ? "partial_kpi" : scenario === "error" ? "unavailable" : scenario,
+        scenario === "normal"
+          ? "normal_day"
+          : scenario === "partial"
+            ? "partial_kpi"
+            : scenario === "error"
+              ? "unavailable"
+              : scenario,
       );
     }
   }

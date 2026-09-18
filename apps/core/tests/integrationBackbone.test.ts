@@ -229,6 +229,15 @@ assert.equal(integrationModuleRegistry[1].moduleId, "production.demo");
 
 // Command Center mock scenarios exercise adapter -> validation -> aggregation -> view-model.
 {
+  const view = await new CommandCenterMockDataSource("normal").read(now);
+  assert.equal(view.overallState, "healthy");
+  assert.equal(view.modules.length, 2);
+  assert.equal(view.modules.every((module) => module.reliability === "fresh"), true);
+  assert.equal(view.topAttention.length, 0);
+  assert.equal(view.kpiHighlights.every((item) => item.status === "normal"), true);
+}
+
+{
   const view = await new CommandCenterMockDataSource("healthy").read(now);
   assert.equal(view.overallState, "critical");
   assert.equal(view.modules.length, 2);

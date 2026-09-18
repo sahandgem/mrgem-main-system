@@ -117,8 +117,11 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
   const view = buildCommandCenterViewModel(aggregation([moduleResult({
     status: "valid_with_warnings",
     effectiveState: "degraded",
+    partial: true,
   })]));
   assert.equal(view.modules[0].reliability, "degraded");
+  assert.equal(view.modules[0].isPartialData, true);
+  assert.match(view.modules[0].summaryText, /تصمیم‌گیری کامل نیست/);
   assert.equal(view.topAttention[0].priorityTier, 2);
 }
 
@@ -137,6 +140,8 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
   })]));
   assert.equal(view.modules[0].reliability, "stale_last_known_good");
   assert.match(view.modules[0].reliabilityLabel, /قدیمی/);
+  assert.equal(view.modules[0].hasLastKnownGood, true);
+  assert.equal(view.modules[0].dataStateLabel, "داده فعلی قدیمی است");
 }
 
 // 5. Invalid.

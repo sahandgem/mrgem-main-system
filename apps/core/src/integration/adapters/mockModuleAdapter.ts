@@ -85,6 +85,7 @@ export class MockModuleAdapter implements ModuleReadAdapter {
   readonly adapterKey: string;
   readonly moduleId: string;
   private scenario: MockModuleScenario;
+  private generatedAt?: string;
   private reads = 0;
 
   constructor(
@@ -99,6 +100,10 @@ export class MockModuleAdapter implements ModuleReadAdapter {
 
   setScenario(scenario: MockModuleScenario) {
     this.scenario = scenario;
+  }
+
+  setGeneratedAt(generatedAt?: string) {
+    this.generatedAt = generatedAt;
   }
 
   getReadCount() {
@@ -127,8 +132,21 @@ export class MockModuleAdapter implements ModuleReadAdapter {
 
     const observation = buildMockObservation(
       this.moduleId,
-      this.scenario === "stale" ? "2026-08-06T00:00:00.000Z" : "2026-08-07T09:00:00.000Z",
+      this.generatedAt
+        ?? (this.scenario === "stale" ? "2026-08-06T00:00:00.000Z" : "2026-08-07T09:00:00.000Z"),
     );
+    if (this.scenario === "healthy" || this.scenario === "stale") {
+      observation.summary.text = this.scenario === "healthy"
+        ? "وضعیت ماژول پایدار است و داده معتبر دریافت شده است."
+        : "آخرین داده معتبر موجود است، اما از بازه تازگی عبور کرده است.";
+      observation.kpis = (observation.kpis ?? []).map((kpi) => ({
+        ...kpi,
+        label: "هشدارهای فعال",
+        value: 0,
+        status: "normal",
+      }));
+      observation.alerts = [];
+    }
     if (this.scenario === "degraded") {
       observation.health = {
         ...observation.health,
@@ -143,7 +161,17 @@ export class MockModuleAdapter implements ModuleReadAdapter {
     }
     if (this.scenario === "partial_kpi") {
       const validKpi = observation.kpis?.[0];
-      observation.kpis = [validKpi, { key: "malformed-kpi" }] as unknown as ModuleObservationV1["kpis"];
+      observation.summary.text = "بخشی از داده دریافت شده و برای تصمیم کامل کافی نیست.";
+      observation.kpis = [
+        validKpi ? { ...validKpi, label: "هشدارهای فعال" } : validKpi,
+        { key: "malformed-kpi" },
+      ] as unknown as ModuleObservationV1["kpis"];
+      observation.alerts = (observation.alerts ?? []).map((alert) => ({
+        ...alert,
+        title: "هشدار نمایشی",
+        summary: "بخشی از اطلاعات این هشدار در سناریوی آزمایشی در دسترس نیست.",
+        recommendedNextAction: "کامل‌شدن داده منبع بررسی شود.",
+      }));
       observation.partial = { isPartial: true, missingSections: ["secondary_kpis"] };
     }
     if (this.scenario === "malformed_alert") {

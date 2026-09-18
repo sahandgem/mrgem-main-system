@@ -29,10 +29,13 @@ export interface CommandCenterModuleSummary {
   freshness: CoreModuleResult["freshness"];
   reliability: CommandCenterReliabilityState;
   reliabilityLabel: string;
+  dataStateLabel: string;
   summaryText: string;
+  receivedAt: string;
   observedAt?: string;
   lastSuccessfulAt?: string;
   hasLastKnownGood: boolean;
+  isPartialData: boolean;
   alertCounts: { critical: number; warning: number; info: number };
   highlightedKpiCount: number;
   detailRouteRef?: string;
@@ -200,13 +203,16 @@ export function commandCenterReliabilityLabel(state: CommandCenterReliabilitySta
 
 function summaryFor(result: CoreModuleResult, reliability: CommandCenterReliabilityState) {
   if (reliability === "fresh") return result.observation?.summary.text ?? "داده تازه و معتبر دریافت شد.";
-  if (reliability === "degraded") return result.observation?.summary.text ?? "داده با هشدار یا به‌صورت ناقص دریافت شد.";
+  if (reliability === "degraded" && result.observation?.partial?.isPartial) {
+    return "بخشی از داده دریافت نشده است؛ نمای موجود برای تصمیم‌گیری کامل نیست.";
+  }
+  if (reliability === "degraded") return "داده معتبر است، اما همراه با هشدار دریافت شده است.";
   if (reliability === "stale_last_known_good") return "آخرین داده معتبر نگه داشته شده، اما تازه نیست.";
   if (reliability === "unavailable" && result.lastKnownGood) {
     return "ماژول در دسترس نیست؛ آخرین داده معتبر فقط برای زمینه حفظ شده است.";
   }
   if (reliability === "unavailable") return "ماژول در دسترس نیست و داده معتبر قبلی وجود ندارد.";
-  if (reliability === "invalid") return "payload فعلی نامعتبر است و برای نمایش قابل اعتماد نیست.";
+  if (reliability === "invalid") return "داده فعلی قابل اعتماد نیست و در نمای مدیریتی استفاده نشده است.";
   if (reliability === "unsupported_version") return "نسخه قرارداد فعلی پشتیبانی نمی‌شود.";
   if (reliability === "no_data") return "ماژول فعال است، اما هنوز observation ندارد.";
   if (reliability === "disabled") return "ماژول در registry غیرفعال است.";
@@ -215,10 +221,22 @@ function summaryFor(result: CoreModuleResult, reliability: CommandCenterReliabil
 
 function observationForDisplay(result: CoreModuleResult) {
   if ((result.status === "valid" || result.status === "valid_with_warnings") && result.observation) {
-    return { observation: result.observation, isLastKnownGood: false };
+    return { observation: result.observation, isLastKnownGood: result.freshness === "stale" };
   }
   if (result.lastKnownGood) return { observation: result.lastKnownGood, isLastKnownGood: true };
   return undefined;
+}
+
+function dataStateLabelFor(result: CoreModuleResult, reliability: CommandCenterReliabilityState) {
+  if (reliability === "fresh") return "داده فعلی سالم و تازه است";
+  if (reliability === "stale_last_known_good") return "داده فعلی قدیمی است";
+  if (result.observation?.partial?.isPartial) return "داده فعلی ناقص است";
+  if (reliability === "degraded") return "داده فعلی با هشدار دریافت شده است";
+  if (reliability === "unavailable") return "دریافت فعلی ناموفق است";
+  if (reliability === "invalid" || reliability === "unsupported_version") return "داده فعلی قابل استفاده نیست";
+  if (reliability === "no_data") return "داده فعلی وجود ندارد";
+  if (reliability === "disabled") return "ماژول غیرفعال است";
+  return "وضعیت داده فعلی نامشخص است";
 }
 
 function safeDrillDown(ref: string | undefined, allowed: ReadonlySet<string>) {
@@ -406,10 +424,13 @@ function moduleSummaryFor(
     freshness: result.freshness,
     reliability,
     reliabilityLabel: commandCenterReliabilityLabel(reliability),
+    dataStateLabel: dataStateLabelFor(result, reliability),
     summaryText: summaryFor(result, reliability),
+    receivedAt: result.receivedAt,
     observedAt: display?.observation.generatedAt,
     lastSuccessfulAt: result.lastSuccessfulSyncAt,
-    hasLastKnownGood: Boolean(result.lastKnownGood),
+    hasLastKnownGood: Boolean(result.lastKnownGood || (result.observation && result.freshness === "stale")),
+    isPartialData: Boolean(result.observation?.partial?.isPartial),
     alertCounts: {
       critical: openAlerts.filter((alert) => alert.severity === "critical").length,
       warning: openAlerts.filter((alert) => alert.severity === "warning").length,
@@ -459,8 +480,7 @@ export function buildCommandCenterViewModel(
     });
   const criticalAttentionCount = allAttention.filter((item) => item.severity === "critical").length;
   const warningAttentionCount = allAttention.filter((item) => item.severity === "warning").length;
-  const partialModuleCount = enabled.filter((item) =>
-    item.result.observation?.partial?.isPartial || item.result.status === "valid_with_warnings").length;
+  const partialModuleCount = enabled.filter((item) => item.result.observation?.partial?.isPartial).length;
   const failedModuleCount = enabled.filter((item) =>
     ["unavailable", "invalid_payload", "unsupported_version", "registry_error"].includes(item.result.status)).length;
 

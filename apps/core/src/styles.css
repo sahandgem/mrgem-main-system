@@ -54,6 +54,16 @@ footer { padding: 20px 0 26px; color: #92a4bd; border-top: 1px solid #243044; fo
 .command-center-heading p, .command-center-row p, .command-center-row small, .command-center-refresh-time { color: #a6b6cb; font-size: .78rem; }
 .command-center-actions, .command-center-meta { flex-wrap: wrap; gap: 10px; }
 .command-center-actions { justify-content: flex-end; }
+.command-center-scenario-panel { display: grid; grid-template-columns: minmax(220px, .75fr) minmax(420px, 1.25fr); align-items: end; gap: 20px; padding: 18px; border: 1px solid #2d425a; border-radius: 8px; background: #0f1b2b; }
+.command-center-scenario-panel h3 { margin: 7px 0; font-size: .95rem; }
+.command-center-scenario-panel p { color: #9fb1c8; font-size: .76rem; }
+.command-center-scenario-options { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.scenario-button { min-height: 42px; padding: 8px 10px; border: 1px solid #38516b; border-radius: 7px; background: #15263a; color: #c4d2e4; font-size: .78rem; }
+.scenario-button:hover:not(:disabled) { background: #20364d; color: #fff; }
+.scenario-button[aria-pressed="true"] { border-color: #67d2cf; background: #173b46; color: #dcffff; box-shadow: inset 0 0 0 1px #67d2cf; }
+.command-center-scenario-summary { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 16px 18px; border: 1px solid currentColor; border-inline-start-width: 4px; border-radius: 7px; background: #111f31; }
+.command-center-scenario-summary > div { display: grid; gap: 6px; }
+.command-center-scenario-summary span:not(.status-badge) { color: #b1c0d3; font-size: .78rem; line-height: 1.8; }
 .command-center-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .command-center-summary > div { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 16px; border-inline-start: 3px solid #53b7ba; background: #142336; border-radius: 5px; }
 .command-center-summary span { color: #afc0d5; font-size: .8rem; }
@@ -67,6 +77,9 @@ footer { padding: 20px 0 26px; color: #92a4bd; border-top: 1px solid #243044; fo
 .command-center-row-head { font-size: .8rem; }
 .command-center-row-head > div { display: grid; gap: 6px; min-width: 0; }
 .command-center-row strong, .command-center-row p, .command-center-row small, .command-center-meta span { overflow-wrap: anywhere; }
+.command-center-data-status { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; }
+.command-center-data-status span { display: grid; gap: 4px; padding: 9px 10px; border-radius: 5px; background: #17263a; color: #bdcadd; font-size: .72rem; line-height: 1.7; }
+.command-center-data-status strong { color: #8498b2; font-size: .66rem; font-weight: 500; }
 .command-center-meta { color: #a2b2c9; font-size: .7rem; }
 .command-center-meta span + span::before { content: "•"; margin-inline-end: 8px; color: #62758e; }
 .command-center-kpi-value { color: #eaf0fa; font-size: 1rem; }
@@ -76,6 +89,7 @@ footer { padding: 20px 0 26px; color: #92a4bd; border-top: 1px solid #243044; fo
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (max-width: 1180px) {
   .command-center-header { align-items: flex-start; flex-direction: column; }
+  .command-center-scenario-panel { grid-template-columns: 1fr; align-items: start; }
   .command-center-zones { grid-template-columns: 1fr; }
   .connection-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -85,10 +99,12 @@ footer { padding: 20px 0 26px; color: #92a4bd; border-top: 1px solid #243044; fo
   .core-topbar { gap: 18px; }
   .core-intro { padding-top: 28px; }
   .command-center-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .command-center-scenario-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .command-center-actions { justify-content: flex-start; }
 }
 @media (max-width: 420px) {
-  .connection-grid, .command-center-summary { grid-template-columns: 1fr; }
+  .connection-grid, .command-center-summary, .command-center-scenario-options { grid-template-columns: 1fr; }
   .command-center-row-head { align-items: flex-start; flex-direction: column; }
+  .command-center-scenario-summary { align-items: flex-start; flex-direction: column; }
 }
 @media (prefers-reduced-motion: reduce) { .is-spinning { animation: none; } }

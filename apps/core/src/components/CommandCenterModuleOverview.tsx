@@ -1,7 +1,10 @@
 import { AlertTriangle, BarChart3, RefreshCw, ServerCog, ShieldCheck } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { StatusTone } from "./StatusBadge";
-import { CommandCenterMockDataSource } from "../integration/commandCenter/commandCenterMockDataSource";
+import {
+  CommandCenterMockDataSource,
+  type CommandCenterMockScenario,
+} from "../integration/commandCenter/commandCenterMockDataSource";
 import {
   commandCenterReliabilityLabel,
   type CommandCenterAttentionItem,
@@ -43,6 +46,43 @@ function formatRefreshTime(value?: string) {
   return new Date(value).toLocaleString("fa-IR", { dateStyle: "short", timeStyle: "short" });
 }
 
+const scenarioOptions: ReadonlyArray<{
+  key: CommandCenterMockScenario;
+  label: string;
+  title: string;
+  description: string;
+  tone: StatusTone;
+}> = [
+  {
+    key: "healthy",
+    label: "سالم",
+    title: "داده معتبر و تازه",
+    description: "دریافت فعلی موفق است و داده برای نمای مدیریتی قابل اتکاست.",
+    tone: "good",
+  },
+  {
+    key: "stale",
+    label: "قدیمی",
+    title: "آخرین داده سالم، اما قدیمی",
+    description: "داده معتبر باقی مانده است، ولی از بازه تازگی عبور کرده و نباید جاری تلقی شود.",
+    tone: "warn",
+  },
+  {
+    key: "partial",
+    label: "ناقص",
+    title: "داده ناقص دریافت شده است",
+    description: "بخشی از داده موجود نیست؛ نمای فعلی برای تصمیم کامل کافی نیست.",
+    tone: "warn",
+  },
+  {
+    key: "error",
+    label: "خطای دریافت",
+    title: "دریافت فعلی ناموفق است",
+    description: "مرکز فرمان فعال مانده و آخرین داده سالم را فقط به‌عنوان مرجع تاریخی نشان می‌دهد.",
+    tone: "critical",
+  },
+];
+
 function ModuleRow({ module }: { module: CommandCenterModuleSummary }) {
   return (
     <article className="command-center-row">
@@ -54,8 +94,14 @@ function ModuleRow({ module }: { module: CommandCenterModuleSummary }) {
         <StatusBadge tone={toneForReliability(module.reliability)}>{module.reliabilityLabel}</StatusBadge>
       </div>
       <p>{module.summaryText}</p>
+      <div className="command-center-data-status">
+        <span><strong>وضعیت فعلی</strong>{module.dataStateLabel}</span>
+        {module.hasLastKnownGood && module.observedAt && (
+          <span><strong>آخرین داده سالم</strong>{formatRefreshTime(module.observedAt)}</span>
+        )}
+        {module.isPartialData && <span><strong>دامنه نمایش</strong>فقط بخش‌های معتبر</span>}
+      </div>
       <div className="command-center-meta">
-        <span>وضعیت قرارداد: {module.status}</span>
         <span>هشدار باز: {toPersianNumber(module.alertCounts.critical + module.alertCounts.warning)}</span>
         <span>KPI مهم: {toPersianNumber(module.highlightedKpiCount)}</span>
       </div>
@@ -70,20 +116,22 @@ export function CommandCenterModuleOverview() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [refreshError, setRefreshError] = useState<string>();
   const [lastSuccessfulAt, setLastSuccessfulAt] = useState<string>();
+  const [activeScenario, setActiveScenario] = useState<CommandCenterMockScenario>("healthy");
 
   if (!dataSource.current) dataSource.current = new CommandCenterMockDataSource();
 
-  const refresh = useCallback(async () => {
+  const refresh = useCallback(async (scenario: CommandCenterMockScenario) => {
     if (refreshInFlight.current || !dataSource.current) return;
     refreshInFlight.current = true;
     setIsRefreshing(true);
     setRefreshError(undefined);
     try {
+      dataSource.current.setScenario(scenario);
       const next = await dataSource.current.read();
       setViewModel(next);
       setLastSuccessfulAt(next.generatedAt);
-    } catch (error) {
-      setRefreshError(error instanceof Error ? error.message : "به‌روزرسانی نمای مرکز فرمان ناموفق بود.");
+    } catch {
+      setRefreshError("به‌روزرسانی نمای مدیریتی انجام نشد. لطفاً دوباره تلاش کنید.");
     } finally {
       refreshInFlight.current = false;
       setIsRefreshing(false);
@@ -91,10 +139,16 @@ export function CommandCenterModuleOverview() {
   }, []);
 
   useEffect(() => {
-    void refresh();
+    void refresh("healthy");
   }, [refresh]);
 
   const summary = viewModel?.managementSummary;
+  const scenario = scenarioOptions.find((item) => item.key === activeScenario) ?? scenarioOptions[0];
+
+  const selectScenario = (next: CommandCenterMockScenario) => {
+    setActiveScenario(next);
+    void refresh(next);
+  };
 
   return (
     <section className="command-center-section" aria-labelledby="command-center-title">
@@ -107,11 +161,41 @@ export function CommandCenterModuleOverview() {
         <div className="command-center-actions">
           <StatusBadge tone="focus">DEMO / MOCK</StatusBadge>
           <span className="command-center-refresh-time">آخرین دریافت: {formatRefreshTime(lastSuccessfulAt)}</span>
-          <button className="ghost-button" disabled={isRefreshing} onClick={() => void refresh()} type="button">
+          <button className="ghost-button" disabled={isRefreshing} onClick={() => void refresh(activeScenario)} type="button">
             <RefreshCw aria-hidden="true" className={isRefreshing ? "is-spinning" : undefined} size={17} />
             {isRefreshing ? "در حال دریافت" : "به‌روزرسانی دستی"}
           </button>
         </div>
+      </div>
+
+      <div className="command-center-scenario-panel">
+        <div>
+          <span className="eyebrow">سناریوی نمایشی</span>
+          <h3>وضعیت داده را بررسی کنید</h3>
+          <p>این کنترل فقط داده ساختگی داخل Core را تغییر می‌دهد و هیچ اتصال عملیاتی ندارد.</p>
+        </div>
+        <div className="command-center-scenario-options" role="group" aria-label="انتخاب سناریوی داده mock">
+          {scenarioOptions.map((option) => (
+            <button
+              aria-pressed={activeScenario === option.key}
+              className="scenario-button"
+              disabled={isRefreshing}
+              key={option.key}
+              onClick={() => selectScenario(option.key)}
+              type="button"
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className={`command-center-scenario-summary tone-${scenario.tone}`} role="status" aria-live="polite">
+        <div>
+          <strong>{scenario.title}</strong>
+          <span>{scenario.description}</span>
+        </div>
+        <StatusBadge tone={scenario.tone}>{scenario.label}</StatusBadge>
       </div>
 
       {refreshError && (
@@ -194,8 +278,10 @@ export function CommandCenterModuleOverview() {
             <section className="command-center-zone" aria-labelledby="command-center-modules-title">
               <div className="command-center-zone-head">
                 <h3 id="command-center-modules-title">سلامت ماژول‌ها</h3>
-                <StatusBadge tone={viewModel.reliability.hasPartialData ? "warn" : "good"}>
-                  {viewModel.reliability.hasPartialData ? "داده جزئی" : "داده کامل"}
+                <StatusBadge tone={viewModel.reliability.failedModuleCount ? "critical" : viewModel.reliability.partialModuleCount ? "warn" : "good"}>
+                  {viewModel.reliability.failedModuleCount
+                    ? "دریافت ناموفق"
+                    : viewModel.reliability.partialModuleCount ? "داده ناقص" : "داده کامل"}
                 </StatusBadge>
               </div>
               <div className="command-center-list">

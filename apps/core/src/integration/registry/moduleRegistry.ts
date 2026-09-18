@@ -3,7 +3,7 @@ import type { ModuleDiagnostic, ModuleRegistryEntry } from "@master-gem/module-c
 export const integrationModuleRegistry: readonly ModuleRegistryEntry[] = [
   {
     moduleId: "workforce.demo",
-    displayName: "Workforce Demo",
+    displayName: "برنامه هفتگی (نمونه)",
     moduleType: "workforce",
     enabled: true,
     expectedContractMajor: 1,

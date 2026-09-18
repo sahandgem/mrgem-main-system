@@ -10,6 +10,7 @@ import {
   integrationModuleRegistry,
 } from "../src/integration/registry/moduleRegistry.ts";
 import { validateAndNormalizeObservation } from "../src/integration/validation/moduleObservationValidator.ts";
+import { CommandCenterMockDataSource } from "../src/integration/commandCenter/commandCenterMockDataSource.ts";
 
 const now = "2026-08-07T09:30:00.000Z";
 
@@ -223,6 +224,47 @@ assert.equal(integrationModuleRegistry[0].moduleId, "workforce.demo");
   assert.equal(module.status, "invalid_payload");
   assert.equal(module.diagnostics[0]?.code, "INVALID_PAYLOAD");
   assert.equal("write" in adapter, false);
+}
+
+// Command Center mock scenarios exercise adapter -> validation -> aggregation -> view-model.
+{
+  const view = await new CommandCenterMockDataSource("healthy").read(now);
+  assert.equal(view.overallState, "healthy");
+  assert.equal(view.modules[0].reliability, "fresh");
+  assert.equal(view.modules[0].dataStateLabel, "داده فعلی سالم و تازه است");
+  assert.equal(view.topAttention.length, 0);
+}
+
+{
+  const view = await new CommandCenterMockDataSource("stale").read(now);
+  assert.equal(view.overallState, "attention");
+  assert.equal(view.modules[0].reliability, "stale_last_known_good");
+  assert.equal(view.modules[0].hasLastKnownGood, true);
+  assert.ok(Date.parse(view.modules[0].observedAt ?? "") < Date.parse(view.modules[0].receivedAt));
+}
+
+{
+  const view = await new CommandCenterMockDataSource("partial").read(now);
+  assert.equal(view.overallState, "attention");
+  assert.equal(view.reliability.hasPartialData, true);
+  assert.equal(view.modules[0].isPartialData, true);
+  assert.equal(view.modules[0].dataStateLabel, "داده فعلی ناقص است");
+}
+
+{
+  const source = new CommandCenterMockDataSource("partial");
+  await source.read(now);
+  source.setScenario("error");
+  const view = await source.read(now);
+  assert.equal(view.overallState, "critical");
+  assert.equal(view.modules[0].reliability, "unavailable");
+  assert.equal(view.modules[0].hasLastKnownGood, true);
+  assert.equal(view.modules[0].dataStateLabel, "دریافت فعلی ناموفق است");
+  assert.equal(view.modules[0].isPartialData, false);
+  assert.equal(view.modules[0].alertCounts.warning, 0);
+  assert.equal(view.modules[0].highlightedKpiCount, 0);
+  assert.ok(Date.parse(view.modules[0].observedAt ?? "") < Date.parse(view.modules[0].receivedAt));
+  assert.doesNotMatch(view.modules[0].summaryText, /SYNTHETIC_UNAVAILABLE|adapter|transport/i);
 }
 
 console.log("Integration Backbone baseline tests passed.");

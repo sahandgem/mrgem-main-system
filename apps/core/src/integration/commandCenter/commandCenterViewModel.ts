@@ -36,6 +36,9 @@ export interface CommandCenterModuleSummary {
   lastSuccessfulAt?: string;
   hasLastKnownGood: boolean;
   isPartialData: boolean;
+  isExperimental: boolean;
+  moduleDescription: string;
+  destinationLabel: string;
   alertCounts: { critical: number; warning: number; info: number };
   highlightedKpiCount: number;
   detailRouteRef?: string;
@@ -55,6 +58,10 @@ export interface CommandCenterAttentionItem {
   priorityTier: 0 | 1 | 2 | 3;
   riskFlags: string[];
   detectedAt?: string;
+  businessImpact: string;
+  timeContext: string;
+  destinationLabel: string;
+  isExperimental: boolean;
   suggestedNextStep?: string;
   drillDownRef?: string;
 }
@@ -66,10 +73,14 @@ export interface CommandCenterKpiHighlight {
   kpiKey: string;
   label: string;
   displayValue: string;
-  status: "critical" | "warning";
+  status: ModuleKpi["status"];
   reliability: CommandCenterReliabilityState;
   reliabilityLabel: string;
   observedAt?: string;
+  trendDirection?: NonNullable<ModuleKpi["comparison"]>["direction"];
+  trendText?: string;
+  contextLabel: string;
+  isExperimental: boolean;
   explanation: string;
   drillDownRef?: string;
 }
@@ -129,6 +140,77 @@ const reliabilityRank: Record<CommandCenterReliabilityState, number> = {
   disabled: 8,
 };
 
+const kpiStatusRank: Record<ModuleKpi["status"], number> = {
+  critical: 0,
+  warning: 1,
+  info: 2,
+  normal: 3,
+  unknown: 4,
+};
+
+const modulePresentation: Readonly<Record<string, {
+  description: string;
+  destinationLabel: string;
+  isExperimental: boolean;
+}>> = {
+  "workforce.demo": {
+    description: "برنامه، ظرفیت، فشار کاری و تعارض‌های عملیاتی نیروی انسانی",
+    destinationLabel: "خلاصه برنامه هفتگی",
+    isExperimental: false,
+  },
+  "production.demo": {
+    description: "نمونه معماری WorkOrder و عملکرد تولید؛ منطق نهایی هنوز تعریف نشده است",
+    destinationLabel: "جزئیات نمونه Production",
+    isExperimental: true,
+  },
+};
+
+const attentionPresentation: Readonly<Record<string, {
+  businessImpact: string;
+  timeContext: string;
+  destinationLabel: string;
+  priorityTier: 1 | 2 | 3;
+}>> = {
+  workforce_operational_conflict: {
+    businessImpact: "برنامه ممکن است قابل اجرا یا از نظر ایمنی قابل اتکا نباشد.",
+    timeContext: "برنامه جاری نمونه",
+    destinationLabel: "برنامه هفتگی و آیتم‌های متعارض",
+    priorityTier: 1,
+  },
+  workforce_schedule_coverage: {
+    businessImpact: "بخشی از کار برنامه‌ریزی‌شده ممکن است بدون پوشش کافی بماند.",
+    timeContext: "برنامه جاری نمونه",
+    destinationLabel: "تحلیل پوشش برنامه",
+    priorityTier: 2,
+  },
+  workforce_capacity_concentration: {
+    businessImpact: "وابستگی زیاد به یک نقش می‌تواند ظرفیت تیم را آسیب‌پذیر کند.",
+    timeContext: "نمای هفتگی نمونه",
+    destinationLabel: "تحلیل فشار کاری",
+    priorityTier: 2,
+  },
+  production_work_order_risk: {
+    businessImpact: "در معماری آینده می‌تواند بر موعد تولید و تعهد تحویل اثر بگذارد.",
+    timeContext: "سناریوی آزمایشی؛ بازه نهایی نیازمند تعریف",
+    destinationLabel: "نمونه جزئیات WorkOrder",
+    priorityTier: 2,
+  },
+  production_plan_attainment: {
+    businessImpact: "در معماری آینده کاهش تحقق برنامه می‌تواند نشانه عقب‌ماندگی تولید باشد.",
+    timeContext: "سناریوی آزمایشی؛ دوره اندازه‌گیری نیازمند تعریف",
+    destinationLabel: "نمونه برنامه در برابر عملکرد",
+    priorityTier: 3,
+  },
+};
+
+function modulePresentationFor(moduleId: string) {
+  return modulePresentation[moduleId] ?? {
+    description: "خلاصه مدیریتی ماژول متصل‌شده",
+    destinationLabel: "جزئیات ماژول",
+    isExperimental: false,
+  };
+}
+
 function compareText(left: string, right: string) {
   if (left === right) return 0;
   return left < right ? -1 : 1;
@@ -145,6 +227,7 @@ export function compareCommandCenterAttention(
   right: CommandCenterAttentionItem,
 ) {
   if (left.priorityTier !== right.priorityTier) return left.priorityTier - right.priorityTier;
+  if (left.isExperimental !== right.isExperimental) return left.isExperimental ? 1 : -1;
   if (severityRank[left.severity] !== severityRank[right.severity]) {
     return severityRank[left.severity] - severityRank[right.severity];
   }
@@ -261,71 +344,14 @@ function displayKpiValue(kpi: ModuleKpi) {
   return kpi.unit ? `${value} ${kpi.unit}` : value;
 }
 
-function moduleStateAttention(
-  result: CoreModuleResult,
-  reliability: CommandCenterReliabilityState,
-): CommandCenterAttentionItem | undefined {
-  const base = {
-    moduleId: result.moduleId,
-    moduleName: result.displayName,
-    reliability,
-    confidence: confidenceFor(reliability),
-    detectedAt: result.receivedAt,
-    riskFlags: riskFlagsFor(reliability),
-  };
-  if (reliability === "invalid" || reliability === "unsupported_version") {
-    return {
-      ...base,
-      attentionId: `${result.moduleId}:data-quality:${result.status}`,
-      sourceType: "data_quality",
-      title: reliability === "invalid" ? "داده ماژول نامعتبر است" : "نسخه قرارداد پشتیبانی نمی‌شود",
-      summary: summaryFor(result, reliability),
-      severity: "critical",
-      priorityTier: 0,
-      suggestedNextStep: "سازگاری قرارداد و diagnostics ماژول بررسی شود.",
-    };
+function kpiTrendText(kpi: ModuleKpi) {
+  if (!kpi.comparison) return undefined;
+  const parts = [kpi.comparison.label];
+  if (typeof kpi.comparison.delta === "number") {
+    const sign = kpi.comparison.delta > 0 ? "+" : "";
+    parts.push(`تغییر ${sign}${kpi.comparison.delta}${kpi.unit ? ` ${kpi.unit}` : ""}`);
   }
-  if (reliability === "unavailable") {
-    return {
-      ...base,
-      attentionId: `${result.moduleId}:module-state:unavailable`,
-      sourceType: "module_state",
-      title: "ماژول در دسترس نیست",
-      summary: summaryFor(result, reliability),
-      severity: "critical",
-      priorityTier: 1,
-      suggestedNextStep: "دسترس‌پذیری منبع بررسی و از داده قدیمی به‌عنوان داده تازه استفاده نشود.",
-    };
-  }
-  if (reliability === "stale_last_known_good" || reliability === "degraded" || reliability === "no_data") {
-    const title = reliability === "stale_last_known_good"
-      ? "داده ماژول قدیمی است"
-      : reliability === "degraded"
-        ? "ماژول با هشدار کار می‌کند"
-        : "ماژول هنوز داده‌ای ندارد";
-    return {
-      ...base,
-      attentionId: `${result.moduleId}:module-state:${reliability}`,
-      sourceType: reliability === "no_data" ? "data_quality" : "module_state",
-      title,
-      summary: summaryFor(result, reliability),
-      severity: "warning",
-      priorityTier: 2,
-      suggestedNextStep: "وضعیت منبع و زمان آخرین داده بررسی شود.",
-    };
-  }
-  if (reliability === "unknown") {
-    return {
-      ...base,
-      attentionId: `${result.moduleId}:module-state:unknown`,
-      sourceType: "module_state",
-      title: "وضعیت ماژول نامشخص است",
-      summary: summaryFor(result, reliability),
-      severity: "info",
-      priorityTier: 3,
-    };
-  }
-  return undefined;
+  return parts.filter(Boolean).join(" · ") || undefined;
 }
 
 function kpiHighlightsFor(
@@ -335,10 +361,10 @@ function kpiHighlightsFor(
 ) {
   const display = observationForDisplay(result);
   if (!display) return [];
-  return (display.observation.kpis ?? []).flatMap<CommandCenterKpiHighlight>((kpi) => {
-    if (kpi.status !== "critical" && kpi.status !== "warning") return [];
+  const presentation = modulePresentationFor(result.moduleId);
+  return (display.observation.kpis ?? []).map<CommandCenterKpiHighlight>((kpi) => {
     const displayReliability = display.isLastKnownGood ? "stale_last_known_good" : reliability;
-    return [{
+    return {
       highlightId: `${result.moduleId}:kpi:${kpi.key}`,
       moduleId: result.moduleId,
       moduleName: result.displayName,
@@ -349,11 +375,17 @@ function kpiHighlightsFor(
       reliability: displayReliability,
       reliabilityLabel: commandCenterReliabilityLabel(displayReliability),
       observedAt: kpi.measuredAt,
+      trendDirection: kpi.comparison?.direction,
+      trendText: kpiTrendText(kpi),
+      contextLabel: attentionPresentation[kpi.key]?.timeContext ?? "آخرین بازه گزارش‌شده",
+      isExperimental: presentation.isExperimental,
       explanation: display.isLastKnownGood
         ? "این KPI از آخرین داده معتبر است و نباید داده جاری تلقی شود."
-        : kpi.status === "critical" ? "KPI بحرانی ماژول" : "KPI نیازمند توجه",
+        : kpi.status === "critical" || kpi.status === "warning"
+          ? "این شاخص از محدوده نمونه مدیریتی خارج شده است."
+          : "این شاخص در محدوده نمونه قرار دارد.",
       drillDownRef: safeDrillDown(kpi.drillDownRef, allowed),
-    }];
+    };
   });
 }
 
@@ -364,9 +396,11 @@ function alertAttentionFor(
 ) {
   const display = observationForDisplay(result);
   if (!display) return [];
+  const moduleDisplay = modulePresentationFor(result.moduleId);
   return (display.observation.alerts ?? []).flatMap<CommandCenterAttentionItem>((alert) => {
     if (alert.status !== "open" || alert.severity === "info") return [];
     const displayReliability = display.isLastKnownGood ? "stale_last_known_good" : reliability;
+    const presentation = attentionPresentation[alert.category];
     return [{
       attentionId: `${result.moduleId}:alert:${alert.alertId}`,
       moduleId: result.moduleId,
@@ -378,9 +412,13 @@ function alertAttentionFor(
       severity: alert.severity,
       confidence: confidenceFor(displayReliability),
       reliability: displayReliability,
-      priorityTier: alert.severity === "critical" ? 1 : 2,
+      priorityTier: presentation?.priorityTier ?? 3,
       riskFlags: riskFlagsFor(displayReliability),
       detectedAt: alert.detectedAt,
+      businessImpact: presentation?.businessImpact ?? "اثر کسب‌وکاری این هشدار نیازمند تعریف است.",
+      timeContext: presentation?.timeContext ?? "بازه زمانی نیازمند تعریف",
+      destinationLabel: presentation?.destinationLabel ?? moduleDisplay.destinationLabel,
+      isExperimental: moduleDisplay.isExperimental,
       suggestedNextStep: alert.recommendedNextAction,
       drillDownRef: safeDrillDown(alert.drillDownRef, allowed),
     }];
@@ -388,22 +426,30 @@ function alertAttentionFor(
 }
 
 function kpiAttentionFor(highlights: readonly CommandCenterKpiHighlight[]): CommandCenterAttentionItem[] {
-  return highlights.map((highlight) => ({
-    attentionId: `${highlight.moduleId}:kpi-attention:${highlight.kpiKey}`,
-    moduleId: highlight.moduleId,
-    moduleName: highlight.moduleName,
-    sourceType: "kpi",
-    sourceRef: highlight.kpiKey,
-    title: highlight.label,
-    summary: `${highlight.displayValue} — ${highlight.explanation}`,
-    severity: highlight.status,
-    confidence: confidenceFor(highlight.reliability),
-    reliability: highlight.reliability,
-    priorityTier: highlight.status === "critical" ? 1 : 2,
-    riskFlags: riskFlagsFor(highlight.reliability),
-    detectedAt: highlight.observedAt,
-    drillDownRef: highlight.drillDownRef,
-  }));
+  return highlights.flatMap((highlight) => {
+    if (highlight.status !== "critical" && highlight.status !== "warning") return [];
+    const presentation = attentionPresentation[highlight.kpiKey];
+    return [{
+      attentionId: `${highlight.moduleId}:kpi-attention:${highlight.kpiKey}`,
+      moduleId: highlight.moduleId,
+      moduleName: highlight.moduleName,
+      sourceType: "kpi" as const,
+      sourceRef: highlight.kpiKey,
+      title: highlight.label,
+      summary: `${highlight.displayValue} — ${highlight.explanation}`,
+      severity: highlight.status,
+      confidence: confidenceFor(highlight.reliability),
+      reliability: highlight.reliability,
+      priorityTier: presentation?.priorityTier ?? 3,
+      riskFlags: riskFlagsFor(highlight.reliability),
+      detectedAt: highlight.observedAt,
+      businessImpact: presentation?.businessImpact ?? "اثر کسب‌وکاری این شاخص نیازمند تعریف است.",
+      timeContext: presentation?.timeContext ?? highlight.contextLabel,
+      destinationLabel: presentation?.destinationLabel ?? "جزئیات شاخص",
+      isExperimental: highlight.isExperimental,
+      drillDownRef: highlight.drillDownRef,
+    }];
+  });
 }
 
 function moduleSummaryFor(
@@ -414,6 +460,7 @@ function moduleSummaryFor(
 ): CommandCenterModuleSummary {
   const display = observationForDisplay(result);
   const openAlerts = (display?.observation.alerts ?? []).filter((alert) => alert.status === "open");
+  const presentation = modulePresentationFor(result.moduleId);
   const routeCandidate = options.moduleDetailRoutes?.[result.moduleId];
   const allowed = options.allowedDrillDownRefs ?? new Set<string>();
   return {
@@ -431,12 +478,15 @@ function moduleSummaryFor(
     lastSuccessfulAt: result.lastSuccessfulSyncAt,
     hasLastKnownGood: Boolean(result.lastKnownGood || (result.observation && result.freshness === "stale")),
     isPartialData: Boolean(result.observation?.partial?.isPartial),
+    isExperimental: presentation.isExperimental,
+    moduleDescription: presentation.description,
+    destinationLabel: presentation.destinationLabel,
     alertCounts: {
       critical: openAlerts.filter((alert) => alert.severity === "critical").length,
       warning: openAlerts.filter((alert) => alert.severity === "warning").length,
       info: openAlerts.filter((alert) => alert.severity === "info").length,
     },
-    highlightedKpiCount: highlights.length,
+    highlightedKpiCount: highlights.filter((item) => item.status === "critical" || item.status === "warning").length,
     detailRouteRef: safeDrillDown(routeCandidate, allowed),
   };
 }
@@ -449,7 +499,6 @@ export function buildCommandCenterViewModel(
   const moduleModels = aggregation.modules.map((result) => {
     const reliability = reliabilityFor(result);
     const highlights = result.status === "disabled" ? [] : kpiHighlightsFor(result, reliability, allowed);
-    const moduleAttention = result.status === "disabled" ? undefined : moduleStateAttention(result, reliability);
     const alertAttention = result.status === "disabled" ? [] : alertAttentionFor(result, reliability, allowed);
     const kpiAttention = result.status === "disabled" ? [] : kpiAttentionFor(highlights);
     return {
@@ -457,7 +506,7 @@ export function buildCommandCenterViewModel(
       reliability,
       highlights,
       summary: moduleSummaryFor(result, reliability, highlights, options),
-      attention: [...(moduleAttention ? [moduleAttention] : []), ...alertAttention, ...kpiAttention],
+      attention: [...alertAttention, ...kpiAttention],
     };
   });
 
@@ -472,8 +521,9 @@ export function buildCommandCenterViewModel(
   const kpiHighlights = moduleModels
     .flatMap((item) => item.highlights)
     .sort((left, right) => {
-      const statusDifference = severityRank[left.status] - severityRank[right.status];
+      const statusDifference = kpiStatusRank[left.status] - kpiStatusRank[right.status];
       if (statusDifference) return statusDifference;
+      if (left.isExperimental !== right.isExperimental) return left.isExperimental ? 1 : -1;
       const reliabilityDifference = reliabilityRank[left.reliability] - reliabilityRank[right.reliability];
       if (reliabilityDifference) return reliabilityDifference;
       return compareText(left.highlightId, right.highlightId);
@@ -510,7 +560,10 @@ export function buildCommandCenterViewModel(
       unknownFreshnessCount: enabled.filter((item) => item.result.freshness === "unknown").length,
       hasPartialData: partialModuleCount > 0 || failedModuleCount > 0,
     },
-    modules: moduleModels.map((item) => item.summary).sort((left, right) => compareText(left.moduleId, right.moduleId)),
+    modules: moduleModels.map((item) => item.summary).sort((left, right) => {
+      if (left.isExperimental !== right.isExperimental) return left.isExperimental ? 1 : -1;
+      return compareText(left.moduleId, right.moduleId);
+    }),
     topAttention,
     kpiHighlights,
   };

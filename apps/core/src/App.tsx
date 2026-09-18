@@ -1,12 +1,5 @@
-import { Boxes, Cable, ShieldCheck } from "lucide-react";
+import { Boxes, ShieldCheck } from "lucide-react";
 import { CommandCenterModuleOverview } from "./components/CommandCenterModuleOverview";
-
-const plannedConnections = [
-  { name: "ورود کالا · محک", scope: "اولین نامزد اتصال؛ منتظر تأیید مرز آداپتور و هویت منبع" },
-  { name: "حسابرسی", scope: "تحلیل مالی در پروژه خودش؛ ارائه خلاصه مدیریتی از طریق قرارداد" },
-  { name: "مرکز تولید", scope: "عملیات تولید در پروژه خودش؛ ارائه وضعیت و هشدارها از طریق قرارداد" },
-  { name: "برنامه هفتگی", scope: "کارکنان، برنامه‌ریزی و داده‌ها در محیط مستقل Workforce" },
-];
 
 export function App() {
   return (
@@ -18,37 +11,26 @@ export function App() {
           <div><strong>مستر جم</strong><span>هسته مرکزی · محیط توسعه</span></div>
         </div>
         <nav aria-label="بخش‌های هسته">
-          <a href="#command-center">مرکز فرمان</a>
-          <a href="#connections">نقشه اتصال‌ها</a>
+          <a href="#command-center">تصویر مدیریتی</a>
+          <a href="#attention-title">صف توجه</a>
+          <a href="#module-entry-title">ماژول‌ها</a>
         </nav>
       </header>
       <main id="main">
         <section className="core-intro" aria-labelledby="core-title">
           <div>
             <span className="eyebrow">MASTER GEM / CORE</span>
-            <h1 id="core-title">هسته مرکزی مستر جم</h1>
-            <p>یک دید مدیریتی مشترک؛ هر پروژه با منطق و محیط توسعه مستقل خودش.</p>
+            <h1 id="core-title">مرکز فرمان مستر جم</h1>
+            <p>یک نمای کوتاه برای فهم وضعیت، تشخیص ریسک و رفتن به محل درست بررسی.</p>
           </div>
           <div className="core-safety"><ShieldCheck aria-hidden="true" size={20} /><span>فقط‌خواندنی<br /><strong>بدون اتصال عملیاتی</strong></span></div>
         </section>
         <div className="core-notice" role="note">
-          این محیط آزمایشی است. شاخص‌ها و هشدارهای زیر ساختگی‌اند و وضعیت واقعی کسب‌وکار را نشان نمی‌دهند.
+          همه داده‌های این نسخه ساختگی‌اند. Production صرفاً معماری UI را نشان می‌دهد و منطق نهایی یا اتصال واقعی ندارد.
         </div>
         <div id="command-center"><CommandCenterModuleOverview /></div>
-        <section id="connections" className="core-connections" aria-labelledby="connections-title">
-          <div className="core-section-heading"><Cable aria-hidden="true" size={21} /><h2 id="connections-title">نقشه اتصال‌های آینده</h2></div>
-          <p>این فهرست نقشه توسعه است، نه فهرست سامانه‌های متصل. اتصال واقعی هر پروژه نیازمند بررسی و تأیید جداگانه است.</p>
-          <div className="connection-grid">
-            {plannedConnections.map((connection) => (
-              <article className="connection-card" key={connection.name}>
-                <span className="connection-state">متصل نشده</span>
-                <h3>{connection.name}</h3><p>{connection.scope}</p>
-              </article>
-            ))}
-          </div>
-        </section>
       </main>
-      <footer>Core صاحب خلاصه و قرارداد اتصال است؛ اطلاعات عملیاتی در پروژه مبدأ می‌مانند.</footer>
+      <footer>Core خلاصه مدیریتی را نمایش می‌دهد؛ حقیقت عملیاتی و اقدام اجرایی در ماژول مبدأ باقی می‌ماند.</footer>
     </div>
   );
 }

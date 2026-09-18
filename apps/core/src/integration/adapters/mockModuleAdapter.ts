@@ -19,54 +19,96 @@ export function buildMockObservation(
   moduleId = "workforce.demo",
   generatedAt = "2026-08-07T09:00:00.000Z",
 ): ModuleObservationV1 {
+  const isProduction = moduleId === "production.demo";
   return {
     contractVersion: "1.0.0",
     observationId: `observation-${moduleId}`,
     module: {
       moduleId,
-      displayName: moduleId === "workforce.demo" ? "Workforce Demo" : moduleId,
-      moduleType: "workforce",
+      displayName: isProduction ? "مرکز تولید (آزمایشی)" : moduleId === "workforce.demo" ? "برنامه هفتگی (نمونه)" : moduleId,
+      moduleType: isProduction ? "production" : "workforce",
       contractVersion: "1.0.0",
       producerVersion: "v1-synthetic",
-      sourceSystem: "master-gem-workforce",
+      sourceSystem: isProduction ? "master-gem-production-mock" : "master-gem-workforce",
       instanceId: `${moduleId}-instance`,
       environment: "test",
     },
     generatedAt,
     sourceDataUpdatedAt: generatedAt,
     summary: {
-      status: "operational",
-      text: "Synthetic Integration Backbone observation.",
+      status: isProduction ? "experimental" : "attention",
+      text: isProduction
+        ? "نمای آزمایشی تولید برای ارزیابی معماری UI؛ اتصال واقعی فعال نیست."
+        : "داده برنامه معتبر است؛ چند موضوع مدیریتی در نمونه نیازمند توجه است.",
     },
     health: {
       state: "healthy",
       observedAt: generatedAt,
       reasonCode: "synthetic_checks_passed",
     },
-    kpis: [
-      {
-        key: "active_alert_count",
-        label: "Active alerts",
-        value: 2,
-        valueType: "count",
-        status: "warning",
-        measuredAt: generatedAt,
-        drillDownRef: "workforce.alerts",
-      },
-    ],
-    alerts: [
-      {
-        alertId: `alert-${moduleId}`,
-        fingerprint: `synthetic-alert-${moduleId}`,
-        category: "operations",
-        severity: "warning",
-        title: "Synthetic warning",
-        summary: "Mock-only warning for contract verification.",
-        detectedAt: generatedAt,
-        status: "open",
-        sourceReference: `synthetic:${moduleId}`,
-      },
-    ],
+    kpis: isProduction
+      ? [{
+          key: "production_plan_attainment",
+          label: "تحقق برنامه تولید",
+          value: 78,
+          valueType: "percentage",
+          unit: "٪",
+          status: "warning",
+          measuredAt: generatedAt,
+          comparison: { baselineValue: 90, delta: -12, direction: "down", label: "نمونه مقایسه با برنامه" },
+          drillDownRef: "#module-production-demo",
+        }]
+      : [
+          {
+            key: "workforce_schedule_coverage",
+            label: "پوشش برنامه",
+            value: 86,
+            valueType: "percentage",
+            unit: "٪",
+            status: "warning",
+            measuredAt: generatedAt,
+            comparison: { baselineValue: 92, delta: -6, direction: "down", label: "نسبت به نمونه مرجع" },
+            drillDownRef: "#module-workforce-demo",
+          },
+          {
+            key: "workforce_capacity_concentration",
+            label: "تمرکز فشار کاری",
+            value: 42,
+            valueType: "percentage",
+            unit: "٪",
+            status: "warning",
+            measuredAt: generatedAt,
+            comparison: { baselineValue: 34, delta: 8, direction: "up", label: "سهم پرتراکم‌ترین نقش" },
+            drillDownRef: "#module-workforce-demo",
+          },
+        ],
+    alerts: isProduction
+      ? [{
+          alertId: "production-demo-work-order-risk",
+          fingerprint: "production-demo-work-order-risk",
+          category: "production_work_order_risk",
+          severity: "warning",
+          title: "یک WorkOrder آزمایشی در معرض تأخیر است",
+          summary: "این سیگنال فقط معماری نمایش ریسک تولید را نشان می‌دهد و منطق نهایی محصول نیست.",
+          detectedAt: generatedAt,
+          status: "open",
+          sourceReference: "mock:production:work-order",
+          recommendedNextAction: "تعریف منطق نهایی Production پیش از هر تصمیم عملیاتی تکمیل شود.",
+          drillDownRef: "#module-production-demo",
+        }]
+      : [{
+          alertId: "workforce-demo-operational-conflict",
+          fingerprint: "workforce-demo-operational-conflict",
+          category: "workforce_operational_conflict",
+          severity: "critical",
+          title: "تعارض عملیاتی در برنامه نمونه دیده شده است",
+          summary: "یک تخصیص نمونه با محدودیت زمانی یا ایمنی برنامه سازگار نیست.",
+          detectedAt: generatedAt,
+          status: "open",
+          sourceReference: "mock:workforce:schedule-conflict",
+          recommendedNextAction: "آیتم‌های متعارض در برنامه هفتگی بررسی شوند.",
+          drillDownRef: "#module-workforce-demo",
+        }],
     capabilities: [
       { key: "health.read", version: "1.0", mode: "read", status: "available" },
       { key: "kpi.read", version: "1.0", mode: "read", status: "available" },
@@ -135,17 +177,8 @@ export class MockModuleAdapter implements ModuleReadAdapter {
       this.generatedAt
         ?? (this.scenario === "stale" ? "2026-08-06T00:00:00.000Z" : "2026-08-07T09:00:00.000Z"),
     );
-    if (this.scenario === "healthy" || this.scenario === "stale") {
-      observation.summary.text = this.scenario === "healthy"
-        ? "وضعیت ماژول پایدار است و داده معتبر دریافت شده است."
-        : "آخرین داده معتبر موجود است، اما از بازه تازگی عبور کرده است.";
-      observation.kpis = (observation.kpis ?? []).map((kpi) => ({
-        ...kpi,
-        label: "هشدارهای فعال",
-        value: 0,
-        status: "normal",
-      }));
-      observation.alerts = [];
+    if (this.scenario === "stale") {
+      observation.summary.text = "آخرین داده معتبر موجود است، اما از بازه تازگی عبور کرده است.";
     }
     if (this.scenario === "degraded") {
       observation.health = {
@@ -163,14 +196,13 @@ export class MockModuleAdapter implements ModuleReadAdapter {
       const validKpi = observation.kpis?.[0];
       observation.summary.text = "بخشی از داده دریافت شده و برای تصمیم کامل کافی نیست.";
       observation.kpis = [
-        validKpi ? { ...validKpi, label: "هشدارهای فعال" } : validKpi,
+        validKpi,
         { key: "malformed-kpi" },
       ] as unknown as ModuleObservationV1["kpis"];
       observation.alerts = (observation.alerts ?? []).map((alert) => ({
         ...alert,
-        title: "هشدار نمایشی",
-        summary: "بخشی از اطلاعات این هشدار در سناریوی آزمایشی در دسترس نیست.",
-        recommendedNextAction: "کامل‌شدن داده منبع بررسی شود.",
+        summary: `${alert.summary} بخشی از اطلاعات این سناریو در دسترس نیست.`,
+        recommendedNextAction: "کامل‌شدن داده منبع پیش از تصمیم بررسی شود.",
       }));
       observation.partial = { isPartial: true, missingSections: ["secondary_kpis"] };
     }

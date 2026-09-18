@@ -13,6 +13,21 @@ export const integrationModuleRegistry: readonly ModuleRegistryEntry[] = [
       allowedFutureSkewSeconds: 5 * 60,
     },
     adapterKey: "mock.workforce",
+    detailRouteRef: "#module-workforce-demo",
+  },
+  {
+    moduleId: "production.demo",
+    displayName: "مرکز تولید (آزمایشی)",
+    moduleType: "production",
+    enabled: true,
+    expectedContractMajor: 1,
+    freshnessPolicy: {
+      staleAfterSeconds: 60 * 60,
+      criticalAfterSeconds: 4 * 60 * 60,
+      allowedFutureSkewSeconds: 5 * 60,
+    },
+    adapterKey: "mock.production",
+    detailRouteRef: "#module-production-demo",
   },
 ];
 

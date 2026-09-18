@@ -6,6 +6,11 @@ import { buildCommandCenterViewModel, type CommandCenterViewModel } from "./comm
 
 export type CommandCenterMockScenario = "healthy" | "stale" | "partial" | "error";
 
+const moduleDetailRoutes = Object.fromEntries(
+  integrationModuleRegistry.flatMap((entry) => entry.detailRouteRef ? [[entry.moduleId, entry.detailRouteRef]] : []),
+);
+const allowedDrillDownRefs = new Set(Object.values(moduleDetailRoutes));
+
 export interface CommandCenterDataSource {
   read(now?: string): Promise<CommandCenterViewModel>;
 }
@@ -61,6 +66,10 @@ export class CommandCenterMockDataSource implements CommandCenterDataSource {
     this.configureAdapters(this.scenario, now);
     const activeAggregator = this.scenario === "error" ? this.errorAggregator : this.aggregator;
     const aggregation = await activeAggregator.collect(integrationModuleRegistry, this.adapters, now);
-    return buildCommandCenterViewModel(aggregation);
+    return buildCommandCenterViewModel(aggregation, {
+      allowedDrillDownRefs,
+      moduleDetailRoutes,
+      maxAttentionItems: 8,
+    });
   }
 }

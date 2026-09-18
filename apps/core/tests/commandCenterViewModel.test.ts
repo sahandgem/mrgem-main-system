@@ -81,10 +81,11 @@ function alert(
   severity: ModuleAlert["severity"],
   id = `alert-${severity}`,
   detectedAt = now,
+  category = "workforce_operational_conflict",
 ): ModuleAlert {
   return {
     alertId: id,
-    category: "synthetic",
+    category,
     severity,
     title: `${severity} synthetic alert`,
     summary: "Synthetic alert for Command Center tests.",
@@ -122,14 +123,16 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
   assert.equal(view.modules[0].reliability, "degraded");
   assert.equal(view.modules[0].isPartialData, true);
   assert.match(view.modules[0].summaryText, /تصمیم‌گیری کامل نیست/);
-  assert.equal(view.topAttention[0].priorityTier, 2);
+  assert.equal(view.topAttention.length, 0);
+  assert.equal(view.overallState, "unknown");
 }
 
 // 3. Unavailable.
 {
   const view = buildCommandCenterViewModel(aggregation([moduleResult({ status: "unavailable" })]));
   assert.equal(view.modules[0].reliability, "unavailable");
-  assert.equal(view.topAttention[0].severity, "critical");
+  assert.equal(view.topAttention.length, 0);
+  assert.equal(view.reliability.failedModuleCount, 1);
 }
 
 // 4. Stale last-known-good semantics.
@@ -153,7 +156,7 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
     freshness: "unknown",
   })]));
   assert.equal(view.modules[0].reliability, "invalid");
-  assert.equal(view.topAttention[0].priorityTier, 0);
+  assert.equal(view.topAttention.length, 0);
 }
 
 // 6. Unsupported version.
@@ -165,7 +168,7 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
     freshness: "unknown",
   })]));
   assert.equal(view.modules[0].reliability, "unsupported_version");
-  assert.equal(view.topAttention[0].priorityTier, 0);
+  assert.equal(view.topAttention.length, 0);
 }
 
 // 7. No data is explicit and not zero/healthy.
@@ -209,13 +212,13 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
   assert.equal(view.modules[0].alertCounts.info, 1);
 }
 
-// 11. Warning and critical KPIs are highlighted; normal is not.
+// 11. All management KPIs are visible; only warning and critical become attention.
 {
   const view = buildCommandCenterViewModel(aggregation([moduleResult({
     kpis: [kpi("warning"), kpi("critical"), kpi("normal")],
   })]));
-  assert.deepEqual(view.kpiHighlights.map((item) => item.status), ["critical", "warning"]);
-  assert.equal(view.kpiHighlights.some((item) => item.kpiKey === "kpi-normal"), false);
+  assert.deepEqual(view.kpiHighlights.map((item) => item.status), ["critical", "warning", "normal"]);
+  assert.equal(view.topAttention.filter((item) => item.sourceType === "kpi").length, 2);
 }
 
 // 12. Fresh and stale KPI reliability remain distinct.
@@ -230,15 +233,16 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
   assert.equal(stale.kpiHighlights[0].reliability, "stale_last_known_good");
 }
 
-// 13. Multi-module ordering is deterministic and blocking precedes urgent/attention.
+// 13. Multi-module business attention ordering is deterministic; data failures stay in data health.
 {
   const view = buildCommandCenterViewModel(aggregation([
     moduleResult({ moduleId: "workforce.warning", alerts: [alert("warning")] }),
     moduleResult({ moduleId: "workforce.invalid", status: "invalid_payload", sourceHealth: "unknown", effectiveState: "unknown", freshness: "unknown" }),
     moduleResult({ moduleId: "workforce.critical", alerts: [alert("critical")] }),
   ]));
-  assert.equal(view.topAttention[0].moduleId, "workforce.invalid");
-  assert.equal(view.topAttention[1].moduleId, "workforce.critical");
+  assert.equal(view.topAttention[0].moduleId, "workforce.critical");
+  assert.equal(view.topAttention[1].moduleId, "workforce.warning");
+  assert.equal(view.modules.find((item) => item.moduleId === "workforce.invalid")?.reliability, "invalid");
 }
 
 // 14. One failed module does not blank healthy module results.
@@ -259,10 +263,11 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
   assert.equal(view.overallState, "healthy");
 }
 
-// 16. No KPI highlights is distinct from a zero KPI value.
+// 16. A normal KPI remains visible without entering the Attention Queue.
 {
   const view = buildCommandCenterViewModel(aggregation([moduleResult({ kpis: [kpi("normal")] })]));
-  assert.equal(view.kpiHighlights.length, 0);
+  assert.equal(view.kpiHighlights.length, 1);
+  assert.equal(view.topAttention.length, 0);
 }
 
 // 17. Stable tie-break and same-input determinism.
@@ -280,6 +285,10 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
     priorityTier: 2,
     riskFlags: [],
     detectedAt: now,
+    businessImpact: "Same",
+    timeContext: "Same",
+    destinationLabel: "Same",
+    isExperimental: false,
   }));
   const first = rankCommandCenterAttention(items);
   const second = rankCommandCenterAttention(items);
@@ -323,6 +332,27 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
   assert.deepEqual(first, second);
   assert.equal(first.managementSummary.healthyModuleCount, 0);
   assert.notEqual(first.modules[0].reliability, "fresh");
+}
+
+// 21. A technical severity without defined business meaning cannot jump to high priority.
+{
+  const view = buildCommandCenterViewModel(aggregation([moduleResult({
+    alerts: [alert("critical", "technical-only", now, "technical_transport_failure")],
+  })]));
+  assert.equal(view.topAttention[0].priorityTier, 3);
+  assert.match(view.topAttention[0].businessImpact, /نیازمند تعریف/);
+}
+
+// 22. Production is explicitly experimental in the management model.
+{
+  const production = buildMockObservation("production.demo", now);
+  const view = buildCommandCenterViewModel(aggregation([{
+    ...moduleResult({ moduleId: "production.demo" }),
+    observation: production,
+  }]));
+  assert.equal(view.modules[0].isExperimental, true);
+  assert.equal(view.kpiHighlights[0].isExperimental, true);
+  assert.equal(view.topAttention.every((item) => item.isExperimental), true);
 }
 
 console.log("Command Center view-model tests passed.");

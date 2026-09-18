@@ -49,8 +49,9 @@ async function collectScenario(
   return { adapter, module: result.modules[0], result };
 }
 
-assert.equal(integrationModuleRegistry.length, 1);
+assert.equal(integrationModuleRegistry.length, 2);
 assert.equal(integrationModuleRegistry[0].moduleId, "workforce.demo");
+assert.equal(integrationModuleRegistry[1].moduleId, "production.demo");
 
 {
   const { module } = await collectScenario("healthy");
@@ -229,15 +230,17 @@ assert.equal(integrationModuleRegistry[0].moduleId, "workforce.demo");
 // Command Center mock scenarios exercise adapter -> validation -> aggregation -> view-model.
 {
   const view = await new CommandCenterMockDataSource("healthy").read(now);
-  assert.equal(view.overallState, "healthy");
-  assert.equal(view.modules[0].reliability, "fresh");
-  assert.equal(view.modules[0].dataStateLabel, "داده فعلی سالم و تازه است");
-  assert.equal(view.topAttention.length, 0);
+  assert.equal(view.overallState, "critical");
+  assert.equal(view.modules.length, 2);
+  assert.equal(view.modules.every((module) => module.reliability === "fresh"), true);
+  assert.equal(view.modules.every((module) => module.dataStateLabel === "داده فعلی سالم و تازه است"), true);
+  assert.ok(view.topAttention.length >= 5 && view.topAttention.length <= 8);
+  assert.equal(view.modules.find((module) => module.moduleId === "production.demo")?.isExperimental, true);
 }
 
 {
   const view = await new CommandCenterMockDataSource("stale").read(now);
-  assert.equal(view.overallState, "attention");
+  assert.equal(view.overallState, "critical");
   assert.equal(view.modules[0].reliability, "stale_last_known_good");
   assert.equal(view.modules[0].hasLastKnownGood, true);
   assert.ok(Date.parse(view.modules[0].observedAt ?? "") < Date.parse(view.modules[0].receivedAt));
@@ -245,7 +248,7 @@ assert.equal(integrationModuleRegistry[0].moduleId, "workforce.demo");
 
 {
   const view = await new CommandCenterMockDataSource("partial").read(now);
-  assert.equal(view.overallState, "attention");
+  assert.equal(view.overallState, "critical");
   assert.equal(view.reliability.hasPartialData, true);
   assert.equal(view.modules[0].isPartialData, true);
   assert.equal(view.modules[0].dataStateLabel, "داده فعلی ناقص است");
@@ -256,15 +259,18 @@ assert.equal(integrationModuleRegistry[0].moduleId, "workforce.demo");
   await source.read(now);
   source.setScenario("error");
   const view = await source.read(now);
+  const workforce = view.modules.find((module) => module.moduleId === "workforce.demo");
+  assert.ok(workforce);
   assert.equal(view.overallState, "critical");
-  assert.equal(view.modules[0].reliability, "unavailable");
-  assert.equal(view.modules[0].hasLastKnownGood, true);
-  assert.equal(view.modules[0].dataStateLabel, "دریافت فعلی ناموفق است");
-  assert.equal(view.modules[0].isPartialData, false);
-  assert.equal(view.modules[0].alertCounts.warning, 0);
-  assert.equal(view.modules[0].highlightedKpiCount, 0);
-  assert.ok(Date.parse(view.modules[0].observedAt ?? "") < Date.parse(view.modules[0].receivedAt));
-  assert.doesNotMatch(view.modules[0].summaryText, /SYNTHETIC_UNAVAILABLE|adapter|transport/i);
+  assert.equal(workforce.reliability, "unavailable");
+  assert.equal(workforce.hasLastKnownGood, true);
+  assert.equal(workforce.dataStateLabel, "دریافت فعلی ناموفق است");
+  assert.equal(workforce.isPartialData, false);
+  assert.equal(workforce.alertCounts.critical, 1);
+  assert.equal(workforce.highlightedKpiCount, 2);
+  assert.ok(Date.parse(workforce.observedAt ?? "") < Date.parse(workforce.receivedAt));
+  assert.doesNotMatch(workforce.summaryText, /SYNTHETIC_UNAVAILABLE|adapter|transport/i);
+  assert.equal(view.topAttention.every((item) => item.reliability === "stale_last_known_good"), true);
 }
 
 console.log("Integration Backbone baseline tests passed.");

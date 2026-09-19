@@ -1,6 +1,8 @@
 import type { CommandCenterAttentionItem, CommandCenterKpiHighlight, CommandCenterModuleSummary } from "../../integration/commandCenter/commandCenterViewModel";
 import { formatDateTime, toPersianNumber, toneForReliability } from "./presentation";
 
+import { attentionSummary, hasDisplayData, visibleCount } from "./density";
+
 type RailProps = {
   attentions: readonly CommandCenterAttentionItem[];
   highlights: readonly CommandCenterKpiHighlight[];
@@ -8,7 +10,7 @@ type RailProps = {
 };
 
 function Metric({ value, label }: { value?: string | number; label: string }) {
-  return <div><strong>{value === undefined ? "—" : toPersianNumber(value)}</strong><span>{label}</span></div>;
+  return <div><strong>{value === undefined ? "نامشخص" : toPersianNumber(value)}</strong><span>{label}</span></div>;
 }
 
 function ModuleRail({ attentions, highlights, module, production }: RailProps & { production: boolean }) {
@@ -26,11 +28,11 @@ function ModuleRail({ attentions, highlights, module, production }: RailProps & 
         <span>{production ? "آزمایشی / Mock" : "برنامه هفتگی · نمونه"}</span>
       </header>
       <div className="rail-metrics">
-        {production ? <><Metric value={plan?.displayValue} label="تحقق برنامه نمونه" /><Metric value={alerts.length} label="سفارش نیازمند بررسی" /></> : <>
+        {production ? <><Metric value={plan?.displayValue} label="تحقق برنامه نمونه" /><Metric value={visibleCount(alerts.length, module)} label="سفارش نیازمند بررسی" /></> : <>
           <Metric value={coverage?.displayValue} label="پوشش برنامه" />
           <Metric value={capacity?.displayValue} label="تمرکز ظرفیت" />
-          <Metric value={alerts.length} label="تعارض در نمونه" />
-          <Metric value={items.length} label="موضوع نیازمند توجه" />
+          <Metric value={visibleCount(alerts.length, module)} label="تعارض در نمونه" />
+          <Metric value={visibleCount(items.length, module)} label="موضوع نیازمند توجه" />
         </>}
       </div>
       <div className={`rail-trust tone-${toneForReliability(module?.reliability ?? "unknown")}`}>
@@ -39,14 +41,14 @@ function ModuleRail({ attentions, highlights, module, production }: RailProps & 
       </div>
       <div className="rail-exceptions">
         <h3>{production ? "استثناهای نمونه تولید" : "نقاط توجه برنامه"}</h3>
-        {items.length ? items.slice(0, 3).map((item) => (
+        {items.length ? items.slice(0, 5).map((item) => (
           <div className="rail-exception" key={item.attentionId}>
-            <strong>{item.title}</strong><p>{item.destinationLabel}</p>
+            <strong>{attentionSummary(item).title}</strong><p>{attentionSummary(item).impact}</p>
           </div>
-        )) : <p>در داده موجود موضوع بازی دیده نشد.</p>}
-        {production && <div className="rail-exception rail-exception--pending"><strong>موعد، مواد و گلوگاه</strong><p>نیازمند تعریف؛ اتصال واقعی فعال نیست.</p></div>}
+        )) : <p>{!hasDisplayData(module) ? "داده معتبر موجود نیست." : module?.isPartialData ? "پوشش داده ناقص است." : "در داده موجود موضوع بازی دیده نشد."}</p>}
+
       </div>
-      <p className="rail-footnote">{production ? "اعداد فقط برای ارزیابی UI هستند؛ منطق نهایی تولید تعریف نشده است." : "مالک اطلاعات و اقدام اجرایی: برنامه هفتگی"}</p>
+      {production && <p className="rail-footnote">آزمایشی؛ اتصال واقعی فعال نیست.</p>}
       <a className="rail-destination" href="#attention-title">مرور موضوع‌های {production ? "تولید" : "برنامه"} در مرکز فرمان</a>
     </aside>
   );

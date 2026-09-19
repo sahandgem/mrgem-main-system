@@ -32,7 +32,6 @@ export function CockpitSystemBar({
       <div className="cockpit-brand" aria-label="Master Gem Core">
         <strong>MASTER GEM</strong>
         <span>CORE</span>
-        <StatusBadge tone="focus">MOCK</StatusBadge>
       </div>
       <dl className="cockpit-system-facts">
         <div>
@@ -40,7 +39,7 @@ export function CockpitSystemBar({
           <dd><StatusBadge tone={toneForOverallState(viewModel.overallState)}>{overallStateLabel(viewModel.overallState)}</StatusBadge></dd>
         </div>
         <div>
-          <dt>آخرین دریافت</dt>
+          <dt>آخرین دریافت موفق</dt>
           <dd>{formatDateTime(lastSuccessfulAt)}</dd>
         </div>
         <div>

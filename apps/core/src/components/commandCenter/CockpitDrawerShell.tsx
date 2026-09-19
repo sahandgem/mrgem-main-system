@@ -8,6 +8,8 @@ import {
   toneForReliability,
 } from "./presentation";
 
+import { reliabilityText } from "./density";
+
 export function CockpitDrawerShell({
   item,
   onClose,
@@ -38,7 +40,7 @@ export function CockpitDrawerShell({
       tabIndex={-1}
     >
       <header>
-        <div><span className="section-label">ATTENTION DETAIL / SHELL</span><h2 id="drawer-title">خلاصه موضوع</h2></div>
+        <div><span className="section-label">مشاهده جزئیات</span><h2 id="drawer-title">خلاصه موضوع</h2></div>
         <button aria-label="بستن جزئیات" className="drawer-close" onClick={onClose} type="button">بستن</button>
       </header>
       <div className="drawer-heading">
@@ -53,13 +55,14 @@ export function CockpitDrawerShell({
         <div><dt>چه اتفاقی افتاده</dt><dd>{item.summary}</dd></div>
         <div><dt>اثر احتمالی</dt><dd>{item.businessImpact}</dd></div>
         <div><dt>زمان مرتبط</dt><dd>{item.timeContext} · ثبت {formatDateTime(item.detectedAt)}</dd></div>
-        <div><dt>اعتماد به داده</dt><dd><StatusBadge tone={toneForReliability(item.reliability)}>{confidenceLabel(item.confidence)}</StatusBadge></dd></div>
+        <div><dt>اعتماد به داده</dt><dd><StatusBadge tone={toneForReliability(item.reliability)}>{reliabilityText(item.reliability)} · {confidenceLabel(item.confidence)}</StatusBadge></dd></div>
         <div><dt>گزینه / گام پیشنهادی</dt><dd>{item.suggestedNextStep ?? "در داده فعلی گزینه اجرایی تعریف نشده است."}</dd></div>
         <div><dt>مقصد بررسی</dt><dd>{item.destinationLabel}</dd></div>
+        {item.sourceRef && <div><dt>مرجع داده نمونه</dt><dd dir="ltr">{item.sourceRef}</dd></div>}
       </dl>
       <div className="drawer-placeholder">
-        <strong>جای تاریخچه و اقدام‌های آینده</strong>
-        <p>در C2 فقط فضای Drawer ارزیابی می‌شود؛ عملیات و مسیر واقعی هنوز پیاده نشده است.</p>
+        <strong>فقط مشاهده و بررسی</strong>
+        <p>{item.isExperimental ? "تولید آزمایشی است؛ منطق نهایی و اتصال واقعی تعریف نشده‌اند." : "مالک برنامه و اقدام اجرایی، ماژول برنامه هفتگی است."}</p>
       </div>
     </aside>
   );

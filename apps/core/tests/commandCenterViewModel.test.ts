@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { attentionSummary, reliabilityText, visibleCount } from "../src/components/commandCenter/density.ts";
 import { buildMockObservation } from "../src/integration/adapters/mockModuleAdapter.ts";
 import type {
   CoreModuleResult,
@@ -355,4 +356,27 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
   assert.equal(view.topAttention.every((item) => item.isExperimental), true);
 }
 
-console.log("Command Center view-model tests passed.");
+// C3 presentation must preserve unknown/partial counts and original detail.
+{
+  const view = buildCommandCenterViewModel(aggregation([moduleResult()]));
+  const module = view.modules[0];
+  assert.equal(visibleCount(0, module), 0);
+  assert.equal(visibleCount(0, undefined), undefined);
+  assert.equal(visibleCount(0, { ...module, isPartialData: true }), undefined);
+  assert.equal(visibleCount(2, { ...module, isPartialData: true }), 2);
+  assert.equal(visibleCount(0, { ...module, reliability: "unavailable", hasLastKnownGood: false }), undefined);
+  assert.equal(visibleCount(2, { ...module, reliability: "stale_last_known_good", hasLastKnownGood: true }), 2);
+  assert.equal(reliabilityText("fresh"), "داده تازه");
+  assert.match(reliabilityText("degraded"), /ناقص/);
+  assert.match(reliabilityText("stale_last_known_good"), /تاریخی/);
+  assert.match(reliabilityText("unavailable"), /موجود نیست/);
+  const data = buildMockObservation("workforce.demo", now);
+  const attention = buildCommandCenterViewModel(aggregation([{ ...moduleResult(), observation: data }])).topAttention[0];
+  const before = JSON.stringify(attention);
+  const compact = attentionSummary(attention);
+  assert.ok(compact.title.length <= attention.title.length);
+  assert.equal(JSON.stringify(attention), before);
+  assert.deepEqual(attentionSummary({ ...attention, sourceRef: "future:unknown" }), { title: attention.title, impact: attention.businessImpact });
+}
+
+console.log("Command Center view-model and C3 presentation tests passed.");

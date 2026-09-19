@@ -1,5 +1,7 @@
 import type { CommandCenterAttentionItem, CommandCenterViewModel } from "../../integration/commandCenter/commandCenterViewModel";
-import { attentionPriorityLabel, confidenceLabel, formatDateTime, toPersianNumber } from "./presentation";
+import { attentionPriorityLabel, formatDateTime, toPersianNumber } from "./presentation";
+
+import { attentionSummary, reliabilityText } from "./density";
 
 export function CommandCenterAttentionQueue({ onOpen, viewModel }: {
   onOpen: (item: CommandCenterAttentionItem, trigger: HTMLButtonElement) => void;
@@ -20,17 +22,17 @@ export function CommandCenterAttentionQueue({ onOpen, viewModel }: {
                 <strong>{attentionPriorityLabel(item.priorityTier)}</strong>
               </div>
               <div className="command-row__issue">
-                <h4>{item.title}</h4>
-                <p>{item.businessImpact}</p>
+                <h4>{attentionSummary(item).title}</h4>
+                <p>{attentionSummary(item).impact}</p>
               </div>
               <button className="command-row__open" aria-label={`بررسی: ${item.title}`} onClick={(event) => onOpen(item, event.currentTarget)} type="button">بررسی ←</button>
               <div className="command-row__context">
-                <span>{item.timeContext}</span>
+                <span>{item.isExperimental ? "بازه نیازمند تعریف" : item.timeContext}</span>
                 <span>{item.destinationLabel}{item.isExperimental ? " · آزمایشی" : ""}</span>
               </div>
               <div className="command-row__metadata">
-                <span>{item.reliability === "fresh" ? "داده تازه" : item.reliability === "stale_last_known_good" ? "آخرین داده سالم؛ تاریخی" : "داده ناقص؛ با احتیاط"} · {confidenceLabel(item.confidence)}</span>
-                <time dateTime={item.detectedAt}>{formatDateTime(item.detectedAt)}</time>
+                <span>{reliabilityText(item.reliability)}</span>
+                {item.reliability === "stale_last_known_good" && <time dateTime={item.detectedAt}>{formatDateTime(item.detectedAt)}</time>}
               </div>
             </article>
           ))}

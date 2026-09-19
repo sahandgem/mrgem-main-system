@@ -4,6 +4,8 @@ import {
   toPersianNumber,
 } from "./presentation";
 
+import { attentionSummary } from "./density";
+
 export function CommandCenterExecutiveSummary({ viewModel }: { viewModel: CommandCenterViewModel }) {
   const { managementSummary, reliability } = viewModel;
   const dataTrustTone = reliability.failedModuleCount
@@ -28,16 +30,12 @@ export function CommandCenterExecutiveSummary({ viewModel }: { viewModel: Comman
             <h3 id="executive-summary-title">{overallStateLabel(viewModel.overallState)}</h3>
             <p>
               {managementSummary.criticalAttentionCount
-                ? `${toPersianNumber(managementSummary.criticalAttentionCount)} موضوع با اثر مهم در صف بررسی قرار دارد.`
+                ? `${toPersianNumber(managementSummary.criticalAttentionCount)} موضوع مهم · ${attentionSummary(viewModel.topAttention[0]).title}`
                 : managementSummary.warningAttentionCount
-                  ? `${toPersianNumber(managementSummary.warningAttentionCount)} موضوع برای پیگیری مدیر دیده شده است.`
-                  : "در داده موجود، موضوع مهمی برای اقدام مدیر دیده نشده است."}
+                  ? `${toPersianNumber(managementSummary.warningAttentionCount)} موضوع برای پیگیری`
+                  : "در داده موجود موضوع مهمی دیده نشد."}
             </p>
           </div>
-        </div>
-        <div className="status-summary__metrics" aria-label="خلاصه توجه مدیریتی">
-          <span><strong>{toPersianNumber(viewModel.topAttention.length)}</strong> موضوع در صف توجه</span>
-          <span><strong>{toPersianNumber(managementSummary.enabledModuleCount)}</strong> ماژول فعال</span>
         </div>
       </div>
 
@@ -46,14 +44,9 @@ export function CommandCenterExecutiveSummary({ viewModel }: { viewModel: Comman
         <strong>{dataTrustLabel}</strong>
         <p>
           {reliability.failedModuleCount
-            ? `دریافت فعلی ناموفق است؛ ${toPersianNumber(viewModel.modules.filter((item) => item.hasLastKnownGood).length)} مرجع «آخرین داده سالم» فقط برای مقایسه تاریخی حفظ شده است.`
-            : "سلامت داده مستقل از اولویت کسب‌وکاری نمایش داده می‌شود."}
+            ? `داده فعلی در دسترس نیست؛ ${toPersianNumber(viewModel.modules.filter((item) => item.hasLastKnownGood).length)} مرجع تاریخی`
+            : reliability.hasPartialData ? "فقط در محدوده داده معتبر" : managementSummary.staleModuleCount ? "مرجع تاریخی؛ نه داده جاری" : ""}
         </p>
-        <div className="status-summary__data-counts">
-          <span>کامل <b>{toPersianNumber(reliability.completeModuleCount)}</b></span>
-          <span>ناقص <b>{toPersianNumber(reliability.partialModuleCount)}</b></span>
-          <span>ناموفق <b>{toPersianNumber(reliability.failedModuleCount)}</b></span>
-        </div>
       </aside>
     </section>
   );

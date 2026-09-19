@@ -133,6 +133,8 @@ p { line-height: 1.65; }
 .cockpit-system-message { position: fixed; z-index: 60; top: 48px; right: 12px; left: 12px; padding: 12px; background: #32222a; color: #f1bdc4; }
 .cockpit-loading { display: grid; place-content: center; min-height: 100dvh; gap: 12px; }
 @media (max-height: 900px) and (min-width: 1101px) {
+  .important-changes__list { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .important-changes__list article:nth-child(n+3), .rail-exception:nth-of-type(n+4) { display: none; }
   :root { --vital-height: 80px; }
   .cockpit-stage { grid-template-rows: minmax(0,1fr) 62px var(--vital-height); }
   .cockpit-rail { padding: 12px; }
@@ -142,12 +144,15 @@ p { line-height: 1.65; }
   .status-summary__metrics, .status-summary__data-counts { display: none; }
 }
 @media (max-width: 1450px) and (min-width: 1101px) {
+  .important-changes__list { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .important-changes__list article:nth-child(n+3), .rail-exception:nth-of-type(n+4) { display: none; }
   .cockpit-system-bar { gap: 18px; }
   .cockpit-system-facts { gap: 18px; }
   .cockpit-system-facts dt { display: none; }
-  .cockpit-system-facts > div:nth-child(4) dt { display: block; }
+  .cockpit-system-facts > div:nth-child(4) dt, .cockpit-system-facts > div:nth-child(2) dt { display: block; }
 }
 @media (max-width: 1100px) {
+  .important-changes__list article:nth-child(n+3), .rail-exception:nth-of-type(n+4) { display: none; }
   .cockpit-system-bar { flex-wrap: wrap; height: auto; min-height: 64px; gap: 10px; padding-block: 8px; }
   .cockpit-system-facts { gap: 12px; flex-wrap: wrap; }
   .cockpit-system-facts dt { display: none; }

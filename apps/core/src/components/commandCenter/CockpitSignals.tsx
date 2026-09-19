@@ -1,5 +1,4 @@
 import type { CommandCenterViewModel } from "../../integration/commandCenter/commandCenterViewModel";
-import { StatusBadge } from "../StatusBadge";
 import { toPersianNumber, toneForKpiStatus } from "./presentation";
 
 function dataSlot(viewModel: CommandCenterViewModel) {
@@ -15,7 +14,6 @@ export function ImportantChanges({ viewModel }: { viewModel: CommandCenterViewMo
   return (
     <section className="important-changes" aria-labelledby="important-changes-title">
       <header>
-        <span className="section-label">IMPORTANT CHANGES</span>
         <h2 id="important-changes-title">تغییرهای مهم</h2>
       </header>
       {changes.length ? (
@@ -46,12 +44,12 @@ export function VitalStrip({ viewModel }: { viewModel: CommandCenterViewModel })
 
   return (
     <section className="vital-strip" aria-label="نوار حیاتی کسب‌وکار">
-      <div className="vital-slot vital-slot--placeholder"><span>SALES</span><strong>متصل نیست</strong><small>داده فروش در دسترس نیست</small></div>
-      <div className="vital-slot vital-slot--placeholder"><span>CASH</span><strong>متصل نیست</strong><small>داده مالی در دسترس نیست</small></div>
-      <div className="vital-slot vital-slot--experimental"><span>ORDERS</span><strong>{workOrderCount ? `${toPersianNumber(workOrderCount)} Mock` : "بدون مورد"}</strong><small>آزمایشی</small></div>
-      <div className="vital-slot"><span>WORKFORCE</span><strong>{workforce ? toPersianNumber(workforce.displayValue) : "ناموجود"}</strong><small>پوشش برنامه{workforce?.reliability === "stale_last_known_good" ? " · آخرین داده سالم" : ""}</small></div>
-      <div className="vital-slot vital-slot--experimental"><span>PRODUCTION</span><strong>{production ? toPersianNumber(production.displayValue) : "ناموجود"}</strong><small>تحقق mock برنامه{production?.reliability === "stale_last_known_good" ? " · آخرین داده سالم" : ""}</small></div>
-      <div className={`vital-slot tone-${data.tone}`}><span>DATA</span><strong>{data.value}</strong><small>{data.detail}</small></div>
+      <div className="vital-slot vital-slot--placeholder"><span>فروش</span><strong>متصل نیست</strong><small>داده فروش در دسترس نیست</small></div>
+      <div className="vital-slot vital-slot--placeholder"><span>نقدینگی</span><strong>متصل نیست</strong><small>داده مالی در دسترس نیست</small></div>
+      <div className="vital-slot vital-slot--experimental"><span>سفارش‌ها</span><strong>{workOrderCount ? `${toPersianNumber(workOrderCount)} نمونه` : "بدون مورد"}</strong><small>آزمایشی</small></div>
+      <div className="vital-slot"><span>نیروی انسانی</span><strong>{workforce ? toPersianNumber(workforce.displayValue) : "ناموجود"}</strong><small>پوشش برنامه{workforce?.reliability === "stale_last_known_good" ? " · آخرین داده سالم" : ""}</small></div>
+      <div className="vital-slot vital-slot--experimental"><span>تولید</span><strong>{production ? toPersianNumber(production.displayValue) : "ناموجود"}</strong><small>تحقق mock برنامه{production?.reliability === "stale_last_known_good" ? " · آخرین داده سالم" : ""}</small></div>
+      <div className={`vital-slot tone-${data.tone}`}><span>داده</span><strong>{data.value}</strong><small>{data.detail}</small></div>
     </section>
   );
 }

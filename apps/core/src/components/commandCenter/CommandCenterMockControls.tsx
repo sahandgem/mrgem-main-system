@@ -24,7 +24,7 @@ export function CommandCenterMockControls({
   const active = options.find((item) => item.key === activeScenario) ?? options[0];
   return (
     <details className="mock-controls">
-      <summary><FlaskConical aria-hidden="true" size={16} /><span>کنترل تست سناریوهای داده</span><StatusBadge tone={active.tone}>{active.label}</StatusBadge></summary>
+      <summary aria-label="کنترل تست سناریوهای داده"><FlaskConical aria-hidden="true" size={16} /><span>کنترل تست سناریوهای داده</span><StatusBadge tone={active.tone}>{active.label}</StatusBadge></summary>
       <div className="mock-controls__body">
         <div><strong>{active.title}</strong><p>{active.description}</p></div>
         <div className="mock-controls__options" role="group" aria-label="انتخاب سناریوی داده mock">

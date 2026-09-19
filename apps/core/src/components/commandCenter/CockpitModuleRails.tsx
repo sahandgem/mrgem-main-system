@@ -1,118 +1,56 @@
-import type {
-  CommandCenterAttentionItem,
-  CommandCenterKpiHighlight,
-  CommandCenterModuleSummary,
-} from "../../integration/commandCenter/commandCenterViewModel";
-import { StatusBadge } from "../StatusBadge";
-import {
-  formatDateTime,
-  toPersianNumber,
-  toneForKpiStatus,
-  toneForReliability,
-} from "./presentation";
+import type { CommandCenterAttentionItem, CommandCenterKpiHighlight, CommandCenterModuleSummary } from "../../integration/commandCenter/commandCenterViewModel";
+import { formatDateTime, toPersianNumber, toneForReliability } from "./presentation";
 
-function kpiFor(highlights: readonly CommandCenterKpiHighlight[], key: string) {
-  return highlights.find((item) => item.kpiKey === key);
-}
-
-function attentionFor(items: readonly CommandCenterAttentionItem[], moduleId: string, sourceRef: string) {
-  return items.find((item) => item.moduleId === moduleId && item.sourceRef === sourceRef);
-}
-
-function RailKpi({ item, fallback }: { item?: CommandCenterKpiHighlight; fallback: string }) {
-  if (!item) {
-    return <div className="rail-signal rail-signal--empty"><span>{fallback}</span><strong>داده معتبر موجود نیست</strong></div>;
-  }
-  return (
-    <div className={`rail-signal tone-${toneForKpiStatus(item.status)}`}>
-      <span>{item.label}</span>
-      <strong>{toPersianNumber(item.displayValue)}</strong>
-      <small>{item.contextLabel}</small>
-    </div>
-  );
-}
-
-function RailHeader({ headingId, module, label }: { headingId: string; module?: CommandCenterModuleSummary; label: string }) {
-  return (
-    <header className="cockpit-rail__header">
-      <div><span className="section-label">{label}</span><h2 id={headingId}>{module?.displayName ?? "ماژول در دسترس نیست"}</h2></div>
-      {module?.isExperimental && <StatusBadge tone="focus">EXPERIMENTAL</StatusBadge>}
-      {module && <StatusBadge tone={toneForReliability(module.reliability)}>{module.reliabilityLabel}</StatusBadge>}
-    </header>
-  );
-}
-
-export function WorkforceRail({
-  attentions,
-  highlights,
-  module,
-}: {
+type RailProps = {
   attentions: readonly CommandCenterAttentionItem[];
   highlights: readonly CommandCenterKpiHighlight[];
   module?: CommandCenterModuleSummary;
-}) {
-  const workforceHighlights = highlights.filter((item) => item.moduleId === module?.moduleId);
-  const conflict = attentionFor(attentions, module?.moduleId ?? "", "mock:workforce:schedule-conflict");
+};
 
+function Metric({ value, label }: { value?: string | number; label: string }) {
+  return <div><strong>{value === undefined ? "—" : toPersianNumber(value)}</strong><span>{label}</span></div>;
+}
+
+function ModuleRail({ attentions, highlights, module, production }: RailProps & { production: boolean }) {
+  const items = attentions.filter((item) => item.moduleId === module?.moduleId);
+  const kpis = highlights.filter((item) => item.moduleId === module?.moduleId);
+  const coverage = kpis.find((item) => item.kpiKey === "workforce_schedule_coverage");
+  const capacity = kpis.find((item) => item.kpiKey === "workforce_capacity_concentration");
+  const plan = kpis.find((item) => item.kpiKey === "production_plan_attainment");
+  const alerts = items.filter((item) => item.sourceType === "alert");
+  const id = production ? "production" : "workforce";
   return (
-    <aside className="cockpit-rail cockpit-rail--workforce" id="module-workforce-demo" aria-labelledby="workforce-rail-title">
-      <RailHeader headingId="workforce-rail-title" label="WORKFORCE" module={module} />
-      <div className="rail-health">
-        <span>سلامت و تازگی</span>
-        <strong>{module?.dataStateLabel ?? "داده‌ای دریافت نشده"}</strong>
-        <small>{module?.hasLastKnownGood ? `آخرین داده سالم: ${formatDateTime(module.observedAt)}` : "داده فعلی مبنای نمایش است"}</small>
+    <aside className={`cockpit-rail cockpit-rail--${id}`} id={`module-${id}-demo`} aria-labelledby={`${id}-rail-title`}>
+      <header className="instrument-rail-heading">
+        <h2 id={`${id}-rail-title`}>{production ? "تولید" : "نیروی انسانی"}</h2>
+        <span>{production ? "آزمایشی / Mock" : "برنامه هفتگی · نمونه"}</span>
+      </header>
+      <div className="rail-metrics">
+        {production ? <><Metric value={plan?.displayValue} label="تحقق برنامه نمونه" /><Metric value={alerts.length} label="سفارش نیازمند بررسی" /></> : <>
+          <Metric value={coverage?.displayValue} label="پوشش برنامه" />
+          <Metric value={capacity?.displayValue} label="تمرکز ظرفیت" />
+          <Metric value={alerts.length} label="تعارض در نمونه" />
+          <Metric value={items.length} label="موضوع نیازمند توجه" />
+        </>}
       </div>
-      <div className="rail-signals" aria-label="خلاصه Workforce">
-        <RailKpi item={kpiFor(workforceHighlights, "workforce_schedule_coverage")} fallback="پوشش برنامه" />
-        <RailKpi item={kpiFor(workforceHighlights, "workforce_capacity_concentration")} fallback="تمرکز فشار کاری" />
-        <div className={`rail-signal ${conflict ? "tone-critical" : "tone-good"}`}>
-          <span>تعارض عملیاتی یا ایمنی</span>
-          <strong>{conflict ? "نیازمند بررسی" : "مورد بازی دیده نشد"}</strong>
-          <small>{conflict?.businessImpact ?? "براساس داده mock فعلی"}</small>
-        </div>
+      <div className={`rail-trust tone-${toneForReliability(module?.reliability ?? "unknown")}`}>
+        <strong>{module?.dataStateLabel ?? "داده معتبر موجود نیست"}</strong>
+        <span>{module?.hasLastKnownGood ? "آخرین داده سالم؛ مرجع تاریخی" : module?.isPartialData ? "فقط بخش‌های معتبر نمایش داده شده" : "زمان مشاهده"} · {formatDateTime(module?.observedAt)}</span>
       </div>
-      <div className="rail-attention-count">
-        <span>موضوع‌های صف توجه</span>
-        <strong>{toPersianNumber(attentions.filter((item) => item.moduleId === module?.moduleId).length)}</strong>
+      <div className="rail-exceptions">
+        <h3>{production ? "استثناهای نمونه تولید" : "نقاط توجه برنامه"}</h3>
+        {items.length ? items.slice(0, 3).map((item) => (
+          <div className="rail-exception" key={item.attentionId}>
+            <strong>{item.title}</strong><p>{item.destinationLabel}</p>
+          </div>
+        )) : <p>در داده موجود موضوع بازی دیده نشد.</p>}
+        {production && <div className="rail-exception rail-exception--pending"><strong>موعد، مواد و گلوگاه</strong><p>نیازمند تعریف؛ اتصال واقعی فعال نیست.</p></div>}
       </div>
-      <a className="rail-destination" href={module?.detailRouteRef ?? "#attention-title"}>{module?.destinationLabel ?? "مسیر جزئیات تعریف نشده"}</a>
+      <p className="rail-footnote">{production ? "اعداد فقط برای ارزیابی UI هستند؛ منطق نهایی تولید تعریف نشده است." : "مالک اطلاعات و اقدام اجرایی: برنامه هفتگی"}</p>
+      <a className="rail-destination" href="#attention-title">مرور موضوع‌های {production ? "تولید" : "برنامه"} در مرکز فرمان</a>
     </aside>
   );
 }
 
-export function ProductionRail({
-  attentions,
-  highlights,
-  module,
-}: {
-  attentions: readonly CommandCenterAttentionItem[];
-  highlights: readonly CommandCenterKpiHighlight[];
-  module?: CommandCenterModuleSummary;
-}) {
-  const productionHighlights = highlights.filter((item) => item.moduleId === module?.moduleId);
-  const workOrder = attentionFor(attentions, module?.moduleId ?? "", "mock:production:work-order");
-
-  return (
-    <aside className="cockpit-rail cockpit-rail--production" id="module-production-demo" aria-labelledby="production-rail-title">
-      <RailHeader headingId="production-rail-title" label="PRODUCTION" module={module} />
-      <div className="experimental-notice" role="note">
-        داده این پنل mock است؛ اتصال واقعی و منطق نهایی Production فعال نیست.
-      </div>
-      <div className="rail-health">
-        <span>سلامت و تازگی نمونه</span>
-        <strong>{module?.dataStateLabel ?? "داده‌ای دریافت نشده"}</strong>
-        <small>{module?.hasLastKnownGood ? `مرجع تاریخی: ${formatDateTime(module.observedAt)}` : "داده فعلی mock مبنای نمایش است"}</small>
-      </div>
-      <div className="rail-signals" aria-label="خلاصه آزمایشی Production">
-        <div className={`rail-signal ${workOrder ? "tone-warn" : "tone-good"}`}>
-          <span>WorkOrder در خطر</span>
-          <strong>{workOrder ? "۱ نمونه آزمایشی" : "مورد بازی دیده نشد"}</strong>
-          <small>فقط برای نمایش معماری UI</small>
-        </div>
-        <RailKpi item={kpiFor(productionHighlights, "production_plan_attainment")} fallback="عملکرد در برابر برنامه" />
-        <div className="rail-signal rail-signal--empty"><span>گلوگاه / موعد / مواد</span><strong>نیازمند تعریف</strong><small>هیچ منطق قطعی اعمال نشده است</small></div>
-      </div>
-      <a className="rail-destination" href={module?.detailRouteRef ?? "#attention-title"}>{module?.destinationLabel ?? "مسیر جزئیات تعریف نشده"}</a>
-    </aside>
-  );
-}
+export function WorkforceRail(props: RailProps) { return <ModuleRail {...props} production={false} />; }
+export function ProductionRail(props: RailProps) { return <ModuleRail {...props} production />; }

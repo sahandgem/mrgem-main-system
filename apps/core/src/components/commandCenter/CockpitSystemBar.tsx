@@ -40,15 +40,15 @@ export function CockpitSystemBar({
           <dd><StatusBadge tone={toneForOverallState(viewModel.overallState)}>{overallStateLabel(viewModel.overallState)}</StatusBadge></dd>
         </div>
         <div>
-          <dt>بازه / آخرین دریافت</dt>
+          <dt>آخرین دریافت</dt>
           <dd>{formatDateTime(lastSuccessfulAt)}</dd>
         </div>
         <div>
-          <dt>Data Trust</dt>
+          <dt>اعتماد داده</dt>
           <dd><StatusBadge tone={trust.tone}>{trust.label}</StatusBadge></dd>
         </div>
         <div>
-          <dt>Attention</dt>
+          <dt>نیازمند توجه</dt>
           <dd><strong>{toPersianNumber(viewModel.topAttention.length)}</strong> مورد</dd>
         </div>
       </dl>

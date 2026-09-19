@@ -1,9 +1,7 @@
 import type { CommandCenterViewModel } from "../../integration/commandCenter/commandCenterViewModel";
-import { StatusBadge } from "../StatusBadge";
 import {
   overallStateLabel,
   toPersianNumber,
-  toneForOverallState,
 } from "./presentation";
 
 export function CommandCenterExecutiveSummary({ viewModel }: { viewModel: CommandCenterViewModel }) {
@@ -24,7 +22,7 @@ export function CommandCenterExecutiveSummary({ viewModel }: { viewModel: Comman
   return (
     <section className="status-summary" aria-labelledby="executive-summary-title">
       <div className="status-summary__business">
-        <div className="section-label">STATUS SUMMARY / BUSINESS</div>
+        <div className="section-label">وضعیت کسب‌وکار</div>
         <div className="status-summary__headline">
           <div>
             <h3 id="executive-summary-title">{overallStateLabel(viewModel.overallState)}</h3>
@@ -36,9 +34,6 @@ export function CommandCenterExecutiveSummary({ viewModel }: { viewModel: Comman
                   : "در داده موجود، موضوع مهمی برای اقدام مدیر دیده نشده است."}
             </p>
           </div>
-          <StatusBadge tone={toneForOverallState(viewModel.overallState)}>
-            {overallStateLabel(viewModel.overallState)}
-          </StatusBadge>
         </div>
         <div className="status-summary__metrics" aria-label="خلاصه توجه مدیریتی">
           <span><strong>{toPersianNumber(viewModel.topAttention.length)}</strong> موضوع در صف توجه</span>
@@ -47,7 +42,7 @@ export function CommandCenterExecutiveSummary({ viewModel }: { viewModel: Comman
       </div>
 
       <aside className={`status-summary__data tone-${dataTrustTone}`} aria-label="اعتمادپذیری داده">
-        <div className="section-label">DATA TRUST</div>
+        <div className="section-label">اعتماد به داده</div>
         <strong>{dataTrustLabel}</strong>
         <p>
           {reliability.failedModuleCount

@@ -73,7 +73,7 @@ function ModuleRail({
             <span className="sr-only">مشاهده تصویر مدیریتی ماژول</span>
           </button>
         ) : <h2 id={`${id}-rail-title`}>{production ? "تولید" : "نیروی انسانی"}</h2>}
-        <span>{production ? "آزمایشی / Mock" : "برنامه هفتگی · نمونه"}</span>
+        <span>{production ? "آزمایشی" : "برنامه هفتگی · نمونه"}</span>
       </header>
       <div className="rail-metrics">
         {production ? <>

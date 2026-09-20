@@ -58,7 +58,7 @@ function AttentionDetail({
         {relatedKpi && (
           <div>
             <dt>مورد مرتبط</dt>
-            <dd><button className="drawer-related-button" onClick={() => onSelect({ kind: "kpi", signal: signalFromHighlight(relatedKpi, module, [item]) })} type="button">مشاهده شاخص «{relatedKpi.label}» در همین Drawer</button></dd>
+            <dd><button className="drawer-related-button" onClick={() => onSelect({ kind: "kpi", signal: signalFromHighlight(relatedKpi, module, [item]) })} type="button">مشاهده شاخص «{relatedKpi.label}» در همین پنل</button></dd>
           </div>
         )}
         <div><dt>مقصد بررسی</dt><dd>{item.destinationLabel}</dd></div>
@@ -83,7 +83,7 @@ function ModuleDetail({
         <span>تصویر مدیریتی ماژول</span>
         <h3>{module.displayName}</h3>
         <div>
-          {module.isExperimental && <StatusBadge tone="focus">Mock / آزمایشی</StatusBadge>}
+          {module.isExperimental && <StatusBadge tone="focus">آزمایشی</StatusBadge>}
           <StatusBadge tone={toneForReliability(module.reliability)}>{module.dataStateLabel}</StatusBadge>
         </div>
       </div>
@@ -119,7 +119,7 @@ function ModuleDetail({
         )}
       </dl>
       <DrawerNavigation label={module.destinationLabel} reference={module.detailRouteRef} />
-      {module.isExperimental && <div className="drawer-placeholder"><strong>Production آزمایشی است</strong><p>این Snapshot فقط معماری UI را نشان می‌دهد؛ اتصال و منطق نهایی تولید فعال نیست.</p></div>}
+      {module.isExperimental && <div className="drawer-placeholder"><strong>تولید آزمایشی است</strong><p>این نمای مدیریتی فقط معماری رابط را نشان می‌دهد؛ اتصال و منطق نهایی تولید فعال نیست.</p></div>}
     </>
   );
 }
@@ -155,11 +155,11 @@ function KpiDetail({
         {signal.explanation && <div><dt>معنای مدیریتی</dt><dd>{signal.explanation}</dd></div>}
         <div><dt>منبع و وضعیت داده</dt><dd>{signal.ownerLabel} · {signal.dataStateLabel}</dd><dd className="drawer-secondary">زمان مشاهده: {formatDateTime(signal.observedAt)}</dd></div>
         {relatedAttention && (
-          <div><dt>موضوع مرتبط</dt><dd><button className="drawer-related-button" onClick={() => onSelect({ kind: "attention", item: relatedAttention, module: signal.module })} type="button">مشاهده «{relatedAttention.title}» در همین Drawer</button></dd></div>
+          <div><dt>موضوع مرتبط</dt><dd><button className="drawer-related-button" onClick={() => onSelect({ kind: "attention", item: relatedAttention, module: signal.module })} type="button">مشاهده «{relatedAttention.title}» در همین پنل</button></dd></div>
         )}
       </dl>
       <DrawerNavigation label={signal.destinationLabel} reference={signal.destinationRef} />
-      {!signal.value && <div className="drawer-placeholder"><strong>Unknown برابر صفر نیست</strong><p>تا وقتی منبع معتبر متصل یا مقدار واقعی موجود نباشد، عددی برای این سیگنال نمایش داده نمی‌شود.</p></div>}
+      {!signal.value && <div className="drawer-placeholder"><strong>نامشخص برابر صفر نیست</strong><p>تا وقتی منبع معتبر متصل یا مقدار واقعی موجود نباشد، عددی برای این سیگنال نمایش داده نمی‌شود.</p></div>}
     </>
   );
 }
@@ -189,7 +189,7 @@ function ChangeDetail({
         <div><dt>اثر کسب‌وکاری</dt><dd>{changeImpact(item.kpiKey)}</dd></div>
         <div><dt>زمان مشاهده تغییر</dt><dd>{formatDateTime(item.observedAt)}</dd></div>
         {relatedAttention && (
-          <div><dt>موضوع مرتبط</dt><dd><button className="drawer-related-button" onClick={() => onSelect({ kind: "attention", item: relatedAttention, module, relatedKpi: item })} type="button">مشاهده موضوع مرتبط در همین Drawer</button></dd></div>
+          <div><dt>موضوع مرتبط</dt><dd><button className="drawer-related-button" onClick={() => onSelect({ kind: "attention", item: relatedAttention, module, relatedKpi: item })} type="button">مشاهده موضوع مرتبط در همین پنل</button></dd></div>
         )}
       </dl>
       <DrawerNavigation label={module?.destinationLabel} reference={item.drillDownRef ?? module?.detailRouteRef} />
@@ -201,10 +201,12 @@ export function CockpitDrawerShell({
   onClose,
   onSelect,
   selection,
+  showInitialFocusRing,
 }: {
   onClose: () => void;
   onSelect: (selection: CockpitDrawerSelection) => void;
   selection?: CockpitDrawerSelection;
+  showInitialFocusRing: boolean;
 }) {
   const drawerRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -226,7 +228,7 @@ export function CockpitDrawerShell({
   const sectionLabel = selection.kind === "attention"
     ? "جزئیات موضوع مدیریتی"
     : selection.kind === "module"
-      ? "Snapshot ماژول"
+      ? "نمای مدیریتی ماژول"
       : selection.kind === "kpi"
         ? "جزئیات شاخص"
         : "جزئیات تغییر";
@@ -234,7 +236,7 @@ export function CockpitDrawerShell({
   return (
     <aside aria-labelledby="cockpit-drawer-title" className="cockpit-drawer" ref={drawerRef} role="dialog">
       <header>
-        <div><span className="section-label">مشاهده و بررسی</span><h2 id="cockpit-drawer-title" ref={titleRef} tabIndex={-1}>{sectionLabel}</h2></div>
+        <div><span className="section-label">مشاهده و بررسی</span><h2 className={showInitialFocusRing ? "drawer-title drawer-title--keyboard" : "drawer-title"} id="cockpit-drawer-title" ref={titleRef} tabIndex={-1}>{sectionLabel}</h2></div>
         <button aria-label="بستن جزئیات و بازگشت به عنصر انتخاب‌شده" className="drawer-close" onClick={onClose} type="button">بستن</button>
       </header>
       {selection.kind === "attention" && <AttentionDetail onSelect={onSelect} selection={selection} />}

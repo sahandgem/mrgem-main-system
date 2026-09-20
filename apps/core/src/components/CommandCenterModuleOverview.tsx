@@ -34,12 +34,12 @@ const scenarioOptions: readonly ScenarioOption[] = [
     key: "normal",
     label: "روز عادی",
     title: "داده تازه، بدون موضوع باز",
-    description: "برای بررسی پوسته در روزی که Attention مدیریتی فعالی وجود ندارد.",
+    description: "برای بررسی پوسته در روزی که موضوع مدیریتی فعالی وجود ندارد.",
     tone: "good",
   },
   {
     key: "healthy",
-    label: "چند Attention",
+    label: "چند موضوع",
     title: "داده معتبر با چند موضوع مدیریتی",
     description: "دریافت فعلی موفق است و موضوع‌های کسب‌وکاری مستقل از سلامت داده نمایش داده می‌شوند.",
     tone: "warn",
@@ -60,7 +60,7 @@ const scenarioOptions: readonly ScenarioOption[] = [
   },
   {
     key: "error",
-    label: "خطای دریافت",
+    label: "خطای داده",
     title: "دریافت فعلی ناموفق است",
     description: "آخرین داده سالم فقط به‌عنوان مرجع تاریخی حفظ می‌شود و داده فعلی محسوب نمی‌شود.",
     tone: "critical",
@@ -71,6 +71,7 @@ export function CommandCenterModuleOverview() {
   const dataSource = useRef<CommandCenterMockDataSource | null>(null);
   const refreshInFlight = useRef(false);
   const drawerTrigger = useRef<HTMLButtonElement | null>(null);
+  const drawerTitleShowsFocus = useRef(false);
   const [viewModel, setViewModel] = useState<CommandCenterViewModel>();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [refreshError, setRefreshError] = useState<string>();
@@ -111,10 +112,12 @@ export function CommandCenterModuleOverview() {
 
   const openDrawer = useCallback((selection: CockpitDrawerSelection, trigger: HTMLButtonElement) => {
     drawerTrigger.current = trigger;
+    drawerTitleShowsFocus.current = trigger.matches(":focus-visible");
     setDrawerSelection((current) => reduceCockpitDrawer(current, { type: "open", selection }));
   }, []);
 
   const switchDrawer = useCallback((selection: CockpitDrawerSelection) => {
+    drawerTitleShowsFocus.current = document.activeElement?.matches(":focus-visible") ?? false;
     setDrawerSelection((current) => reduceCockpitDrawer(current, { type: "open", selection }));
   }, []);
 
@@ -130,7 +133,7 @@ export function CommandCenterModuleOverview() {
   if (!viewModel) {
     return (
       <main className="cockpit-loading" id="cockpit-main">
-        <strong>در حال ساخت نمای مدیریتی از داده mock...</strong>
+        <strong>در حال ساخت نمای مدیریتی از داده آزمایشی...</strong>
         {refreshError && <span role="alert">{refreshError}</span>}
       </main>
     );
@@ -235,6 +238,7 @@ export function CommandCenterModuleOverview() {
         onClose={closeDrawer}
         onSelect={switchDrawer}
         selection={drawerSelection}
+        showInitialFocusRing={drawerTitleShowsFocus.current}
       />
       <CommandCenterMockControls
         activeScenario={activeScenario}

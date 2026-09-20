@@ -159,8 +159,8 @@ const modulePresentation: Readonly<Record<string, {
     isExperimental: false,
   },
   "production.demo": {
-    description: "نمونه معماری WorkOrder و عملکرد تولید؛ منطق نهایی هنوز تعریف نشده است",
-    destinationLabel: "جزئیات نمونه Production",
+    description: "نمونه معماری سفارش کاری و عملکرد تولید؛ منطق نهایی هنوز تعریف نشده است",
+    destinationLabel: "جزئیات نمونه تولید",
     isExperimental: true,
   },
 };
@@ -192,7 +192,7 @@ const attentionPresentation: Readonly<Record<string, {
   production_work_order_risk: {
     businessImpact: "در معماری آینده می‌تواند بر موعد تولید و تعهد تحویل اثر بگذارد.",
     timeContext: "سناریوی آزمایشی؛ بازه نهایی نیازمند تعریف",
-    destinationLabel: "نمونه جزئیات WorkOrder",
+    destinationLabel: "نمونه جزئیات سفارش کاری",
     priorityTier: 2,
   },
   production_plan_attainment: {
@@ -274,12 +274,12 @@ export function commandCenterReliabilityLabel(state: CommandCenterReliabilitySta
     fresh: "تازه و معتبر",
     degraded: "معتبر با هشدار",
     stale_last_known_good: "آخرین داده معتبر؛ قدیمی",
-    unavailable: "در دسترس نیست",
-    invalid: "داده نامعتبر",
-    unsupported_version: "نسخه ناسازگار",
+    unavailable: "خطای داده",
+    invalid: "خطای داده؛ داده نامعتبر",
+    unsupported_version: "خطای داده؛ نسخه ناسازگار",
     no_data: "بدون داده",
     disabled: "غیرفعال",
-    unknown: "وضعیت نامشخص",
+    unknown: "نامشخص",
   };
   return labels[state];
 }
@@ -297,8 +297,8 @@ function summaryFor(result: CoreModuleResult, reliability: CommandCenterReliabil
   if (reliability === "unavailable") return "ماژول در دسترس نیست و داده معتبر قبلی وجود ندارد.";
   if (reliability === "invalid") return "داده فعلی قابل اعتماد نیست و در نمای مدیریتی استفاده نشده است.";
   if (reliability === "unsupported_version") return "نسخه قرارداد فعلی پشتیبانی نمی‌شود.";
-  if (reliability === "no_data") return "ماژول فعال است، اما هنوز observation ندارد.";
-  if (reliability === "disabled") return "ماژول در registry غیرفعال است.";
+  if (reliability === "no_data") return "ماژول فعال است، اما هنوز داده‌ای ثبت نشده است.";
+  if (reliability === "disabled") return "ماژول در فهرست ماژول‌ها غیرفعال است.";
   return "قابلیت اطمینان داده مشخص نیست.";
 }
 
@@ -315,8 +315,8 @@ function dataStateLabelFor(result: CoreModuleResult, reliability: CommandCenterR
   if (reliability === "stale_last_known_good") return "داده فعلی قدیمی است";
   if (result.observation?.partial?.isPartial) return "داده فعلی ناقص است";
   if (reliability === "degraded") return "داده فعلی با هشدار دریافت شده است";
-  if (reliability === "unavailable") return "دریافت فعلی ناموفق است";
-  if (reliability === "invalid" || reliability === "unsupported_version") return "داده فعلی قابل استفاده نیست";
+  if (reliability === "unavailable") return "خطای داده؛ دریافت فعلی ناموفق است";
+  if (reliability === "invalid" || reliability === "unsupported_version") return "خطای داده؛ داده فعلی قابل استفاده نیست";
   if (reliability === "no_data") return "داده فعلی وجود ندارد";
   if (reliability === "disabled") return "ماژول غیرفعال است";
   return "وضعیت داده فعلی نامشخص است";

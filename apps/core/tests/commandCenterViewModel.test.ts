@@ -374,10 +374,10 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
   assert.equal(visibleCount(2, { ...module, isPartialData: true }), 2);
   assert.equal(visibleCount(0, { ...module, reliability: "unavailable", hasLastKnownGood: false }), undefined);
   assert.equal(visibleCount(2, { ...module, reliability: "stale_last_known_good", hasLastKnownGood: true }), 2);
-  assert.equal(reliabilityText("fresh"), "داده تازه");
+  assert.equal(reliabilityText("fresh"), "تازه و معتبر");
   assert.match(reliabilityText("degraded"), /ناقص/);
   assert.match(reliabilityText("stale_last_known_good"), /تاریخی/);
-  assert.match(reliabilityText("unavailable"), /موجود نیست/);
+  assert.match(reliabilityText("unavailable"), /خطای داده/);
   const data = buildMockObservation("workforce.demo", now);
   const attention = buildCommandCenterViewModel(aggregation([{ ...moduleResult(), observation: data }])).topAttention[0];
   const before = JSON.stringify(attention);

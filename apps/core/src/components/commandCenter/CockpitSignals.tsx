@@ -7,11 +7,11 @@ import { signalFromHighlight, type CockpitKpiSignal } from "./drawerModel";
 import { formatDateTime, toPersianNumber, toneForKpiStatus } from "./presentation";
 
 function dataSlot(viewModel: CommandCenterViewModel) {
-  if (viewModel.reliability.failedModuleCount) return { value: "ناموفق", detail: viewModel.modules.some((item) => item.hasLastKnownGood) ? "مرجع تاریخی موجود" : "داده موجود نیست", tone: "critical" as const };
+  if (viewModel.reliability.failedModuleCount) return { value: "خطای داده", detail: viewModel.modules.some((item) => item.hasLastKnownGood) ? "مرجع تاریخی موجود" : "داده موجود نیست", tone: "critical" as const };
   if (viewModel.reliability.hasPartialData) return { value: "ناقص", detail: "تصمیم با احتیاط", tone: "warn" as const };
   if (viewModel.managementSummary.staleModuleCount) return { value: "قدیمی", detail: "مرجع تاریخی", tone: "warn" as const };
   if (!viewModel.modules.length || viewModel.reliability.unknownFreshnessCount) return { value: "نامشخص", detail: "پوشش نامعلوم", tone: "info" as const };
-  return { value: "تازه", detail: `${toPersianNumber(viewModel.reliability.completeModuleCount)} ماژول معتبر`, tone: "good" as const };
+  return { value: "تازه و معتبر", detail: `${toPersianNumber(viewModel.reliability.completeModuleCount)} ماژول معتبر`, tone: "good" as const };
 }
 
 export function ImportantChanges({
@@ -68,7 +68,7 @@ function VitalSlot({
     <button
       aria-current={selected ? "true" : undefined}
       aria-label={`${signal.label}: ${signal.value ?? signal.dataStateLabel}؛ مشاهده جزئیات`}
-      className={`vital-slot${placeholder ? " vital-slot--placeholder" : ""}${signal.isExperimental ? " vital-slot--experimental" : ""}${tone ? ` tone-${tone}` : ""}`}
+      className={`vital-slot${signal.signalId === "vital-data" ? " vital-slot--data" : ""}${placeholder ? " vital-slot--placeholder" : ""}${signal.isExperimental ? " vital-slot--experimental" : ""}${tone ? ` tone-${tone}` : ""}`}
       onClick={(event) => onOpen(signal, event.currentTarget)}
       title="مشاهده جزئیات سیگنال"
       type="button"
@@ -151,11 +151,11 @@ export function VitalStrip({
       ...signalFromHighlight(production, productionModule, viewModel.topAttention),
       signalId: "vital-production",
       label: "تولید",
-      context: `تحقق mock برنامه · ${production.contextLabel}`,
+      context: `تحقق آزمایشی برنامه · ${production.contextLabel}`,
     } : {
       signalId: "vital-production",
       label: "تولید",
-      context: "تحقق mock برنامه",
+      context: "تحقق آزمایشی برنامه",
       ownerLabel: productionModule?.displayName ?? "مرکز تولید آزمایشی",
       dataStateLabel: productionModule?.dataStateLabel ?? "داده موجود نیست",
       reliability: productionModule?.reliability,

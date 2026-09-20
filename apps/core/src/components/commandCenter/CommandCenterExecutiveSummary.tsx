@@ -14,12 +14,12 @@ export function CommandCenterExecutiveSummary({ viewModel }: { viewModel: Comman
       ? "warn"
       : "good";
   const dataTrustLabel = reliability.failedModuleCount
-    ? "دریافت فعلی قابل اتکا نیست"
+    ? "خطای داده؛ دریافت فعلی قابل اتکا نیست"
     : reliability.hasPartialData
-      ? "تصویر داده ناقص است"
+      ? "داده ناقص است"
       : managementSummary.staleModuleCount
-        ? "آخرین داده معتبر، قدیمی است"
-        : "داده تازه و قابل اتکاست";
+        ? "داده قدیمی است"
+        : "داده تازه و معتبر است";
 
   return (
     <section className="status-summary" aria-labelledby="executive-summary-title">

@@ -18,10 +18,11 @@ export function changeImpact(key: string) {
 }
 
 export function reliabilityText(value: CommandCenterReliabilityState) {
-  if (value === "fresh") return "داده تازه";
+  if (value === "fresh") return "تازه و معتبر";
   if (value === "stale_last_known_good") return "آخرین داده سالم؛ تاریخی";
-  if (value === "degraded") return "داده ناقص؛ با احتیاط";
-  return "داده معتبر موجود نیست";
+  if (value === "degraded") return "ناقص؛ با احتیاط";
+  if (value === "unavailable" || value === "invalid" || value === "unsupported_version") return "خطای داده";
+  return "نامشخص";
 }
 
 export function hasDisplayData(module?: CommandCenterModuleSummary) {

@@ -8,7 +8,7 @@ import {
 } from "./presentation";
 
 function dataTrust(viewModel: CommandCenterViewModel) {
-  if (viewModel.reliability.failedModuleCount) return { label: "دریافت ناموفق", tone: "critical" as const };
+  if (viewModel.reliability.failedModuleCount) return { label: "خطای داده", tone: "critical" as const };
   if (viewModel.reliability.hasPartialData) return { label: "داده ناقص", tone: "warn" as const };
   if (viewModel.managementSummary.staleModuleCount) return { label: "داده قدیمی", tone: "warn" as const };
   return { label: "تازه و معتبر", tone: "good" as const };

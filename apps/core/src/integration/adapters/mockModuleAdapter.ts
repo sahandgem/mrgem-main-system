@@ -39,7 +39,7 @@ export function buildMockObservation(
     summary: {
       status: isProduction ? "experimental" : "attention",
       text: isProduction
-        ? "نمای آزمایشی تولید برای ارزیابی معماری UI؛ اتصال واقعی فعال نیست."
+        ? "نمای آزمایشی تولید برای ارزیابی معماری رابط؛ اتصال واقعی فعال نیست."
         : "داده برنامه معتبر است؛ چند موضوع مدیریتی در نمونه نیازمند توجه است.",
     },
     health: {
@@ -89,12 +89,12 @@ export function buildMockObservation(
           fingerprint: "production-demo-work-order-risk",
           category: "production_work_order_risk",
           severity: "warning",
-          title: "یک WorkOrder آزمایشی در معرض تأخیر است",
+          title: "یک سفارش کاری آزمایشی در معرض تأخیر است",
           summary: "این سیگنال فقط معماری نمایش ریسک تولید را نشان می‌دهد و منطق نهایی محصول نیست.",
           detectedAt: generatedAt,
           status: "open",
           sourceReference: "mock:production:work-order",
-          recommendedNextAction: "تعریف منطق نهایی Production پیش از هر تصمیم عملیاتی تکمیل شود.",
+          recommendedNextAction: "تعریف منطق نهایی تولید پیش از هر تصمیم عملیاتی تکمیل شود.",
           drillDownRef: "#module-production-demo",
         }]
       : [{

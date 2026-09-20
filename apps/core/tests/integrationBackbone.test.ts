@@ -273,7 +273,7 @@ assert.equal(integrationModuleRegistry[1].moduleId, "production.demo");
   assert.equal(view.overallState, "critical");
   assert.equal(workforce.reliability, "unavailable");
   assert.equal(workforce.hasLastKnownGood, true);
-  assert.equal(workforce.dataStateLabel, "دریافت فعلی ناموفق است");
+  assert.equal(workforce.dataStateLabel, "خطای داده؛ دریافت فعلی ناموفق است");
   assert.equal(workforce.isPartialData, false);
   assert.equal(workforce.alertCounts.critical, 1);
   assert.equal(workforce.highlightedKpiCount, 2);

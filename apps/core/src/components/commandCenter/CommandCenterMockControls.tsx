@@ -27,7 +27,7 @@ export function CommandCenterMockControls({
       <summary aria-label="کنترل تست سناریوهای داده"><FlaskConical aria-hidden="true" size={16} /><span>کنترل تست سناریوهای داده</span><StatusBadge tone={active.tone}>{active.label}</StatusBadge></summary>
       <div className="mock-controls__body">
         <div><strong>{active.title}</strong><p>{active.description}</p></div>
-        <div className="mock-controls__options" role="group" aria-label="انتخاب سناریوی داده mock">
+        <div className="mock-controls__options" role="group" aria-label="انتخاب سناریوی داده آزمایشی">
           {options.map((option) => (
             <button
               aria-pressed={activeScenario === option.key}

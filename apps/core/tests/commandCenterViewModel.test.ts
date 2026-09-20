@@ -1,5 +1,13 @@
 import assert from "node:assert/strict";
 import { attentionSummary, reliabilityText, visibleCount } from "../src/components/commandCenter/density.ts";
+import {
+  drawerSelectionKey,
+  reduceCockpitDrawer,
+  relatedAttentionForKpi,
+  signalFromHighlight,
+  type CockpitDrawerSelection,
+  type CockpitKpiSignal,
+} from "../src/components/commandCenter/drawerModel.ts";
 import { buildMockObservation } from "../src/integration/adapters/mockModuleAdapter.ts";
 import type {
   CoreModuleResult,
@@ -380,3 +388,58 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
 }
 
 console.log("Command Center view-model and C3 presentation tests passed.");
+
+// C4 keeps exactly one drawer payload and replaces it instead of creating a nested stack.
+{
+  const view = buildCommandCenterViewModel(aggregation([moduleResult({
+    kpis: [kpi("warning", "workforce_schedule_coverage")],
+  })]));
+  const module = view.modules[0];
+  const highlight = view.kpiHighlights[0];
+  const attention = view.topAttention[0];
+  const attentionSelection: CockpitDrawerSelection = { kind: "attention", item: attention, module, relatedKpi: highlight };
+  const moduleSelection: CockpitDrawerSelection = {
+    kind: "module",
+    module,
+    kpis: [highlight],
+    attentions: [attention],
+    latestChange: highlight,
+  };
+  const opened = reduceCockpitDrawer(undefined, { type: "open", selection: attentionSelection });
+  assert.equal(opened?.kind, "attention");
+  assert.equal(drawerSelectionKey(opened!), `attention:${attention.attentionId}`);
+  const replaced = reduceCockpitDrawer(opened, { type: "open", selection: moduleSelection });
+  assert.equal(replaced?.kind, "module");
+  assert.equal("previous" in replaced!, false);
+  assert.equal(reduceCockpitDrawer(replaced, { type: "close" }), undefined);
+}
+
+// C4 only links KPI and Attention when the module and source reference actually match.
+{
+  const view = buildCommandCenterViewModel(aggregation([moduleResult({
+    kpis: [kpi("warning", "workforce_schedule_coverage")],
+  })]));
+  const highlight = view.kpiHighlights[0];
+  const attention = relatedAttentionForKpi(highlight, view.topAttention);
+  assert.equal(attention?.sourceRef, highlight.kpiKey);
+  assert.equal(relatedAttentionForKpi({ ...highlight, kpiKey: "unrelated" }, view.topAttention), undefined);
+  const signal = signalFromHighlight(highlight, view.modules[0], view.topAttention);
+  assert.equal(signal.relatedAttention?.attentionId, attention?.attentionId);
+  assert.equal(signal.value, "7");
+}
+
+// An unconnected Vital signal has no numeric fallback: unknown is never rendered as zero.
+{
+  const unconnected: CockpitKpiSignal = {
+    signalId: "vital-sales",
+    label: "فروش",
+    context: "داده موجود نیست",
+    ownerLabel: "فروش",
+    dataStateLabel: "متصل نیست",
+    isExperimental: false,
+  };
+  assert.equal(unconnected.value, undefined);
+  assert.notEqual(unconnected.value, "0");
+}
+
+console.log("Cockpit C4 interaction-model tests passed.");

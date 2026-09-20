@@ -5,6 +5,8 @@ import {
 } from "../integration/commandCenter/commandCenterMockDataSource";
 import type {
   CommandCenterAttentionItem,
+  CommandCenterKpiHighlight,
+  CommandCenterModuleSummary,
   CommandCenterViewModel,
 } from "../integration/commandCenter/commandCenterViewModel";
 import { CockpitDrawerShell } from "./commandCenter/CockpitDrawerShell";
@@ -18,6 +20,14 @@ import {
   CommandCenterMockControls,
   type ScenarioOption,
 } from "./commandCenter/CommandCenterMockControls";
+import {
+  drawerSelectionKey,
+  reduceCockpitDrawer,
+  relatedAttentionForKpi,
+  signalFromHighlight,
+  type CockpitDrawerSelection,
+  type CockpitKpiSignal,
+} from "./commandCenter/drawerModel";
 
 const scenarioOptions: readonly ScenarioOption[] = [
   {
@@ -66,7 +76,7 @@ export function CommandCenterModuleOverview() {
   const [refreshError, setRefreshError] = useState<string>();
   const [lastSuccessfulAt, setLastSuccessfulAt] = useState<string>();
   const [activeScenario, setActiveScenario] = useState<CommandCenterMockScenario>("healthy");
-  const [selectedAttention, setSelectedAttention] = useState<CommandCenterAttentionItem>();
+  const [drawerSelection, setDrawerSelection] = useState<CockpitDrawerSelection>();
 
   if (!dataSource.current) dataSource.current = new CommandCenterMockDataSource();
 
@@ -80,7 +90,8 @@ export function CommandCenterModuleOverview() {
       const next = await dataSource.current.read();
       setViewModel(next);
       setLastSuccessfulAt(next.generatedAt);
-      setSelectedAttention(undefined);
+      setDrawerSelection((current) => reduceCockpitDrawer(current, { type: "close" }));
+      drawerTrigger.current = null;
     } catch {
       setRefreshError("به‌روزرسانی نمای مدیریتی انجام نشد. لطفاً دوباره تلاش کنید.");
     } finally {
@@ -98,14 +109,22 @@ export function CommandCenterModuleOverview() {
     void refresh(next);
   };
 
-  const openDrawer = useCallback((item: CommandCenterAttentionItem, trigger: HTMLButtonElement) => {
+  const openDrawer = useCallback((selection: CockpitDrawerSelection, trigger: HTMLButtonElement) => {
     drawerTrigger.current = trigger;
-    setSelectedAttention(item);
+    setDrawerSelection((current) => reduceCockpitDrawer(current, { type: "open", selection }));
+  }, []);
+
+  const switchDrawer = useCallback((selection: CockpitDrawerSelection) => {
+    setDrawerSelection((current) => reduceCockpitDrawer(current, { type: "open", selection }));
   }, []);
 
   const closeDrawer = useCallback(() => {
-    setSelectedAttention(undefined);
-    window.requestAnimationFrame(() => drawerTrigger.current?.focus());
+    const trigger = drawerTrigger.current;
+    setDrawerSelection((current) => reduceCockpitDrawer(current, { type: "close" }));
+    window.requestAnimationFrame(() => {
+      if (trigger?.isConnected) trigger.focus();
+      drawerTrigger.current = null;
+    });
   }, []);
 
   if (!viewModel) {
@@ -119,6 +138,53 @@ export function CommandCenterModuleOverview() {
 
   const workforce = viewModel.modules.find((item) => item.moduleId === "workforce.demo");
   const production = viewModel.modules.find((item) => item.moduleId === "production.demo");
+  const selectedKey = drawerSelection ? drawerSelectionKey(drawerSelection) : undefined;
+
+  const openAttention = (item: CommandCenterAttentionItem, trigger: HTMLButtonElement) => {
+    openDrawer({
+      kind: "attention",
+      item,
+      module: viewModel.modules.find((module) => module.moduleId === item.moduleId),
+      relatedKpi: viewModel.kpiHighlights.find((highlight) => (
+        highlight.moduleId === item.moduleId && highlight.kpiKey === item.sourceRef
+      )),
+    }, trigger);
+  };
+
+  const openModule = (module: CommandCenterModuleSummary, trigger: HTMLButtonElement) => {
+    const kpis = viewModel.kpiHighlights.filter((item) => item.moduleId === module.moduleId);
+    openDrawer({
+      kind: "module",
+      module,
+      kpis,
+      attentions: viewModel.topAttention.filter((item) => item.moduleId === module.moduleId),
+      latestChange: kpis.find((item) => item.status !== "normal" && item.trendText),
+    }, trigger);
+  };
+
+  const openKpi = (highlight: CommandCenterKpiHighlight, trigger: HTMLButtonElement) => {
+    openDrawer({
+      kind: "kpi",
+      signal: signalFromHighlight(
+        highlight,
+        viewModel.modules.find((module) => module.moduleId === highlight.moduleId),
+        viewModel.topAttention,
+      ),
+    }, trigger);
+  };
+
+  const openSignal = (signal: CockpitKpiSignal, trigger: HTMLButtonElement) => {
+    openDrawer({ kind: "kpi", signal }, trigger);
+  };
+
+  const openChange = (item: CommandCenterKpiHighlight, trigger: HTMLButtonElement) => {
+    openDrawer({
+      kind: "change",
+      item,
+      module: viewModel.modules.find((module) => module.moduleId === item.moduleId),
+      relatedAttention: relatedAttentionForKpi(item, viewModel.topAttention),
+    }, trigger);
+  };
 
   return (
     <div className="command-center">
@@ -133,19 +199,43 @@ export function CommandCenterModuleOverview() {
 
       <main className="cockpit-stage" id="cockpit-main">
         <div className="cockpit-main-grid">
-          <WorkforceRail attentions={viewModel.topAttention} highlights={viewModel.kpiHighlights} module={workforce} />
           <section className="command-core" aria-label="مرکز فرمان مدیریتی">
             <CommandCenterExecutiveSummary viewModel={viewModel} />
-            <CommandCenterAttentionQueue onOpen={openDrawer} viewModel={viewModel} />
+            <CommandCenterAttentionQueue
+              onOpen={openAttention}
+              selectedAttentionId={drawerSelection?.kind === "attention" ? drawerSelection.item.attentionId : undefined}
+              viewModel={viewModel}
+            />
             <CockpitUpcomingCommitments />
           </section>
-          <ProductionRail attentions={viewModel.topAttention} highlights={viewModel.kpiHighlights} module={production} />
+          <WorkforceRail
+            attentions={viewModel.topAttention}
+            highlights={viewModel.kpiHighlights}
+            module={workforce}
+            onOpenAttention={openAttention}
+            onOpenKpi={openKpi}
+            onOpenModule={openModule}
+            selectedKey={selectedKey}
+          />
+          <ProductionRail
+            attentions={viewModel.topAttention}
+            highlights={viewModel.kpiHighlights}
+            module={production}
+            onOpenAttention={openAttention}
+            onOpenKpi={openKpi}
+            onOpenModule={openModule}
+            selectedKey={selectedKey}
+          />
         </div>
-        <ImportantChanges viewModel={viewModel} />
-        <VitalStrip viewModel={viewModel} />
+        <ImportantChanges onOpen={openChange} selectedKey={selectedKey} viewModel={viewModel} />
+        <VitalStrip onOpen={openSignal} selectedKey={selectedKey} viewModel={viewModel} />
       </main>
 
-      <CockpitDrawerShell item={selectedAttention} onClose={closeDrawer} />
+      <CockpitDrawerShell
+        onClose={closeDrawer}
+        onSelect={switchDrawer}
+        selection={drawerSelection}
+      />
       <CommandCenterMockControls
         activeScenario={activeScenario}
         disabled={isRefreshing}

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { ArrowLeft } from "lucide-react";
 import type {
   CommandCenterAttentionItem,
   CommandCenterViewModel,
@@ -66,7 +67,7 @@ export function CommandCenterAttentionQueue({
               <button
                 aria-current={selected ? "true" : undefined}
                 aria-label={`${attentionPriorityLabel(item.priorityTier)}؛ ${summary.title}؛ ${summary.impact}؛ مشاهده جزئیات`}
-                className={`command-row${selected ? " command-row--selected" : ""}`}
+                className={`command-row command-row--${item.priorityTier <= 1 ? "critical" : "attention"}${selected ? " command-row--selected" : ""}`}
                 key={item.attentionId}
                 onClick={(event) => onOpen(item, event.currentTarget)}
                 type="button"
@@ -79,10 +80,12 @@ export function CommandCenterAttentionQueue({
                   <strong>{summary.title}</strong>
                   <span>{summary.impact}</span>
                 </span>
-                <span className="command-row__open">{selected ? "در حال بررسی" : "بررسی ←"}</span>
+                <span className="command-row__open">
+                  {selected ? "در حال بررسی" : <><span>بررسی</span><ArrowLeft aria-hidden="true" size={14} strokeWidth={1.5} /></>}
+                </span>
                 <span className="command-row__context">
-                  <span>{item.isExperimental ? "بازه نیازمند تعریف" : item.timeContext}</span>
-                  <span>{item.destinationLabel}{item.isExperimental ? " · آزمایشی" : ""}</span>
+                  <span className="command-row__time">{item.isExperimental ? "بازه نیازمند تعریف" : item.timeContext}</span>
+                  <span className="command-row__destination">{item.destinationLabel}{item.isExperimental ? " · آزمایشی" : ""}</span>
                 </span>
               </button>
             );

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { ArrowLeft, X } from "lucide-react";
 import { StatusBadge } from "../StatusBadge";
 import { changeImpact, reliabilityText } from "./density";
 import {
@@ -20,7 +21,12 @@ function DrawerNavigation({ label, reference }: { label?: string; reference?: st
   if (!reference) {
     return <p className="drawer-route-missing">مسیر ورود به ماژول هنوز متصل نیست.</p>;
   }
-  return <a className="drawer-navigation" href={reference}>{label ? `رفتن به ${label}` : "رفتن به مقصد ثبت‌شده"}</a>;
+  return (
+    <a className="drawer-navigation" href={reference}>
+      <span>{label ? `رفتن به ${label}` : "رفتن به مقصد ثبت‌شده"}</span>
+      <ArrowLeft aria-hidden="true" size={16} strokeWidth={1.5} />
+    </a>
+  );
 }
 
 function AttentionDetail({
@@ -237,7 +243,10 @@ export function CockpitDrawerShell({
     <aside aria-labelledby="cockpit-drawer-title" className="cockpit-drawer" ref={drawerRef} role="dialog">
       <header>
         <div><span className="section-label">مشاهده و بررسی</span><h2 className={showInitialFocusRing ? "drawer-title drawer-title--keyboard" : "drawer-title"} id="cockpit-drawer-title" ref={titleRef} tabIndex={-1}>{sectionLabel}</h2></div>
-        <button aria-label="بستن جزئیات و بازگشت به عنصر انتخاب‌شده" className="drawer-close" onClick={onClose} type="button">بستن</button>
+        <button aria-label="بستن جزئیات و بازگشت به عنصر انتخاب‌شده" className="drawer-close" onClick={onClose} type="button">
+          <X aria-hidden="true" size={16} strokeWidth={1.5} />
+          <span>بستن</span>
+        </button>
       </header>
       {selection.kind === "attention" && <AttentionDetail onSelect={onSelect} selection={selection} />}
       {selection.kind === "module" && <ModuleDetail onSelect={onSelect} selection={selection} />}

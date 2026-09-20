@@ -73,7 +73,9 @@ function ModuleRail({
             <span className="sr-only">مشاهده تصویر مدیریتی ماژول</span>
           </button>
         ) : <h2 id={`${id}-rail-title`}>{production ? "تولید" : "نیروی انسانی"}</h2>}
-        <span>{production ? "آزمایشی" : "برنامه هفتگی · نمونه"}</span>
+        <span className={production ? "instrument-rail-state instrument-rail-state--experimental" : "instrument-rail-state"}>
+          {production ? "آزمایشی" : "برنامه هفتگی · نمونه"}
+        </span>
       </header>
       <div className="rail-metrics">
         {production ? <>
@@ -125,7 +127,7 @@ function ModuleRail({
         {items.length ? items.slice(0, 5).map((item) => (
           <button
             aria-current={selectedKey === `attention:${item.attentionId}` ? "true" : undefined}
-            className="rail-exception"
+            className={`rail-exception rail-exception--${item.priorityTier <= 1 ? "critical" : item.priorityTier === 2 ? "attention" : "followup"}`}
             key={item.attentionId}
             onClick={(event) => onOpenAttention(item, event.currentTarget)}
             type="button"

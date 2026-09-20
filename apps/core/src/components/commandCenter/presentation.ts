@@ -46,8 +46,8 @@ export function toneForAttention(item: CommandCenterAttentionItem): StatusTone {
 }
 
 export function attentionPriorityLabel(priority: CommandCenterAttentionItem["priorityTier"]) {
-  if (priority === 0 || priority === 1) return "اولویت فوری";
-  if (priority === 2) return "اولویت بالا";
+  if (priority === 0 || priority === 1) return "فوری";
+  if (priority === 2) return "نیازمند توجه";
   return "نیازمند پیگیری";
 }
 

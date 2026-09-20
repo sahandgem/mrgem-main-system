@@ -1,3 +1,4 @@
+import { RefreshCw } from "lucide-react";
 import type { CommandCenterViewModel } from "../../integration/commandCenter/commandCenterViewModel";
 import { StatusBadge } from "../StatusBadge";
 import {
@@ -52,6 +53,7 @@ export function CockpitSystemBar({
         </div>
       </dl>
       <button className="system-refresh" disabled={isRefreshing} onClick={onRefresh} type="button">
+        <RefreshCw aria-hidden="true" size={14} strokeWidth={1.5} />
         {isRefreshing ? "در حال دریافت" : "به‌روزرسانی"}
       </button>
     </header>

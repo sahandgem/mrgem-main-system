@@ -39,10 +39,10 @@ export function ImportantChanges({
               type="button"
             >
               <span className="important-change__heading">
-                <span>{item.moduleName}</span>
-                <strong>{item.label} · {changeImpact(item.kpiKey)}</strong>
+                <strong>{item.label}</strong>
+                <b className={`tone-${toneForKpiStatus(item.status)}`}>{toPersianNumber(item.trendText ?? "")}</b>
               </span>
-              <b className={`tone-${toneForKpiStatus(item.status)}`}>{toPersianNumber(item.trendText ?? "")}</b>
+              <span className="important-change__impact">{changeImpact(item.kpiKey)}</span>
               <small>{item.isExperimental ? "آزمایشی · " : ""}{reliabilityText(item.reliability)} · مشاهده {formatDateTime(item.observedAt)}</small>
             </button>
           ))}
@@ -67,14 +67,14 @@ function VitalSlot({
   return (
     <button
       aria-current={selected ? "true" : undefined}
-      aria-label={`${signal.label}: ${signal.value ?? signal.dataStateLabel}؛ مشاهده جزئیات`}
+      aria-label={`${signal.label}: ${toPersianNumber(signal.value ?? signal.dataStateLabel)}؛ مشاهده جزئیات`}
       className={`vital-slot${signal.signalId === "vital-data" ? " vital-slot--data" : ""}${placeholder ? " vital-slot--placeholder" : ""}${signal.isExperimental ? " vital-slot--experimental" : ""}${tone ? ` tone-${tone}` : ""}`}
       onClick={(event) => onOpen(signal, event.currentTarget)}
       title="مشاهده جزئیات سیگنال"
       type="button"
     >
       <span>{signal.label}</span>
-      <strong>{signal.value ?? signal.dataStateLabel}</strong>
+      <strong>{toPersianNumber(signal.value ?? signal.dataStateLabel)}</strong>
       <small>{signal.context}</small>
     </button>
   );

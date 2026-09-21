@@ -6,23 +6,34 @@ import type {
 } from "../../integration/commandCenter/commandCenterViewModel";
 import { attentionSummary } from "./density";
 import { attentionPriorityLabel, toPersianNumber } from "./presentation";
+import type { CockpitViewport } from "./useCockpitViewport";
 
 export function CommandCenterAttentionQueue({
+  expanded,
   onOpen,
+  onToggleExpanded,
   selectedAttentionId,
   viewModel,
+  viewport,
 }: {
+  expanded: boolean;
   onOpen: (item: CommandCenterAttentionItem, trigger: HTMLButtonElement) => void;
+  onToggleExpanded: () => void;
   selectedAttentionId?: string;
   viewModel: CommandCenterViewModel;
+  viewport: CockpitViewport;
 }) {
   const listRef = useRef<HTMLDivElement>(null);
   const [remainingBelow, setRemainingBelow] = useState(0);
   const urgentCount = viewModel.topAttention.filter((item) => item.priorityTier <= 1).length;
+  const isMobile = viewport === "mobile";
+  const visibleItems = isMobile && !expanded ? viewModel.topAttention.slice(0, 3) : viewModel.topAttention;
+  const mobileRemaining = viewModel.topAttention.length - 3;
+  const selectedBeyondPreview = isMobile && viewModel.topAttention.slice(3).some((item) => item.attentionId === selectedAttentionId);
 
   useEffect(() => {
     const list = listRef.current;
-    if (!list) return;
+    if (!list || viewport !== "desktop") return;
     let frame = 0;
     const updateRemaining = () => {
       window.cancelAnimationFrame(frame);
@@ -46,10 +57,10 @@ export function CommandCenterAttentionQueue({
       list.removeEventListener("scroll", updateRemaining);
       window.removeEventListener("resize", updateRemaining);
     };
-  }, [viewModel.topAttention]);
+  }, [viewModel.topAttention, viewport]);
 
   return (
-    <section className={`attention-section${remainingBelow ? " attention-section--overflow" : ""}`} aria-labelledby="attention-title">
+    <section className={`attention-section${viewport === "desktop" && remainingBelow ? " attention-section--overflow" : ""}`} aria-labelledby="attention-title">
       <header className="attention-heading">
         <div><h3 id="attention-title">نیازمند توجه شما</h3><p>به‌ترتیب اثر بر کسب‌وکار</p></div>
         <span className="section-count">
@@ -59,8 +70,8 @@ export function CommandCenterAttentionQueue({
         </span>
       </header>
       {viewModel.topAttention.length ? (
-        <div className="attention-list" ref={listRef} tabIndex={0} role="region" aria-label="موضوع‌های مدیریتی؛ ادامه موارد با پیمایش صف">
-          {viewModel.topAttention.map((item) => {
+        <div className="attention-list" id="attention-list" ref={listRef} tabIndex={viewport === "desktop" ? 0 : undefined} role="region" aria-label={viewport === "desktop" ? "موضوع‌های مدیریتی؛ ادامه موارد با پیمایش صف" : "موضوع‌های مدیریتی"}>
+          {visibleItems.map((item) => {
             const summary = attentionSummary(item);
             const selected = item.attentionId === selectedAttentionId;
             return (
@@ -68,6 +79,7 @@ export function CommandCenterAttentionQueue({
                 aria-current={selected ? "true" : undefined}
                 aria-label={`${attentionPriorityLabel(item.priorityTier)}؛ ${summary.title}؛ ${summary.impact}؛ مشاهده جزئیات`}
                 className={`command-row command-row--${item.priorityTier <= 1 ? "critical" : "attention"}${selected ? " command-row--selected" : ""}`}
+                data-attention-id={item.attentionId}
                 key={item.attentionId}
                 onClick={(event) => onOpen(item, event.currentTarget)}
                 type="button"
@@ -92,7 +104,19 @@ export function CommandCenterAttentionQueue({
           })}
         </div>
       ) : <div className="empty-state tone-good"><div><strong>موضوع بازی برای توجه مدیر وجود ندارد</strong><span>براساس داده موجود در این نمای آزمایشی</span></div></div>}
-      {remainingBelow > 0 && (
+      {isMobile && mobileRemaining > 0 && (
+        <div className="attention-mobile-overflow">
+          {!expanded && <span>{toPersianNumber(mobileRemaining)} مورد دیگر</span>}
+          <button
+            aria-controls="attention-list"
+            aria-expanded={expanded}
+            disabled={expanded && selectedBeyondPreview}
+            onClick={onToggleExpanded}
+            type="button"
+          >{expanded ? "نمایش کمتر" : "نمایش همه موضوعات"}</button>
+        </div>
+      )}
+      {viewport === "desktop" && remainingBelow > 0 && (
         <div className="attention-more" aria-live="polite">
           {toPersianNumber(remainingBelow)} مورد دیگر در ادامه صف
         </div>

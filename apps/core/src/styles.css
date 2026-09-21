@@ -88,10 +88,9 @@ p { line-height: 1.65; }
 .cockpit-system-facts dd strong { font-size: 20px; }
 .system-refresh { display: inline-flex; align-items: center; gap: var(--space-1); padding: 4px 8px; min-height: 30px; color: var(--text-muted); background: transparent; border: 0; border-radius: var(--radius-control); font-size: var(--font-size-meta); transition: background-color var(--motion-duration-fast) var(--motion-easing-standard), color var(--motion-duration-fast) var(--motion-easing-standard); }
 .system-refresh:hover { color: var(--text-primary); background: var(--surface-hover); }
-.cockpit-stage { display: grid; grid-template-rows: minmax(0,1fr) 68px var(--vital-height); gap: 8px; height: calc(100dvh - var(--system-bar-height)); padding: 8px 12px 0; }
-.cockpit-main-grid { display: grid; grid-template-columns: clamp(256px,16.667vw,320px) minmax(0,1fr) clamp(320px,20.417vw,392px); grid-template-areas: "workforce command production"; gap: 12px; direction: ltr; min-height: 0; }
-.cockpit-rail, .command-core { direction: rtl; min-width: 0; min-height: 0; }
-.cockpit-rail--workforce { grid-area: workforce; } .cockpit-rail--production { grid-area: production; } .command-core { grid-area: command; }
+.cockpit-stage { display: grid; grid-template-columns: clamp(256px,16.667vw,320px) minmax(0,1fr) clamp(320px,20.417vw,392px); grid-template-rows: auto minmax(0,1fr) 48px 68px var(--vital-height); grid-template-areas: "workforce summary production" "workforce attention production" "workforce commitments production" "changes changes changes" "vital vital vital"; gap: 8px 12px; direction: ltr; height: calc(100dvh - var(--system-bar-height)); padding: 8px 12px 0; }
+.cockpit-stage > * { direction: rtl; min-width: 0; min-height: 0; }
+.cockpit-rail--workforce { grid-area: workforce; } .cockpit-rail--production { grid-area: production; }
 .cockpit-rail { display: flex; flex-direction: column; padding: 16px 14px; background: var(--surface-primary); border: var(--border-width) solid var(--border-rail); }
 .instrument-rail-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
 .instrument-rail-heading h2 { font-size: 16px; }
@@ -122,15 +121,14 @@ p { line-height: 1.65; }
 .rail-exception p, .rail-exceptions > p { color: var(--text-muted); font-size: var(--font-size-meta); margin-top: 4px; }
 .rail-footnote { padding-top: 10px; color: var(--text-muted); font-size: var(--font-size-micro); }
 .rail-destination { display: block; margin-top: 6px; padding: 8px 0 0; font-size: var(--font-size-meta); color: var(--signal-info); text-decoration: none; }
-.command-core { display: grid; grid-template-rows: auto minmax(0,1fr) 48px; gap: 8px; }
-.status-summary { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); gap: 16px; padding: 10px 12px; }
+.status-summary { grid-area: summary; display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); gap: 16px; padding: 10px 12px; }
 .status-summary__business, .status-summary__data { min-width: 0; }
 .status-summary__headline h3 { font-size: 17px; line-height: 1.6; }
 .status-summary__headline p { font-size: var(--font-size-body); line-height: 20px; color: var(--text-secondary); }
 .status-summary__data { border-inline-start: var(--border-width) solid var(--border-subtle); padding-inline-start: 14px; }
 .status-summary__data > strong { display: block; font-size: 12px; margin: 5px 0; }
 .status-summary__data > p { color: var(--text-muted); font-size: var(--font-size-micro); }
-.attention-section { display: grid; grid-template-rows: auto minmax(0,1fr) auto; min-height: 0; padding: 14px 16px 0; background: var(--surface-command); border: var(--border-width) solid var(--border-strong); }
+.attention-section { grid-area: attention; display: grid; grid-template-rows: auto minmax(0,1fr) auto; min-height: 0; padding: 14px 16px 0; background: var(--surface-command); border: var(--border-width) solid var(--border-strong); }
 .attention-heading { display: flex; align-items: center; justify-content: space-between; padding-bottom: 12px; }
 .attention-heading h3 { font-size: 20px; line-height: 1.6; }
 .attention-heading p { font-size: var(--font-size-meta); color: var(--text-muted); }
@@ -157,13 +155,14 @@ p { line-height: 1.65; }
 .command-row__context { grid-column: 2 / -1; display: flex; flex-wrap: wrap; gap: 3px 12px; color: var(--text-muted); font-size: var(--font-size-meta); line-height: 1.6; }
 .command-row__destination { color: var(--text-secondary); }
 .attention-more { min-height: 20px; padding-top: 3px; color: var(--text-muted); font-size: var(--font-size-micro); text-align: center; border-top: var(--border-width) solid var(--border-subtle); }
+.attention-mobile-overflow { display: none; }
 .empty-state { display: flex; align-items: start; padding: 24px 0; }
 .empty-state > div { display: grid; gap: 8px; }
 .empty-state strong { font-size: 16px; } .empty-state span { font-size: 12px; color: var(--text-secondary); }
-.upcoming-commitments { display: flex; align-items: center; gap: 12px; padding: 4px 12px; color: var(--text-secondary); }
+.upcoming-commitments { grid-area: commitments; display: flex; align-items: center; gap: 12px; padding: 4px 12px; color: var(--text-secondary); }
 .upcoming-commitments h3 { font-size: 12px; white-space: nowrap; }
 .upcoming-commitments p { font-size: var(--font-size-meta); }
-.important-changes { display: grid; grid-template-columns: 130px minmax(0,1fr); align-items: center; background: var(--surface-instrument); border-top: var(--border-width) solid var(--border-subtle); border-bottom: var(--border-width) solid var(--border-subtle); padding: 0 12px; }
+.important-changes { grid-area: changes; display: grid; grid-template-columns: 130px minmax(0,1fr); align-items: center; background: var(--surface-instrument); border-top: var(--border-width) solid var(--border-subtle); border-bottom: var(--border-width) solid var(--border-subtle); padding: 0 12px; }
 .important-changes h2 { font-size: 12px; color: var(--text-muted); font-weight: 600; }
 .important-changes__list { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); }
 .important-changes__list > button { display: grid; gap: 2px; min-width: 0; padding: 0 12px; color: inherit; background: transparent; border: 0; border-inline-start: var(--border-width) solid var(--border-subtle); text-align: start; transition: background-color var(--motion-duration-fast) var(--motion-easing-standard); }
@@ -175,7 +174,7 @@ p { line-height: 1.65; }
 .important-change__impact { color: var(--text-muted); font-size: var(--font-size-meta); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .important-changes__list small { color: var(--text-faint); font-size: var(--font-size-meta); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .important-changes__empty { font-size: 12px; color: var(--text-muted); }
-.vital-strip { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); align-items: center; height: var(--vital-height); background: var(--surface-primary); border-top: var(--border-width) solid var(--border-strong); }
+.vital-strip { grid-area: vital; display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); align-items: center; height: var(--vital-height); background: var(--surface-primary); border-top: var(--border-width) solid var(--border-strong); }
 .vital-slot { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-width: 0; height: 100%; padding: 0 8px; color: inherit; background: transparent; border: 0; border-inline-end: var(--border-width) solid var(--border-rail); transition: background-color var(--motion-duration-fast) var(--motion-easing-standard); }
 .vital-slot:hover { background: var(--surface-hover); }
 .vital-slot[aria-current="true"] { background: var(--surface-selected); }
@@ -238,17 +237,17 @@ p { line-height: 1.65; }
 .mock-controls__options button[aria-pressed="true"] { border-color: var(--signal-healthy); }
 .cockpit-system-message { position: fixed; z-index: 60; top: 48px; right: 12px; left: 12px; padding: 12px; background: var(--surface-critical-soft); color: var(--signal-critical); }
 .cockpit-loading { display: grid; place-content: center; min-height: 100dvh; gap: 12px; }
-@media (max-height: 900px) and (min-width: 1101px) {
+@media (max-height: 900px) and (min-width: 1180px) {
   .important-changes__list { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .important-changes__list > button:nth-child(n+3), .rail-exception:nth-of-type(n+4) { display: none; }
   :root { --vital-height: 80px; }
-  .cockpit-stage { grid-template-rows: minmax(0,1fr) 62px var(--vital-height); }
+  .cockpit-stage { grid-template-rows: auto minmax(0,1fr) 48px 62px var(--vital-height); }
   .cockpit-rail { padding: 12px; }
   .rail-metrics { gap: 12px 8px; padding: 14px 0; }
   .rail-exception { padding: 9px 0; }
   .status-summary { padding: 6px 12px; }
 }
-@media (max-width: 1450px) and (min-width: 1101px) {
+@media (max-width: 1450px) and (min-width: 1180px) {
   .important-changes__list { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .important-changes__list > button:nth-child(n+3), .rail-exception:nth-of-type(n+4) { display: none; }
   .cockpit-system-bar { gap: 18px; }
@@ -256,14 +255,12 @@ p { line-height: 1.65; }
   .cockpit-system-facts dt { display: none; }
   .cockpit-system-facts > div:nth-child(4) dt, .cockpit-system-facts > div:nth-child(2) dt { display: block; }
 }
-@media (max-width: 1100px) {
+@media (max-width: 1179px) {
   .important-changes__list > button:nth-child(n+3), .rail-exception:nth-of-type(n+4) { display: none; }
   .cockpit-system-bar { flex-wrap: wrap; height: auto; min-height: 64px; gap: 10px; padding-block: 8px; }
   .cockpit-system-facts { gap: 12px; flex-wrap: wrap; }
   .cockpit-system-facts dt { display: none; }
-  .cockpit-stage { height: auto; grid-template-rows: auto auto auto; }
-  .cockpit-main-grid { grid-template-columns: 1fr; grid-template-areas: "command" "workforce" "production"; }
-  .command-core { grid-template-rows: auto auto auto; }
+  .cockpit-stage { height: auto; grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: none; grid-auto-rows: auto; grid-template-areas: "attention attention" "vital vital" "workforce production" "changes changes" "commitments commitments"; }
   .attention-list { overflow: visible; }
   .cockpit-rail { min-height: 0; }
   .rail-exceptions { overflow: visible; }
@@ -275,11 +272,22 @@ p { line-height: 1.65; }
   .mock-controls:not([open]) summary > span { display: inline; }
   .mock-controls[open] { top: auto; width: auto; }
 }
+@media (max-width: 900px) {
+  .cockpit-stage { grid-template-columns: minmax(0,1fr); grid-template-areas: "attention" "vital" "workforce" "production" "changes" "commitments"; }
+}
 @media (max-width: 720px) {
   :root { --motion-panel-offset: 10px; }
-  .cockpit-system-facts { order: 3; flex-basis: 100%; }
-  .system-refresh { margin-inline-start: auto; }
-  .cockpit-system-facts > div:nth-child(2) { display: none; }
+  .cockpit-system-bar { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px 8px; padding: 6px 12px 8px; }
+  .cockpit-brand { grid-column: 1; grid-row: 1; align-self: center; }
+  .cockpit-system-facts { grid-column: 1 / -1; grid-row: 2; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 4px 12px; }
+  .cockpit-system-facts > div { display: flex; flex-wrap: wrap; gap: 2px 6px; min-width: 0; }
+  .cockpit-system-facts > div:first-child { order: 1; }
+  .cockpit-system-facts > div:nth-child(2) { order: 4; margin-inline-start: 0; }
+  .cockpit-system-facts > div:nth-child(3) { order: 3; }
+  .cockpit-system-facts > div:nth-child(4) { order: 2; }
+  .cockpit-system-facts dt { display: block; }
+  .cockpit-system-facts dd { white-space: normal; }
+  .system-refresh { grid-column: 2; grid-row: 1; min-height: 44px; margin-inline-start: 0; }
   .status-summary { grid-template-columns: 1fr; gap: 8px; }
   .status-summary__data { border-inline-start: 0; padding-inline-start: 0; }
   .command-row { grid-template-columns: minmax(0,1fr) 64px; gap: 6px; }
@@ -287,18 +295,28 @@ p { line-height: 1.65; }
   .command-row__issue { grid-column: 1 / -1; grid-row: 2; }
   .command-row__open { grid-column: 2; grid-row: 1; }
   .command-row__context { grid-column: 1 / -1; }
+  .attention-section { padding: 10px 12px 0; }
+  .attention-heading { padding-bottom: 8px; }
+  .attention-mobile-overflow { display: flex; align-items: center; justify-content: space-between; gap: 8px; border-top: var(--border-width) solid var(--border-subtle); color: var(--text-muted); font-size: var(--font-size-body); }
+  .attention-mobile-overflow button { min-height: 44px; padding: 8px; border: 0; background: transparent; color: var(--signal-info); }
+  .attention-mobile-overflow button:hover { background: var(--surface-hover); }
   .upcoming-commitments { flex-wrap: wrap; padding-block: 12px; }
   .rail-metrics { grid-template-columns: 1fr 1fr; }
   .important-changes { grid-template-columns: 1fr; padding: 12px; gap: 10px; }
   .important-changes__list { grid-template-columns: 1fr; gap: 10px; }
   .important-changes__list > button { border-inline-start: 0; border-top: var(--border-width) solid var(--border-subtle); padding: 8px 0 0; }
-  .vital-strip { height: auto; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px 0; padding-block: 16px; }
-  .vital-slot { padding: 0 4px; }
+  .vital-strip { height: auto; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0; padding-block: 0; }
+  .vital-slot { min-height: 80px; padding: 8px 4px; }
   .vital-slot strong { font-size: 22px; }
   .vital-slot--placeholder strong { font-size: 14px; }
-  .cockpit-drawer { top: 0; width: 100%; animation-duration: var(--motion-duration-standard); }
+  .cockpit-drawer { top: 0; width: 100%; border-left: 0; box-shadow: -2px 0 8px rgb(0 0 0 / 8%); animation-duration: var(--motion-duration-standard); }
+  .drawer-close { min-height: 44px; }
+  .rail-title-button, .rail-destination, .drawer-navigation, .drawer-related-button, .drawer-related-list button, .drawer-inline-list button { min-height: 44px; }
+  .rail-destination { display: flex; align-items: center; }
+  .drawer-facts dd { overflow-wrap: anywhere; }
 }
 @media (max-width: 480px) {
+  .vital-strip { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .drawer-facts > div { grid-template-columns: 1fr; }
   .drawer-facts dt, .drawer-facts dd { grid-column: 1; }
 }

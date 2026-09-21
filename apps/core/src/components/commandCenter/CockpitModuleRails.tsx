@@ -8,6 +8,8 @@ import { formatDateTime, toPersianNumber, toneForReliability } from "./presentat
 
 type RailProps = {
   attentions: readonly CommandCenterAttentionItem[];
+  compact: boolean;
+  excludedAttentionIds: readonly string[];
   highlights: readonly CommandCenterKpiHighlight[];
   module?: CommandCenterModuleSummary;
   onOpenAttention: (item: CommandCenterAttentionItem, trigger: HTMLButtonElement) => void;
@@ -39,6 +41,8 @@ function Metric({ label, onOpen, selected, value }: {
 
 function ModuleRail({
   attentions,
+  compact,
+  excludedAttentionIds,
   highlights,
   module,
   onOpenAttention,
@@ -48,6 +52,9 @@ function ModuleRail({
   selectedKey,
 }: RailProps & { production: boolean }) {
   const items = attentions.filter((item) => item.moduleId === module?.moduleId);
+  const visibleExceptions = compact
+    ? items.filter((item) => !excludedAttentionIds.includes(item.attentionId)).slice(0, 2)
+    : items.slice(0, 5);
   const kpis = highlights.filter((item) => item.moduleId === module?.moduleId);
   const coverage = kpis.find((item) => item.kpiKey === "workforce_schedule_coverage");
   const capacity = kpis.find((item) => item.kpiKey === "workforce_capacity_concentration");
@@ -124,10 +131,11 @@ function ModuleRail({
       </div>
       <div className="rail-exceptions">
         <h3>{production ? "استثناهای نمونه تولید" : "نقاط توجه برنامه"}</h3>
-        {items.length ? items.slice(0, 5).map((item) => (
+        {visibleExceptions.length ? visibleExceptions.map((item) => (
           <button
             aria-current={selectedKey === `attention:${item.attentionId}` ? "true" : undefined}
             className={`rail-exception rail-exception--${item.priorityTier <= 1 ? "critical" : item.priorityTier === 2 ? "attention" : "followup"}`}
+            data-attention-id={item.attentionId}
             key={item.attentionId}
             onClick={(event) => onOpenAttention(item, event.currentTarget)}
             type="button"
@@ -135,7 +143,11 @@ function ModuleRail({
             <strong>{attentionSummary(item).title}</strong>
             <p>{attentionSummary(item).impact}</p>
           </button>
-        )) : <p>{!hasDisplayData(module) ? "داده معتبر موجود نیست." : module?.isPartialData ? "پوشش داده ناقص است." : "در داده موجود موضوع بازی دیده نشد."}</p>}
+        )) : <p>{items.length && compact && excludedAttentionIds.length
+          ? "موضوع‌های این بخش در صف اصلی دیده می‌شوند."
+          : !hasDisplayData(module) ? "داده معتبر موجود نیست."
+            : module?.isPartialData ? "پوشش داده ناقص است."
+              : "در داده موجود موضوع بازی دیده نشد."}</p>}
       </div>
       {production && <p className="rail-footnote">آزمایشی؛ اتصال واقعی فعال نیست.</p>}
       <a className="rail-destination" href="#attention-title">مرور موضوع‌های {production ? "تولید" : "برنامه"} در مرکز فرمان</a>

@@ -4,7 +4,7 @@ export function CockpitUpcomingCommitments() {
       <div>
         <h3 id="commitments-title">تعهدهای پیش رو</h3>
       </div>
-      <p>تعهد زمان‌دار معتبر موجود نیست.</p>
+      <p>اطلاعات تعهدهای پیش رو در دسترس نیست.</p>
     </section>
   );
 }

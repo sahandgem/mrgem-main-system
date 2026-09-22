@@ -5,7 +5,7 @@ import type {
   CommandCenterViewModel,
 } from "../../integration/commandCenter/commandCenterViewModel";
 import { attentionSummary } from "./density";
-import { attentionPriorityLabel, toPersianNumber } from "./presentation";
+import { attentionPriorityLabel, managerTimeContext, toPersianNumber } from "./presentation";
 import type { CockpitViewport } from "./useCockpitViewport";
 
 export function CommandCenterAttentionQueue({
@@ -62,7 +62,7 @@ export function CommandCenterAttentionQueue({
   return (
     <section className={`attention-section${viewport === "desktop" && remainingBelow ? " attention-section--overflow" : ""}`} aria-labelledby="attention-title">
       <header className="attention-heading">
-        <div><h3 id="attention-title">نیازمند توجه شما</h3><p>به‌ترتیب اثر بر کسب‌وکار</p></div>
+        <div><h3 id="attention-title">نیازمند توجه شما</h3></div>
         <span className="section-count">
           <strong>{toPersianNumber(viewModel.topAttention.length)}</strong> فعال
           <span aria-hidden="true"> · </span>
@@ -74,10 +74,11 @@ export function CommandCenterAttentionQueue({
           {visibleItems.map((item) => {
             const summary = attentionSummary(item);
             const selected = item.attentionId === selectedAttentionId;
+            const timeContext = managerTimeContext(item.timeContext);
             return (
               <button
                 aria-current={selected ? "true" : undefined}
-                aria-label={`${attentionPriorityLabel(item.priorityTier)}؛ ${summary.title}؛ ${summary.impact}؛ مشاهده جزئیات`}
+                aria-label={`${attentionPriorityLabel(item.priorityTier)}؛ ${summary.title}؛ ${summary.impact}؛ بررسی`}
                 className={`command-row command-row--${item.priorityTier <= 1 ? "critical" : "attention"}${selected ? " command-row--selected" : ""}`}
                 data-attention-id={item.attentionId}
                 key={item.attentionId}
@@ -96,7 +97,7 @@ export function CommandCenterAttentionQueue({
                   {selected ? "در حال بررسی" : <><span>بررسی</span><ArrowLeft aria-hidden="true" size={14} strokeWidth={1.5} /></>}
                 </span>
                 <span className="command-row__context">
-                  <span className="command-row__time">{item.isExperimental ? "بازه نیازمند تعریف" : item.timeContext}</span>
+                  {timeContext && <span className="command-row__time">{timeContext}</span>}
                   <span className="command-row__destination">{item.destinationLabel}{item.isExperimental ? " · آزمایشی" : ""}</span>
                 </span>
               </button>

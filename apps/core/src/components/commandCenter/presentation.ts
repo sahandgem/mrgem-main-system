@@ -15,6 +15,14 @@ export function formatDateTime(value?: string) {
   return new Date(value).toLocaleString("fa-IR", { dateStyle: "short", timeStyle: "short" });
 }
 
+export function managerTimeContext(value: string) {
+  return value.includes("نیازمند تعریف") ? undefined : value;
+}
+
+export function managerDataStateLabel(reliability: CommandCenterReliabilityState, label: string) {
+  return reliability === "fresh" ? "تازه و معتبر" : label;
+}
+
 export function toneForReliability(reliability: CommandCenterReliabilityState): StatusTone {
   if (reliability === "fresh") return "good";
   if (reliability === "degraded" || reliability === "stale_last_known_good") return "warn";

@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { attentionSummary, reliabilityText, visibleCount } from "../src/components/commandCenter/density.ts";
+import { managerDataStateLabel, managerTimeContext } from "../src/components/commandCenter/presentation.ts";
 import {
   drawerSelectionKey,
   reduceCockpitDrawer,
@@ -378,6 +379,10 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
   assert.match(reliabilityText("degraded"), /ناقص/);
   assert.match(reliabilityText("stale_last_known_good"), /تاریخی/);
   assert.match(reliabilityText("unavailable"), /خطای داده/);
+  assert.equal(managerDataStateLabel("fresh", module.dataStateLabel), "تازه و معتبر");
+  assert.equal(managerDataStateLabel("stale_last_known_good", "داده فعلی قدیمی است"), "داده فعلی قدیمی است");
+  assert.equal(managerTimeContext("سناریوی آزمایشی؛ دوره اندازه‌گیری نیازمند تعریف"), undefined);
+  assert.equal(managerTimeContext("برنامه جاری نمونه"), "برنامه جاری نمونه");
   const data = buildMockObservation("workforce.demo", now);
   const attention = buildCommandCenterViewModel(aggregation([{ ...moduleResult(), observation: data }])).topAttention[0];
   const before = JSON.stringify(attention);

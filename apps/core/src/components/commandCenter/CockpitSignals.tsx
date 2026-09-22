@@ -4,7 +4,7 @@ import type {
 } from "../../integration/commandCenter/commandCenterViewModel";
 import { changeImpact, hasDisplayData, reliabilityText } from "./density";
 import { signalFromHighlight, type CockpitKpiSignal } from "./drawerModel";
-import { formatDateTime, toPersianNumber, toneForKpiStatus } from "./presentation";
+import { toPersianNumber, toneForKpiStatus } from "./presentation";
 
 function dataSlot(viewModel: CommandCenterViewModel) {
   if (viewModel.reliability.failedModuleCount) return { value: "خطای داده", detail: viewModel.modules.some((item) => item.hasLastKnownGood) ? "مرجع تاریخی موجود" : "داده موجود نیست", tone: "critical" as const };
@@ -33,7 +33,7 @@ export function ImportantChanges({
           {changes.map((item) => (
             <button
               aria-current={selectedKey === `change:${item.highlightId}` ? "true" : undefined}
-              aria-label={`تغییر مهم: ${item.label}؛ مشاهده جزئیات`}
+              aria-label={`تغییر مهم: ${item.label}؛ بررسی`}
               key={item.highlightId}
               onClick={(event) => onOpen(item, event.currentTarget)}
               type="button"
@@ -43,7 +43,9 @@ export function ImportantChanges({
                 <b className={`tone-${toneForKpiStatus(item.status)}`}>{toPersianNumber(item.trendText ?? "")}</b>
               </span>
               <span className="important-change__impact">{changeImpact(item.kpiKey)}</span>
-              <small>{item.isExperimental ? "آزمایشی · " : ""}{reliabilityText(item.reliability)} · مشاهده {formatDateTime(item.observedAt)}</small>
+              {(item.isExperimental || item.reliability !== "fresh") && (
+                <small>{[item.isExperimental && "آزمایشی", item.reliability !== "fresh" && reliabilityText(item.reliability)].filter(Boolean).join(" · ")}</small>
+              )}
             </button>
           ))}
         </div>
@@ -67,10 +69,10 @@ function VitalSlot({
   return (
     <button
       aria-current={selected ? "true" : undefined}
-      aria-label={`${signal.label}: ${toPersianNumber(signal.value ?? signal.dataStateLabel)}؛ مشاهده جزئیات`}
+      aria-label={`${signal.label}: ${toPersianNumber(signal.value ?? signal.dataStateLabel)}؛ بررسی`}
       className={`vital-slot${signal.signalId === "vital-data" ? " vital-slot--data" : ""}${placeholder ? " vital-slot--placeholder" : ""}${signal.isExperimental ? " vital-slot--experimental" : ""}${tone ? ` tone-${tone}` : ""}`}
       onClick={(event) => onOpen(signal, event.currentTarget)}
-      title="مشاهده جزئیات سیگنال"
+      title="بررسی سیگنال"
       type="button"
     >
       <span>{signal.label}</span>
@@ -118,7 +120,7 @@ export function VitalStrip({
       signalId: "vital-orders",
       label: "سفارش‌ها",
       value: ordersKnown ? (workOrderCount ? `${toPersianNumber(workOrderCount)} نمونه` : "بدون مورد") : undefined,
-      context: productionModule?.hasLastKnownGood ? "آزمایشی · آخرین داده سالم" : productionModule?.isPartialData ? "آزمایشی · ناقص" : "موارد در خطر · آزمایشی",
+      context: productionModule?.hasLastKnownGood ? "آزمایشی · آخرین داده سالم" : productionModule?.isPartialData ? "آزمایشی · ناقص" : "آزمایشی · سفارش نمونه",
       ownerLabel: productionModule?.displayName ?? "مرکز تولید آزمایشی",
       dataStateLabel: ordersKnown ? (productionModule?.dataStateLabel ?? "نامشخص") : "نامشخص",
       reliability: productionModule?.reliability,
@@ -151,11 +153,11 @@ export function VitalStrip({
       ...signalFromHighlight(production, productionModule, viewModel.topAttention),
       signalId: "vital-production",
       label: "تولید",
-      context: `تحقق آزمایشی برنامه · ${production.contextLabel}`,
+      context: productionModule?.hasLastKnownGood ? "آزمایشی · آخرین داده سالم" : productionModule?.isPartialData ? "آزمایشی · ناقص" : "آزمایشی · دوره نامشخص",
     } : {
       signalId: "vital-production",
       label: "تولید",
-      context: "تحقق آزمایشی برنامه",
+      context: "آزمایشی · داده موجود نیست",
       ownerLabel: productionModule?.displayName ?? "مرکز تولید آزمایشی",
       dataStateLabel: productionModule?.dataStateLabel ?? "داده موجود نیست",
       reliability: productionModule?.reliability,

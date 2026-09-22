@@ -4,7 +4,7 @@ import type {
   CommandCenterModuleSummary,
 } from "../../integration/commandCenter/commandCenterViewModel";
 import { attentionSummary, hasDisplayData, visibleCount } from "./density";
-import { formatDateTime, toPersianNumber, toneForReliability } from "./presentation";
+import { formatDateTime, managerDataStateLabel, toPersianNumber, toneForReliability } from "./presentation";
 
 type RailProps = {
   attentions: readonly CommandCenterAttentionItem[];
@@ -27,10 +27,10 @@ function Metric({ label, onOpen, selected, value }: {
   return (
     <button
       aria-current={selected ? "true" : undefined}
-      aria-label={`${label}: ${value === undefined ? "نامشخص" : toPersianNumber(value)}؛ مشاهده جزئیات`}
+      aria-label={`${label}: ${value === undefined ? "نامشخص" : toPersianNumber(value)}؛ بررسی`}
       className="rail-metric"
       onClick={(event) => onOpen(event.currentTarget)}
-      title="مشاهده زمینه این شاخص"
+      title="بررسی زمینه شاخص"
       type="button"
     >
       <strong>{value === undefined ? "نامشخص" : toPersianNumber(value)}</strong>
@@ -77,7 +77,7 @@ function ModuleRail({
             type="button"
           >
             <h2 id={`${id}-rail-title`}>{production ? "تولید" : "نیروی انسانی"}</h2>
-            <span className="sr-only">مشاهده تصویر مدیریتی ماژول</span>
+            <span className="sr-only">بررسی تصویر مدیریتی ماژول</span>
           </button>
         ) : <h2 id={`${id}-rail-title`}>{production ? "تولید" : "نیروی انسانی"}</h2>}
         <span className={production ? "instrument-rail-state instrument-rail-state--experimental" : "instrument-rail-state"}>
@@ -126,8 +126,10 @@ function ModuleRail({
         </>}
       </div>
       <div className={`rail-trust tone-${toneForReliability(module?.reliability ?? "unknown")}`}>
-        <strong>{module?.dataStateLabel ?? "داده معتبر موجود نیست"}</strong>
-        <span>{module?.hasLastKnownGood ? "آخرین داده سالم؛ مرجع تاریخی" : module?.isPartialData ? "فقط بخش‌های معتبر نمایش داده شده" : "زمان مشاهده"} · {formatDateTime(module?.observedAt)}</span>
+        <strong>{module ? managerDataStateLabel(module.reliability, module.dataStateLabel) : "داده معتبر موجود نیست"}</strong>
+        {module?.hasLastKnownGood ? <span>آخرین داده سالم · {formatDateTime(module.observedAt ?? module.lastSuccessfulAt)}</span>
+          : module?.isPartialData ? <span>فقط بخش معتبر · {formatDateTime(module.observedAt)}</span>
+            : module?.reliability !== "fresh" && module?.observedAt ? <span>زمان مشاهده · {formatDateTime(module.observedAt)}</span> : null}
       </div>
       <div className="rail-exceptions">
         <h3>{production ? "استثناهای نمونه تولید" : "نقاط توجه برنامه"}</h3>
@@ -144,12 +146,11 @@ function ModuleRail({
             <p>{attentionSummary(item).impact}</p>
           </button>
         )) : <p>{items.length && compact && excludedAttentionIds.length
-          ? "موضوع‌های این بخش در صف اصلی دیده می‌شوند."
+          ? "موضوع‌ها در صف بالا"
           : !hasDisplayData(module) ? "داده معتبر موجود نیست."
             : module?.isPartialData ? "پوشش داده ناقص است."
               : "در داده موجود موضوع بازی دیده نشد."}</p>}
       </div>
-      {production && <p className="rail-footnote">آزمایشی؛ اتصال واقعی فعال نیست.</p>}
       <a className="rail-destination" href="#attention-title">مرور موضوع‌های {production ? "تولید" : "برنامه"} در مرکز فرمان</a>
     </aside>
   );

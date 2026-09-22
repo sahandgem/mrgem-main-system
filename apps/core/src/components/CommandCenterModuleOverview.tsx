@@ -68,7 +68,7 @@ const scenarioOptions: readonly ScenarioOption[] = [
   },
 ];
 
-export function CommandCenterModuleOverview() {
+export function CommandCenterModuleOverview({ showDevScenarioControls = false }: { showDevScenarioControls?: boolean }) {
   const dataSource = useRef<CommandCenterMockDataSource | null>(null);
   const refreshInFlight = useRef(false);
   const drawerTrigger = useRef<HTMLButtonElement | null>(null);
@@ -275,12 +275,12 @@ export function CommandCenterModuleOverview() {
         selection={drawerSelection}
         showInitialFocusRing={drawerTitleShowsFocus.current}
       />
-      <CommandCenterMockControls
+      {showDevScenarioControls && <CommandCenterMockControls
         activeScenario={activeScenario}
         disabled={isRefreshing}
         onSelect={selectScenario}
         options={scenarioOptions}
-      />
+      />}
     </div>
   );
 }

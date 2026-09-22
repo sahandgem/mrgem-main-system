@@ -5,8 +5,8 @@ const summaries: Readonly<Record<string, { title: string; impact: string }>> = {
   "mock:workforce:schedule-conflict": { title: "تعارض عملیاتی در برنامه نمونه", impact: "ریسک اجرا یا ایمنی برنامه" },
   workforce_schedule_coverage: { title: "پوشش ناکافی برنامه", impact: "احتمال باقی‌ماندن کار بدون پوشش" },
   workforce_capacity_concentration: { title: "تمرکز فشار کاری", impact: "آسیب‌پذیری ظرفیت با اتکا به یک نقش" },
-  "mock:production:work-order": { title: "سفارش آزمایشی در معرض تأخیر", impact: "ریسک موعد تولید و تحویل؛ آزمایشی" },
-  production_plan_attainment: { title: "فاصله با برنامه تولید نمونه", impact: "احتمال عقب‌ماندگی تولید؛ آزمایشی" },
+  "mock:production:work-order": { title: "سفارش نمونه در معرض تأخیر", impact: "ریسک موعد تولید و تحویل" },
+  production_plan_attainment: { title: "فاصله با برنامه تولید نمونه", impact: "احتمال عقب‌ماندگی تولید" },
 };
 
 export function attentionSummary(item: CommandCenterAttentionItem) {

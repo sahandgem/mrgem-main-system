@@ -1520,10 +1520,10 @@ body {
 
 
 .cockpit-drawer {
-  top: 60px;
+  top: 58px;
   right: 8px;
   bottom: 8px;
-  width: clamp(320px, 24vw, 360px);
+  width: 320px;
   padding: 16px;
   border: 1px solid #315768;
   border-radius: 12px;
@@ -2163,7 +2163,7 @@ body {
   .cockpit-mobile-nav {
     position: fixed;
     right: 8px;
-    bottom: 6px;
+    bottom: 8px;
     left: 8px;
     z-index: 35;
     display: grid;
@@ -2263,7 +2263,7 @@ body {
   }
 
   .cockpit-stage {
-    padding: 10px 8px 72px;
+    padding: 10px 8px 70px;
   }
 
   .attention-section {

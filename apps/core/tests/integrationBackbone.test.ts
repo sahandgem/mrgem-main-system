@@ -11,6 +11,8 @@ import {
 } from "../src/integration/registry/moduleRegistry.ts";
 import { validateAndNormalizeObservation } from "../src/integration/validation/moduleObservationValidator.ts";
 import { CommandCenterMockDataSource } from "../src/integration/commandCenter/commandCenterMockDataSource.ts";
+import { TransportModuleAdapter } from "../src/integration/adapters/transportModuleAdapter.ts";
+import type { SanitizedModuleTransport, SanitizedModuleTransportResult } from "../src/integration/transports/sanitizedModuleTransport.ts";
 import { CommandCenterLiveDataSource, CommandCenterLiveGateClosedError } from "../src/integration/commandCenter/commandCenterLiveDataSource.ts";
 import type { CommandCenterDataSource } from "../src/integration/commandCenter/commandCenterDataSource.ts";
 import { CommandCenterRuntime } from "../src/integration/commandCenter/commandCenterRuntime.ts";
@@ -452,4 +454,129 @@ function deferred<T>() {
   assert.equal(environment.runtime.getState().lastSuccessfulAt, undefined);
 }
 
-console.log("Integration Backbone baseline, C11 runtime and C12 live-gate tests passed.");
+class FixtureSanitizedModuleTransport implements SanitizedModuleTransport {
+  private readonly results: Readonly<Record<string, SanitizedModuleTransportResult>>;
+  private readonly readCounts = new Map<string, number>();
+
+  constructor(results: Readonly<Record<string, SanitizedModuleTransportResult>>) {
+    this.results = results;
+  }
+
+  async read(moduleId: string): Promise<SanitizedModuleTransportResult> {
+    this.readCounts.set(moduleId, (this.readCounts.get(moduleId) ?? 0) + 1);
+    return this.results[moduleId] ?? { kind: "no_data" };
+  }
+
+  getReadCount(moduleId: string) {
+    return this.readCounts.get(moduleId) ?? 0;
+  }
+}
+
+function transportAdapters(transport: SanitizedModuleTransport) {
+  return Object.fromEntries(
+    integrationModuleRegistry.map((entry) => [
+      entry.adapterKey,
+      new TransportModuleAdapter(entry.moduleId, entry.adapterKey, transport),
+    ]),
+  );
+}
+
+// C13: sanitized fixture payload can flow through TransportModuleAdapter -> LiveDataSource -> ViewModel.
+{
+  const results = Object.fromEntries(
+    integrationModuleRegistry.map((entry) => [
+      entry.moduleId,
+      {
+        kind: "payload" as const,
+        payload: buildMockObservation(entry.moduleId, now),
+      },
+    ]),
+  );
+  const transport = new FixtureSanitizedModuleTransport(results);
+  const adapters = transportAdapters(transport);
+  const source = new CommandCenterLiveDataSource({ enabled: true, adapters });
+  const view = await source.read(now);
+
+  assert.equal(view.modules.length, integrationModuleRegistry.length);
+  assert.equal(view.modules.every((module) => module.reliability === "fresh"), true);
+  for (const entry of integrationModuleRegistry) assert.equal(transport.getReadCount(entry.moduleId), 1);
+  for (const adapter of Object.values(adapters)) assert.equal("write" in adapter, false);
+}
+
+// C13: no-data is preserved as no-data semantics, never zero or healthy.
+{
+  const transport = new FixtureSanitizedModuleTransport({});
+  const source = new CommandCenterLiveDataSource({
+    enabled: true,
+    adapters: transportAdapters(transport),
+  });
+  const view = await source.read(now);
+
+  assert.equal(view.modules.every((module) => module.reliability === "no_data"), true);
+  assert.equal(view.managementSummary.healthyModuleCount, 0);
+  assert.equal(view.overallState, "unknown");
+}
+
+// C13: normalized transport failure becomes data-health unavailable without leaking raw details.
+{
+  const results = Object.fromEntries(
+    integrationModuleRegistry.map((entry) => [
+      entry.moduleId,
+      {
+        kind: "unavailable" as const,
+        category: "timeout" as const,
+        reference: "fixture-timeout-ref",
+      },
+    ]),
+  );
+  const transport = new FixtureSanitizedModuleTransport(results);
+  const source = new CommandCenterLiveDataSource({
+    enabled: true,
+    adapters: transportAdapters(transport),
+  });
+  const view = await source.read(now);
+
+  assert.equal(view.modules.every((module) => module.reliability === "unavailable"), true);
+  assert.equal(view.reliability.failedModuleCount, integrationModuleRegistry.length);
+  assert.equal(view.modules.every((module) => !/fixture-timeout-ref/i.test(module.summaryText)), true);
+}
+
+// C13: malformed sanitized payload is rejected by the existing validation boundary.
+{
+  const results = Object.fromEntries(
+    integrationModuleRegistry.map((entry) => [
+      entry.moduleId,
+      { kind: "payload" as const, payload: { moduleId: entry.moduleId, malformed: true } },
+    ]),
+  );
+  const transport = new FixtureSanitizedModuleTransport(results);
+  const source = new CommandCenterLiveDataSource({
+    enabled: true,
+    adapters: transportAdapters(transport),
+  });
+  const view = await source.read(now);
+
+  assert.equal(view.modules.every((module) => module.reliability === "invalid"), true);
+  assert.equal(view.managementSummary.healthyModuleCount, 0);
+}
+
+// C13: C12 closed gate prevents even a configured transport adapter from being read.
+{
+  const transport = new FixtureSanitizedModuleTransport(
+    Object.fromEntries(
+      integrationModuleRegistry.map((entry) => [
+        entry.moduleId,
+        { kind: "payload" as const, payload: buildMockObservation(entry.moduleId, now) },
+      ]),
+    ),
+  );
+  const source = new CommandCenterLiveDataSource({
+    enabled: false,
+    adapters: transportAdapters(transport),
+  });
+
+  await assert.rejects(() => source.read(now), CommandCenterLiveGateClosedError);
+  for (const entry of integrationModuleRegistry) assert.equal(transport.getReadCount(entry.moduleId), 0);
+}
+
+console.log("Integration Backbone baseline, C11 runtime, C12 live-gate and C13 transport-adapter tests passed.");

@@ -25,8 +25,22 @@ export function ImportantChanges({
 }) {
   const changes = viewModel.kpiHighlights.filter((item) => item.status !== "normal" && item.trendText).slice(0, 3);
 
+  if (viewModel.reliability.failedModuleCount) {
+    const historicalCount = viewModel.modules.filter((item) => item.hasLastKnownGood).length;
+    return (
+      <section className="important-changes important-changes--system-alert" aria-labelledby="important-changes-title">
+        <span className="system-alert__icon" aria-hidden="true">!</span>
+        <div className="system-alert__copy">
+          <h2 id="important-changes-title">هشدار سیستم</h2>
+          <p>دریافت فعلی برخی داده‌ها ناموفق است؛ {toPersianNumber(historicalCount)} مرجع تاریخی فقط برای زمینه حفظ شده است.</p>
+        </div>
+        <a className="system-alert__action" href="#vital-signals">بررسی اعتماد داده</a>
+      </section>
+    );
+  }
+
   return (
-    <section className="important-changes" aria-labelledby="important-changes-title">
+    <section className="important-changes" id="important-changes" aria-labelledby="important-changes-title">
       <header><h2 id="important-changes-title">تغییرهای مهم</h2></header>
       {changes.length ? (
         <div className="important-changes__list">
@@ -70,7 +84,7 @@ function VitalSlot({
     <button
       aria-current={selected ? "true" : undefined}
       aria-label={`${signal.label}: ${toPersianNumber(signal.value ?? signal.dataStateLabel)}؛ بررسی`}
-      className={`vital-slot${signal.signalId === "vital-data" ? " vital-slot--data" : ""}${placeholder ? " vital-slot--placeholder" : ""}${signal.isExperimental ? " vital-slot--experimental" : ""}${tone ? ` tone-${tone}` : ""}`}
+      className={`vital-slot vital-slot--${signal.signalId.replace("vital-", "")}${signal.signalId === "vital-data" ? " vital-slot--data" : ""}${placeholder ? " vital-slot--placeholder" : ""}${signal.isExperimental ? " vital-slot--experimental" : ""}${tone ? ` tone-${tone}` : ""}`}
       onClick={(event) => onOpen(signal, event.currentTarget)}
       title="بررسی سیگنال"
       type="button"
@@ -179,7 +193,14 @@ export function VitalStrip({
   ];
 
   return (
-    <section className="vital-strip" aria-label="نوار حیاتی کسب‌وکار">
+    <section className="vital-strip" id="vital-signals" aria-label="نوار حیاتی کسب‌وکار">
+      <header className="vital-mobile-heading">
+        <span className="vital-mobile-heading__pulse" aria-hidden="true">⌁</span>
+        <div>
+          <h2>سیگنال‌های حیاتی</h2>
+          <span>نمای کلی وضعیت کسب‌وکار</span>
+        </div>
+      </header>
       {signals.map((signal, index) => (
         <VitalSlot
           key={signal.signalId}

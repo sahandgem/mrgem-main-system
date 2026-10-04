@@ -10,6 +10,7 @@ import type {
   CommandCenterViewModel,
 } from "../integration/commandCenter/commandCenterViewModel";
 import { CockpitDrawerShell } from "./commandCenter/CockpitDrawerShell";
+import { CockpitMobileNavigation } from "./commandCenter/CockpitMobileNavigation";
 import { ProductionRail, WorkforceRail } from "./commandCenter/CockpitModuleRails";
 import { ImportantChanges, VitalStrip } from "./commandCenter/CockpitSignals";
 import { CockpitSystemBar } from "./commandCenter/CockpitSystemBar";
@@ -253,9 +254,16 @@ export function CommandCenterModuleOverview({ showDevScenarioControls = false }:
   const content = viewport === "desktop"
     ? [summary, attention, commitments, workforceRail, productionRail, changes, vital]
     : [attention, vital, workforceRail, productionRail, changes, commitments];
+  const visualState = viewModel.reliability.failedModuleCount || viewModel.overallState === "critical"
+    ? "critical"
+    : viewModel.reliability.hasPartialData || viewModel.managementSummary.staleModuleCount || viewModel.overallState === "attention"
+      ? "attention"
+      : viewModel.overallState === "healthy"
+        ? "healthy"
+        : "unknown";
 
   return (
-    <div className="command-center">
+    <div className={`command-center command-center--${visualState}`}>
       <CockpitSystemBar
         isRefreshing={isRefreshing}
         lastSuccessfulAt={lastSuccessfulAt}
@@ -275,6 +283,7 @@ export function CommandCenterModuleOverview({ showDevScenarioControls = false }:
         selection={drawerSelection}
         showInitialFocusRing={drawerTitleShowsFocus.current}
       />
+      {viewport === "mobile" && <CockpitMobileNavigation />}
       {showDevScenarioControls && <CommandCenterMockControls
         activeScenario={activeScenario}
         disabled={isRefreshing}

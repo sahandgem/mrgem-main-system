@@ -1,4 +1,4 @@
-import { RefreshCw } from "lucide-react";
+import { Gem, RefreshCw } from "lucide-react";
 import type { CommandCenterViewModel } from "../../integration/commandCenter/commandCenterViewModel";
 import { StatusBadge } from "../StatusBadge";
 import {
@@ -30,18 +30,38 @@ export function CockpitSystemBar({
 
   return (
     <header className="cockpit-system-bar">
-      <div className="cockpit-brand" aria-label="Master Gem Core">
-        <strong>MASTER GEM</strong>
-        <span>CORE</span>
-      </div>
-      <dl className="cockpit-system-facts">
-        <div>
-          <dt>وضعیت کلی</dt>
-          <dd><StatusBadge tone={toneForOverallState(viewModel.overallState)}>{overallStateLabel(viewModel.overallState)}</StatusBadge></dd>
+      <div className="cockpit-top-nav">
+        <div className="cockpit-brand" aria-label="Master Gem Core">
+          <span className="cockpit-brand__mark" aria-hidden="true"><Gem size={18} strokeWidth={1.7} /></span>
+          <span className="cockpit-brand__copy">
+            <strong>MASTER GEM</strong>
+            <span>مرکز فرمان هسته</span>
+          </span>
         </div>
+
+        <nav className="cockpit-nav-links" aria-label="ناوبری مرکز فرمان">
+          <a aria-current="page" href="#attention-title">مرکز فرمان</a>
+          <a href="#module-workforce-demo">نیروی انسانی</a>
+          <a href="#module-production-demo">تولید</a>
+          <a href="#vital-signals">سیگنال‌های حیاتی</a>
+        </nav>
+
+        <div className="cockpit-top-actions">
+          <span className="cockpit-last-sync">
+            <span>آخرین دریافت</span>
+            <strong>{formatDateTime(lastSuccessfulAt)}</strong>
+          </span>
+          <button className="system-refresh" disabled={isRefreshing} onClick={onRefresh} type="button">
+            <RefreshCw aria-hidden="true" size={15} strokeWidth={1.7} />
+            <span>{isRefreshing ? "در حال دریافت" : "به‌روزرسانی"}</span>
+          </button>
+        </div>
+      </div>
+
+      <dl className="cockpit-status-strip">
         <div>
-          <dt>آخرین دریافت موفق</dt>
-          <dd>{formatDateTime(lastSuccessfulAt)}</dd>
+          <dt>وضعیت کسب‌وکار</dt>
+          <dd><StatusBadge tone={toneForOverallState(viewModel.overallState)}>{overallStateLabel(viewModel.overallState)}</StatusBadge></dd>
         </div>
         <div>
           <dt>اعتماد داده</dt>
@@ -51,11 +71,11 @@ export function CockpitSystemBar({
           <dt>نیازمند توجه</dt>
           <dd><strong>{toPersianNumber(viewModel.topAttention.length)}</strong> مورد</dd>
         </div>
+        <div>
+          <dt>فوری</dt>
+          <dd><strong>{toPersianNumber(viewModel.managementSummary.criticalAttentionCount)}</strong> مورد</dd>
+        </div>
       </dl>
-      <button className="system-refresh" disabled={isRefreshing} onClick={onRefresh} type="button">
-        <RefreshCw aria-hidden="true" size={14} strokeWidth={1.5} />
-        {isRefreshing ? "در حال دریافت" : "به‌روزرسانی"}
-      </button>
     </header>
   );
 }

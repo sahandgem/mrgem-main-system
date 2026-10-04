@@ -106,7 +106,7 @@ export interface CommandCenterReliabilitySummary {
 export interface CommandCenterViewModel {
   generatedAt: string;
   sourceSchemaVersion: "integration-contract-v1";
-  dataLabel: "DEMO/MOCK";
+  dataLabel: "DEMO/MOCK" | "LIVE/READ-ONLY";
   overallState: CommandCenterOverallState;
   managementSummary: CommandCenterManagementSummary;
   reliability: CommandCenterReliabilitySummary;
@@ -116,6 +116,7 @@ export interface CommandCenterViewModel {
 }
 
 export interface CommandCenterViewModelOptions {
+  dataLabel?: CommandCenterViewModel["dataLabel"];
   allowedDrillDownRefs?: ReadonlySet<string>;
   moduleDetailRoutes?: Readonly<Record<string, string>>;
   maxAttentionItems?: number;
@@ -542,7 +543,7 @@ export function buildCommandCenterViewModel(
   return {
     generatedAt: aggregation.generatedAt,
     sourceSchemaVersion: "integration-contract-v1",
-    dataLabel: "DEMO/MOCK",
+    dataLabel: options.dataLabel ?? "DEMO/MOCK",
     overallState,
     managementSummary: {
       enabledModuleCount: enabled.length,

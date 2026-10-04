@@ -24,6 +24,7 @@ import {
   ProductionOperationsObservationContractError,
   type SanitizedProductionOperationsSnapshotV1,
 } from "../src/integration/production/productionOperationsObservation.ts";
+import { ProductionOperationsSanitizedTransport } from "../src/integration/production/productionOperationsTransport.ts";
 
 const now = "2026-08-07T09:30:00.000Z";
 
@@ -741,4 +742,118 @@ function productionSnapshot(
   );
 }
 
-console.log("Integration Backbone baseline, C11 runtime, C12 live-gate, C13 transport-adapter, C14 contract-separation and C15 production-observation tests passed.");
+// C17: C16-shaped Production snapshot reaches the Command Center end-to-end through the guarded transport path.
+{
+  const productionEntry: ModuleRegistryEntry = {
+    moduleId: "production.operations",
+    displayName: "عملیات تولید",
+    moduleType: "production",
+    enabled: true,
+    expectedContractMajor: 1,
+    freshnessPolicy: {
+      staleAfterSeconds: 5 * 60,
+      criticalAfterSeconds: 15 * 60,
+      allowedFutureSkewSeconds: 60,
+    },
+    adapterKey: "transport.production.operations",
+  };
+  const liveRegistry: readonly ModuleRegistryEntry[] = [
+    registryEntry("workforce.demo", "mock.workforce"),
+    productionEntry,
+  ];
+  let productionReadCount = 0;
+  const productionTransport = new ProductionOperationsSanitizedTransport({
+    reader: {
+      async read() {
+        productionReadCount += 1;
+        return productionSnapshot();
+      },
+    },
+    environment: "test",
+  });
+  const adapters = {
+    "mock.workforce": new MockModuleAdapter("workforce.demo", "mock.workforce", "normal_day"),
+    "transport.production.operations": new TransportModuleAdapter(
+      "production.operations",
+      "transport.production.operations",
+      productionTransport,
+    ),
+  };
+  const source = new CommandCenterLiveDataSource({
+    enabled: true,
+    registry: liveRegistry,
+    adapters,
+  });
+  const view = await source.read(now);
+  const productionModule = view.modules.find((module) => module.moduleId === "production.operations");
+  const productionKpis = view.kpiHighlights.filter((item) => item.moduleId === "production.operations");
+
+  assert.equal(view.dataLabel, "LIVE/READ-ONLY");
+  assert.equal(view.modules.length, 2);
+  assert.equal(productionReadCount, 1);
+  assert.ok(productionModule);
+  assert.equal(productionModule.reliability, "fresh");
+  assert.equal(productionModule.isExperimental, false);
+  assert.equal(productionModule.summaryText, "10 سفارش تولید پس از مرحله پیش‌نویس هنوز در وضعیت غیرنهایی قرار دارد.");
+  assert.equal(productionKpis.some((item) => item.kpiKey === "production_open_orders" && item.displayValue === "10"), true);
+  assert.equal(productionKpis.some((item) => item.kpiKey === "production_awaiting_qc_orders" && item.displayValue === "2"), true);
+}
+
+// C17: the same Production transport stays unread when the Live gate is closed.
+{
+  let readCount = 0;
+  const productionTransport = new ProductionOperationsSanitizedTransport({
+    reader: {
+      async read() {
+        readCount += 1;
+        return productionSnapshot();
+      },
+    },
+  });
+  const productionEntry: ModuleRegistryEntry = {
+    moduleId: "production.operations",
+    displayName: "عملیات تولید",
+    moduleType: "production",
+    enabled: true,
+    expectedContractMajor: 1,
+    freshnessPolicy: {
+      staleAfterSeconds: 5 * 60,
+      criticalAfterSeconds: 15 * 60,
+      allowedFutureSkewSeconds: 60,
+    },
+    adapterKey: "transport.production.operations",
+  };
+  const source = new CommandCenterLiveDataSource({
+    enabled: false,
+    registry: [productionEntry],
+    adapters: {
+      "transport.production.operations": new TransportModuleAdapter(
+        "production.operations",
+        "transport.production.operations",
+        productionTransport,
+      ),
+    },
+  });
+
+  await assert.rejects(() => source.read(now), CommandCenterLiveGateClosedError);
+  assert.equal(readCount, 0);
+}
+
+// C17: Production contract mismatch is normalized to unavailable and cannot masquerade as healthy data.
+{
+  const productionTransport = new ProductionOperationsSanitizedTransport({
+    reader: {
+      async read() {
+        return {
+          ...productionSnapshot(),
+          contractVersion: "wrong-version",
+        } as SanitizedProductionOperationsSnapshotV1;
+      },
+    },
+  });
+  const result = await productionTransport.read("production.operations");
+  assert.equal(result.kind, "unavailable");
+  if (result.kind === "unavailable") assert.equal(result.category, "validation");
+}
+
+console.log("Integration Backbone baseline, C11 runtime, C12 live-gate, C13 transport-adapter, C14 contract-separation, C15 production-observation and C17 end-to-end tests passed.");

@@ -579,4 +579,57 @@ function transportAdapters(transport: SanitizedModuleTransport) {
   for (const entry of integrationModuleRegistry) assert.equal(transport.getReadCount(entry.moduleId), 0);
 }
 
-console.log("Integration Backbone baseline, C11 runtime, C12 live-gate and C13 transport-adapter tests passed.");
+// C14: Product Monitoring identity DTO is a different contract and must never be accepted as a Command Center module observation.
+{
+  const productMonitoringIdentityDto = {
+    contractVersion: "1.0",
+    sources: [{
+      sourceId: "mahak-product-identity",
+      sourceName: "Mahak operational product identity",
+      authorityClass: "unknown",
+      contractVersion: "1.0",
+      sourceSchemaVersion: "mahak-product-identity-v1",
+      correlationId: "corr_test",
+      attemptedAt: now,
+      locationIds: [],
+      timezone: "Etc/UTC",
+      payloadState: "current",
+      availability: "available",
+      fetchedAt: now,
+      sourceUpdatedAt: now,
+      freshness: "fresh",
+    }],
+    product: {
+      productId: "pc-product-test",
+      productCode: "TEST-001",
+      displayName: "Test Product",
+    },
+    sections: [{
+      sectionId: "identity",
+      enabled: true,
+      required: true,
+      state: "valid",
+      sourceRefs: ["mahak-product-identity"],
+    }],
+    overallStatus: "COMPLETE",
+    overallFreshness: "fresh",
+  };
+  const results = Object.fromEntries(
+    integrationModuleRegistry.map((entry) => [
+      entry.moduleId,
+      { kind: "payload" as const, payload: productMonitoringIdentityDto },
+    ]),
+  );
+  const transport = new FixtureSanitizedModuleTransport(results);
+  const source = new CommandCenterLiveDataSource({
+    enabled: true,
+    adapters: transportAdapters(transport),
+  });
+  const view = await source.read(now);
+
+  assert.equal(view.modules.every((module) => module.reliability === "invalid"), true);
+  assert.equal(view.managementSummary.healthyModuleCount, 0);
+  assert.equal(view.topAttention.length, 0);
+}
+
+console.log("Integration Backbone baseline, C11 runtime, C12 live-gate, C13 transport-adapter and C14 contract-separation tests passed.");

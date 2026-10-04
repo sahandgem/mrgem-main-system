@@ -67,9 +67,17 @@ test("development and preview ports, roots and outputs are separate and fixed", 
   assert.equal(new Set(ports).size, ports.length);
 });
 
-test("Core stays mock-only: it cannot access browser business storage or make network requests", () => {
+test("Core network access is limited to the approved read-only module adapter", () => {
+  const allowedNetworkFile = resolve(root, "apps/core/src/integration/adapters/httpModuleAdapter.ts");
   for (const file of sourceFiles(join(root, "apps/core/src"))) {
     if (file.endsWith(".css")) continue;
-    assert.doesNotMatch(readFileSync(file, "utf8"), /\b(localStorage|sessionStorage|indexedDB|fetch|XMLHttpRequest|WebSocket)\b/, file);
+    const source = readFileSync(file, "utf8");
+    assert.doesNotMatch(source, /\b(localStorage|sessionStorage|indexedDB)\b/, file);
+    if (resolve(file) === allowedNetworkFile) {
+      assert.match(source, /\bfetch\b/, file);
+      assert.doesNotMatch(source, /\b(XMLHttpRequest|WebSocket)\b/, file);
+    } else {
+      assert.doesNotMatch(source, /\b(fetch|XMLHttpRequest|WebSocket)\b/, file);
+    }
   }
 });

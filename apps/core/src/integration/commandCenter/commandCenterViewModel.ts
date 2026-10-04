@@ -163,6 +163,11 @@ const modulePresentation: Readonly<Record<string, {
     destinationLabel: "جزئیات نمونه تولید",
     isExperimental: true,
   },
+  "finance.friday-market": {
+    description: "وضعیت عملیاتی، تسویه، نگهداری پول و بینش‌های روند جمعه‌بازار",
+    destinationLabel: "گزارش جمعه‌بازار",
+    isExperimental: false,
+  },
 };
 
 const attentionPresentation: Readonly<Record<string, {
@@ -200,6 +205,24 @@ const attentionPresentation: Readonly<Record<string, {
     timeContext: "سناریوی آزمایشی؛ دوره اندازه‌گیری نیازمند تعریف",
     destinationLabel: "نمونه برنامه در برابر عملکرد",
     priorityTier: 3,
+  },
+  friday_market_action_custody: {
+    businessImpact: "محل نگهداری پول یا ماندن آن نزد شخص نیازمند اقدام مدیریتی است.",
+    timeContext: "وضعیت جاری جمعه‌بازار",
+    destinationLabel: "جزئیات نگهداری پول جمعه‌بازار",
+    priorityTier: 1,
+  },
+  friday_market_action_settlement: {
+    businessImpact: "تسویه باز می‌تواند مانده اشخاص یا پول عبوری را باز نگه دارد.",
+    timeContext: "وضعیت جاری جمعه‌بازار",
+    destinationLabel: "تسویه‌های جمعه‌بازار",
+    priorityTier: 2,
+  },
+  friday_market_attention_integrity: {
+    businessImpact: "کامل نبودن بستن رویداد یا داده مبنا نیازمند بررسی مدیر است.",
+    timeContext: "آخرین وضعیت جمعه‌بازار",
+    destinationLabel: "کنترل نهایی جمعه‌بازار",
+    priorityTier: 2,
   },
 };
 

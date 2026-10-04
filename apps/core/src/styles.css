@@ -86,6 +86,7 @@ p { line-height: 1.65; }
 .cockpit-system-facts dt { color: var(--text-muted); font-size: var(--font-size-meta); white-space: nowrap; }
 .cockpit-system-facts dd { color: var(--text-secondary); font-size: 12px; white-space: nowrap; }
 .cockpit-system-facts dd strong { font-size: 20px; }
+.system-actions { display: inline-flex; align-items: center; gap: 4px; }
 .system-refresh { display: inline-flex; align-items: center; gap: var(--space-1); padding: 4px 8px; min-height: 30px; color: var(--text-muted); background: transparent; border: 0; border-radius: var(--radius-control); font-size: var(--font-size-meta); transition: background-color var(--motion-duration-fast) var(--motion-easing-standard), color var(--motion-duration-fast) var(--motion-easing-standard); }
 .system-refresh:hover { color: var(--text-primary); background: var(--surface-hover); }
 .cockpit-stage { display: grid; grid-template-columns: clamp(256px,16.667vw,320px) minmax(0,1fr) clamp(320px,20.417vw,392px); grid-template-rows: auto minmax(0,1fr) 48px 68px var(--vital-height); grid-template-areas: "workforce summary production" "workforce attention production" "workforce commitments production" "changes changes changes" "vital vital vital"; gap: 8px 12px; direction: ltr; height: calc(100dvh - var(--system-bar-height)); padding: 8px 12px 0; }
@@ -290,7 +291,8 @@ p { line-height: 1.65; }
   .cockpit-system-facts dd { white-space: normal; line-height: 1.45; }
   .cockpit-system-facts > div:first-child dd, .cockpit-system-facts > div:nth-child(4) dd { font-size: var(--font-size-body); }
   .cockpit-system-facts dd strong { font-size: var(--font-size-kpi-secondary); }
-  .system-refresh { grid-column: 2; grid-row: 1; min-height: 44px; margin-inline-start: 0; }
+  .system-actions { grid-column: 2; grid-row: 1; min-height: 44px; margin-inline-start: 0; justify-content: flex-end; }
+  .system-actions .system-refresh { min-height: 44px; margin-inline-start: 0; }
   .attention-section { padding: 8px 12px 0; }
   .attention-heading { padding-bottom: 6px; }
   .attention-heading h3 { font-size: 18px; }

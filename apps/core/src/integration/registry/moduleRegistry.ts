@@ -31,6 +31,23 @@ export const integrationModuleRegistry: readonly ModuleRegistryEntry[] = [
   },
 ];
 
+export function fridayMarketRegistryEntry(detailRouteRef: string): ModuleRegistryEntry {
+  return {
+    moduleId: "finance.friday-market",
+    displayName: "جمعه‌بازار",
+    moduleType: "finance",
+    enabled: true,
+    expectedContractMajor: 1,
+    freshnessPolicy: {
+      staleAfterSeconds: 30 * 60,
+      criticalAfterSeconds: 2 * 60 * 60,
+      allowedFutureSkewSeconds: 5 * 60,
+    },
+    adapterKey: "http.friday-market",
+    detailRouteRef,
+  };
+}
+
 export interface RegistryValidationResult {
   duplicateModuleIds: Set<string>;
   invalidEntries: Map<string, ModuleDiagnostic[]>;

@@ -12,9 +12,10 @@ Check `git status --short`, current branch and worktree location before editing.
 - `packages/module-contracts` is the only current shared package. Keep it free of
   application dependencies and domain logic. Contract changes need coordinated
   review and both apps' tests/builds; do not silently broaden the contract.
-- No real adapter, production network connection, direct external database or
-  browser-storage bridge is authorized by the environment-separation phase.
-  P06's Mahak gate remains pending. Broad P56 monolith cleanup stays frozen.
+- Phase 6.13 authorizes one bounded read-only HTTP adapter for Friday Market
+  observations. It does not authorize direct external database access, browser
+  storage bridges, write/command transports, or other real adapters. P06's Mahak
+  gate remains pending. Broad P56 monolith cleanup stays frozen.
 - Keep real-data recovery separate from source recovery. Do not reset demo,
   import, clear storage, or overwrite a browser profile as a diagnostic shortcut.
 - Core worktree branch: `codex/dev-core`. Workforce: `codex/dev-workforce`.

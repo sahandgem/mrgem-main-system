@@ -7,8 +7,10 @@ import {
 import type { ModuleRegistryEntry } from "@master-gem/module-contracts";
 import {
   findModuleRegistryEntry,
+  fridayMarketRegistryEntry,
   integrationModuleRegistry,
 } from "../src/integration/registry/moduleRegistry.ts";
+import { HttpModuleAdapter } from "../src/integration/adapters/httpModuleAdapter.ts";
 import { validateAndNormalizeObservation } from "../src/integration/validation/moduleObservationValidator.ts";
 import { CommandCenterMockDataSource } from "../src/integration/commandCenter/commandCenterMockDataSource.ts";
 
@@ -280,6 +282,107 @@ assert.equal(integrationModuleRegistry[1].moduleId, "production.demo");
   assert.ok(Date.parse(workforce.observedAt ?? "") < Date.parse(workforce.receivedAt));
   assert.doesNotMatch(workforce.summaryText, /SYNTHETIC_UNAVAILABLE|adapter|transport/i);
   assert.equal(view.topAttention.every((item) => item.reliability === "stale_last_known_good"), true);
+}
+
+
+// Phase 6.13: a trusted Friday Market observation can join the existing Core pipeline.
+{
+  const detailUrl = "https://audit-app.example/friday-market";
+  const observation = {
+    contractVersion: "1.0.0",
+    observationId: "friday-market:test",
+    module: {
+      moduleId: "finance.friday-market",
+      displayName: "جمعه‌بازار",
+      moduleType: "finance",
+      contractVersion: "1.0.0",
+      producerVersion: "phase6.13",
+      sourceSystem: "audit-app",
+      environment: "test",
+    },
+    generatedAt: now,
+    summary: { status: "attention", text: "1 اقدام · 1 بینش روندی" },
+    health: { state: "healthy", observedAt: now },
+    kpis: [{
+      key: "friday_market_insight_sales",
+      label: "تغییر فروش جمعه‌بازار",
+      value: "بینش روندی",
+      valueType: "text",
+      status: "info",
+      measuredAt: now,
+      comparison: { direction: "unknown", label: "تغییر از آستانه مصوب عبور کرده است." },
+      drillDownRef: detailUrl,
+    }],
+    alerts: [{
+      alertId: "settlement-1",
+      category: "friday_market_action_settlement",
+      severity: "warning",
+      title: "تسویه باز",
+      summary: "یک تسویه هنوز باز است.",
+      detectedAt: now,
+      status: "open",
+      recommendedNextAction: "بررسی تسویه",
+      drillDownRef: detailUrl,
+    }],
+    capabilities: [{ key: "friday_market_read", version: "1", mode: "read", status: "available" }],
+    ownership: { businessTruthOwner: "audit-app/friday-market", isDerived: true },
+  };
+  const fetcher = async () => new Response(JSON.stringify(observation), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
+  const entry = fridayMarketRegistryEntry(detailUrl);
+  const source = new CommandCenterMockDataSource("normal", {
+    entries: [entry],
+    adapters: {
+      [entry.adapterKey]: new HttpModuleAdapter(
+        entry.moduleId,
+        entry.adapterKey,
+        "/api/integrations/friday-market",
+        fetcher,
+      ),
+    },
+  });
+  const view = await source.read(now);
+  const fridayMarket = view.modules.find((module) => module.moduleId === "finance.friday-market");
+  assert.equal(fridayMarket?.reliability, "fresh");
+  assert.equal(fridayMarket?.isExperimental, false);
+  const attention = view.topAttention.find((item) => item.moduleId === "finance.friday-market");
+  assert.equal(attention?.priorityTier, 2);
+  assert.equal(attention?.suggestedNextStep, "بررسی تسویه");
+  const insight = view.kpiHighlights.find((item) => item.moduleId === "finance.friday-market");
+  assert.equal(insight?.status, "info");
+  assert.match(insight?.trendText ?? "", /آستانه مصوب/);
+  assert.equal(insight?.drillDownRef, detailUrl);
+}
+
+// Phase 6.13: authenticated HTTP adapter never calls the endpoint without a token.
+{
+  let calls = 0;
+  const fetcher = async (_input: RequestInfo | URL, init?: RequestInit) => {
+    calls += 1;
+    assert.equal(new Headers(init?.headers).get("Authorization"), "Bearer secure-token");
+    return new Response(JSON.stringify({ ok: true }), { status: 200 });
+  };
+  const missing = new HttpModuleAdapter(
+    "finance.friday-market",
+    "http.friday-market",
+    "/bridge",
+    fetcher,
+    () => null,
+  );
+  assert.equal((await missing.read()).kind, "unavailable");
+  assert.equal(calls, 0);
+
+  const authenticated = new HttpModuleAdapter(
+    "finance.friday-market",
+    "http.friday-market",
+    "/bridge",
+    fetcher,
+    () => "secure-token",
+  );
+  assert.equal((await authenticated.read()).kind, "data");
+  assert.equal(calls, 1);
 }
 
 console.log("Integration Backbone baseline tests passed.");

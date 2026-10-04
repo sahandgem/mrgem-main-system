@@ -1,6 +1,7 @@
-import type {
-  CommandCenterKpiHighlight,
-  CommandCenterViewModel,
+import {
+  findPrimaryCommandCenterModule,
+  type CommandCenterKpiHighlight,
+  type CommandCenterViewModel,
 } from "../../integration/commandCenter/commandCenterViewModel";
 import { changeImpact, hasDisplayData, reliabilityText } from "./density";
 import { signalFromHighlight, type CockpitKpiSignal } from "./drawerModel";
@@ -105,13 +106,24 @@ export function VitalStrip({
   selectedKey?: string;
   viewModel: CommandCenterViewModel;
 }) {
-  const workforce = viewModel.kpiHighlights.find((item) => item.kpiKey === "workforce_schedule_coverage");
-  const production = viewModel.kpiHighlights.find((item) => item.kpiKey === "production_plan_attainment");
-  const workforceModule = viewModel.modules.find((item) => item.moduleId === "workforce.demo");
-  const productionModule = viewModel.modules.find((item) => item.moduleId === "production.demo");
+  const workforceModule = findPrimaryCommandCenterModule(viewModel.modules, "workforce");
+  const productionModule = findPrimaryCommandCenterModule(viewModel.modules, "production");
+  const workforce = viewModel.kpiHighlights.find((item) => (
+    item.moduleId === workforceModule?.moduleId && item.kpiKey === "workforce_schedule_coverage"
+  ));
+  const production = viewModel.kpiHighlights.find((item) => (
+    item.moduleId === productionModule?.moduleId
+    && (item.kpiKey === "production_plan_attainment" || item.kpiKey === "production_in_progress_orders")
+  ));
+  const openOrders = viewModel.kpiHighlights.find((item) => (
+    item.moduleId === productionModule?.moduleId && item.kpiKey === "production_open_orders"
+  ));
   const workOrderAttention = viewModel.topAttention.find((item) => item.sourceRef === "mock:production:work-order");
   const workOrderCount = viewModel.topAttention.filter((item) => item.sourceRef === "mock:production:work-order").length;
-  const ordersKnown = hasDisplayData(productionModule) && (!productionModule?.isPartialData || workOrderCount > 0);
+  const mockOrdersKnown = hasDisplayData(productionModule) && (!productionModule?.isPartialData || workOrderCount > 0);
+  const ordersKnown = Boolean(openOrders) || mockOrdersKnown;
+  const ordersValue = openOrders?.displayValue ?? (workOrderCount ? `${toPersianNumber(workOrderCount)} نمونه` : "بدون مورد");
+  const productionIsExperimental = productionModule?.isExperimental ?? true;
   const data = dataSlot(viewModel);
   const signals: CockpitKpiSignal[] = [
     {
@@ -133,15 +145,25 @@ export function VitalStrip({
     {
       signalId: "vital-orders",
       label: "سفارش‌ها",
-      value: ordersKnown ? (workOrderCount ? `${toPersianNumber(workOrderCount)} نمونه` : "بدون مورد") : undefined,
-      context: productionModule?.hasLastKnownGood ? "آزمایشی · آخرین داده سالم" : productionModule?.isPartialData ? "آزمایشی · ناقص" : "آزمایشی · سفارش نمونه",
-      ownerLabel: productionModule?.displayName ?? "مرکز تولید آزمایشی",
+      value: ordersKnown ? ordersValue : undefined,
+      context: openOrders
+        ? productionModule?.hasLastKnownGood
+          ? "سفارش‌های باز · آخرین داده سالم"
+          : productionModule?.isPartialData
+            ? "سفارش‌های باز · داده ناقص"
+            : "سفارش‌های باز"
+        : productionModule?.hasLastKnownGood
+          ? "آزمایشی · آخرین داده سالم"
+          : productionModule?.isPartialData
+            ? "آزمایشی · ناقص"
+            : "آزمایشی · سفارش نمونه",
+      ownerLabel: productionModule?.displayName ?? "مرکز تولید",
       dataStateLabel: ordersKnown ? (productionModule?.dataStateLabel ?? "نامشخص") : "نامشخص",
       reliability: productionModule?.reliability,
       observedAt: productionModule?.observedAt,
       destinationLabel: productionModule?.destinationLabel,
       destinationRef: productionModule?.detailRouteRef,
-      isExperimental: true,
+      isExperimental: productionIsExperimental,
       relatedAttention: workOrderAttention,
       module: productionModule,
     },
@@ -167,18 +189,28 @@ export function VitalStrip({
       ...signalFromHighlight(production, productionModule, viewModel.topAttention),
       signalId: "vital-production",
       label: "تولید",
-      context: productionModule?.hasLastKnownGood ? "آزمایشی · آخرین داده سالم" : productionModule?.isPartialData ? "آزمایشی · ناقص" : "آزمایشی · دوره نامشخص",
+      context: productionIsExperimental
+        ? productionModule?.hasLastKnownGood
+          ? "آزمایشی · آخرین داده سالم"
+          : productionModule?.isPartialData
+            ? "آزمایشی · ناقص"
+            : "آزمایشی · دوره نامشخص"
+        : productionModule?.hasLastKnownGood
+          ? "آخرین داده سالم"
+          : productionModule?.isPartialData
+            ? "داده ناقص"
+            : production.contextLabel,
     } : {
       signalId: "vital-production",
       label: "تولید",
-      context: "آزمایشی · داده موجود نیست",
-      ownerLabel: productionModule?.displayName ?? "مرکز تولید آزمایشی",
+      context: productionIsExperimental ? "آزمایشی · داده موجود نیست" : "داده تولید در دسترس نیست",
+      ownerLabel: productionModule?.displayName ?? "مرکز تولید",
       dataStateLabel: productionModule?.dataStateLabel ?? "داده موجود نیست",
       reliability: productionModule?.reliability,
       observedAt: productionModule?.observedAt,
       destinationLabel: productionModule?.destinationLabel,
       destinationRef: productionModule?.detailRouteRef,
-      isExperimental: true,
+      isExperimental: productionIsExperimental,
       module: productionModule,
     },
     {

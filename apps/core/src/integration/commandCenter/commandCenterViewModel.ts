@@ -212,6 +212,17 @@ function modulePresentationFor(moduleId: string) {
   };
 }
 
+export type CommandCenterModuleFamily = "workforce" | "production";
+
+export function findPrimaryCommandCenterModule(
+  modules: readonly CommandCenterModuleSummary[],
+  family: CommandCenterModuleFamily,
+) {
+  const prefix = `${family}.`;
+  const candidates = modules.filter((item) => item.moduleId === family || item.moduleId.startsWith(prefix));
+  return candidates.find((item) => !item.isExperimental) ?? candidates[0];
+}
+
 function compareText(left: string, right: string) {
   if (left === right) return 0;
   return left < right ? -1 : 1;

@@ -3,10 +3,11 @@ import {
   createCommandCenterRuntimeEnvironment,
   type CommandCenterDevScenario,
 } from "../integration/commandCenter/commandCenterRuntimeEnvironment";
-import type {
-  CommandCenterAttentionItem,
-  CommandCenterKpiHighlight,
-  CommandCenterModuleSummary,
+import {
+  findPrimaryCommandCenterModule,
+  type CommandCenterAttentionItem,
+  type CommandCenterKpiHighlight,
+  type CommandCenterModuleSummary,
 } from "../integration/commandCenter/commandCenterViewModel";
 import { CockpitDrawerShell } from "./commandCenter/CockpitDrawerShell";
 import { CockpitMobileNavigation } from "./commandCenter/CockpitMobileNavigation";
@@ -132,14 +133,14 @@ export function CommandCenterModuleOverview({ showDevScenarioControls = false }:
   if (!viewModel) {
     return (
       <main className="cockpit-loading" id="cockpit-main">
-        <strong>در حال ساخت نمای مدیریتی از داده آزمایشی...</strong>
+        <strong>{runtimeEnvironment.sourceMode === "live" ? "در حال ساخت نمای مدیریتی از داده فقط‌خواندنی..." : "در حال ساخت نمای مدیریتی از داده آزمایشی..."}</strong>
         {refreshError && <span role="alert">{refreshError}</span>}
       </main>
     );
   }
 
-  const workforce = viewModel.modules.find((item) => item.moduleId === "workforce.demo");
-  const production = viewModel.modules.find((item) => item.moduleId === "production.demo");
+  const workforce = findPrimaryCommandCenterModule(viewModel.modules, "workforce");
+  const production = findPrimaryCommandCenterModule(viewModel.modules, "production");
   const selectedKey = drawerSelection ? drawerSelectionKey(drawerSelection) : undefined;
   const mobileAttentionCount = viewport === "mobile" && !showAllMobileAttention
     ? Math.min(3, viewModel.topAttention.length)

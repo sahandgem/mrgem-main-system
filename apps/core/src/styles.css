@@ -2664,11 +2664,11 @@ body {
 @media (max-width: 720px) {
   .vital-strip {
     position: relative;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(3, 80px);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, 80px);
     gap: 10px 12px;
-    height: 342px;
-    min-height: 342px;
+    height: 252px;
+    min-height: 252px;
     padding: 62px 12px 20px;
   }
 
@@ -2742,6 +2742,15 @@ body {
   .vital-slot small {
     font-size: 7px;
     line-height: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .vital-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(3, 80px);
+    height: 342px;
+    min-height: 342px;
   }
 }
 

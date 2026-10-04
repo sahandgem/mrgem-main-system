@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   createCommandCenterRuntimeEnvironment,
   type CommandCenterDevScenario,
+  type CommandCenterRuntimeEnvironment,
 } from "../integration/commandCenter/commandCenterRuntimeEnvironment";
 import {
   findPrimaryCommandCenterModule,
@@ -69,8 +70,16 @@ const scenarioOptions: readonly ScenarioOption[] = [
   },
 ];
 
-export function CommandCenterModuleOverview({ showDevScenarioControls = false }: { showDevScenarioControls?: boolean }) {
-  const [runtimeEnvironment] = useState(createCommandCenterRuntimeEnvironment);
+export interface CommandCenterModuleOverviewProps {
+  showDevScenarioControls?: boolean;
+  runtimeEnvironmentFactory?: () => CommandCenterRuntimeEnvironment;
+}
+
+export function CommandCenterModuleOverview({
+  showDevScenarioControls = false,
+  runtimeEnvironmentFactory = createCommandCenterRuntimeEnvironment,
+}: CommandCenterModuleOverviewProps) {
+  const [runtimeEnvironment] = useState(runtimeEnvironmentFactory);
   const runtime = runtimeEnvironment.runtime;
   const drawerTrigger = useRef<HTMLButtonElement | null>(null);
   const drawerTitleShowsFocus = useRef(false);

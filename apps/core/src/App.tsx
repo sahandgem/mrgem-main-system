@@ -1,11 +1,19 @@
 import { CommandCenterModuleOverview } from "./components/CommandCenterModuleOverview";
+import type { CommandCenterRuntimeEnvironment } from "./integration/commandCenter/commandCenterRuntimeEnvironment";
 
-export function App() {
+export interface AppProps {
+  runtimeEnvironmentFactory?: () => CommandCenterRuntimeEnvironment;
+}
+
+export function App({ runtimeEnvironmentFactory }: AppProps = {}) {
   const showDevScenarioControls = import.meta.env.DEV && window.location.pathname === "/__dev/command-center";
   return (
     <div className="core-shell">
       <a className="skip-link" href="#cockpit-main">رفتن به محتوای اصلی</a>
-      <CommandCenterModuleOverview showDevScenarioControls={showDevScenarioControls} />
+      <CommandCenterModuleOverview
+        runtimeEnvironmentFactory={runtimeEnvironmentFactory}
+        showDevScenarioControls={showDevScenarioControls}
+      />
     </div>
   );
 }

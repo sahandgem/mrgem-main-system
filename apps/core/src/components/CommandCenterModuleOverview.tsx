@@ -95,7 +95,7 @@ export function CommandCenterModuleOverview({ showDevScenarioControls = false }:
 
   const selectScenario = (next: CommandCenterDevScenario) => {
     setActiveScenario(next);
-    runtimeEnvironment.setDevScenario(next);
+    runtimeEnvironment.setDevScenario?.(next);
     void refresh();
   };
 

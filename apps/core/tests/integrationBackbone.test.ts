@@ -11,8 +11,10 @@ import {
 } from "../src/integration/registry/moduleRegistry.ts";
 import { validateAndNormalizeObservation } from "../src/integration/validation/moduleObservationValidator.ts";
 import { CommandCenterMockDataSource } from "../src/integration/commandCenter/commandCenterMockDataSource.ts";
+import { CommandCenterLiveDataSource, CommandCenterLiveGateClosedError } from "../src/integration/commandCenter/commandCenterLiveDataSource.ts";
 import type { CommandCenterDataSource } from "../src/integration/commandCenter/commandCenterDataSource.ts";
 import { CommandCenterRuntime } from "../src/integration/commandCenter/commandCenterRuntime.ts";
+import { createCommandCenterRuntimeEnvironment } from "../src/integration/commandCenter/commandCenterRuntimeEnvironment.ts";
 import type { CommandCenterViewModel } from "../src/integration/commandCenter/commandCenterViewModel.ts";
 
 const now = "2026-08-07T09:30:00.000Z";
@@ -394,4 +396,60 @@ function deferred<T>() {
   assert.equal(runtime.getState().lastSuccessfulAt, newerAt);
 }
 
-console.log("Integration Backbone baseline and C11 runtime tests passed.");
+// C12 gate: default runtime environment stays mock.
+{
+  const environment = createCommandCenterRuntimeEnvironment();
+  assert.equal(environment.sourceMode, "mock");
+  assert.equal(environment.runtime.getState().sourceKind, "mock");
+  assert.equal(typeof environment.setDevScenario, "function");
+}
+
+// C12 gate: closed Live source fails before reading any injected adapter.
+{
+  const adapters = Object.fromEntries(
+    integrationModuleRegistry.map((entry) => [
+      entry.adapterKey,
+      new MockModuleAdapter(entry.moduleId, entry.adapterKey, "healthy"),
+    ]),
+  );
+  const source = new CommandCenterLiveDataSource({ enabled: false, adapters });
+
+  await assert.rejects(
+    () => source.read(now),
+    (error: unknown) => error instanceof CommandCenterLiveGateClosedError
+      && error.code === "LIVE_DATA_GATE_CLOSED",
+  );
+  for (const adapter of Object.values(adapters)) assert.equal(adapter.getReadCount(), 0);
+}
+
+// C12 gate: an explicitly enabled Live source can consume only injected ModuleReadAdapters.
+{
+  const adapters = Object.fromEntries(
+    integrationModuleRegistry.map((entry) => [
+      entry.adapterKey,
+      new MockModuleAdapter(entry.moduleId, entry.adapterKey, "healthy"),
+    ]),
+  );
+  const source = new CommandCenterLiveDataSource({ enabled: true, adapters });
+  const view = await source.read(now);
+
+  assert.equal(source.sourceKind, "live");
+  assert.equal(view.modules.length, integrationModuleRegistry.length);
+  assert.equal(view.modules.every((module) => module.reliability === "fresh"), true);
+  for (const adapter of Object.values(adapters)) assert.equal(adapter.getReadCount(), 1);
+}
+
+// C12 gate: selecting Live without explicit config remains fail-closed.
+{
+  const environment = createCommandCenterRuntimeEnvironment({ mode: "live" });
+
+  assert.equal(environment.sourceMode, "live");
+  assert.equal(environment.runtime.getState().sourceKind, "live");
+  assert.equal(environment.setDevScenario, undefined);
+  assert.equal(await environment.runtime.refresh(now), "error");
+  assert.equal(environment.runtime.getState().phase, "error");
+  assert.equal(environment.runtime.getState().viewModel, undefined);
+  assert.equal(environment.runtime.getState().lastSuccessfulAt, undefined);
+}
+
+console.log("Integration Backbone baseline, C11 runtime and C12 live-gate tests passed.");

@@ -2,7 +2,8 @@ import { MockModuleAdapter } from "../adapters/mockModuleAdapter";
 import type { ModuleReadAdapter } from "../adapters/moduleAdapter";
 import { ModuleObservationAggregator } from "../aggregation/moduleObservationAggregator";
 import { integrationModuleRegistry } from "../registry/moduleRegistry";
-import { buildCommandCenterViewModel, type CommandCenterViewModel } from "./commandCenterViewModel";
+import type { CommandCenterDataSource } from "./commandCenterDataSource";
+import { buildCommandCenterViewModel } from "./commandCenterViewModel";
 
 export type CommandCenterMockScenario = "normal" | "healthy" | "stale" | "partial" | "error";
 
@@ -11,11 +12,8 @@ const moduleDetailRoutes = Object.fromEntries(
 );
 const allowedDrillDownRefs = new Set(Object.values(moduleDetailRoutes));
 
-export interface CommandCenterDataSource {
-  read(now?: string): Promise<CommandCenterViewModel>;
-}
-
 export class CommandCenterMockDataSource implements CommandCenterDataSource {
+  readonly sourceKind = "mock" as const;
   private readonly aggregator = new ModuleObservationAggregator();
   private readonly errorAggregator = new ModuleObservationAggregator();
   private readonly adapters: Readonly<Record<string, MockModuleAdapter>>;

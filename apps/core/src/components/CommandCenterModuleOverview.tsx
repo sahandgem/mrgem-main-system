@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  CommandCenterMockDataSource,
-  type CommandCenterMockScenario,
-} from "../integration/commandCenter/commandCenterMockDataSource";
+  createCommandCenterRuntimeEnvironment,
+  type CommandCenterDevScenario,
+} from "../integration/commandCenter/commandCenterRuntimeEnvironment";
 import type {
   CommandCenterAttentionItem,
   CommandCenterKpiHighlight,
   CommandCenterModuleSummary,
-  CommandCenterViewModel,
 } from "../integration/commandCenter/commandCenterViewModel";
 import { CockpitDrawerShell } from "./commandCenter/CockpitDrawerShell";
 import { CockpitMobileNavigation } from "./commandCenter/CockpitMobileNavigation";
@@ -70,50 +69,40 @@ const scenarioOptions: readonly ScenarioOption[] = [
 ];
 
 export function CommandCenterModuleOverview({ showDevScenarioControls = false }: { showDevScenarioControls?: boolean }) {
-  const dataSource = useRef<CommandCenterMockDataSource | null>(null);
-  const refreshInFlight = useRef(false);
+  const [runtimeEnvironment] = useState(createCommandCenterRuntimeEnvironment);
+  const runtime = runtimeEnvironment.runtime;
   const drawerTrigger = useRef<HTMLButtonElement | null>(null);
   const drawerTitleShowsFocus = useRef(false);
-  const [viewModel, setViewModel] = useState<CommandCenterViewModel>();
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [refreshError, setRefreshError] = useState<string>();
-  const [lastSuccessfulAt, setLastSuccessfulAt] = useState<string>();
-  const [activeScenario, setActiveScenario] = useState<CommandCenterMockScenario>("healthy");
+  const [runtimeState, setRuntimeState] = useState(runtime.getState());
+  const [activeScenario, setActiveScenario] = useState<CommandCenterDevScenario>("healthy");
   const [drawerSelection, setDrawerSelection] = useState<CockpitDrawerSelection>();
   const [showAllMobileAttention, setShowAllMobileAttention] = useState(false);
   const viewport = useCockpitViewport();
 
-  if (!dataSource.current) dataSource.current = new CommandCenterMockDataSource();
+  const refresh = useCallback(async () => {
+    const outcome = await runtime.refresh();
+    if (outcome !== "success") return;
+    setShowAllMobileAttention(false);
+    setDrawerSelection((current) => reduceCockpitDrawer(current, { type: "close" }));
+    drawerTrigger.current = null;
+  }, [runtime]);
 
-  const refresh = useCallback(async (scenario: CommandCenterMockScenario) => {
-    if (refreshInFlight.current || !dataSource.current) return;
-    refreshInFlight.current = true;
-    setIsRefreshing(true);
-    setRefreshError(undefined);
-    try {
-      dataSource.current.setScenario(scenario);
-      const next = await dataSource.current.read();
-      setViewModel(next);
-      setLastSuccessfulAt(next.generatedAt);
-      setShowAllMobileAttention(false);
-      setDrawerSelection((current) => reduceCockpitDrawer(current, { type: "close" }));
-      drawerTrigger.current = null;
-    } catch {
-      setRefreshError("به‌روزرسانی نمای مدیریتی انجام نشد. لطفاً دوباره تلاش کنید.");
-    } finally {
-      refreshInFlight.current = false;
-      setIsRefreshing(false);
-    }
-  }, []);
+  useEffect(() => runtime.subscribe(setRuntimeState), [runtime]);
 
   useEffect(() => {
-    void refresh("healthy");
-  }, [refresh]);
+    if (runtime.getState().phase === "idle") void refresh();
+  }, [refresh, runtime]);
 
-  const selectScenario = (next: CommandCenterMockScenario) => {
+  const selectScenario = (next: CommandCenterDevScenario) => {
     setActiveScenario(next);
-    void refresh(next);
+    runtimeEnvironment.setDevScenario(next);
+    void refresh();
   };
+
+  const viewModel = runtimeState.viewModel;
+  const isRefreshing = runtimeState.phase === "loading" || runtimeState.phase === "refreshing";
+  const refreshError = runtimeState.error?.message;
+  const lastSuccessfulAt = runtimeState.lastSuccessfulAt;
 
   const openDrawer = useCallback((selection: CockpitDrawerSelection, trigger: HTMLButtonElement) => {
     drawerTrigger.current = trigger;
@@ -267,7 +256,7 @@ export function CommandCenterModuleOverview({ showDevScenarioControls = false }:
       <CockpitSystemBar
         isRefreshing={isRefreshing}
         lastSuccessfulAt={lastSuccessfulAt}
-        onRefresh={() => void refresh(activeScenario)}
+        onRefresh={() => void refresh()}
         viewModel={viewModel}
       />
 

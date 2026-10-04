@@ -11,6 +11,9 @@ import {
 } from "../src/integration/registry/moduleRegistry.ts";
 import { validateAndNormalizeObservation } from "../src/integration/validation/moduleObservationValidator.ts";
 import { CommandCenterMockDataSource } from "../src/integration/commandCenter/commandCenterMockDataSource.ts";
+import type { CommandCenterDataSource } from "../src/integration/commandCenter/commandCenterDataSource.ts";
+import { CommandCenterRuntime } from "../src/integration/commandCenter/commandCenterRuntime.ts";
+import type { CommandCenterViewModel } from "../src/integration/commandCenter/commandCenterViewModel.ts";
 
 const now = "2026-08-07T09:30:00.000Z";
 
@@ -282,4 +285,95 @@ assert.equal(integrationModuleRegistry[1].moduleId, "production.demo");
   assert.equal(view.topAttention.every((item) => item.reliability === "stale_last_known_good"), true);
 }
 
-console.log("Integration Backbone baseline tests passed.");
+function deferred<T>() {
+  let resolve!: (value: T) => void;
+  let reject!: (reason?: unknown) => void;
+  const promise = new Promise<T>((resolvePromise, rejectPromise) => {
+    resolve = resolvePromise;
+    reject = rejectPromise;
+  });
+  return { promise, resolve, reject };
+}
+
+// C11 runtime: initial load publishes loading -> ready and owns lifecycle timestamps.
+{
+  const source = new CommandCenterMockDataSource("normal");
+  const runtime = new CommandCenterRuntime(source);
+  const phases: string[] = [];
+  const unsubscribe = runtime.subscribe((state) => phases.push(state.phase));
+
+  assert.equal(runtime.getState().phase, "idle");
+  assert.equal(await runtime.refresh(now), "success");
+  assert.equal(runtime.getState().phase, "ready");
+  assert.equal(runtime.getState().sourceKind, "mock");
+  assert.equal(runtime.getState().lastAttemptAt, now);
+  assert.equal(runtime.getState().lastSuccessfulAt, now);
+  assert.equal(runtime.getState().viewModel?.overallState, "healthy");
+  assert.deepEqual(phases, ["loading", "ready"]);
+  unsubscribe();
+}
+
+// C11 runtime: a failed refresh keeps the previous successful snapshot and timestamp.
+{
+  const first = await new CommandCenterMockDataSource("normal").read(now);
+  const recoveredAt = "2026-08-07T10:15:00.000Z";
+  const recovered = { ...first, generatedAt: recoveredAt };
+  let mode: "first" | "fail" | "recover" = "first";
+  const source: CommandCenterDataSource = {
+    sourceKind: "mock",
+    async read() {
+      if (mode === "fail") throw new Error("synthetic read failure");
+      return mode === "recover" ? recovered : first;
+    },
+  };
+  const runtime = new CommandCenterRuntime(source);
+
+  assert.equal(await runtime.refresh(now), "success");
+  const successfulSnapshot = runtime.getState().viewModel;
+  mode = "fail";
+  const failedAt = "2026-08-07T10:00:00.000Z";
+  assert.equal(await runtime.refresh(failedAt), "error");
+  assert.equal(runtime.getState().phase, "error");
+  assert.equal(runtime.getState().viewModel, successfulSnapshot);
+  assert.equal(runtime.getState().lastSuccessfulAt, now);
+  assert.equal(runtime.getState().lastAttemptAt, failedAt);
+  assert.equal(runtime.getState().error?.code, "READ_FAILED");
+
+  mode = "recover";
+  assert.equal(await runtime.refresh(recoveredAt), "success");
+  assert.equal(runtime.getState().phase, "ready");
+  assert.equal(runtime.getState().error, undefined);
+  assert.equal(runtime.getState().lastSuccessfulAt, recoveredAt);
+  assert.equal(runtime.getState().viewModel?.generatedAt, recoveredAt);
+}
+
+// C11 runtime: a slower older request cannot overwrite a newer successful snapshot.
+{
+  const template = await new CommandCenterMockDataSource("normal").read(now);
+  const olderAt = "2026-08-07T11:00:00.000Z";
+  const newerAt = "2026-08-07T11:05:00.000Z";
+  const older = deferred<CommandCenterViewModel>();
+  const newer = deferred<CommandCenterViewModel>();
+  let readCount = 0;
+  const source: CommandCenterDataSource = {
+    sourceKind: "mock",
+    read() {
+      readCount += 1;
+      return readCount === 1 ? older.promise : newer.promise;
+    },
+  };
+  const runtime = new CommandCenterRuntime(source);
+
+  const olderRefresh = runtime.refresh(olderAt);
+  const newerRefresh = runtime.refresh(newerAt);
+  newer.resolve({ ...template, generatedAt: newerAt });
+  assert.equal(await newerRefresh, "success");
+  assert.equal(runtime.getState().viewModel?.generatedAt, newerAt);
+
+  older.resolve({ ...template, generatedAt: olderAt });
+  assert.equal(await olderRefresh, "superseded");
+  assert.equal(runtime.getState().viewModel?.generatedAt, newerAt);
+  assert.equal(runtime.getState().lastSuccessfulAt, newerAt);
+}
+
+console.log("Integration Backbone baseline and C11 runtime tests passed.");

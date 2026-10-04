@@ -82,7 +82,7 @@ export class CommandCenterRuntime {
         sourceKind: this.dataSource.sourceKind,
         viewModel,
         lastAttemptAt: now,
-        lastSuccessfulAt: viewModel.generatedAt,
+        lastSuccessfulAt: now,
       });
       return "success";
     } catch {

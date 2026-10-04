@@ -313,6 +313,24 @@ function deferred<T>() {
   unsubscribe();
 }
 
+// C11 runtime: successful read time is independent from the snapshot generatedAt.
+{
+  const snapshot = await new CommandCenterMockDataSource("normal").read("2026-08-07T08:00:00.000Z");
+  const source: CommandCenterDataSource = {
+    sourceKind: "mock",
+    async read() {
+      return snapshot;
+    },
+  };
+  const runtime = new CommandCenterRuntime(source);
+  const receivedAt = "2026-08-07T09:45:00.000Z";
+
+  assert.equal(await runtime.refresh(receivedAt), "success");
+  assert.equal(runtime.getState().lastSuccessfulAt, receivedAt);
+  assert.equal(runtime.getState().viewModel?.generatedAt, "2026-08-07T08:00:00.000Z");
+  assert.notEqual(runtime.getState().lastSuccessfulAt, runtime.getState().viewModel?.generatedAt);
+}
+
 // C11 runtime: a failed refresh keeps the previous successful snapshot and timestamp.
 {
   const first = await new CommandCenterMockDataSource("normal").read(now);

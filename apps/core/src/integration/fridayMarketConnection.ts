@@ -31,6 +31,25 @@ export function clearFridayMarketAccessToken() {
   inMemoryAccessToken = null;
 }
 
+export async function verifyFridayMarketBridgeAccess(
+  accessToken: string,
+  endpointOverride?: string,
+) {
+  const endpoint = endpointOverride ?? fridayMarketBridgeEndpoint();
+  const token = accessToken.trim();
+  if (!endpoint || !token) return false;
+
+  const adapter = new HttpModuleAdapter(
+    "finance.friday-market",
+    "http.friday-market.connection-check",
+    endpoint,
+    undefined,
+    () => token,
+  );
+  const result = await adapter.read();
+  return result.kind === "data";
+}
+
 export function fridayMarketDataSourceExtension(): CommandCenterDataSourceExtension | null {
   const endpoint = fridayMarketBridgeEndpoint();
   const authorizeUrl = fridayMarketAuthorizeUrl();
@@ -65,6 +84,7 @@ export function authorizeFridayMarket(): Promise<boolean> {
 
   return new Promise((resolve) => {
     let settled = false;
+    let verifying = false;
     const finish = (value: boolean) => {
       if (settled) return;
       settled = true;
@@ -74,11 +94,23 @@ export function authorizeFridayMarket(): Promise<boolean> {
       resolve(value);
     };
     const onMessage = (event: MessageEvent) => {
-      if (event.origin !== expectedOrigin || event.source !== popup) return;
+      if (event.origin !== expectedOrigin || event.source !== popup || verifying) return;
       const data = event.data as { type?: string; accessToken?: string } | null;
       if (data?.type !== authMessageType || !data.accessToken) return;
-      inMemoryAccessToken = data.accessToken;
-      finish(true);
+
+      const accessToken = data.accessToken;
+      verifying = true;
+      window.clearInterval(closedCheck);
+      void verifyFridayMarketBridgeAccess(accessToken).then((verified) => {
+        if (settled) return;
+        if (!verified) {
+          clearFridayMarketAccessToken();
+          finish(false);
+          return;
+        }
+        inMemoryAccessToken = accessToken;
+        finish(true);
+      });
     };
     window.addEventListener("message", onMessage);
     const closedCheck = window.setInterval(() => {

@@ -129,7 +129,10 @@ export function CommandCenterModuleOverview({ showDevScenarioControls = false }:
     setIsConnectingAccounting(true);
     try {
       const connected = await authorizeFridayMarket();
-      if (!connected) return;
+      if (!connected) {
+        setRefreshError("اتصال حسابداری تأیید نشد؛ داده جمعه‌بازار وارد Core نشد.");
+        return;
+      }
       dataSource.current = createCommandCenterDataSource(activeScenario);
       setAccountingConnected(true);
       await refresh(activeScenario);

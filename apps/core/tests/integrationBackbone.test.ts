@@ -13,6 +13,7 @@ import {
 import { HttpModuleAdapter } from "../src/integration/adapters/httpModuleAdapter.ts";
 import { validateAndNormalizeObservation } from "../src/integration/validation/moduleObservationValidator.ts";
 import { CommandCenterMockDataSource } from "../src/integration/commandCenter/commandCenterMockDataSource.ts";
+import { verifyFridayMarketBridgeAccess } from "../src/integration/fridayMarketConnection.ts";
 
 const now = "2026-08-07T09:30:00.000Z";
 
@@ -383,6 +384,14 @@ assert.equal(integrationModuleRegistry[1].moduleId, "production.demo");
   );
   assert.equal((await authenticated.read()).kind, "data");
   assert.equal(calls, 1);
+}
+
+// Phase 6 E2E: connection is accepted only after a real authenticated adapter read succeeds.
+{
+  const endpoint = "data:application/json,%7B%22ok%22%3Atrue%7D";
+  assert.equal(await verifyFridayMarketBridgeAccess("secure-token", endpoint), true);
+  assert.equal(await verifyFridayMarketBridgeAccess("", endpoint), false);
+  assert.equal(await verifyFridayMarketBridgeAccess("secure-token", "data:text/plain,not-json"), false);
 }
 
 console.log("Integration Backbone baseline tests passed.");

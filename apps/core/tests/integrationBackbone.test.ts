@@ -18,6 +18,12 @@ import type { CommandCenterDataSource } from "../src/integration/commandCenter/c
 import { CommandCenterRuntime } from "../src/integration/commandCenter/commandCenterRuntime.ts";
 import { createCommandCenterRuntimeEnvironment } from "../src/integration/commandCenter/commandCenterRuntimeEnvironment.ts";
 import type { CommandCenterViewModel } from "../src/integration/commandCenter/commandCenterViewModel.ts";
+import {
+  buildProductionOperationsObservation,
+  PRODUCTION_OPERATIONS_SNAPSHOT_VERSION,
+  ProductionOperationsObservationContractError,
+  type SanitizedProductionOperationsSnapshotV1,
+} from "../src/integration/production/productionOperationsObservation.ts";
 
 const now = "2026-08-07T09:30:00.000Z";
 
@@ -632,4 +638,107 @@ function transportAdapters(transport: SanitizedModuleTransport) {
   assert.equal(view.topAttention.length, 0);
 }
 
-console.log("Integration Backbone baseline, C11 runtime, C12 live-gate, C13 transport-adapter and C14 contract-separation tests passed.");
+function productionSnapshot(
+  overrides: Partial<SanitizedProductionOperationsSnapshotV1> = {},
+): SanitizedProductionOperationsSnapshotV1 {
+  return {
+    contractVersion: PRODUCTION_OPERATIONS_SNAPSHOT_VERSION,
+    generatedAt: now,
+    sourceDataUpdatedAt: now,
+    counts: {
+      draft: 2,
+      reservationPending: 1,
+      reserved: 1,
+      released: 1,
+      issuePending: 1,
+      inProgress: 3,
+      awaitingQc: 2,
+      completionPending: 1,
+      completed: 8,
+      cancelled: 1,
+    },
+    ...overrides,
+  };
+}
+
+// C15: exact Production order-state counts map to a valid production.operations ModuleObservation.
+{
+  const observation = buildProductionOperationsObservation(productionSnapshot());
+  const productionEntry: ModuleRegistryEntry = {
+    moduleId: "production.operations",
+    displayName: "عملیات تولید",
+    moduleType: "production",
+    enabled: true,
+    expectedContractMajor: 1,
+    freshnessPolicy: {
+      staleAfterSeconds: 5 * 60,
+      criticalAfterSeconds: 15 * 60,
+      allowedFutureSkewSeconds: 60,
+    },
+    adapterKey: "transport.production.operations",
+  };
+  const validated = validateAndNormalizeObservation(observation, productionEntry, now);
+
+  assert.equal(validated.status, "valid");
+  assert.equal(validated.effectiveState, "healthy");
+  assert.equal(observation.module.sourceSystem, "master-gem-production-center");
+  assert.equal(observation.ownership.businessTruthOwner, "master-gem-production-center");
+  const kpis = Object.fromEntries((observation.kpis ?? []).map((item) => [item.key, item]));
+  assert.equal(kpis.production_open_orders.value, 10);
+  assert.equal(kpis.production_in_progress_orders.value, 3);
+  assert.equal(kpis.production_awaiting_qc_orders.value, 2);
+  assert.equal(kpis.production_awaiting_qc_orders.status, "info");
+  assert.equal(kpis.production_integration_pending_orders.value, 3);
+  assert.equal(kpis.production_integration_pending_orders.status, "info");
+  assert.equal((observation.alerts ?? []).length, 0);
+}
+
+// C15: zero operational counts stay normal and are never turned into synthetic warnings.
+{
+  const snapshot = productionSnapshot({
+    sourceDataUpdatedAt: null,
+    counts: {
+      draft: 0,
+      reservationPending: 0,
+      reserved: 0,
+      released: 0,
+      issuePending: 0,
+      inProgress: 0,
+      awaitingQc: 0,
+      completionPending: 0,
+      completed: 0,
+      cancelled: 0,
+    },
+  });
+  const observation = buildProductionOperationsObservation(snapshot);
+  assert.equal(observation.sourceDataUpdatedAt, undefined);
+  assert.equal(observation.kpis?.every((item) => item.status === "normal"), true);
+  assert.match(observation.summary.text, /بازی ثبت نشده/);
+}
+
+// C15: invalid versions and invalid counts fail closed before ModuleObservation creation.
+{
+  assert.throws(
+    () => buildProductionOperationsObservation({
+      ...productionSnapshot(),
+      contractVersion: "wrong-version" as typeof PRODUCTION_OPERATIONS_SNAPSHOT_VERSION,
+    }),
+    ProductionOperationsObservationContractError,
+  );
+  assert.throws(
+    () => buildProductionOperationsObservation({
+      ...productionSnapshot(),
+      counts: { ...productionSnapshot().counts, awaitingQc: -1 },
+    }),
+    ProductionOperationsObservationContractError,
+  );
+  assert.throws(
+    () => buildProductionOperationsObservation({
+      ...productionSnapshot(),
+      counts: { ...productionSnapshot().counts, inProgress: 1.5 },
+    }),
+    ProductionOperationsObservationContractError,
+  );
+}
+
+console.log("Integration Backbone baseline, C11 runtime, C12 live-gate, C13 transport-adapter, C14 contract-separation and C15 production-observation tests passed.");

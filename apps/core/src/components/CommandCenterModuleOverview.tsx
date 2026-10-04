@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   CommandCenterMockDataSource,
+  createCommandCenterDataSource,
   type CommandCenterMockScenario,
 } from "../integration/commandCenter/commandCenterMockDataSource";
 import type {
@@ -9,6 +10,11 @@ import type {
   CommandCenterModuleSummary,
   CommandCenterViewModel,
 } from "../integration/commandCenter/commandCenterViewModel";
+import {
+  authorizeFridayMarket,
+  fridayMarketBridgeConfigured,
+  getFridayMarketAccessToken,
+} from "../integration/fridayMarketConnection";
 import { CockpitDrawerShell } from "./commandCenter/CockpitDrawerShell";
 import { ProductionRail, WorkforceRail } from "./commandCenter/CockpitModuleRails";
 import { ImportantChanges, VitalStrip } from "./commandCenter/CockpitSignals";
@@ -80,9 +86,13 @@ export function CommandCenterModuleOverview({ showDevScenarioControls = false }:
   const [activeScenario, setActiveScenario] = useState<CommandCenterMockScenario>("healthy");
   const [drawerSelection, setDrawerSelection] = useState<CockpitDrawerSelection>();
   const [showAllMobileAttention, setShowAllMobileAttention] = useState(false);
+  const [accountingConnected, setAccountingConnected] = useState(() => (
+    fridayMarketBridgeConfigured() && Boolean(getFridayMarketAccessToken())
+  ));
+  const [isConnectingAccounting, setIsConnectingAccounting] = useState(false);
   const viewport = useCockpitViewport();
 
-  if (!dataSource.current) dataSource.current = new CommandCenterMockDataSource();
+  if (!dataSource.current) dataSource.current = createCommandCenterDataSource();
 
   const refresh = useCallback(async (scenario: CommandCenterMockScenario) => {
     if (refreshInFlight.current || !dataSource.current) return;
@@ -112,6 +122,20 @@ export function CommandCenterModuleOverview({ showDevScenarioControls = false }:
   const selectScenario = (next: CommandCenterMockScenario) => {
     setActiveScenario(next);
     void refresh(next);
+  };
+
+  const connectAccounting = async () => {
+    if (!fridayMarketBridgeConfigured() || isConnectingAccounting) return;
+    setIsConnectingAccounting(true);
+    try {
+      const connected = await authorizeFridayMarket();
+      if (!connected) return;
+      dataSource.current = createCommandCenterDataSource(activeScenario);
+      setAccountingConnected(true);
+      await refresh(activeScenario);
+    } finally {
+      setIsConnectingAccounting(false);
+    }
   };
 
   const openDrawer = useCallback((selection: CockpitDrawerSelection, trigger: HTMLButtonElement) => {
@@ -257,8 +281,12 @@ export function CommandCenterModuleOverview({ showDevScenarioControls = false }:
   return (
     <div className="command-center">
       <CockpitSystemBar
+        accountingAvailable={fridayMarketBridgeConfigured()}
+        accountingConnected={accountingConnected}
+        isConnectingAccounting={isConnectingAccounting}
         isRefreshing={isRefreshing}
         lastSuccessfulAt={lastSuccessfulAt}
+        onConnectAccounting={() => void connectAccounting()}
         onRefresh={() => void refresh(activeScenario)}
         viewModel={viewModel}
       />

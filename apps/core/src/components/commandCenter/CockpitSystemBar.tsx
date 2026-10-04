@@ -16,13 +16,21 @@ function dataTrust(viewModel: CommandCenterViewModel) {
 }
 
 export function CockpitSystemBar({
+  accountingAvailable = false,
+  accountingConnected = false,
+  isConnectingAccounting = false,
   isRefreshing,
   lastSuccessfulAt,
+  onConnectAccounting,
   onRefresh,
   viewModel,
 }: {
+  accountingAvailable?: boolean;
+  accountingConnected?: boolean;
+  isConnectingAccounting?: boolean;
   isRefreshing: boolean;
   lastSuccessfulAt?: string;
+  onConnectAccounting?: () => void;
   onRefresh: () => void;
   viewModel: CommandCenterViewModel;
 }) {
@@ -52,10 +60,24 @@ export function CockpitSystemBar({
           <dd><strong>{toPersianNumber(viewModel.topAttention.length)}</strong> مورد</dd>
         </div>
       </dl>
-      <button className="system-refresh" disabled={isRefreshing} onClick={onRefresh} type="button">
-        <RefreshCw aria-hidden="true" size={14} strokeWidth={1.5} />
-        {isRefreshing ? "در حال دریافت" : "به‌روزرسانی"}
-      </button>
+      <div className="system-actions">
+        {accountingAvailable && (
+          accountingConnected
+            ? <StatusBadge tone="good">حسابداری متصل</StatusBadge>
+            : <button
+                className="system-refresh"
+                disabled={isConnectingAccounting}
+                onClick={onConnectAccounting}
+                type="button"
+              >
+                {isConnectingAccounting ? "در حال اتصال" : "اتصال حسابداری"}
+              </button>
+        )}
+        <button className="system-refresh" disabled={isRefreshing} onClick={onRefresh} type="button">
+          <RefreshCw aria-hidden="true" size={14} strokeWidth={1.5} />
+          {isRefreshing ? "در حال دریافت" : "به‌روزرسانی"}
+        </button>
+      </div>
     </header>
   );
 }

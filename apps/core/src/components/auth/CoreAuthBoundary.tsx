@@ -14,10 +14,54 @@ import {
   type CoreAuthProviderFactory,
 } from "../../integration/auth/coreAuthProvider";
 import type { CommandCenterRuntimeEnvironment } from "../../integration/commandCenter/commandCenterRuntimeEnvironment";
+import { isManagerLiveRuntime } from "../../integration/auth/managerRuntimeGate";
 
 export interface CoreAuthBoundaryProps {
   authProviderFactory?: CoreAuthProviderFactory;
   runtimeEnvironmentFactory?: () => CommandCenterRuntimeEnvironment;
+}
+
+function AuthenticatedManagerRoute({
+  runtimeEnvironmentFactory,
+  onSignOut,
+}: {
+  runtimeEnvironmentFactory?: () => CommandCenterRuntimeEnvironment;
+  onSignOut: () => void;
+}) {
+  const [environment] = useState(() => {
+    try {
+      return runtimeEnvironmentFactory?.() ?? null;
+    } catch {
+      return null;
+    }
+  });
+
+  if (isManagerLiveRuntime(environment)) {
+    return (
+      <div className="core-shell">
+        <a className="skip-link" href="#cockpit-main">رفتن به محتوای اصلی</a>
+        <CommandCenterModuleOverview runtimeEnvironmentFactory={() => environment!} />
+        <button className="core-auth-session-exit" type="button" onClick={onSignOut}>
+          خروج از نشست
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <main className="core-auth core-auth--gate" id="core-auth-main" dir="rtl">
+      <section className="core-auth-gate" aria-labelledby="core-auth-gate-title">
+        <span className="core-auth-gate__icon" aria-hidden="true"><ShieldCheck size={28} /></span>
+        <span className="core-auth-eyebrow">احراز هویت تأیید شد</span>
+        <h1 id="core-auth-gate-title">مسیر داده مدیریتی هنوز بسته است</h1>
+        <p>
+          هویت کاربر تأیید شده، اما مسیر داده زنده معتبر متصل نشده است.
+          داده آزمایشی در مسیر مدیر نمایش داده نمی‌شود.
+        </p>
+        <button type="button" onClick={onSignOut}>خروج از نشست</button>
+      </section>
+    </main>
+  );
 }
 
 export function CoreAuthBoundary({
@@ -90,30 +134,11 @@ export function CoreAuthBoundary({
   };
 
   if (snapshot.phase === "authenticated") {
-    if (runtimeEnvironmentFactory) {
-      return (
-        <div className="core-shell">
-          <a className="skip-link" href="#cockpit-main">رفتن به محتوای اصلی</a>
-          <CommandCenterModuleOverview runtimeEnvironmentFactory={runtimeEnvironmentFactory} />
-        </div>
-      );
-    }
-
     return (
-      <main className="core-auth core-auth--gate" id="core-auth-main" dir="rtl">
-        <section className="core-auth-gate" aria-labelledby="core-auth-gate-title">
-          <span className="core-auth-gate__icon" aria-hidden="true"><ShieldCheck size={28} /></span>
-          <span className="core-auth-eyebrow">احراز هویت تأیید شد</span>
-          <h1 id="core-auth-gate-title">مسیر داده مدیریتی هنوز بسته است</h1>
-          <p>
-            هویت کاربر تأیید شده، اما مسیر داده زنده هنوز به این بخش متصل نشده است.
-            هیچ داده آزمایشی جای داده واقعی نمایش داده نمی‌شود.
-          </p>
-          <button type="button" onClick={() => void provider.signOut()}>
-            خروج از نشست
-          </button>
-        </section>
-      </main>
+      <AuthenticatedManagerRoute
+        runtimeEnvironmentFactory={runtimeEnvironmentFactory}
+        onSignOut={() => void provider.signOut()}
+      />
     );
   }
 

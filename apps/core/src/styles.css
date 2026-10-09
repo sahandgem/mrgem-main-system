@@ -3172,3 +3172,23 @@ body {
   .core-auth-signal { margin-top: 14px; }
   .core-auth-panel { padding: 32px 20px 36px; }
 }
+
+/* C38 — visible logout control for an explicitly injected manager Live runtime. */
+.core-auth-session-exit {
+  position: fixed;
+  z-index: 150;
+  top: 10px;
+  left: 12px;
+  min-height: 30px;
+  padding: 5px 12px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control, 4px);
+}
+.core-auth-session-exit:hover,
+.core-auth-session-exit:focus-visible {
+  color: var(--text-primary);
+  border-color: var(--border-interactive);
+}

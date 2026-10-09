@@ -31,7 +31,20 @@ export function CoreAuthBoundary({
   const [localMessage, setLocalMessage] = useState<string>();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => provider.subscribe(setSnapshot), [provider]);
+  useEffect(() => {
+    const unsubscribe = provider.subscribe(setSnapshot);
+    let active = true;
+
+    void provider.initialize().catch(() => {
+      if (active) setLocalMessage("راه‌اندازی احراز هویت انجام نشد.");
+    });
+
+    return () => {
+      active = false;
+      unsubscribe();
+      provider.dispose();
+    };
+  }, [provider]);
 
   const canSubmit = useMemo(
     () => snapshot.configured

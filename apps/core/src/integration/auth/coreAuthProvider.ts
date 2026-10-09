@@ -27,9 +27,11 @@ export interface CoreAuthProvider {
   readonly kind: "closed" | "trusted";
   getSnapshot(): CoreAuthSnapshot;
   subscribe(listener: CoreAuthListener): () => void;
+  initialize(): Promise<void>;
   signIn(credentials: CoreAuthCredentials): Promise<CoreAuthSignInOutcome>;
   signOut(): Promise<void>;
   getAccessToken(): Promise<string | null>;
+  dispose(): void;
 }
 
 export type CoreAuthProviderFactory = () => CoreAuthProvider;
@@ -91,6 +93,7 @@ export function createClosedCoreAuthProvider(): CoreAuthProvider {
       listeners.add(listener);
       return () => listeners.delete(listener);
     },
+    async initialize() {},
     async signIn() {
       publish({
         phase: "error",
@@ -112,6 +115,7 @@ export function createClosedCoreAuthProvider(): CoreAuthProvider {
     async getAccessToken() {
       return null;
     },
+    dispose() {},
   });
 }
 

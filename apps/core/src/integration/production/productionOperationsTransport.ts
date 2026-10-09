@@ -3,6 +3,7 @@ import type {
   SanitizedModuleTransport,
   SanitizedModuleTransportResult,
 } from "../transports/sanitizedModuleTransport";
+import { AuthenticatedBffReadError } from "../transports/authenticatedBffRequest";
 import {
   buildProductionOperationsObservation,
   ProductionOperationsObservationContractError,
@@ -44,6 +45,12 @@ export class ProductionOperationsSanitizedTransport implements SanitizedModuleTr
         payload: buildProductionOperationsObservation(snapshot, this.environment),
       };
     } catch (error) {
+      if (error instanceof AuthenticatedBffReadError) {
+        return {
+          kind: "unavailable",
+          category: error.category,
+        };
+      }
       if (error instanceof ProductionOperationsObservationContractError) {
         return {
           kind: "unavailable",

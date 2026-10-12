@@ -1,0 +1,23 @@
+import assert from "node:assert/strict";
+import {HttpModuleAdapter} from "../src/integration/adapters/httpModuleAdapter.ts";
+const response=(body:string,headers:Record<string,string>={})=>new Response(body,{status:200,headers:{"content-type":"application/json",...headers}});
+let token:string|null="synthetic-token-aaaaaaaaaaaaaaaa";
+let release!:(x:Response)=>void,started!:()=>void;
+const ready=new Promise<void>(r=>started=r);
+const pending=new Promise<Response>(r=>release=r);
+const reader=new HttpModuleAdapter("finance.friday-market","http.test","/local",async(_,init)=>{
+ assert.equal(init?.method,"GET");
+ assert.equal(new Headers(init?.headers).get("authorization"),"Bearer synthetic-token-aaaaaaaaaaaaaaaa");
+ started();return pending;
+},()=>token);
+const request=reader.read();await ready;token=null;release(response('{"ok":true}'));
+const stale=await request;assert.equal(stale.kind,"unavailable");
+if(stale.kind==="unavailable")assert.equal(stale.error?.code,"AUTH_CHANGED");
+const html=new HttpModuleAdapter("finance.friday-market","http.test","/local",async()=>new Response("<html>secret</html>",{status:200,headers:{"content-type":"text/html"}}));
+assert.equal((await html.read()).kind,"unavailable");
+const huge=new HttpModuleAdapter("finance.friday-market","http.test","/local",async()=>response("a".repeat(512*1024+1)));
+const oversized=await huge.read();assert.equal(oversized.kind,"unavailable");
+if(oversized.kind==="unavailable")assert.equal(oversized.error?.code,"OVERSIZED_RESPONSE");
+const invalid=new HttpModuleAdapter("finance.friday-market","http.test","/local",async()=>response("{broken"));
+const rejected=await invalid.read();assert.equal(rejected.kind,"unavailable");assert.equal(JSON.stringify(rejected).includes("broken"),false);
+console.log("C65 stale token, bounded JSON, safe HTTP errors PASS");

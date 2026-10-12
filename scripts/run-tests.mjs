@@ -4,7 +4,7 @@ import { join } from "node:path";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const suites = {
-  core: ["integrationBackbone.test.ts", "commandCenterViewModel.test.ts", "coreAuthProvider.test.ts", "supabaseBrowserAuthAdapter.test.ts", "authenticatedBffRequest.test.ts", "managerRuntimeGate.test.ts", "c49SyntheticBuildBoundary.test.ts", "c50AuthSignOutRace.test.ts", "c51BrowserSessionBoundary.test.ts", "c52RuntimeFailureBoundary.test.ts", "c53DataTrustStates.test.ts", "c55OfflineReadiness.test.ts", "c57SecurityReview.test.ts", "c58SyntheticModuleFlow.test.ts", "c59HistoricalInteractionBoundary.test.ts", "c62FridayMarketBridgeMerge.test.ts", "c63MergeOwnership.test.ts", "c64FridayAuthSecurity.test.ts"],
+  core: ["integrationBackbone.test.ts", "commandCenterViewModel.test.ts", "coreAuthProvider.test.ts", "supabaseBrowserAuthAdapter.test.ts", "authenticatedBffRequest.test.ts", "managerRuntimeGate.test.ts", "c49SyntheticBuildBoundary.test.ts", "c50AuthSignOutRace.test.ts", "c51BrowserSessionBoundary.test.ts", "c52RuntimeFailureBoundary.test.ts", "c53DataTrustStates.test.ts", "c55OfflineReadiness.test.ts", "c57SecurityReview.test.ts", "c58SyntheticModuleFlow.test.ts", "c59HistoricalInteractionBoundary.test.ts", "c62FridayMarketBridgeMerge.test.ts", "c63MergeOwnership.test.ts", "c64FridayAuthSecurity.test.ts", "c65SafeHttpBoundary.test.ts"],
   workforce: ["analysis.test.ts"],
 };
 const selected = process.argv[2];

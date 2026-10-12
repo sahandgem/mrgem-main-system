@@ -4,6 +4,14 @@ import type { CommandCenterDataSourceExtension } from "./commandCenter/commandCe
 
 const authMessageType = "master-gem:friday-market-auth";
 let inMemoryAccessToken: string | null = null;
+let tokenExpiresAt = 0;
+let authGeneration = 0;
+const MAX_TOKEN_LENGTH = 8192;
+const TOKEN_LIFETIME_MS = 20 * 60 * 1000;
+
+export function validFridayMarketToken(input: unknown): input is string {
+  return typeof input === "string" && input.length >= 20 && input.length <= MAX_TOKEN_LENGTH && !/\s/.test(input);
+}
 
 type ViteEnv = Record<string, string | undefined>;
 
@@ -24,11 +32,16 @@ export function fridayMarketBridgeConfigured() {
 }
 
 export function getFridayMarketAccessToken() {
+  if (inMemoryAccessToken && Date.now() >= tokenExpiresAt) {
+    clearFridayMarketAccessToken();
+  }
   return inMemoryAccessToken;
 }
 
 export function clearFridayMarketAccessToken() {
+  authGeneration++;
   inMemoryAccessToken = null;
+  tokenExpiresAt = 0;
 }
 
 export async function verifyFridayMarketBridgeAccess(
@@ -36,8 +49,8 @@ export async function verifyFridayMarketBridgeAccess(
   endpointOverride?: string,
 ) {
   const endpoint = endpointOverride ?? fridayMarketBridgeEndpoint();
-  const token = accessToken.trim();
-  if (!endpoint || !token) return false;
+  if (!endpoint || !validFridayMarketToken(accessToken)) return false;
+  const token = accessToken;
 
   const adapter = new HttpModuleAdapter(
     "finance.friday-market",
@@ -77,6 +90,9 @@ export function authorizeFridayMarket(): Promise<boolean> {
   if (!authorizeUrl) return Promise.resolve(false);
 
   const target = new URL(authorizeUrl);
+  // A remote login endpoint must use transport encryption.
+  if (target.protocol !== "https:" && !(target.protocol === "http:" && target.hostname === "localhost")) return Promise.resolve(false);
+  const generation = authGeneration;
   target.searchParams.set("origin", window.location.origin);
   const popup = window.open(target.toString(), "master-gem-friday-market-auth", "width=520,height=640");
   if (!popup) return Promise.resolve(false);
@@ -91,26 +107,27 @@ export function authorizeFridayMarket(): Promise<boolean> {
       window.removeEventListener("message", onMessage);
       window.clearInterval(closedCheck);
       window.clearTimeout(timeout);
+      try { popup.close(); } catch { /* popup may already be closed */ }
       resolve(value);
     };
     const onMessage = (event: MessageEvent) => {
       if (event.origin !== expectedOrigin || event.source !== popup || verifying) return;
       const data = event.data as { type?: string; accessToken?: string } | null;
-      if (data?.type !== authMessageType || !data.accessToken) return;
+      if (data?.type !== authMessageType || !validFridayMarketToken(data.accessToken)) return;
 
       const accessToken = data.accessToken;
       verifying = true;
       window.clearInterval(closedCheck);
       void verifyFridayMarketBridgeAccess(accessToken).then((verified) => {
         if (settled) return;
-        if (!verified) {
-          clearFridayMarketAccessToken();
+        if (!verified || generation !== authGeneration) {
           finish(false);
           return;
         }
         inMemoryAccessToken = accessToken;
+        tokenExpiresAt = Date.now() + TOKEN_LIFETIME_MS;
         finish(true);
-      });
+      }).catch(() => finish(false));
     };
     window.addEventListener("message", onMessage);
     const closedCheck = window.setInterval(() => {

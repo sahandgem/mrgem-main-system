@@ -1,6 +1,6 @@
 import { HttpModuleAdapter } from "./adapters/httpModuleAdapter";
 import { fridayMarketRegistryEntry } from "./registry/moduleRegistry";
-import type { CommandCenterDataSourceExtension } from "./commandCenter/commandCenterMockDataSource";
+import type { CommandCenterDataSourceExtension } from "./commandCenter/commandCenterLiveDataSource";
 
 const authMessageType = "master-gem:friday-market-auth";
 let inMemoryAccessToken: string | null = null;

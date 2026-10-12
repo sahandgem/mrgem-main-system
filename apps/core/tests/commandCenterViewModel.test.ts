@@ -19,6 +19,7 @@ import type {
 } from "@master-gem/module-contracts";
 import {
   buildCommandCenterViewModel,
+  findPrimaryCommandCenterModule,
   rankCommandCenterAttention,
   type CommandCenterAttentionItem,
 } from "../src/integration/commandCenter/commandCenterViewModel.ts";
@@ -363,6 +364,27 @@ function kpi(status: ModuleKpi["status"], key = `kpi-${status}`): ModuleKpi {
   assert.equal(view.modules[0].isExperimental, true);
   assert.equal(view.kpiHighlights[0].isExperimental, true);
   assert.equal(view.topAttention.every((item) => item.isExperimental), true);
+}
+
+// C21: UI module selection is family-based and prefers the non-experimental live Production module.
+{
+  const view = buildCommandCenterViewModel(aggregation([
+    moduleResult({ moduleId: "workforce.demo" }),
+    moduleResult({ moduleId: "production.demo" }),
+    moduleResult({ moduleId: "production.operations" }),
+  ]));
+  assert.equal(findPrimaryCommandCenterModule(view.modules, "workforce")?.moduleId, "workforce.demo");
+  assert.equal(findPrimaryCommandCenterModule(view.modules, "production")?.moduleId, "production.operations");
+  assert.equal(findPrimaryCommandCenterModule(view.modules, "production")?.isExperimental, false);
+}
+
+// C21: mock-only Production remains selected when no live Production module exists.
+{
+  const view = buildCommandCenterViewModel(aggregation([
+    moduleResult({ moduleId: "production.demo" }),
+  ]));
+  assert.equal(findPrimaryCommandCenterModule(view.modules, "production")?.moduleId, "production.demo");
+  assert.equal(findPrimaryCommandCenterModule(view.modules, "production")?.isExperimental, true);
 }
 
 // C3 presentation must preserve unknown/partial counts and original detail.

@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type {
   CommandCenterAttentionItem,
   CommandCenterKpiHighlight,
@@ -36,6 +37,47 @@ function Metric({ label, onOpen, selected, value }: {
       <strong>{value === undefined ? "نامشخص" : toPersianNumber(value)}</strong>
       <span>{label}</span>
     </button>
+  );
+}
+
+function progressValue(value?: string | number) {
+  if (value === undefined) return 0;
+  const normalized = String(value).replace(/[۰-۹]/g, (digit) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(digit)));
+  const parsed = Number.parseFloat(normalized.replace(/[^\d.-]/g, ""));
+  if (!Number.isFinite(parsed)) return 0;
+  return Math.max(0, Math.min(100, parsed));
+}
+
+function RailVisual({
+  label,
+  production,
+  value,
+}: {
+  label: string;
+  production: boolean;
+  value?: string | number;
+}) {
+  const progress = progressValue(value);
+  const style = { "--rail-progress": `${progress}%` } as CSSProperties;
+
+  return (
+    <div className="rail-visual-summary">
+      <div className="rail-gauge" style={style}>
+        <span>
+          <strong>{value === undefined ? "—" : toPersianNumber(value)}</strong>
+          <small>{label}</small>
+        </span>
+      </div>
+      <div className="rail-mini-instrument" aria-hidden="true">
+        <span>{production ? "جریان تولید" : "ریتم برنامه"}</span>
+        <div className="rail-mini-chart">
+          {[36, 58, 42, 74, 62, 86, 70, 92, 78, 64].map((height, index) => (
+            <i key={index} style={{ height: `${height}%` }} />
+          ))}
+        </div>
+        <div className="rail-mini-line"><i /><i /><i /></div>
+      </div>
+    </div>
   );
 }
 
@@ -84,6 +126,13 @@ function ModuleRail({
           {production ? "آزمایشی" : "برنامه هفتگی · نمونه"}
         </span>
       </header>
+
+      <RailVisual
+        label={production ? "تحقق برنامه" : "پوشش برنامه"}
+        production={production}
+        value={production ? plan?.displayValue : coverage?.displayValue}
+      />
+
       <div className="rail-metrics">
         {production ? <>
           <Metric
@@ -125,12 +174,14 @@ function ModuleRail({
           />
         </>}
       </div>
+
       <div className={`rail-trust tone-${toneForReliability(module?.reliability ?? "unknown")}`}>
         <strong>{module ? managerDataStateLabel(module.reliability, module.dataStateLabel) : "داده معتبر موجود نیست"}</strong>
         {module?.hasLastKnownGood ? <span>آخرین داده سالم · {formatDateTime(module.observedAt ?? module.lastSuccessfulAt)}</span>
           : module?.isPartialData ? <span>فقط بخش معتبر · {formatDateTime(module.observedAt)}</span>
             : module?.reliability !== "fresh" && module?.observedAt ? <span>زمان مشاهده · {formatDateTime(module.observedAt)}</span> : null}
       </div>
+
       <div className="rail-exceptions">
         <h3>{production ? "استثناهای نمونه تولید" : "نقاط توجه برنامه"}</h3>
         {visibleExceptions.length ? visibleExceptions.map((item) => (

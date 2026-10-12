@@ -1,0 +1,25 @@
+import assert from "node:assert/strict";
+import { CommandCenterMockDataSource } from "../src/integration/commandCenter/commandCenterMockDataSource.ts";
+import { resolveCockpitDataTrust } from "../src/components/commandCenter/cockpitDataTrust.ts";
+
+const at = "2026-10-12T08:00:00.000Z";
+const normal = await new CommandCenterMockDataSource("normal").read(at);
+assert.deepEqual(resolveCockpitDataTrust(normal), {label:"تازه و معتبر",tone:"good"});
+const partial = await new CommandCenterMockDataSource("partial").read(at);
+assert.equal(resolveCockpitDataTrust(partial).label, "داده ناقص");
+const stale = await new CommandCenterMockDataSource("stale").read(at);
+assert.equal(resolveCockpitDataTrust(stale).label, "داده قدیمی");
+const error = await new CommandCenterMockDataSource("error").read(at);
+assert.equal(resolveCockpitDataTrust(error).tone, "critical");
+assert.deepEqual(resolveCockpitDataTrust(normal, true), {label:"نمای قبلی؛ جاری نیست",tone:"critical"});
+const unknown = {...normal, modules: normal.modules.map(m=>({...m,reliability:"unknown" as const})), managementSummary:{...normal.managementSummary,staleModuleCount:0}};
+assert.deepEqual(resolveCockpitDataTrust(unknown), {label:"اعتبار نامشخص",tone:"empty"});
+const none = {...normal, modules: [], managementSummary:{...normal.managementSummary,staleModuleCount:0}};
+assert.equal(resolveCockpitDataTrust(none).label, "اعتبار نامشخص");
+const empty = {...normal, modules: normal.modules.map(m=>({...m,reliability:"no_data" as const}))};
+assert.equal(resolveCockpitDataTrust(empty).label, "اعتبار نامشخص");
+const degraded = {...normal, modules: normal.modules.map((m,i)=>i===0?{...m,reliability:"degraded" as const}:m)};
+assert.equal(resolveCockpitDataTrust(degraded).label, "داده همراه هشدار");
+const invalid = {...normal, modules: normal.modules.map((m,i)=>i===0?{...m,reliability:"invalid" as const}:m)};
+assert.equal(resolveCockpitDataTrust(invalid).tone, "critical");
+console.log("C53 trust labels distinguish all operational data states.");

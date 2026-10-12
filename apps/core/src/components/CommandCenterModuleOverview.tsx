@@ -1,21 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  CommandCenterMockDataSource,
-  createCommandCenterDataSource,
-  type CommandCenterMockScenario,
-} from "../integration/commandCenter/commandCenterMockDataSource";
-import type {
-  CommandCenterAttentionItem,
-  CommandCenterKpiHighlight,
-  CommandCenterModuleSummary,
-  CommandCenterViewModel,
-} from "../integration/commandCenter/commandCenterViewModel";
+  createCommandCenterRuntimeEnvironment,
+  type CommandCenterDevScenario,
+  type CommandCenterRuntimeEnvironment,
+} from "../integration/commandCenter/commandCenterRuntimeEnvironment";
 import {
-  authorizeFridayMarket,
-  fridayMarketBridgeConfigured,
-  getFridayMarketAccessToken,
-} from "../integration/fridayMarketConnection";
+  findPrimaryCommandCenterModule,
+  type CommandCenterAttentionItem,
+  type CommandCenterKpiHighlight,
+  type CommandCenterModuleSummary,
+} from "../integration/commandCenter/commandCenterViewModel";
 import { CockpitDrawerShell } from "./commandCenter/CockpitDrawerShell";
+import { CockpitMobileNavigation } from "./commandCenter/CockpitMobileNavigation";
 import { ProductionRail, WorkforceRail } from "./commandCenter/CockpitModuleRails";
 import { ImportantChanges, VitalStrip } from "./commandCenter/CockpitSignals";
 import { CockpitSystemBar } from "./commandCenter/CockpitSystemBar";
@@ -74,72 +70,78 @@ const scenarioOptions: readonly ScenarioOption[] = [
   },
 ];
 
-export function CommandCenterModuleOverview({ showDevScenarioControls = false }: { showDevScenarioControls?: boolean }) {
-  const dataSource = useRef<CommandCenterMockDataSource | null>(null);
-  const refreshInFlight = useRef(false);
+export interface CommandCenterModuleOverviewProps {
+  showDevScenarioControls?: boolean;
+  runtimeEnvironmentFactory?: () => CommandCenterRuntimeEnvironment;
+}
+
+export function CommandCenterModuleOverview({
+  showDevScenarioControls = false,
+  runtimeEnvironmentFactory = createCommandCenterRuntimeEnvironment,
+}: CommandCenterModuleOverviewProps) {
+  const [runtimeEnvironment] = useState(runtimeEnvironmentFactory);
+  const runtime = runtimeEnvironment.runtime;
   const drawerTrigger = useRef<HTMLButtonElement | null>(null);
   const drawerTitleShowsFocus = useRef(false);
-  const [viewModel, setViewModel] = useState<CommandCenterViewModel>();
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [refreshError, setRefreshError] = useState<string>();
-  const [lastSuccessfulAt, setLastSuccessfulAt] = useState<string>();
-  const [activeScenario, setActiveScenario] = useState<CommandCenterMockScenario>("healthy");
+  const [runtimeState, setRuntimeState] = useState(runtime.getState());
+  const [activeScenario, setActiveScenario] = useState<CommandCenterDevScenario>("healthy");
   const [drawerSelection, setDrawerSelection] = useState<CockpitDrawerSelection>();
   const [showAllMobileAttention, setShowAllMobileAttention] = useState(false);
-  const [accountingConnected, setAccountingConnected] = useState(() => (
-    fridayMarketBridgeConfigured() && Boolean(getFridayMarketAccessToken())
-  ));
+  // The default development Mock and unconfigured manager route expose no bridge.
+  const bridge = runtimeEnvironment.sourceMode === "live" ? runtimeEnvironment.fridayMarket : undefined;
+  const [accountingConnected, setAccountingConnected] = useState(() => bridge?.connected() ?? false);
   const [isConnectingAccounting, setIsConnectingAccounting] = useState(false);
+  const [accountingError, setAccountingError] = useState<string>();
   const viewport = useCockpitViewport();
 
-  if (!dataSource.current) dataSource.current = createCommandCenterDataSource();
-
-  const refresh = useCallback(async (scenario: CommandCenterMockScenario) => {
-    if (refreshInFlight.current || !dataSource.current) return;
-    refreshInFlight.current = true;
-    setIsRefreshing(true);
-    setRefreshError(undefined);
-    try {
-      dataSource.current.setScenario(scenario);
-      const next = await dataSource.current.read();
-      setViewModel(next);
-      setLastSuccessfulAt(next.generatedAt);
-      setShowAllMobileAttention(false);
-      setDrawerSelection((current) => reduceCockpitDrawer(current, { type: "close" }));
+  const refresh = useCallback(async () => {
+    const outcome = await runtime.refresh();
+    if (outcome === "error") {
+      setDrawerSelection(undefined);
       drawerTrigger.current = null;
-    } catch {
-      setRefreshError("به‌روزرسانی نمای مدیریتی انجام نشد. لطفاً دوباره تلاش کنید.");
-    } finally {
-      refreshInFlight.current = false;
-      setIsRefreshing(false);
+      return;
     }
-  }, []);
+    if (outcome !== "success") return;
+    setShowAllMobileAttention(false);
+    setDrawerSelection((current) => reduceCockpitDrawer(current, { type: "close" }));
+    drawerTrigger.current = null;
+  }, [runtime]);
 
-  useEffect(() => {
-    void refresh("healthy");
-  }, [refresh]);
-
-  const selectScenario = (next: CommandCenterMockScenario) => {
-    setActiveScenario(next);
-    void refresh(next);
-  };
-
-  const connectAccounting = async () => {
-    if (!fridayMarketBridgeConfigured() || isConnectingAccounting) return;
+  const connectAccounting = useCallback(async () => {
+    if (!bridge?.available() || isConnectingAccounting || accountingConnected) return;
     setIsConnectingAccounting(true);
+    setAccountingError(undefined);
     try {
-      const connected = await authorizeFridayMarket();
-      if (!connected) {
-        setRefreshError("اتصال حسابداری تأیید نشد؛ داده جمعه‌بازار وارد Core نشد.");
+      if (!await bridge.connect()) {
+        setAccountingError("اتصال حسابداری تأیید نشد؛ داده جمعه‌بازار وارد هسته نشد.");
         return;
       }
-      dataSource.current = createCommandCenterDataSource(activeScenario);
       setAccountingConnected(true);
-      await refresh(activeScenario);
+      await refresh();
+    } catch {
+      setAccountingError("اتصال حسابداری انجام نشد؛ لطفاً دوباره تلاش کنید.");
     } finally {
       setIsConnectingAccounting(false);
     }
+  }, [accountingConnected, bridge, isConnectingAccounting, refresh]);
+
+  useEffect(() => runtime.subscribe(setRuntimeState), [runtime]);
+
+  useEffect(() => {
+    if (runtime.getState().phase === "idle") void refresh();
+  }, [refresh, runtime]);
+
+  const selectScenario = (next: CommandCenterDevScenario) => {
+    setActiveScenario(next);
+    runtimeEnvironment.setDevScenario?.(next);
+    void refresh();
   };
+
+  const viewModel = runtimeState.viewModel;
+  const isRefreshing = runtimeState.phase === "loading" || runtimeState.phase === "refreshing";
+  const refreshError = runtimeState.error?.message;
+  const isHistorical = Boolean(runtimeState.viewModel && runtimeState.error);
+  const lastSuccessfulAt = runtimeState.lastSuccessfulAt;
 
   const openDrawer = useCallback((selection: CockpitDrawerSelection, trigger: HTMLButtonElement) => {
     drawerTrigger.current = trigger;
@@ -169,14 +171,17 @@ export function CommandCenterModuleOverview({ showDevScenarioControls = false }:
   if (!viewModel) {
     return (
       <main className="cockpit-loading" id="cockpit-main">
-        <strong>در حال ساخت نمای مدیریتی از داده آزمایشی...</strong>
-        {refreshError && <span role="alert">{refreshError}</span>}
+        <strong>{refreshError ? "داده مدیریتی در دسترس نیست" : runtimeEnvironment.sourceMode === "live" ? "در حال ساخت نمای مدیریتی از داده فقط‌خواندنی..." : "در حال ساخت نمای مدیریتی از داده آزمایشی..."}</strong>
+        {refreshError && <span role="alert">{refreshError} داده آزمایشی جایگزین داده واقعی نمی‌شود.</span>}
+        {refreshError && <button type="button" onClick={() => void refresh()}>تلاش مجدد</button>}
+        {bridge?.available() && !accountingConnected && <button type="button" disabled={isConnectingAccounting || isRefreshing} onClick={() => void connectAccounting()}>{isConnectingAccounting ? "در حال اتصال" : "اتصال حسابداری"}</button>}
+        {accountingError && <span role="alert">{accountingError}</span>}
       </main>
     );
   }
 
-  const workforce = viewModel.modules.find((item) => item.moduleId === "workforce.demo");
-  const production = viewModel.modules.find((item) => item.moduleId === "production.demo");
+  const workforce = findPrimaryCommandCenterModule(viewModel.modules, "workforce");
+  const production = findPrimaryCommandCenterModule(viewModel.modules, "production");
   const selectedKey = drawerSelection ? drawerSelectionKey(drawerSelection) : undefined;
   const mobileAttentionCount = viewport === "mobile" && !showAllMobileAttention
     ? Math.min(3, viewModel.topAttention.length)
@@ -280,23 +285,31 @@ export function CommandCenterModuleOverview({ showDevScenarioControls = false }:
   const content = viewport === "desktop"
     ? [summary, attention, commitments, workforceRail, productionRail, changes, vital]
     : [attention, vital, workforceRail, productionRail, changes, commitments];
+  const visualState = viewModel.reliability.failedModuleCount || viewModel.overallState === "critical"
+    ? "critical"
+    : viewModel.reliability.hasPartialData || viewModel.managementSummary.staleModuleCount || viewModel.overallState === "attention"
+      ? "attention"
+      : viewModel.overallState === "healthy"
+        ? "healthy"
+        : "unknown";
 
   return (
-    <div className="command-center">
+    <div className={`command-center command-center--${visualState}`}>
       <CockpitSystemBar
-        accountingAvailable={fridayMarketBridgeConfigured()}
+        accountingAvailable={Boolean(bridge?.available())}
         accountingConnected={accountingConnected}
         isConnectingAccounting={isConnectingAccounting}
+        onConnectAccounting={() => void connectAccounting()}
+        isHistorical={isHistorical}
         isRefreshing={isRefreshing}
         lastSuccessfulAt={lastSuccessfulAt}
-        onConnectAccounting={() => void connectAccounting()}
-        onRefresh={() => void refresh(activeScenario)}
+        onRefresh={() => void refresh()}
         viewModel={viewModel}
       />
 
-      {refreshError && <div className="cockpit-system-message" role="alert">{refreshError} آخرین نمای موفق حفظ شده است.</div>}
+      {(refreshError || accountingError) && <div className="cockpit-system-message" role="alert">{refreshError ? `${refreshError} آخرین نمای موفق فقط برای مراجعه تاریخی نمایش داده می‌شود و داده جاری نیست.` : accountingError}</div>}
 
-      <main className="cockpit-stage" id="cockpit-main">
+      <main className="cockpit-stage" id="cockpit-main" inert={isHistorical} aria-label={isHistorical ? "نمای قبلی، فقط برای مراجعه تاریخی" : undefined}>
         {content}
       </main>
 
@@ -306,6 +319,7 @@ export function CommandCenterModuleOverview({ showDevScenarioControls = false }:
         selection={drawerSelection}
         showInitialFocusRing={drawerTitleShowsFocus.current}
       />
+      {viewport === "mobile" && <CockpitMobileNavigation />}
       {showDevScenarioControls && <CommandCenterMockControls
         activeScenario={activeScenario}
         disabled={isRefreshing}

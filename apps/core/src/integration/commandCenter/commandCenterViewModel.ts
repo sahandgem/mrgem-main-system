@@ -106,7 +106,7 @@ export interface CommandCenterReliabilitySummary {
 export interface CommandCenterViewModel {
   generatedAt: string;
   sourceSchemaVersion: "integration-contract-v1";
-  dataLabel: "DEMO/MOCK";
+  dataLabel: "DEMO/MOCK" | "LIVE/READ-ONLY";
   overallState: CommandCenterOverallState;
   managementSummary: CommandCenterManagementSummary;
   reliability: CommandCenterReliabilitySummary;
@@ -116,6 +116,7 @@ export interface CommandCenterViewModel {
 }
 
 export interface CommandCenterViewModelOptions {
+  dataLabel?: CommandCenterViewModel["dataLabel"];
   allowedDrillDownRefs?: ReadonlySet<string>;
   moduleDetailRoutes?: Readonly<Record<string, string>>;
   maxAttentionItems?: number;
@@ -232,6 +233,17 @@ function modulePresentationFor(moduleId: string) {
     destinationLabel: "جزئیات ماژول",
     isExperimental: false,
   };
+}
+
+export type CommandCenterModuleFamily = "workforce" | "production";
+
+export function findPrimaryCommandCenterModule(
+  modules: readonly CommandCenterModuleSummary[],
+  family: CommandCenterModuleFamily,
+) {
+  const prefix = `${family}.`;
+  const candidates = modules.filter((item) => item.moduleId === family || item.moduleId.startsWith(prefix));
+  return candidates.find((item) => !item.isExperimental) ?? candidates[0];
 }
 
 function compareText(left: string, right: string) {
@@ -565,7 +577,7 @@ export function buildCommandCenterViewModel(
   return {
     generatedAt: aggregation.generatedAt,
     sourceSchemaVersion: "integration-contract-v1",
-    dataLabel: "DEMO/MOCK",
+    dataLabel: options.dataLabel ?? "DEMO/MOCK",
     overallState,
     managementSummary: {
       enabledModuleCount: enabled.length,

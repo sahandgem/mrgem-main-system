@@ -134,6 +134,10 @@ export function createSupabaseBrowserAuthAdapter(
   let initialized = false;
   let disposed = false;
   let initializationSequence = 0;
+  // A user-initiated sign-out invalidates in-flight session restores and sign-ins.
+  let authGeneration = 0;
+  let localSignOutBarrier = false;
+  let signOutPending = false;
 
   const publish = (next: CoreAuthSnapshot) => {
     snapshot = Object.freeze(next);
@@ -164,6 +168,8 @@ export function createSupabaseBrowserAuthAdapter(
       clearSession();
       return;
     }
+    // Late SDK callbacks must not reopen a locally signed-out manager route.
+    if (localSignOutBarrier || signOutPending || snapshot.phase === "authenticating") return;
     adoptSession(session);
   };
 
@@ -182,6 +188,7 @@ export function createSupabaseBrowserAuthAdapter(
     async initialize() {
       if (initialized) return;
       const sequence = ++initializationSequence;
+      const generation = authGeneration;
       disposed = false;
       initialized = true;
 
@@ -196,14 +203,14 @@ export function createSupabaseBrowserAuthAdapter(
         subscription = nextSubscription;
 
         const result = await client.auth.getSession();
-        if (sequence !== initializationSequence || disposed) return;
+        if (sequence !== initializationSequence || disposed || generation !== authGeneration || localSignOutBarrier) return;
         if (result?.error) {
           clearSession(AUTH_UNAVAILABLE_MESSAGE);
           return;
         }
         adoptSession(result?.data?.session ?? null);
       } catch {
-        if (sequence !== initializationSequence || disposed) return;
+        if (sequence !== initializationSequence || disposed || generation !== authGeneration || localSignOutBarrier) return;
         initialized = false;
         subscription?.unsubscribe();
         subscription = null;
@@ -212,7 +219,7 @@ export function createSupabaseBrowserAuthAdapter(
     },
 
     async signIn(credentials: CoreAuthCredentials) {
-      if (disposed) {
+      if (disposed || signOutPending) {
         return {
           status: "unavailable" as const,
           message: AUTH_UNAVAILABLE_MESSAGE,
@@ -229,10 +236,15 @@ export function createSupabaseBrowserAuthAdapter(
         };
       }
 
+      localSignOutBarrier = false;
+      const generation = ++authGeneration;
       publish(configuredSnapshot("authenticating", { email }));
 
       try {
         const result = await client.auth.signInWithPassword({ email, password });
+        if (generation !== authGeneration || disposed || localSignOutBarrier) {
+          return { status: "unavailable" as const, message: AUTH_UNAVAILABLE_MESSAGE };
+        }
         if (result?.error) {
           clearSession(SIGN_IN_REJECTED_MESSAGE);
           return {
@@ -252,7 +264,9 @@ export function createSupabaseBrowserAuthAdapter(
 
         return { status: "authenticated" as const };
       } catch {
-        clearSession(AUTH_UNAVAILABLE_MESSAGE);
+        if (generation === authGeneration && !disposed && !localSignOutBarrier) {
+          clearSession(AUTH_UNAVAILABLE_MESSAGE);
+        }
         return {
           status: "unavailable" as const,
           message: AUTH_UNAVAILABLE_MESSAGE,
@@ -261,25 +275,33 @@ export function createSupabaseBrowserAuthAdapter(
     },
 
     async signOut() {
+      if (signOutPending) return;
+      authGeneration += 1;
+      localSignOutBarrier = true;
+      signOutPending = true;
       accessToken = null;
       publish(configuredSnapshot("unauthenticated"));
 
       try {
         const result = await client.auth.signOut({ scope: "local" });
-        if (result?.error) {
+        if (result?.error && !disposed) {
           publish(configuredSnapshot("error", {
             message: "خروج سمت سرور کامل نشد؛ برای ادامه دوباره وارد شوید.",
           }));
         }
       } catch {
-        publish(configuredSnapshot("error", {
-          message: "خروج سمت سرور کامل نشد؛ برای ادامه دوباره وارد شوید.",
-        }));
+        if (!disposed) {
+          publish(configuredSnapshot("error", {
+            message: "خروج سمت سرور کامل نشد؛ برای ادامه دوباره وارد شوید.",
+          }));
+        }
+      } finally {
+        signOutPending = false;
       }
     },
 
     async getAccessToken() {
-      return snapshot.phase === "authenticated" ? accessToken : null;
+      return !disposed && !localSignOutBarrier && snapshot.phase === "authenticated" ? accessToken : null;
     },
 
     dispose() {
@@ -287,6 +309,7 @@ export function createSupabaseBrowserAuthAdapter(
       disposed = true;
       initialized = false;
       initializationSequence += 1;
+      authGeneration += 1;
       accessToken = null;
       subscription?.unsubscribe();
       subscription = null;

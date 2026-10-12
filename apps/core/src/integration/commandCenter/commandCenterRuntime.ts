@@ -70,7 +70,8 @@ export class CommandCenterRuntime {
       ...this.state,
       phase: hasSnapshot ? "refreshing" : "loading",
       lastAttemptAt: now,
-      error: undefined,
+      // Keep the historical-data warning visible until a successful read.
+      error: hasSnapshot && this.state.phase === "error" ? this.state.error : undefined,
     });
 
     try {

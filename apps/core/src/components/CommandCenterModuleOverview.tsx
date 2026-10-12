@@ -91,6 +91,11 @@ export function CommandCenterModuleOverview({
 
   const refresh = useCallback(async () => {
     const outcome = await runtime.refresh();
+    if (outcome === "error") {
+      setDrawerSelection(undefined);
+      drawerTrigger.current = null;
+      return;
+    }
     if (outcome !== "success") return;
     setShowAllMobileAttention(false);
     setDrawerSelection((current) => reduceCockpitDrawer(current, { type: "close" }));
@@ -112,6 +117,7 @@ export function CommandCenterModuleOverview({
   const viewModel = runtimeState.viewModel;
   const isRefreshing = runtimeState.phase === "loading" || runtimeState.phase === "refreshing";
   const refreshError = runtimeState.error?.message;
+  const isHistorical = Boolean(runtimeState.viewModel && runtimeState.error);
   const lastSuccessfulAt = runtimeState.lastSuccessfulAt;
 
   const openDrawer = useCallback((selection: CockpitDrawerSelection, trigger: HTMLButtonElement) => {
@@ -265,7 +271,7 @@ export function CommandCenterModuleOverview({
   return (
     <div className={`command-center command-center--${visualState}`}>
       <CockpitSystemBar
-        isHistorical={runtimeState.phase === "error"}
+        isHistorical={isHistorical}
         isRefreshing={isRefreshing}
         lastSuccessfulAt={lastSuccessfulAt}
         onRefresh={() => void refresh()}
@@ -274,7 +280,7 @@ export function CommandCenterModuleOverview({
 
       {refreshError && <div className="cockpit-system-message" role="alert">{refreshError} آخرین نمای موفق فقط برای مراجعه تاریخی نمایش داده می‌شود و داده جاری نیست.</div>}
 
-      <main className="cockpit-stage" id="cockpit-main">
+      <main className="cockpit-stage" id="cockpit-main" inert={isHistorical} aria-label={isHistorical ? "نمای قبلی، فقط برای مراجعه تاریخی" : undefined}>
         {content}
       </main>
 

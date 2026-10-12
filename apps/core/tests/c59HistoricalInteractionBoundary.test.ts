@@ -1,0 +1,40 @@
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+import {fileURLToPath} from "node:url";
+import {CommandCenterRuntime} from "../src/integration/commandCenter/commandCenterRuntime.ts";
+import {CommandCenterMockDataSource} from "../src/integration/commandCenter/commandCenterMockDataSource.ts";
+import type {CommandCenterViewModel} from "../src/integration/commandCenter/commandCenterViewModel.ts";
+
+const t1="2026-10-12T09:00:00.000Z";
+const t2="2026-10-12T09:03:00.000Z";
+const t3="2026-10-12T09:05:00.000Z";
+const baseline=await new CommandCenterMockDataSource("normal").read(t1);
+let reply!:(v:CommandCenterViewModel)=>void;
+let invocation=0;
+const source={sourceKind:"mock" as const,read:async()=>{
+ invocation++;
+ if(invocation===1)return baseline;
+ if(invocation===2)throw Error("C59_SYNTHETIC_OUTAGE");
+ return new Promise<CommandCenterViewModel>(resolve=>{reply=resolve;});
+}};
+const runtime=new CommandCenterRuntime(source);
+assert.equal(await runtime.refresh(t1),"success");
+assert.equal(await runtime.refresh(t2),"error");
+assert.equal(runtime.getState().phase,"error");
+const retry=runtime.refresh(t3);
+assert.equal(runtime.getState().phase,"refreshing");
+assert.equal(runtime.getState().viewModel,baseline);
+assert.equal(runtime.getState().lastSuccessfulAt,t1);
+assert.equal(runtime.getState().error?.code,"READ_FAILED","historical warning is not removed while retrying");
+reply({...baseline,generatedAt:t3});
+assert.equal(await retry,"success");
+assert.equal(runtime.getState().error,undefined);
+assert.equal(runtime.getState().lastSuccessfulAt,t3);
+
+const file=fileURLToPath(new URL("../src/components/CommandCenterModuleOverview.tsx",import.meta.url));
+const ui=readFileSync(file,"utf8");
+assert.match(ui,/inert=\{isHistorical\}/);
+assert.match(ui,/isHistorical=\{isHistorical\}/);
+assert.match(ui,/setDrawerSelection\(undefined\)/);
+assert.match(ui,/aria-label=\{isHistorical\s*\?/);
+console.log("C59 historical fallback remains labelled and noninteractive while reconnecting.");

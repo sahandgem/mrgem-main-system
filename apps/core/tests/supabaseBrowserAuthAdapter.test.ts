@@ -17,7 +17,7 @@ function session(
 ): SupabaseAuthSessionLike {
   return {
     access_token: accessToken,
-    expires_at: 1791534000,
+    expires_at: Math.floor(Date.now() / 1000) + 3600,
     user: {
       id: "2dcf9f1f-0418-4af3-9509-a11dfd273001",
       email,

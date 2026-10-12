@@ -76,7 +76,11 @@ function cleanEmail(value: unknown): string | undefined {
 
 function accessTokenFromSession(session: SupabaseAuthSessionLike | null | undefined): string | null {
   const token = typeof session?.access_token === "string" ? session.access_token.trim() : "";
-  return token.length >= 20 && token.length <= 16384 ? token : null;
+  if (token.length < 20 || token.length > 16384) return null;
+  // A browser may still hold a syntactically valid but expired session.
+  const expiresAt = session?.expires_at;
+  if (expiresAt !== undefined && (!Number.isSafeInteger(expiresAt) || expiresAt <= Date.now() / 1000)) return null;
+  return token;
 }
 
 function configuredSnapshot(
@@ -165,6 +169,8 @@ export function createSupabaseBrowserAuthAdapter(
   const authStateChanged = (event: string, session: SupabaseAuthSessionLike | null) => {
     if (disposed) return;
     if (event === "SIGNED_OUT" || !session) {
+      authGeneration += 1;
+      localSignOutBarrier = true;
       clearSession();
       return;
     }

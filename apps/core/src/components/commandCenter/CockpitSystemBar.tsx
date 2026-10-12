@@ -1,6 +1,7 @@
 import { Gem, RefreshCw } from "lucide-react";
 import type { CommandCenterViewModel } from "../../integration/commandCenter/commandCenterViewModel";
 import { StatusBadge } from "../StatusBadge";
+import { resolveCockpitDataTrust } from "./cockpitDataTrust";
 import {
   formatDateTime,
   overallStateLabel,
@@ -8,25 +9,20 @@ import {
   toneForOverallState,
 } from "./presentation";
 
-function dataTrust(viewModel: CommandCenterViewModel) {
-  if (viewModel.reliability.failedModuleCount) return { label: "خطای داده", tone: "critical" as const };
-  if (viewModel.reliability.hasPartialData) return { label: "داده ناقص", tone: "warn" as const };
-  if (viewModel.managementSummary.staleModuleCount) return { label: "داده قدیمی", tone: "warn" as const };
-  return { label: "تازه و معتبر", tone: "good" as const };
-}
-
 export function CockpitSystemBar({
   isRefreshing,
+  isHistorical,
   lastSuccessfulAt,
   onRefresh,
   viewModel,
 }: {
   isRefreshing: boolean;
+  isHistorical?: boolean;
   lastSuccessfulAt?: string;
   onRefresh: () => void;
   viewModel: CommandCenterViewModel;
 }) {
-  const trust = dataTrust(viewModel);
+  const trust = resolveCockpitDataTrust(viewModel, isHistorical);
 
   return (
     <header className="cockpit-system-bar">

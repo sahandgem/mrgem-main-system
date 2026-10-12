@@ -265,6 +265,7 @@ export function CommandCenterModuleOverview({
   return (
     <div className={`command-center command-center--${visualState}`}>
       <CockpitSystemBar
+        isHistorical={runtimeState.phase === "error"}
         isRefreshing={isRefreshing}
         lastSuccessfulAt={lastSuccessfulAt}
         onRefresh={() => void refresh()}

@@ -102,13 +102,23 @@ export function createAuthenticatedBffJsonReader(
       }
 
       const statusCode = Number(response?.statusCode);
-      if (statusCode === 200) return response.body;
+      if (statusCode === 200) {
+        // Responses that arrive after logout or token rotation are not current data.
+        let currentToken: string | null;
+        try {
+          currentToken = await options.authProvider.getAccessToken();
+        } catch {
+          throw new AuthenticatedBffReadError("unauthorized");
+        }
+        if (currentToken !== token) throw new AuthenticatedBffReadError("unauthorized");
+        return response.body;
+      }
 
       if (statusCode === 401) {
         try {
           // Do not revoke a newer session because an old in-flight request got a 401.
           const currentToken = await options.authProvider.getAccessToken();
-          if (currentToken === token || currentToken === null) {
+          if (currentToken === token) {
             await options.authProvider.signOut();
           }
         } catch {

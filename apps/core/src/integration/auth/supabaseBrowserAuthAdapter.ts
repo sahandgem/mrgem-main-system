@@ -134,6 +134,7 @@ export function createSupabaseBrowserAuthAdapter(
   const listeners = new Set<CoreAuthListener>();
   let snapshot: CoreAuthSnapshot = configuredSnapshot("unauthenticated");
   let accessToken: string | null = null;
+  let accessTokenExpiresAt: number | undefined;
   let subscription: SupabaseAuthSubscriptionLike | null = null;
   let initialized = false;
   let disposed = false;
@@ -150,6 +151,7 @@ export function createSupabaseBrowserAuthAdapter(
 
   const clearSession = (message?: string) => {
     accessToken = null;
+    accessTokenExpiresAt = undefined;
     publish(configuredSnapshot(message ? "error" : "unauthenticated", { message }));
   };
 
@@ -160,6 +162,7 @@ export function createSupabaseBrowserAuthAdapter(
       return false;
     }
     accessToken = token;
+    accessTokenExpiresAt = session?.expires_at;
     publish(configuredSnapshot("authenticated", {
       email: cleanEmail(session?.user?.email),
     }));
@@ -168,6 +171,7 @@ export function createSupabaseBrowserAuthAdapter(
 
   const authStateChanged = (event: string, session: SupabaseAuthSessionLike | null) => {
     if (disposed) return;
+    if (event !== "SIGNED_OUT" && event !== "INITIAL_SESSION" && event !== "SIGNED_IN" && event !== "TOKEN_REFRESHED") return;
     if (event === "SIGNED_OUT" || !session) {
       authGeneration += 1;
       localSignOutBarrier = true;
@@ -252,6 +256,7 @@ export function createSupabaseBrowserAuthAdapter(
           return { status: "unavailable" as const, message: AUTH_UNAVAILABLE_MESSAGE };
         }
         if (result?.error) {
+          localSignOutBarrier = true;
           clearSession(SIGN_IN_REJECTED_MESSAGE);
           return {
             status: "rejected" as const,
@@ -261,6 +266,7 @@ export function createSupabaseBrowserAuthAdapter(
 
         const session = result?.data?.session ?? null;
         if (!adoptSession(session)) {
+          localSignOutBarrier = true;
           clearSession(AUTH_UNAVAILABLE_MESSAGE);
           return {
             status: "unavailable" as const,
@@ -271,6 +277,7 @@ export function createSupabaseBrowserAuthAdapter(
         return { status: "authenticated" as const };
       } catch {
         if (generation === authGeneration && !disposed && !localSignOutBarrier) {
+          localSignOutBarrier = true;
           clearSession(AUTH_UNAVAILABLE_MESSAGE);
         }
         return {
@@ -286,6 +293,7 @@ export function createSupabaseBrowserAuthAdapter(
       localSignOutBarrier = true;
       signOutPending = true;
       accessToken = null;
+      accessTokenExpiresAt = undefined;
       publish(configuredSnapshot("unauthenticated"));
 
       try {
@@ -307,7 +315,12 @@ export function createSupabaseBrowserAuthAdapter(
     },
 
     async getAccessToken() {
-      return !disposed && !localSignOutBarrier && snapshot.phase === "authenticated" ? accessToken : null;
+      if (disposed || localSignOutBarrier || snapshot.phase !== "authenticated") return null;
+      if (accessTokenExpiresAt !== undefined && accessTokenExpiresAt <= Date.now() / 1000) {
+        clearSession();
+        return null;
+      }
+      return accessToken;
     },
 
     dispose() {
@@ -317,6 +330,7 @@ export function createSupabaseBrowserAuthAdapter(
       initializationSequence += 1;
       authGeneration += 1;
       accessToken = null;
+      accessTokenExpiresAt = undefined;
       subscription?.unsubscribe();
       subscription = null;
       listeners.clear();

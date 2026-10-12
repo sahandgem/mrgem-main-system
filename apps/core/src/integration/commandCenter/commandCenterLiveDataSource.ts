@@ -46,6 +46,16 @@ export class CommandCenterLiveDataSource implements CommandCenterDataSource {
     if (!this.enabled) throw new CommandCenterLiveGateClosedError();
 
     const extension = this.extension?.() ?? null;
+    if (extension) {
+      const ids = new Set(this.registry.map(item => item.moduleId));
+      const keys = new Set(this.registry.map(item => item.adapterKey));
+      for (const entry of extension.entries) {
+        if (ids.has(entry.moduleId) || keys.has(entry.adapterKey)) throw new Error("DUPLICATE_MODULE_EXTENSION");
+        ids.add(entry.moduleId);
+        keys.add(entry.adapterKey);
+        if (!extension.adapters[entry.adapterKey]) throw new Error("MISSING_MODULE_ADAPTER");
+      }
+    }
     const entries = extension ? [...this.registry, ...extension.entries] : this.registry;
     // Base adapters cannot be replaced by the optional extension.
     const adapters = extension ? { ...extension.adapters, ...this.adapters } : this.adapters;

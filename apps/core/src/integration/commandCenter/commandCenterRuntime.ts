@@ -50,6 +50,12 @@ export class CommandCenterRuntime {
 
   getState = () => this.state;
 
+  /** Invalidates inflight responses and erases the prior snapshot after access loss. */
+  invalidate() {
+    this.requestSequence += 1;
+    this.publish({phase: "idle", sourceKind: this.dataSource.sourceKind});
+  }
+
   subscribe = (listener: CommandCenterRuntimeListener) => {
     this.listeners.add(listener);
     return () => {

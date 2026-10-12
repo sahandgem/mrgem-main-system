@@ -1,0 +1,16 @@
+import assert from "node:assert/strict";
+import {CommandCenterRuntime} from "../src/integration/commandCenter/commandCenterRuntime.ts";
+import {CommandCenterMockDataSource} from "../src/integration/commandCenter/commandCenterMockDataSource.ts";
+const view=await new CommandCenterMockDataSource().read("2026-10-12T09:00:00.000Z");
+let finish!:(value:typeof view)=>void;
+const pending=new Promise<typeof view>(r=>{finish=r;});
+const runtime=new CommandCenterRuntime({sourceKind:"mock",async read(){return pending;}});
+const reading=runtime.refresh();
+assert.equal(runtime.getState().phase,"loading");
+runtime.invalidate();
+assert.equal(runtime.getState().phase,"idle");
+assert.equal(runtime.getState().viewModel,undefined);
+finish(view);
+assert.equal(await reading,"superseded");
+assert.equal(runtime.getState().viewModel,undefined);
+console.log("C67 signout-style revocation invalidates stale async snapshot PASS");

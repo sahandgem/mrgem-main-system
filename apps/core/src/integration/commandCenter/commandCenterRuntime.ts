@@ -76,6 +76,9 @@ export class CommandCenterRuntime {
     try {
       const viewModel = await this.dataSource.read(now);
       if (requestId !== this.requestSequence) return "superseded";
+      // Reject a forged synthetic view on the manager's Live data path.
+      const expectedLabel = this.dataSource.sourceKind === "live" ? "LIVE/READ-ONLY" : "DEMO/MOCK";
+      if (!viewModel || viewModel.dataLabel !== expectedLabel) throw new Error("SOURCE_MODE_MISMATCH");
 
       this.publish({
         phase: "ready",

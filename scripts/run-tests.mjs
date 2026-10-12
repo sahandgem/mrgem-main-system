@@ -4,7 +4,7 @@ import { join } from "node:path";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const suites = {
-  core: ["integrationBackbone.test.ts", "commandCenterViewModel.test.ts", "coreAuthProvider.test.ts", "supabaseBrowserAuthAdapter.test.ts", "authenticatedBffRequest.test.ts", "managerRuntimeGate.test.ts", "c49SyntheticBuildBoundary.test.ts", "c50AuthSignOutRace.test.ts", "c51BrowserSessionBoundary.test.ts"],
+  core: ["integrationBackbone.test.ts", "commandCenterViewModel.test.ts", "coreAuthProvider.test.ts", "supabaseBrowserAuthAdapter.test.ts", "authenticatedBffRequest.test.ts", "managerRuntimeGate.test.ts", "c49SyntheticBuildBoundary.test.ts", "c50AuthSignOutRace.test.ts", "c51BrowserSessionBoundary.test.ts", "c52RuntimeFailureBoundary.test.ts"],
   workforce: ["analysis.test.ts"],
 };
 const selected = process.argv[2];

@@ -142,8 +142,9 @@ export function CommandCenterModuleOverview({
   if (!viewModel) {
     return (
       <main className="cockpit-loading" id="cockpit-main">
-        <strong>{runtimeEnvironment.sourceMode === "live" ? "در حال ساخت نمای مدیریتی از داده فقط‌خواندنی..." : "در حال ساخت نمای مدیریتی از داده آزمایشی..."}</strong>
-        {refreshError && <span role="alert">{refreshError}</span>}
+        <strong>{refreshError ? "داده مدیریتی در دسترس نیست" : runtimeEnvironment.sourceMode === "live" ? "در حال ساخت نمای مدیریتی از داده فقط‌خواندنی..." : "در حال ساخت نمای مدیریتی از داده آزمایشی..."}</strong>
+        {refreshError && <span role="alert">{refreshError} داده آزمایشی جایگزین داده واقعی نمی‌شود.</span>}
+        {refreshError && <button type="button" onClick={() => void refresh()}>تلاش مجدد</button>}
       </main>
     );
   }
@@ -270,7 +271,7 @@ export function CommandCenterModuleOverview({
         viewModel={viewModel}
       />
 
-      {refreshError && <div className="cockpit-system-message" role="alert">{refreshError} آخرین نمای موفق حفظ شده است.</div>}
+      {refreshError && <div className="cockpit-system-message" role="alert">{refreshError} آخرین نمای موفق فقط برای مراجعه تاریخی نمایش داده می‌شود و داده جاری نیست.</div>}
 
       <main className="cockpit-stage" id="cockpit-main">
         {content}

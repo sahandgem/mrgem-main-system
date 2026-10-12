@@ -17,6 +17,7 @@ export function CockpitSystemBar({
   isHistorical,
   lastSuccessfulAt,
   onConnectAccounting,
+  onDisconnectAccounting,
   onRefresh,
   viewModel,
 }: {
@@ -27,6 +28,7 @@ export function CockpitSystemBar({
   isHistorical?: boolean;
   lastSuccessfulAt?: string;
   onConnectAccounting?: () => void;
+  onDisconnectAccounting?: () => void;
   onRefresh: () => void;
   viewModel: CommandCenterViewModel;
 }) {
@@ -57,10 +59,12 @@ export function CockpitSystemBar({
           </span>
           {accountingAvailable && (
             accountingConnected
-              ? <StatusBadge tone="good">حسابداری متصل</StatusBadge>
+              ? <div className="system-actions"><StatusBadge tone="good">حسابداری متصل</StatusBadge><button className="system-refresh" type="button" onClick={onDisconnectAccounting} disabled={isRefreshing}>قطع ارتباط</button></div>
               : <button
                   className="system-refresh"
                   type="button"
+                  aria-label="اتصال فقط‌خواندنی حسابداری"
+                  aria-busy={isConnectingAccounting}
                   disabled={isConnectingAccounting || isRefreshing || isHistorical}
                   onClick={onConnectAccounting}
                 >

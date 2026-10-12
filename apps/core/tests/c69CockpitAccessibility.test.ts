@@ -1,0 +1,11 @@
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+import {fileURLToPath} from "node:url";
+const overview=readFileSync(fileURLToPath(new URL("../src/components/CommandCenterModuleOverview.tsx",import.meta.url)),"utf8");
+const bar=readFileSync(fileURLToPath(new URL("../src/components/commandCenter/CockpitSystemBar.tsx",import.meta.url)),"utf8");
+assert.match(overview,/dir="rtl"/);
+assert.match(overview,/aria-busy=\{isRefreshing\}/);
+assert.match(overview,/inert=\{isHistorical\}/);
+assert.match(bar,/aria-label="اتصال فقط‌خواندنی حسابداری"/);
+assert.match(bar,/aria-busy=\{isConnectingAccounting\}/);
+console.log("C69 Persian direction, busy feedback and historical accessibility PASS");

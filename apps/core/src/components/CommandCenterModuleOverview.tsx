@@ -96,6 +96,7 @@ export function CommandCenterModuleOverview({
 
   const refresh = useCallback(async () => {
     const outcome = await runtime.refresh();
+    setAccountingConnected(bridge?.connected() ?? false);
     if (outcome === "error") {
       setDrawerSelection(undefined);
       drawerTrigger.current = null;
@@ -105,7 +106,7 @@ export function CommandCenterModuleOverview({
     setShowAllMobileAttention(false);
     setDrawerSelection((current) => reduceCockpitDrawer(current, { type: "close" }));
     drawerTrigger.current = null;
-  }, [runtime]);
+  }, [runtime, bridge]);
 
   const connectAccounting = useCallback(async () => {
     if (!bridge?.available() || isConnectingAccounting || accountingConnected) return;
@@ -124,6 +125,15 @@ export function CommandCenterModuleOverview({
       setIsConnectingAccounting(false);
     }
   }, [accountingConnected, bridge, isConnectingAccounting, refresh]);
+
+  const disconnectAccounting = useCallback(() => {
+    bridge?.disconnect();
+    runtime.invalidate();
+    setAccountingConnected(false);
+    setDrawerSelection(undefined);
+    setAccountingError(undefined);
+    void refresh();
+  }, [bridge, runtime, refresh]);
 
   useEffect(() => runtime.subscribe(setRuntimeState), [runtime]);
 
@@ -294,12 +304,13 @@ export function CommandCenterModuleOverview({
         : "unknown";
 
   return (
-    <div className={`command-center command-center--${visualState}`}>
+    <div className={`command-center command-center--${visualState}`} dir="rtl">
       <CockpitSystemBar
         accountingAvailable={Boolean(bridge?.available())}
         accountingConnected={accountingConnected}
         isConnectingAccounting={isConnectingAccounting}
         onConnectAccounting={() => void connectAccounting()}
+        onDisconnectAccounting={disconnectAccounting}
         isHistorical={isHistorical}
         isRefreshing={isRefreshing}
         lastSuccessfulAt={lastSuccessfulAt}
@@ -309,7 +320,7 @@ export function CommandCenterModuleOverview({
 
       {(refreshError || accountingError) && <div className="cockpit-system-message" role="alert">{refreshError ? `${refreshError} آخرین نمای موفق فقط برای مراجعه تاریخی نمایش داده می‌شود و داده جاری نیست.` : accountingError}</div>}
 
-      <main className="cockpit-stage" id="cockpit-main" inert={isHistorical} aria-label={isHistorical ? "نمای قبلی، فقط برای مراجعه تاریخی" : undefined}>
+      <main className="cockpit-stage" id="cockpit-main" aria-busy={isRefreshing} inert={isHistorical} aria-label={isHistorical ? "نمای قبلی، فقط برای مراجعه تاریخی" : undefined}>
         {content}
       </main>
 

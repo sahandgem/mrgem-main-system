@@ -9,6 +9,7 @@ import {
 import { CommandCenterRuntime } from "./commandCenterRuntime";
 import {
   authorizeFridayMarket,
+  clearFridayMarketAccessToken,
   fridayMarketBridgeConfigured,
   fridayMarketDataSourceExtension,
   getFridayMarketAccessToken,
@@ -26,6 +27,7 @@ export interface FridayMarketRuntimeConnector {
   available(): boolean;
   connected(): boolean;
   connect(): Promise<boolean>;
+  disconnect(): void;
 }
 
 export interface CommandCenterRuntimeEnvironment {
@@ -79,6 +81,7 @@ export function createOptInFridayMarketRuntimeEnvironment(
       available: () => enabled && fridayMarketBridgeConfigured(),
       connected: () => enabled && Boolean(getFridayMarketAccessToken()),
       connect: async () => enabled && fridayMarketBridgeConfigured() && await authorizeFridayMarket(),
+      disconnect: () => clearFridayMarketAccessToken(),
     },
   };
 }

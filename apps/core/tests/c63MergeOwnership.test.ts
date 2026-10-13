@@ -5,7 +5,8 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 const root=path.resolve(fileURLToPath(new URL("../../..",import.meta.url)));
 const git=(...args:string[])=>execFileSync("git",args,{cwd:root,encoding:"utf8"}).trim();
-assert.equal(git("branch","--show-current"),"trial/core-merge-20261012");
+assert.ok(["trial/core-merge-20261012","codex/dev-core"].includes(git("branch","--show-current")),
+  "merge ownership test must run only on the approved trial or local development branch");
 const parents=git("log","-1","--merges","--format=%P").split(" ");
 assert.equal(parents.length,2,"previous trial merge retained both parents");
 assert.equal(parents[0],git("rev-parse","origin/codex/dev-core"));

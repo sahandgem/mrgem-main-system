@@ -1,4 +1,47 @@
+## CORE-V2-P06 - Mahak Integration Readiness and Adapter Boundary
+
+Gate V2-C is now operator-selected as Product Entry / Mahak and Weekly-Gate is recorded as Option C. Weekly Schedule is retained, duplicated Weekly management scope is frozen/retired for controlled cleanup, and P56 remains frozen.
+
+Read-only inspection pinned the strongest observed operational candidate, mapped SQLite/localStorage/JS/XLS authority conflicts, verified SQLite integrity and current governed UID coverage, compared six boundary choices, and designed an aggregate-only P07 slice. The durable identity verdict is `EXISTING_DURABLE_MAHAK_SOURCE_IDENTITY_PROVEN; CORE_CANONICAL_PRODUCT_MAPPING_NOT YET PROVEN`. The preferred boundary is an atomic versioned JSON module-observation snapshot; a dedicated authenticated versioned read-only HTTP module endpoint is the fallback.
+
+P06 is docs-only. `MAHAK-GATE = PENDING_OPERATOR_DECISION` with technical recommendation Option B (approve with required prep). No real adapter, Core/Mahak runtime or source change, database migration, write-back, AI/automation, P56 work, merge, or push occurred.
+
+## CORE-V2-WEEKLY-P00 - Weekly Dashboard Recovery and Scope Audit
+
+P05 remains complete with Gate V2-C pending. A docs-only repository audit confirmed that `/organization/workforce-dashboard` and `/organization/workforce-dashboard/schedule` are Core-owned Workforce surfaces backed by local persisted data, real analyzer/recommendation logic, and shared `WeeklyGrid`. P04 sits beside the existing weekly dashboard as a bounded mock-only Command Center section; it did not replace it.
+
+The weekly capability is classified `USABLE BUT ARCHITECTURALLY INCOMPLETE`. P56 is extraction/refactor work and is not required for the Weekly-Gate decision or a future bounded product contract. Technical recommendation is Option C, but `WEEKLY-GATE = PENDING_OPERATOR_DECISION`; P56 remains frozen, Gate V2-C remains pending, and Mahak P06 remains paused. No runtime/source/UI/CSS/route/test/package/storage change, merge, or push occurred.
+
+## CORE-V2-P05 - First Real Pilot Selection Gate
+
+P04 was accepted with documented gaps. P05 compared exactly Product Entry / Mahak and Finance / Audit against 20 evidence-based criteria without integrating either source. Product/Mahak has stronger local/runtime and documentation evidence and is technically recommended, but still needs an authoritative-source and versioned read-only export readiness phase. Finance/Audit management value is strong, while its executable source, ownership, freshness, fixture, and transport evidence remain `UNKNOWN / NEEDS READINESS CHECK`.
+
+`GATE V2-C = PENDING_OPERATOR_DECISION`; no pilot was auto-selected, P06 did not start, P56 remains frozen, subprojects remain isolated, and no runtime, source, UI, package, backend/database/auth/API/storage, AI/automation, command, write-back, merge, or push was introduced.
+## CORE-V2-P04 - Command Center Implementation
+
+Gate V2-B was approved as designed. A pure read-only view model now consumes only normalized P02 mock aggregation, applies deterministic tier/rank attention, and renders one bounded DEMO/MOCK section on the existing workforce dashboard. Page-load and manual refresh, last-success retention, explicit trust states, failure/empty states, 20 focused tests, full test/build, and 1280/390/320 browser checks pass. No real adapter, route, package, storage, command, AI, backend/database/auth/API, P56, prototype, pilot, or subproject integration was added. Verdict: `COMMAND_CENTER_BASELINE_VERIFIED_WITH_GAPS`; the gaps are pre-existing host duplicate-key and external-image console signals.
+
+Commit is local to `feature/master-gem-v2-command-center-p04`; no merge or push is authorized by P04.
+
+P05 remains blocked pending Project Core review of Report 180. If P04 is accepted, the next decision is the V2.3 gate to select exactly one pilot or explicitly defer.
+
+## CORE-V2-P03 - Command Center Data Consumption Design
+
+- Designed a read-only Command Center consumer over normalized P02 aggregation results.
+- Defined module summaries, attention items, KPI highlights, management summaries, reliability rules, deterministic priority, drill-down boundaries, refresh baseline, failure states, and P04 test/browser scope.
+- Recommended a bounded insertion into the existing workforce dashboard; no runtime or UI change was made.
+- Gate V2-B remains `PENDING_OPERATOR_DECISION`; no automatic approval was granted.
+
 ﻿# Phase Log
+## CORE-V2-P02
+
+Gate V2-A was approved as designed. The Integration Backbone baseline was implemented as an additive read-only proof: versioned contracts, a static Core registry, one deterministic mock adapter, independent validation/normalization, freshness/effective-state evaluation, in-memory last-known-good handling, and failure-isolated aggregation. The 14-case matrix plus determinism, no-mutation, invalid-payload, and failure-isolation assertions pass. Build passes with 1751 transformed modules. No UI, route, storage, package, backend/database/auth/API, command path, write-back, real subproject, pilot, merge, or push was introduced. Verdict: `INTEGRATION_BACKBONE_BASELINE_VERIFIED`.
+## CORE-V2-P01
+
+Evidence-based Integration Backbone discovery and contract design completed as docs-only work. Report 177 records existing V1 seams and forbidden coupling, a small versioned observation contract, orthogonal health/freshness semantics, generic KPI/alert/capability models, static Core-owned registry, source-specific adapter boundary, four read-path options, and the recommended in-process mock/static P02 proof. The acceptance matrix, rollback and non-auth security boundary are defined. Gate V2-A remains pending; no source/runtime change, adapter implementation, real integration, pilot selection, merge, or push occurred.
+## CORE-V2-PLAN-P00
+
+The official Master Gem V2 roadmap was defined as documentation-only work from stable V1 baseline `7d39d79`. The sequence is V2.1 Integration Backbone, V2.2 Command Center, V2.3 exactly one Project Core-selected pilot, and V2.4 approval-gated intelligence/automation. Gates V2-A through V2-D, rollback boundaries, non-goals, candidate Product/Mahak and Finance/Audit assessments, and the P01-P09+ phase map are recorded. No pilot, implementation, merge, push, backend/database/auth/API/storage change, P56 resume, or subproject integration occurred.
 
 ## CORE-HARDEN-P09 / P09D
 

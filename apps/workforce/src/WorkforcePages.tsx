@@ -1149,6 +1149,7 @@ function DashboardPageV2({
         })}
       </section>
 
+
       <section className="cockpit-grid">
         <div className="side-column">
           <CapacityPanel items={capacityItems} />

@@ -1,0 +1,9 @@
+{
+  "name": "@master-gem/module-contracts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": { "types": "./src/moduleContract.ts", "default": "./src/moduleContract.ts" }
+  }
+}

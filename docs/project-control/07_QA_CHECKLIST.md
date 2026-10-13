@@ -1,4 +1,109 @@
+## CORE-V2-P06 Mahak Readiness QA
+
+- [x] New-Windows local V2 commit objects, expected Weekly branch/HEAD, clean start, and Reports 181/182 verified before branch creation.
+- [x] Operator decisions recorded: Gate V2-C is Mahak; Weekly-Gate is Option C; Weekly Schedule retained; duplicate Weekly management scope frozen/retired for controlled cleanup; P56 frozen.
+- [x] Mahak runtime locations, Git/source provenance, SQLite, localStorage, JS/XLS masters, requested tables, APIs, health, import/export, AI-ready export, backup/restore, sales/import, and identity evidence inspected read-only.
+- [x] Live SQLite integrity checked read-only with no WAL/SHM creation; no record values, credentials, or source identifiers copied.
+- [x] Source-of-truth matrix and all requested product-identity candidates analyzed.
+- [x] Durable Mahak source identity is distinguished from unresolved Core canonical product mapping.
+- [x] Six adapter choices compared; direct DB, localStorage, UI scraping, arbitrary files, generic API coupling, and write-back rejected.
+- [x] Preferred/fallback boundaries, normalized contract, KPIs, alerts, health, freshness, validation, security, failure states, P07 scope, acceptance, tests, browser plan, rollback, blockers, and open questions defined.
+- [x] Only `docs/project-control/` files changed; no Core/Mahak runtime, test, package, lock, storage, API, database, or UI file changed.
+- [x] No real adapter, source mutation, Mahak write-back, AI/automation, P56 work, merge, or push.
+- [ ] Operator must choose MAHAK-GATE A, B, or C before P07; technical recommendation is B with required prep.
+
+## CORE-V2-WEEKLY-P00 Recovery Audit QA
+
+- [x] Exact P05 branch/HEAD, clean tree, Report 181, Gate V2-C, and P56 freeze verified before branch creation.
+- [x] Dashboard and Schedule routes, adapter entries, active dispatch, `WeeklyGrid`, models, services, analyzer, storage registry, backup, tests, and historical reports inspected.
+- [x] Workforce Core data is explicitly separated from P04 mock Integration Backbone data.
+- [x] Feature inventory and product/architecture/data/test/UX gap analysis completed.
+- [x] P56 classified as frozen extraction/refactor work, not a Weekly product prerequisite.
+- [x] P04 relationship classified as bounded coexistence with KPI/alert/attention overlap.
+- [x] Options A/B/C and a nonbinding technical recommendation are documented.
+- [x] No runtime/source/UI/CSS/route/test/package/lock/storage/prototype/subproject change.
+- [x] P56 remains frozen, Gate V2-C remains pending, and Mahak P06 remains paused.
+- [ ] Operator must explicitly choose Weekly-Gate A, B, or C before Mahak P06 is reconsidered.
+
+## CORE-V2-P05 Pilot Selection Gate QA
+
+- [x] P04 acceptance with documented gaps and exact P04 baseline verified.
+- [x] Review branch created from `d096359968f099e17dc362d3f31dbe58f7db195a` with a clean tree.
+- [x] Exactly Product Entry / Mahak and Finance / Audit compared against 20 criteria.
+- [x] Ratings use only `STRONG`, `ACCEPTABLE`, `WEAK`, and `UNKNOWN`.
+- [x] Missing source evidence is marked `UNKNOWN / NEEDS READINESS CHECK` rather than invented.
+- [x] Command Center fit, source-of-truth, read-only feasibility, testability, risk, and rollback compared.
+- [x] Technical recommendation is separated from operator selection.
+- [x] `GATE V2-C = PENDING_OPERATOR_DECISION`; no pilot or P06 was auto-started.
+- [x] P56 remains frozen; subprojects remain isolated; AI/automation and write-back remain unauthorized.
+- [x] No runtime/source/test/UI/CSS/package/lock/prototype/subproject change.
+- [ ] Operator must explicitly choose Gate V2-C option A, B, or C before any next pilot phase.
+## CORE-V2-P04 Command Center Baseline QA
+
+- [x] Gate V2-B approval and exact P03 parent verified.
+- [x] UI consumes normalized P02 aggregation through a dedicated pure view model.
+- [x] Deterministic tiers, stable tie-breaks, no mutation, and no AI score tested.
+- [x] Fresh, degraded, stale LKG, unavailable, invalid, unsupported, no-data, disabled, and unknown remain distinct.
+- [x] Alert/KPI promotion and non-promotion rules tested.
+- [x] Page-load and manual refresh implemented; no interval/background refresh.
+- [x] Last successful view survives refresh failure by design.
+- [x] No task/decision creation, command execution, or source write-back.
+- [x] `npm.cmd test` PASS, including P02 regression and 20 P04 cases.
+- [x] `npm.cmd run build` PASS; 1758 modules transformed.
+- [x] Browser 1280/390/320 PASS: RTL, no overflow/clipping/crash/mojibake, manual refresh works.
+- [x] New Command Center code emits no console/page error.
+- [ ] Existing host duplicate-key React errors remain tracked as a gap.
+- [ ] Existing external Unsplash network signal remains tracked as a gap.
+- [x] No route/package/storage/backend/database/auth/API/P56/prototype/subproject change.
+- [x] Project Core accepted P04 with documented gaps and opened P05 as a docs-only selection gate.
+
+## CORE-V2-P03 Command Center Consumption Gate
+
+- [x] UI contract consumes only normalized `ModuleAggregationResult` / `CoreModuleResult` data.
+- [x] Raw adapter payloads and arbitrary adapter routes are excluded from the UI contract.
+- [x] View-model derivation is deterministic, pure, and non-mutating by design.
+- [x] Disabled, no-data, stale, unavailable, invalid, unsupported, partial, and empty states are specified.
+- [x] Priority tiers and tie-break rules are explicit and testable.
+- [x] Missing values are not zero; stale values require labels and timestamps.
+- [x] No alert or KPI automatically creates a task, decision, or command.
+- [x] Drill-down references require a Core-owned allowlist.
+- [x] Desktop, 390 px, 320 px, RTL, encoding, keyboard, and overflow checks are required for P04.
+- [x] No real adapter, subproject, fetch, storage, backend, database, auth, migration, or write-back is authorized.
+- [ ] Gate V2-B requires explicit operator Option A or B approval before P04 begins.
+
 # چک‌لیست ثابت QA پایان هر P
+## CORE-V2-P02 Baseline QA
+
+- [x] Gate V2-A approval, P01 branch/commit, clean tree, and Report 177 verified.
+- [x] Contract, static registry, adapter interface, one mock adapter, validator, and read-only aggregator implemented.
+- [x] Healthy, degraded, unavailable, stale, unknown, duplicate, unsupported, optional, partial, malformed, empty, no-data, cached-stale, and disabled cases covered.
+- [x] Failure isolation, determinism, no mutation, no write method, and no auto-discovery verified.
+- [x] `npm.cmd test` PASS; known loader warning unchanged.
+- [x] `npm.cmd run build` PASS; 1751 modules transformed.
+- [x] No user-visible change, so browser verification was not required.
+- [x] No route/storage/package/subproject/prototype/database/backend/auth/API/command/write-back change.
+- [ ] Do not start V2.2 until Project Core explicitly accepts the V2.1 baseline.
+## CORE-V2-P01 Contract Design QA
+
+- [x] P00 branch, commit, roadmap 176, clean tree, and V1 main baseline verified.
+- [x] Source inspection was read-only and covered storage, registry, route, service, backup, history, decision, and technical-debt boundaries.
+- [x] Identity, observation, health, freshness, KPI, alert, capability, ownership, compatibility, error, registry, and adapter contracts are documented.
+- [x] Read-path options A-D are compared; P02 recommendation is in-process mock/static and read-only.
+- [x] P02 minimum slice, untouched areas, acceptance matrix, rollback, and security/non-auth boundary are explicit.
+- [x] Gate V2-A is pending and was not auto-approved.
+- [x] No runtime, test, package, lockfile, prototype, database, backend, auth, API, storage, route, or subproject file changed.
+- [ ] P02 may start only after operator explicitly selects Gate V2-A option A or B.
+## CORE-V2 Planning and Gate QA
+
+- [x] Stable V1 baseline `7d39d79` verified before roadmap work.
+- [x] Roadmap work is docs-only and isolated on a dedicated branch.
+- [x] V2.1 through V2.4 sequence, deliverables, acceptance criteria, rollback boundaries, and non-goals are explicit.
+- [x] Gates V2-A through V2-D are recorded with a safe default of no action.
+- [x] Product/Mahak and Finance/Audit candidates are both analyzed and neither is selected automatically.
+- [x] P56 freeze, subproject isolation, rollback references, and premature backend/database/auth/API/storage prohibitions are retained.
+- [ ] Before each future implementation phase: verify clean tree, approved gate, exact baseline, bounded file scope, rollback point, test/build/manual evidence plan, and closure report.
+- [ ] Before any pilot: verify exactly one selected subproject, synthetic/non-production data, source ownership, compatibility behavior, and adapter disable path.
+- [ ] Before any intelligence/automation: verify a closed pilot, confidence evidence, human review boundary, audit trail, and separate approval for every high-impact action.
 
 ## CORE-HARDEN-P09 Remote Promotion Closure
 

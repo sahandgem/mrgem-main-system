@@ -1,4 +1,181 @@
+## CORE-V2-P06 MAHAK-GATE Decision Queue
+
+### Now - Operator Decision
+
+- Review `183_MASTER_GEM_V2_MAHAK_INTEGRATION_READINESS_AND_ADAPTER_BOUNDARY.md`.
+- Choose exactly one: A approve aggregate read-only P07, B approve with required prep, or C hold/block.
+- Technical recommendation is Option B; it is not an automatic approval.
+
+### Required Prep Before Recommended P07
+
+- Confirm the observed operational Mahak instance, owner, clean release/hash, database authority, and approved launch procedure.
+- Freeze an atomic versioned aggregate JSON snapshot, exact path, checksum/size, sanitized fixtures, KPI/alert formulas, producer cadence, and Core freshness policy.
+- Produce current complete backup/restore evidence and UTF-8/Persian encoding fixtures.
+- Keep P07 aggregate-only. Reconcile/finalize source identity and approve canonical mapping separately before any product drill-down.
+
+### Recorded Scope Decisions
+
+- Gate V2-C is Product Entry / Mahak.
+- Weekly-Gate is Option C: Weekly Schedule retained; duplicated Weekly management scope frozen/retired for controlled cleanup.
+- P56 remains frozen.
+
+### Still Blocked
+
+- P07 until MAHAK-GATE is explicitly selected and its required prerequisites are evidenced.
+- Any direct SQLite, localStorage, JS/XLS, generic Mahak API, UI-scraping, or per-product detail integration.
+- Mahak write-back, imports/restores, database migration, commands, AI/automation, backend/auth/storage expansion, P56, Weekly cleanup, subproject merge, and push.
+
+## CORE-V2-WEEKLY-P00 Weekly-Gate Decision Queue
+
+### Now - Operator Decision
+
+- Review `182_MASTER_GEM_V2_WEEKLY_DASHBOARD_RECOVERY_AND_SCOPE_AUDIT.md`.
+- Choose exactly one Weekly-Gate option: A complete as distinct Core module, B absorb duplicated management parts into Command Center, or C freeze/retire duplicated dashboard parts while keeping unique weekly schedule functionality.
+- Treat Option C as a technical recommendation only, not an automatic selection.
+
+### Still Blocked
+
+- Mahak P06 until the Weekly-Gate review is recorded and Gate V2-C is separately resolved.
+- P56 or any new `WorkforcePages.tsx` extraction without `CORE-RESUME-P56`.
+- Removal of dashboard sections, real Workforce adapter work, Command Center write-back, route/storage/model changes, and subproject merge.
+
+## CORE-V2-P05 Gate V2-C Decision Queue
+
+### Now - Operator Decision
+
+- Review `181_MASTER_GEM_V2_FIRST_REAL_PILOT_SELECTION_GATE.md`.
+- Choose exactly one: A Product Entry / Mahak, B Finance / Audit, or C defer real integration.
+- Treat `PRODUCT ENTRY / MAHAK` as a technical recommendation only, not an automatic selection.
+
+### If Product Entry / Mahak Is Selected
+
+- Start a separate docs/discovery readiness phase first.
+- Pin one authoritative source instance and define a versioned, atomic, read-only export contract.
+- Require sanitized fixtures, stable identity, freshness ownership, failure semantics, and adapter rollback before implementation approval.
+
+### If Finance / Audit Is Selected
+
+- Start a separate source/readiness and adapter-boundary phase first.
+- Verify source location and ownership, currency/period aggregation, redaction, read-only transport, fixtures, reconciliation, and rollback.
+
+### Still Blocked
+
+- Real adapter or subproject merge before Gate V2-C and a separate implementation gate.
+- Direct database sharing, shared localStorage, source-internal imports, UI scraping, and write-back.
+- AI/automation, command execution, approval action, backend/database/auth/API/storage migration, new route, broad redesign, prototype merge, and P56.
+## CORE-V2-P04 Review Gate
+
+### Now - Project Core Decision
+
+- Review `180_MASTER_GEM_V2_COMMAND_CENTER_BASELINE_IMPLEMENTATION.md`.
+- Accept P04, accept with gaps, or hold for correction.
+- Decide whether to separately schedule cleanup for existing dashboard duplicate keys and external Unsplash dependency.
+
+### If P04 Is Accepted
+
+- Open the V2.3 pilot-selection gate.
+- Choose exactly one real subproject pilot or explicitly defer all pilots.
+- Define a separate adapter contract and approval boundary before any real connection.
+
+### Still Blocked
+
+- P05 automatic start.
+- Real Product/Mahak/Finance/Audit/Production/Mobile adapter or merge.
+- AI/automation, command execution, source write-back, and automatic task/decision creation.
+- Backend/database/auth/API/storage migration, new route, broad redesign, prototype merge, and P56.
+
+## CORE-V2 Command Center Gate
+
+### Now - Decision Required
+
+- Review Report 179 and choose Gate V2-B Option A, B, or C.
+- Confirm the existing workforce dashboard as the bounded P04 target surface.
+- Confirm deterministic attention tiers, top-eight limit, and noncritical per-module soft cap.
+
+### Blocked Until Gate V2-B Approval
+
+- CORE-V2-P04: implement the minimum mock-only Command Center consumption slice.
+- Add pure view-model derivation, deterministic ranking, one isolated dashboard component, focused tests, and RTL browser checks.
+
+### Still Frozen
+
+- Real Product, Mahak, Finance, or Audit integration.
+- AI/automation, command execution, write-back, backend/database/auth/migration work.
+- P56 and Task/Decision runtime expansion.
+
+
 ﻿# Backlog
+## CORE-V2-P02 Baseline Review Queue
+
+### Now
+
+- Review `178_MASTER_GEM_V2_INTEGRATION_BACKBONE_BASELINE_IMPLEMENTATION.md`.
+- Decide whether the V2.1 baseline is accepted.
+- Keep V2.2 Command Center consumption planning blocked until that decision is explicit.
+
+### If V2.1 Baseline Is Accepted
+
+- Authorize a separate `CORE-V2-P03 - Command Center Data Consumption Design` phase.
+- Consume only normalized Integration Backbone results.
+- Preserve read-only, source-owned business truth and adapter isolation.
+
+### Still Not Authorized
+
+- Real Product/Mahak or Finance/Audit adapter
+- Pilot selection
+- Command execution or source write-back
+- External network/backend/database/auth/API/storage migration
+- New route or Command Center implementation
+- P56, prototype merge, or full UI redesign
+## CORE-V2-P01 Gate V2-A Queue
+
+### Now
+
+- Review `177_MASTER_GEM_V2_INTEGRATION_BACKBONE_DISCOVERY_AND_CONTRACT.md`.
+- Operator chooses Gate V2-A option A, B with exact changes, or C hold/redesign.
+- Keep P02 blocked until option A or B is explicit.
+
+### After Explicit V2-A Approval Only
+
+- `CORE-V2-P02 - Integration Registry / Adapter Baseline`
+- Implement only the approved contract, static registry, mock adapter, validation, aggregation, diagnostics, and tests.
+- Keep the proof read-only, synthetic, additive, and reversible.
+
+### Still Frozen
+
+- Real Product/Mahak or Finance/Audit adapter
+- Pilot selection and Command Center implementation
+- Commands or source mutation
+- New route/storage key/backend/database/auth/API/migration
+- P56, cockpit runtime, and Task/Decision runtime
+## Master Gem V2 - Gated Roadmap
+
+### Now
+
+- Review `176_MASTER_GEM_V2_ROADMAP_AND_PHASE_DEFINITION.md`.
+- Decide Gate V2-A: authorize or defer `CORE-V2-P01 - Integration Backbone Discovery & Contract Design`.
+- Keep V1 baseline `7d39d79`, rollback refs, P56 freeze, and subproject isolation intact.
+
+### After V2-A
+
+- `CORE-V2-P01 - Integration Backbone Discovery & Contract Design`
+- `CORE-V2-P02 - Integration Registry / Adapter Baseline`
+- Gate V2-B and `CORE-V2-P03 - Command Center Data Consumption Design`
+- `CORE-V2-P04 - Command Center Implementation`
+- Gate V2-C: select Product/Mahak, Finance/Audit, or defer
+- `CORE-V2-P06 - First Real Subproject Adapter / Integration`
+- `CORE-V2-P07 - First Integration Verification & Closure`
+- Gate V2-D and `CORE-V2-P08 - Intelligence Layer Discovery`
+- `CORE-V2-P09+` only after explicit approval
+
+### Frozen / Not Authorized
+
+- P56
+- Simultaneous Product/Mahak and Finance/Audit pilots
+- Direct subproject merge
+- Storage replacement, large backend, database migration, auth/API redesign
+- Prototype merge or full UI redesign
+- Intelligence/automation implementation before a verified pilot
 
 ## CORE-HARDEN-P09 Closure
 

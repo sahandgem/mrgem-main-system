@@ -1810,7 +1810,204 @@ p {
   gap: .2rem;
 }
 
+.command-center-section {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1rem 0;
+  border-block: 1px solid rgba(148, 163, 184, 0.16);
+  overflow: hidden;
+}
+
+.command-center-header,
+.command-center-actions,
+.command-center-row-head,
+.command-center-zone-head,
+.command-center-meta,
+.command-center-message,
+.command-center-empty {
+  display: flex;
+  align-items: center;
+}
+
+.command-center-header,
+.command-center-row-head,
+.command-center-zone-head {
+  justify-content: space-between;
+}
+
+.command-center-header {
+  gap: 1rem;
+}
+
+.command-center-heading {
+  min-width: 0;
+}
+
+.command-center-heading h2,
+.command-center-heading p,
+.command-center-zone h3,
+.command-center-row p {
+  margin: 0;
+}
+
+.command-center-heading h2 {
+  margin-top: 0.15rem;
+  font-size: 1.2rem;
+}
+
+.command-center-heading p,
+.command-center-row p,
+.command-center-row small,
+.command-center-refresh-time {
+  color: #94a3b8;
+  font-size: 0.82rem;
+}
+
+.command-center-actions,
+.command-center-meta {
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.command-center-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.command-center-summary > div {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+  padding: 0.75rem;
+  border-inline-start: 3px solid #22d3ee;
+  background: rgba(15, 23, 42, 0.48);
+}
+
+.command-center-summary span {
+  color: #a8b4c7;
+  font-size: 0.82rem;
+}
+
+.command-center-summary strong {
+  font-size: 1.2rem;
+}
+
+.command-center-zones {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.command-center-zone {
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+.command-center-zone-head {
+  gap: 0.6rem;
+  min-height: 2rem;
+}
+
+.command-center-zone h3 {
+  font-size: 0.95rem;
+}
+
+.command-center-list {
+  display: grid;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.command-center-row {
+  display: grid;
+  gap: 0.45rem;
+  min-width: 0;
+  padding: 0.7rem;
+  border: 1px solid rgba(148, 163, 184, 0.13);
+  border-inline-start: 3px solid currentColor;
+  border-radius: 0.4rem;
+  background: rgba(15, 23, 42, 0.48);
+}
+
+.command-center-row-head {
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.command-center-row-head > div {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.command-center-row strong,
+.command-center-row p,
+.command-center-row small,
+.command-center-meta span,
+.command-center-heading p {
+  overflow-wrap: anywhere;
+}
+
+.command-center-meta {
+  color: #8291a7;
+  font-size: 0.75rem;
+}
+
+.command-center-meta span + span::before {
+  content: "•";
+  margin-inline-end: 0.55rem;
+  color: #475569;
+}
+
+.command-center-kpi-value {
+  color: #f8fafc;
+  font-size: 1rem;
+}
+
+.command-center-message,
+.command-center-empty {
+  gap: 0.6rem;
+  min-width: 0;
+  padding: 0.75rem;
+  border: 1px dashed rgba(148, 163, 184, 0.22);
+  border-radius: 0.4rem;
+  background: rgba(15, 23, 42, 0.36);
+}
+
+.command-center-message > div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.command-center-message span {
+  color: #a8b4c7;
+  font-size: 0.82rem;
+}
+
+.is-spinning {
+  animation: command-center-spin 0.9s linear infinite;
+}
+
+@keyframes command-center-spin {
+  to { transform: rotate(360deg); }
+}
+
 @media (max-width: 1180px) {
+  .command-center-zones {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .command-center-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .kpi-strip,
   .simulation-compare,
   .cockpit-grid,
@@ -1849,6 +2046,32 @@ p {
 }
 
 @media (max-width: 780px) {
+  .command-center-header,
+  .command-center-row-head,
+  .command-center-zone-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .command-center-actions {
+    align-items: stretch;
+  }
+
+  .command-center-actions .ghost-button {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .command-center-summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .command-center-section .status-badge {
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+
   .app-shell {
     grid-template-columns: 1fr;
   }

@@ -1,4 +1,69 @@
+## CORE-V2-P06 Mahak Readiness Design Branch
+
+- Branch: `architecture/master-gem-v2-mahak-integration-readiness-p06`.
+- Parent branch: `review/master-gem-v2-weekly-dashboard-recovery-p00`.
+- Parent / rollback commit: `4561ca121ef6e78fee5a903e2634eb88799ba340`.
+- Scope: docs-only Mahak evidence, source-of-truth/identity analysis, adapter boundary, normalized contract, P07 minimum slice, and Report 183.
+- Decisions carried in: `GATE V2-C = PRODUCT ENTRY / MAHAK`; `WEEKLY-GATE = OPTION C`; Weekly Schedule retained; duplicate Weekly management scope frozen/retired for controlled cleanup; P56 frozen.
+- Gate: `MAHAK-GATE = PENDING_OPERATOR_DECISION`; technical recommendation Option B.
+- Merge/push: not authorized. No Core or Mahak runtime/source integration is present.
+
+## CORE-V2-WEEKLY-P00 Recovery Audit Branch
+
+- Branch: `review/master-gem-v2-weekly-dashboard-recovery-p00`.
+- Parent branch: `review/master-gem-v2-pilot-selection-p05`.
+- Parent/rollback commit: `7250e777efd6d2e9e6f56d1ce289c6c257a24937`.
+- Scope: docs-only audit of Weekly Dashboard, Weekly Schedule, WeeklyGrid, data/storage/test maturity, P56 relationship, and P04 overlap.
+- Gates: `WEEKLY-GATE = PENDING_OPERATOR_DECISION`; `GATE V2-C = PENDING_OPERATOR_DECISION`.
+- P56 remains frozen; Mahak P06 remains paused.
+- Merge/push: not authorized in this phase.
+
+## CORE-V2-P05 Pilot Selection Review Branch
+
+- Branch: `review/master-gem-v2-pilot-selection-p05`
+- Parent branch: `feature/master-gem-v2-command-center-p04`
+- Parent commit: `d096359968f099e17dc362d3f31dbe58f7db195a`
+- Scope: docs-only comparison of Product Entry / Mahak and Finance / Audit plus Report 181.
+- Gate: `V2-C = PENDING_OPERATOR_DECISION`; no pilot is selected.
+- Merge/push: not authorized in P05.
+- Subprojects remain isolated; P56 and AI/automation remain frozen.
+## CORE-V2-P04 Implementation Branch
+
+- Branch: `feature/master-gem-v2-command-center-p04`
+- Parent: `architecture/master-gem-v2-command-center-consumption-p03`
+- Parent commit: `9b0a9494a911c56c78e07b55108cb3183ee7666a`
+- Scope: bounded mock-only Command Center view model, UI section, tests, browser verification, and Report 180.
+- Rollback point: `9b0a9494a911c56c78e07b55108cb3183ee7666a`.
+- Merge/push: not authorized in P04.
+- Real integrations and pilot selection: not present.
+
+## CORE-V2-P03 Design Branch
+
+- Branch: `architecture/master-gem-v2-command-center-consumption-p03`
+- Parent: `feature/master-gem-v2-integration-backbone-p02`
+- Parent commit: `7ec283150e9e78696ef2b736d8be6ccebb03b957`
+- Scope: docs-only Command Center data-consumption design.
+- Merge/push: not authorized in P03.
+
 ﻿# Branch Registry
+## CORE-V2-P02 Integration Backbone Baseline
+
+- `feature/master-gem-v2-integration-backbone-p02`: additive implementation branch from P01 commit `e22fa035cb0f8d8bb1121b7ebd19ed1857be9348`.
+- Purpose: mock-only contract, static registry, validator, adapter boundary, aggregation, tests, and Report 178.
+- Rollback point: `e22fa035cb0f8d8bb1121b7ebd19ed1857be9348`.
+- No merge or push is authorized by P02; `main` remains V1 baseline `7d39d79`.
+## CORE-V2-P01 Integration Backbone Design
+
+- `architecture/master-gem-v2-integration-backbone-p01`: docs-only discovery/contract branch from P00 commit `596ad8d7897c510eafeea674843f8cfd7509d21d`.
+- Purpose: produce Report 177 for Gate V2-A operator review.
+- No merge or push is authorized by P01.
+- `main` remains the stable V1 baseline `7d39d79`.
+## CORE-V2 Planning
+
+- `docs/master-gem-v2-roadmap-p00`: docs-only roadmap branch created from exact stable V1 baseline `7d39d79c2e6de73581d51f7cdb3c7aebe0f194d4`; no merge or push is authorized in P00.
+- `main` and `origin/main`: protected V1 references remain at `7d39d79` during this planning phase.
+- Existing V1 rollback branches remain retained and must not be deleted or repointed without Project Core approval.
+- Future V2 branches must be phase-scoped and created only after the corresponding V2-A, V2-B, V2-C, or V2-D gate.
 
 ## CORE-HARDEN-P09 Remote Promotion
 

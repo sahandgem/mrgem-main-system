@@ -1,4 +1,83 @@
+## CORE-V2-P06 Mahak Integration Readiness and Adapter Boundary
+
+- Operator decisions are recorded: `GATE V2-C = PRODUCT ENTRY / MAHAK` and `WEEKLY-GATE = OPTION C`.
+- Weekly Schedule is retained; duplicated Weekly management scope is frozen/retired for later controlled cleanup. P56 remains frozen.
+- P06 completed read-only evidence discovery and docs-only boundary design on `architecture/master-gem-v2-mahak-integration-readiness-p06`.
+- The observed operational Mahak database is healthy and has governed source identity coverage for all 16 current products; a Core canonical product mapping is not yet proved.
+- Preferred boundary: atomic versioned JSON module-observation snapshot. Fallback: dedicated authenticated versioned read-only HTTP module endpoint.
+- Technical recommendation: MAHAK-GATE Option B, approve with required prep. `MAHAK-GATE = PENDING_OPERATOR_DECISION`; P07 must not start automatically.
+- No real adapter, Mahak/Core runtime or source change, write-back, AI/automation, P56 work, merge, or push occurred.
+- Report: `183_MASTER_GEM_V2_MAHAK_INTEGRATION_READINESS_AND_ADAPTER_BOUNDARY.md`.
+
+## CORE-V2-WEEKLY-P00 Weekly Dashboard Recovery Audit
+
+- P05 is complete; `GATE V2-C = PENDING_OPERATOR_DECISION` remains unchanged.
+- Weekly Dashboard and the separate Weekly Schedule route are confirmed as Core-owned Workforce surfaces.
+- The current capability is `USABLE BUT ARCHITECTURALLY INCOMPLETE`: local CRUD/persistence, real analysis, recommendations, decisions, backup coverage, RTL, and responsive containment exist; dated-week semantics and focused Schedule/component tests do not.
+- P04 extends the existing dashboard with one bounded mock-only Command Center section; it does not replace the weekly schedule or Workforce analyzer.
+- Generic KPI/alert/attention concepts overlap. Technical recommendation is Weekly-Gate Option C, but no operator option is selected automatically.
+- `WEEKLY-GATE = PENDING_OPERATOR_DECISION`.
+- No runtime/source/UI/CSS/route/test/package/storage change occurred. P56 remains frozen and Mahak P06 remains paused until Weekly-Gate review.
+- Report: `182_MASTER_GEM_V2_WEEKLY_DASHBOARD_RECOVERY_AND_SCOPE_AUDIT.md`.
+
+## CORE-V2-P05 First Real Pilot Selection Gate
+
+- P04 is accepted with its documented pre-existing duplicate-key and Unsplash gaps.
+- P05 completed a docs-only comparison of Product Entry / Mahak and Finance / Audit on `review/master-gem-v2-pilot-selection-p05`.
+- Technical recommendation: `PRODUCT ENTRY / MAHAK`; this is not an operator selection or implementation approval.
+- Product Entry / Mahak readiness: `NEEDS SMALL PREP`; Finance / Audit readiness: `UNKNOWN` pending source evidence.
+- `GATE V2-C = PENDING_OPERATOR_DECISION`; no pilot is selected and P06 has not started.
+- No real integration, adapter, source change, UI change, backend/database/auth/API/storage change, AI/automation, or write-back exists.
+- P56 remains frozen and Product/Mahak and Finance/Audit remain isolated.
+- Report: `181_MASTER_GEM_V2_FIRST_REAL_PILOT_SELECTION_GATE.md`.
+## CORE-V2-P04 Command Center Baseline
+
+- Gate V2-B was approved as designed and P04 implemented the bounded mock-backed Command Center baseline.
+- Target remains the existing `/organization/workforce-dashboard` route; no route or broad redesign was added.
+- View-model derivation, deterministic priority tiers, trust semantics, manual refresh, failure isolation, and DEMO/MOCK labeling are implemented.
+- `npm.cmd test` PASS; `npm.cmd run build` PASS with 1758 transformed modules.
+- Browser/RTL checks at 1280, 390, and 320 PASS with no overflow, clipping, crash, or mojibake.
+- Verdict: `COMMAND_CENTER_BASELINE_VERIFIED_WITH_GAPS` because the host dashboard retains pre-existing duplicate-key console errors and an external Unsplash network signal.
+- No real integration, AI/automation, command/write-back, backend/database/auth/API/storage change, pilot, P56 work, or subproject merge exists.
+- Report: `180_MASTER_GEM_V2_COMMAND_CENTER_BASELINE_IMPLEMENTATION.md`.
+- P05 must not start automatically; Project Core review is required first.
+
+## CORE-V2-P03 Command Center Consumption Design
+
+- Phase status: design complete; implementation not authorized.
+- Branch: `architecture/master-gem-v2-command-center-consumption-p03`.
+- Parent baseline: `7ec283150e9e78696ef2b736d8be6ccebb03b957`.
+- Report: `179_MASTER_GEM_V2_COMMAND_CENTER_DATA_CONSUMPTION_DESIGN.md`.
+- Recommended host: one bounded read-only section in the existing `/organization/workforce-dashboard` surface.
+- Gate V2-B: `PENDING_OPERATOR_DECISION`; P04 is blocked until explicit Option A or B approval.
+- P56 remains frozen and all external subprojects remain isolated.
+
 # Current State
+## CORE-V2-P02 Integration Backbone Baseline
+
+- Gate V2-A was approved as designed and the minimal baseline was implemented on `feature/master-gem-v2-integration-backbone-p02`.
+- The implementation is additive, read-only, synthetic, and isolated under `src/integration`.
+- Static registry, versioned contract, validation/normalization, one mock adapter, failure-isolated aggregation, and the approved test matrix are implemented.
+- `npm.cmd test` and `npm.cmd run build` pass; build transformed 1751 modules.
+- No UI/route, package/lock, storage key, database/backend/auth/API, real subproject, source write, or command execution was added.
+- P56 remains frozen; subprojects remain isolated; no pilot is selected.
+- V2.2 must not start automatically. Project Core acceptance of the V2.1 baseline is the next decision.
+## CORE-V2-P01 Integration Backbone Contract Design
+
+- CORE-V2-P01 completed discovery and contract design on `architecture/master-gem-v2-integration-backbone-p01`.
+- Report 177 defines module identity, observation, health/freshness, KPI, alert, capability, ownership, compatibility, registry, adapter, diagnostics, P02 proof, tests, and rollback.
+- `GATE V2-A = PENDING_OPERATOR_DECISION`; no P02 implementation is authorized.
+- Runtime/source implementation has not started; no real adapter or subproject connection exists.
+- `main` remains the stable V1 baseline at `7d39d79`; P56 remains frozen.
+- Product/Mahak and Finance/Audit remain isolated, and no pilot is selected.
+## CORE-V2-PLAN-P00 Roadmap State
+
+- Master Gem V1 is closed and stable at baseline `7d39d79c2e6de73581d51f7cdb3c7aebe0f194d4`.
+- V2 planning has started on `docs/master-gem-v2-roadmap-p00`; runtime implementation has not started.
+- Official order: Integration Backbone, Command Center, one explicitly selected real subproject pilot, then Intelligence and Automation.
+- Product/Mahak and Finance/Audit are analyzed candidates but remain isolated; no pilot is selected automatically.
+- P56 remains frozen. Storage replacement, large backend, database migration, auth/API architecture, prototype merge, and full redesign remain prohibited without explicit approval.
+- Active decision: Project Core review of report 176 and Gate V2-A. Next phase is not authorized by this record.
 
 ## CORE-HARDEN-P09 Remote Promotion Closure
 

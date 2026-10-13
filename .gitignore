@@ -9,5 +9,9 @@ coverage/
 .env.*
 *.log
 *.tsbuildinfo
+verification/
+.work/
+.worktrees/
+*.bundle
 
 .DS_Store

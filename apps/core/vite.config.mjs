@@ -6,7 +6,7 @@ export default defineConfig({
   root: fileURLToPath(new URL(".", import.meta.url)),
   plugins: [react()],
   server: {
-    host: "127.0.0.1",
+    host: process.env.CODESPACES === "true" ? "0.0.0.0" : "127.0.0.1",
     port: 5174,
     strictPort: true,
     fs: { allow: [fileURLToPath(new URL("../..", import.meta.url))] },

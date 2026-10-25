@@ -1,0 +1,16 @@
+{
+  "name": "Master Gem Core - free-tier Codespace",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-24-bookworm",
+  "forwardPorts": [
+    5174
+  ],
+  "portsAttributes": {
+    "5174": {
+      "label": "Master Gem Core - synthetic demo only",
+      "onAutoForward": "notify",
+      "protocol": "http"
+    }
+  },
+  "postCreateCommand": "npm ci --no-audit --no-fund",
+  "remoteUser": "node"
+}

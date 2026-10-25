@@ -1,0 +1,41 @@
+# Manual or PR checks only; no deployment, secrets or production connections.
+name: Core and workspace CI
+on:
+  pull_request:
+    branches: [main, codex/dev-core]
+    paths:
+      - 'apps/core/**'
+      - 'apps/workforce/**'
+      - 'packages/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.devcontainer/**'
+      - '.github/workflows/core-ci.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: core-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Read full history for historical merge audit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install from lockfile
+        run: npm ci --no-audit --no-fund
+      - name: Workspace tests
+        run: npm test
+      - name: Build both apps
+        run: npm run build
